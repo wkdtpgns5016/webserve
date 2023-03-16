@@ -27,7 +27,6 @@ class test_client
         memset(&server_addr, 0, sizeof(server_addr));
         server_addr.sin_family=AF_INET;
         server_addr.sin_addr.s_addr=inet_addr(server_ip);
-        std::cout << "aaaa : " << server_addr.sin_addr.s_addr << std::endl;
         server_addr.sin_port=htons(my_port);
         if(connect(socket_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1)
         {
@@ -50,21 +49,22 @@ class test_client
     {
         int clnt_sock;
         int str_len;
-        char message[BUFSIZE];
+        char* message;
+        std::string mesg;
 
         connect_server();
         while(1) 
         {
             /* 메세지 입력, 전송 */
-            fputs("전송할 메시지를 입력 하세요 (q to quit) : ", stdout);
-            fgets(message, BUFSIZE, stdin);
-            if (!strcmp(message,"q\n")) 
+            std::cout << "전송할 메시지를 입력 하세요 (q to quit) : ";
+            std::cin >> mesg;
+            if (!mesg.compare("q\n")) 
                 break;
+            message = (char *)mesg.c_str();
             write(socket_fd, message, strlen(message));
             /* 메세지 수신, 출력 */
-            str_len = read(socket_fd, message, BUFSIZE-1);
-            message[str_len] = 0;
-            printf("서버로부터 전송된 메시지 : %s \n", message);
+            str_len = read(socket_fd, message, strlen(message));
+            std::cout << "서버로부터 전송된 메세지 : " << message << std::endl;
         }
         close(socket_fd);
         return (0);

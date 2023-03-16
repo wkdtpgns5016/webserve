@@ -26,7 +26,6 @@ class test_server
         server_addr.sin_family = AF_INET;
         server_addr.sin_port = htons(my_port);
         server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-        std::cout << server_addr.sin_addr.s_addr << std::endl;
         if (bind(socket_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
         {
             throw std::exception();
@@ -63,16 +62,22 @@ class test_server
 
         bind_server();
         listen_server();
-        clnt_sock = accept_server();
-        while( (str_len = read(clnt_sock, message, BUFSIZE)) != 0)
+        while (1)
         {
-            write(clnt_sock, message, str_len);
-            write(1, message, str_len);
-            str_len=read(clnt_sock, message, BUFSIZE-1);
-            message[str_len]=0;
-            printf("서버로부터 전송된 메시지 : %s \n", message);
+            clnt_sock = accept_server();
+            if (fork() == 0)
+            {
+                while( (str_len = read(clnt_sock, message, BUFSIZE)) != 0)
+                {
+                    write(clnt_sock, message, str_len);
+                    write(1, message, str_len);
+                }
+                exit(0);
+            }
+            else
+                close(clnt_sock);
         }
-        close(clnt_sock);
+        
         return (0);
     }
 };
