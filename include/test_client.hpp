@@ -32,6 +32,7 @@ class test_client
         {
             throw std::exception();
         }
+        std::cout << "server[" << server_ip << "] Connected...." << std::endl;
     }
 
     public:
@@ -58,7 +59,7 @@ class test_client
             /* 메세지 입력, 전송 */
             std::cout << "전송할 메시지를 입력 하세요 (q to quit) : ";
             std::cin >> mesg;
-            if (!mesg.compare("q\n")) 
+            if (!mesg.compare("q")) 
                 break;
             message = (char *)mesg.c_str();
             write(socket_fd, message, strlen(message));
