@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <arpa/inet.h>
-#include <exception>
 #include <unistd.h>
 #include <iostream>
 
@@ -30,7 +29,7 @@ class test_client
         server_addr.sin_port=htons(my_port);
         if(connect(socket_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1)
         {
-            throw std::exception();
+            exit(1);
         }
         std::cout << "server[" << server_ip << "] Connected...." << std::endl;
     }
@@ -42,7 +41,7 @@ class test_client
         my_port = port;
         if ((socket_fd = socket(PF_INET, SOCK_STREAM, 0)) < 0)
         {
-            throw std::exception();
+            exit(1);
         }
     }
 

@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <string.h>
 
-#include <exception>
 #include <iostream>
 #include <vector>
 
@@ -30,7 +29,7 @@
 
 class test_server
 {
-    private:
+    protected:
     int socket_fd;
     int my_port;
     struct sockaddr_in server_addr;
@@ -43,7 +42,7 @@ class test_server
         server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
         if (bind(socket_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
         {
-            throw std::exception();
+            exit(1);
         }
     }
 
@@ -316,7 +315,7 @@ class test_server
      *  내용 변경이 있을 때만 변경사항을 알려줌
      *  리눅스에서는 epoll(), 윈도우에서는 IOCP() 맥에서는 Kqueue() 사용
      */
-    void multi_plexing_run_with_epoll()
+    virtual void multi_plexing_run_with_epoll()
     {
         int kq, event_num;
         std::vector<struct kevent> change_list; // kqueue에 등록할 event list
@@ -329,7 +328,7 @@ class test_server
 
         // kqueue 초기화
         if ((kq = kqueue()) == -1)
-            throw std::exception();
+            return;
 
         // 서버 리스닝 소켓 change list에 추가
         EV_SET(&event_temp, socket_fd, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
@@ -352,7 +351,7 @@ class test_server
                 if (curr_event->flags & EV_ERROR)
                 {
                     if (curr_event->ident == socket_fd)
-                        std::exception();
+                        break;
                     else
                     {
                         close(curr_event->ident);
@@ -403,11 +402,11 @@ class test_server
         my_port = port;
         if ((socket_fd = socket(PF_INET, SOCK_STREAM, 0)) < 0)
         {
-            throw std::exception();
+            exit(1);
         }
     }
 
-    int run()
+    virtual int run()
     {
         bind_server();
         listen_server();
