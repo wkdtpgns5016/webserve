@@ -135,3 +135,51 @@
 
 
 ### **Google Test 사용**
+**1. cmake 설치**
+> brew install cmake
+
+**2. Google Test 환경 구성** </br>
+> 1. github에 있는 Google Test 릴리즈 버전을 선택하여 내려 받는다 </br>
+> (https://github.com/google/googletest/releases) </br>
+> 2. 프로젝트 내 test 디렉토리에 붙여 넣는다
+> 3. 테스트 코드 작성
+> 4. CMakeList.txt 작성
+> 테스트 실행
+
+**3. CMakeList.txt 작성**
+```
+# cmake 버전
+cmake_minimum_required(VERSION 3.24)
+# 프로젝트 이름
+project(webserve-test)
+
+# c++ 지원 버전
+set(CMAKE_CXX_STANDARD 17)
+
+# 라이브러리 빌드 (C 코드)
+add_library(sum SHARED lib/sum.c lib/sum.h)
+
+# 실행 프로그램 빌드 (C 코드)
+include_directories(lib)
+add_executable(webserve-test main.cpp)
+target_link_libraries(webserve-test sum)
+
+# gtest 빌드 (C++ 코드)
+set(gtest_SRC_DIR test/googletest-1.13.0)
+add_subdirectory(${gtest_SRC_DIR})
+
+# 테스트 프로그램 빌드 (C++ 코드)
+include_directories(lib)
+include_directories(${gtest_SRC_DIR}/googletest/include)
+add_executable(테스트실행파일명 test/sum_test.cc)
+target_link_libraries(테스트실행파일명 gtest gtest_main)
+target_link_libraries(테스트실행파일명 sum)
+```
+
+**4. 테스트 실행**
+```
+cmake -S . -B build 
+cmake --build build
+cd build
+./테스트실행파일명
+```

@@ -31,5 +31,11 @@
 *.out
 *.app
 
-# vscode cache
+# vscode
 .vscode
+
+# jetbrain ide
+.idea
+
+# build files
+build/
