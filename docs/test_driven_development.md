@@ -136,7 +136,9 @@
 
 ### **Google Test 사용**
 **1. cmake 설치**
-> brew install cmake
+```
+brew install cmake
+```
 
 **2. Google Test 환경 구성** </br>
 > 1. github에 있는 Google Test 릴리즈 버전을 선택하여 내려 받는다 </br>
