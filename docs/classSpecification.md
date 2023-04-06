@@ -81,5 +81,8 @@
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------:|
+> | string readFile(string) | public | 파일 전체를 읽는 함수|
+> | string readLine(string) | public | 파일 한 줄을 읽는 함수|
+
 
 ### ** [라이브러리 목록](https://github.com/wkdtpgns5016/webserve/blob/main/docs/lib_function.md)** </br>
