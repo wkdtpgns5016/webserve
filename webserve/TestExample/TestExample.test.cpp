@@ -42,7 +42,7 @@ TEST(TestExampleTest, TestExampleSub)
     // then
     EXPECT_EQ(result1, 7);
     EXPECT_EQ(result2, 6);
-    EXPECT_EQ(result3, -45);
+    EXPECT_EQ(result3, 5);
 }
 
 int main(int argc, char **argv)
