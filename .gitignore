@@ -40,3 +40,6 @@
 # build files
 build/
 cmake-build-debug/
+
+# DS_STORE
+.DS_Store
