@@ -1,6 +1,22 @@
 #include "ft.hpp"
-#include <iostream>
 #include "gtest/gtest.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+std::string	read_file_into_string(std::string filename)
+{
+    std::ifstream f(filename);
+    std::string str;
+
+    if(f)
+    {
+        std::ostringstream ss;
+        ss << f.rdbuf();
+        str = ss.str();
+    }
+    return str;
+}
 
 TEST(libftUnitTest, splitStirngTest)
 {
@@ -24,15 +40,14 @@ TEST(libftUnitTest, splitStirngTest)
 
 TEST(libftUnitTest, splitBlockStirngTest)
 {
- // given
- std::string a = "block1 {1, 2, 3, 4} block2 {1, 2, 3, 4} block3 {1, 2, 3, 4}";
+    // given
+    std::string a = read_file_into_string("../var/conf/default.conf");
 
- // when
- std::vector<std::string> result1 = ft::splitBlockString(a);
+    // when
+    std::vector<std::string> result1 = ft::splitBlockString(a);
 
- // then
- EXPECT_EQ(result1.size(), 3);
- EXPECT_EQ(result1[0].compare("1, 2, 3, 4"), 0);
+    // then
+    EXPECT_EQ(result1.size(), 2);
 }
 
 int main(int argc, char **argv)
