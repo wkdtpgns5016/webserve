@@ -10,4 +10,6 @@
 ### **5. [코드 / 커밋 컨벤션 정리](https://github.com/wkdtpgns5016/webserve/blob/main/docs/convention.md)** </br>
 
 ### **6. [테스트 기반 개발 프로그래밍 정리](https://github.com/wkdtpgns5016/webserve/blob/main/docs/test_driven_development.md)** </br>
+
+### **7. [클래스 명세서 및 라이브러리 명세서](https://github.com/wkdtpgns5016/webserve/blob/main/docs/classSpecification.md)** </br>
 <br/>

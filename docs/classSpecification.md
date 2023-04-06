@@ -70,17 +70,16 @@
 > | void locationBlockParsing(string) | public | 문자열을 인자로 받아 객체를 파싱하는 함수 |
 
 
-## **Reader**
+## **FileDescripter**
 > 파일 리더기
 
 **Attribute**
 > | 타입 | 이름 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------|:----------:|
-> | int | _fd | private | 파일 디스크럽터  |
+> | int | _fd | private | 파일 디스크립트  |
 
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------:|
-> | vector&#60;string&#62; splitString(string, string) | public | 문자열을 특정 문자열 기준으로 자르는 함수 |
-> | vector&#60;string&#62; splitBlockWithString(string) | public | Block을 기준으로 문자열을 자르는 함수  |
-> | stirng readFile(string) | public | 파일 경로를 인자로 받아 파일 내용을 문자열로 반환하는 함수 |
+
+### ** [라이브러리 목록](https://github.com/wkdtpgns5016/webserve/blob/main/docs/lib_function.md)** </br>
