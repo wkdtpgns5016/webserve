@@ -6,4 +6,3 @@
 > |:----------|:----------:|
 > | vector&#60;string&#62; splitString(string, string) | 문자열을 특정 문자열 기준으로 자르는 함수 |
 > | vector&#60;string&#62; splitBlockWithString(string) | Block을 기준으로 문자열을 자르는 함수  |
-> | stirng readFile(string) | 파일 경로를 인자로 받아 파일 내용을 문자열로 반환하는 함수 |
