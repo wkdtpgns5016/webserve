@@ -82,4 +82,116 @@
 
 ------------------------------------------------
 
+## **StartLine**
+> Start Line 추상화 객체
+
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> | string | _http_version | private | http 버전 |
+> |  |  |  |  |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | string getHttpVersion(void) const | public | http version getter |
+> | virtual bool isVaild(void) = 0 | public | 유효성 검사 가상 메소드 |
+> | virtual string getString(void) = 0 | public | 문자열 반환 가상 메소드 |
+
+------------------------------------------------
+
+## **RequestLine**
+> Request Line 객체
+
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> | string | _http_method | private | http 버전 |
+> | string | _request_target | private | 요청 타켓 |
+> |  |  |  |  |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | string getHttpMethod(void) const | public | http method getter |
+> | string getRequestTarget(void) const | public | request target getter |
+> | virtual bool isVaild(void) = 0 | public | 유효성 검사 가상 메소드 |
+> | virtual string getString(void) = 0 | public | 문자열 반환 가상 메소드 |
+
+------------------------------------------------
+
+## **StatusLine**
+> Status Line 객체
+
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> | int | _status_code | private | 상태 코드 |
+> | string | _status_message | private | 상태 메세지 |
+> |  |  |  |  |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | string getStatusCode(void) const | public | status code getter |
+> | string getStatusMessage(void) const | public | status message getter |
+> | virtual bool isVaild(void) = 0 | public | 유효성 검사 가상 메소드 |
+> | virtual string getString(void) = 0 | public | 문자열 반환 가상 메소드 |
+
+-----------------------------------------------------
+
+## **HttpMessage**
+> Http Message 추상화 객체
+
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> | map&#60;string, string&#62; | _headers | private | http 헤더 |
+> | string | _message_body | private | 메세지 바디 |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | StartLine* getStartLine(void) const | public | start line getter |
+> | list&#60;HttpHeader&#62; getHeaders(void) const | public | http header getter |
+> | string getMessageBody(void) const | public | message body getter |
+> | virtual bool isVaild(void) = 0 | public | 유효성 검사 가상 메소드 |
+> | virtual string getString(void) = 0 | public | 문자열 반환 가상 메소드 |
+
+------------------------------------------------
+
+## **HttpRequestMessage**
+> Http Request Message 객체
+
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> | RequestLine | _start_line | private | 시작 줄 |
+> |  |  |  |  |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | bool isVaild(void) | public | 유효성 검사 메소드 |
+> | string getString(void) | public | 문자열 반환 메소드 |
+
+------------------------------------------------
+
+## **HttpResponseMessage**
+> Http Response Message 객체
+
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> | StatusLine | _start_line | private | 시작 줄 |
+> |  |  |  |  |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | bool isVaild(void) | public | 유효성 검사 메소드 |
+> | string getString(void) | public | 문자열 반환 메소드 |
+
+---------------------------------------------------
+
 ## **[라이브러리 목록](https://github.com/wkdtpgns5016/webserve/blob/main/docs/lib_function.md)** </br>
