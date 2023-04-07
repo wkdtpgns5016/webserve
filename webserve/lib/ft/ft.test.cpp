@@ -42,12 +42,51 @@ TEST(libftUnitTest, splitBlockStirngTest)
 {
     // given
     std::string a = read_file_into_string("../var/conf/default.conf");
+    std::string b = "    listen 80;\n"
+                    "    listen [::]:80;\n"
+                    "\n"
+                    "    server_name example.com;\n"
+                    "    \n"
+                    "    root /var/html;\n"
+                    "    \n"
+                    "    index index.html;\n"
+                    "\n"
+                    "    client_max_body_size 10M;\n"
+                    "\n"
+                    "    location / {\n"
+                    "        index test.html;\n"
+                    "        try_files $uri $uri/ = 404;\n"
+                    "    }\n";
+    std::string answer1 = "server {\n"
+                         "    listen 80;\n"
+                         "    listen [::]:80;\n"
+                         "\n"
+                         "    server_name example.com;\n"
+                         "    \n"
+                         "    root /var/html;\n"
+                         "    \n"
+                         "    index index.html;\n"
+                         "\n"
+                         "    client_max_body_size 10M;\n"
+                         "\n"
+                         "    location / {\n"
+                         "        index test.html;\n"
+                         "        try_files $uri $uri/ = 404;\n"
+                         "    }\n"
+                         "}\n";
+    std::string answer2 = "    location / {\n"
+                          "        index test.html;\n"
+                          "        try_files $uri $uri/ = 404;\n"
+                          "    }\n";
 
     // when
     std::vector<std::string> result1 = ft::splitBlockString(a);
+    std::vector<std::string> result2 = ft::splitBlockString(b);
 
     // then
     EXPECT_EQ(result1.size(), 2);
+    EXPECT_EQ(result1[0], answer1);
+    EXPECT_EQ(result2[0], answer2);
 }
 
 int main(int argc, char **argv)
