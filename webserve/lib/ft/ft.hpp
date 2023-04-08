@@ -6,7 +6,7 @@
 
 namespace ft
 {
-    std::vector<std::string> splitString(const std::string& str, const std::string& split);
+    std::vector<std::string> splitString(std::string str, std::string split);
     std::vector<std::string> splitBlockString(std::string str);
 }
 
