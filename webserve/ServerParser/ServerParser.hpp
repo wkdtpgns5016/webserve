@@ -4,6 +4,8 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include "../lib/ft/ft.hpp"
+#include <vector>
 
 class ServerParser
 {
@@ -18,11 +20,14 @@ protected:
 
 private:
 	ServerParser();
-	ServerParser(const ServerParser& other);
-	ServerParser& operator=(const ServerParser& other);
+	ServerParser(const ServerParser&);
+	ServerParser& operator=(const ServerParser&);
+
+	void	parseServerBlock(const std::string&);
+	void	parsePort(std::vector<std::string> *);
 
 public:
-	ServerParser(const std::string block_script);
+	ServerParser(const std::string&);
 	~ServerParser();
 
 	int	getPort() const;
