@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <locale>
 
+
 ServerParser::ServerParser(const std::string& server_block)
 {
 	parseServerBlock(server_block);
@@ -62,27 +63,48 @@ void	removeFirstWhiteSpaces(std::vector<std::string> *block_lines)
 			if(std::isspace(line[space_end], std::locale()) == false)
 				break;
 
-		it->substr(0, space_end);
+		it->erase(0, space_end);
 		if (it->empty())
 			block_lines->erase(it);
 	}
 }
 
-bool	checkId(const std::string& line, const std::string& id)
+bool	checkIdentifier(const std::string& line, const std::string& identifier)
 {
-	size_t	id_length = id.length();
+	size_t	id_length = identifier.length();
 
-	if (line.compare(0, id_length, id) == true
+	if (line.compare(0, id_length, identifier) == 0
 			&& line.size() > id_length
-			&& std::isspace(line.at(id_length + 1), std::locale()))
+			&& std::isspace(line.at(id_length), std::locale()) == true)
 		return true;
 	return false;
 }
+
+void	parseServerBrace(std::string* script)
+{
+	if (script->compare(0, 10, "server\n{\n") == 0)
+		return ; //throw
+	script->erase(0, 10);
+
+	size_t	last_brace_pos = script->find_last_of('}');
+	if (script->compare(last_brace_pos - 1, 3, "\n}\n") == 0)
+		return; //throw
+	script->erase(last_brace_pos - 1, 3);
+}
+
+void	parseLocationBlock(std::string* script) //location parser에 location블록을 넘겨주고, script에서 삭제
+{
+	//ft::splitString(*script);
+	//deleteLocationBlock();
+}
+
 void	ServerParser::parseServerBlock(const std::string& server_block)
 {
-	//server keyword 삭제함수 필요
-	//parseLocationBlock(); //호출해서 location블록을 삭제
-	std::vector<std::string> block_lines = ft::splitString(server_block. ";\n");
+	std::string	server_block_cpy = server_block;
+
+	parseServerBrace(&server_block_cpy);
+	parseLocationBlock(&server_block_cpy);
+	std::vector<std::string> block_lines = ft::splitString(server_block_cpy, ";");
 	removeFirstWhiteSpaces(&block_lines);
 	parsePort(&block_lines);
 }
@@ -90,7 +112,7 @@ void	ServerParser::parseServerBlock(const std::string& server_block)
 
 std::vector<std::string>	extractContents(std::string line)
 {
-	std::vector<std::string> ret = ft::splitBlockString(line);
+	std::vector<std::string> ret = ft::splitString(line, " ");
 
 	ret.erase(ret.begin());
 	return ret;
@@ -102,7 +124,7 @@ void	ServerParser::parsePort(std::vector<std::string> *block_lines)
 
 	for (std::vector<std::string>::iterator it = block_lines->begin(); it != ite; it++)
 	{
-		if (checkId(*it, "listen"))
+		if (checkIdentifier(*it, "listen"))
 		{
 			std::vector<std::string>	contents = extractContents(*it);
 			if (contents.size() != 1)
