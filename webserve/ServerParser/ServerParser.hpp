@@ -23,9 +23,15 @@ private:
 	ServerParser(const ServerParser&);
 	ServerParser& operator=(const ServerParser&);
 
+	void	parseServerBrace(std::string*);
+	void	parseLocationBlock(std::string*);
 	void	parseServerBlock(const std::string&);
-	void	parsePort(std::vector<std::string> *);
+	
+	void	loopForParsing(std::vector<std::string>*, const std::string&, bool (ServerParser::*)(std::vector<std::string>));	bool	parsePort(std::vector<std::string>);
 
+	bool	checkIdentifier(const std::string&, const std::string&);
+	void	removeFirstWhiteSpaces(std::vector<std::string> *);
+	std::vector<std::string>	extractContents(std::string line);
 public:
 	ServerParser(const std::string&);
 	~ServerParser();

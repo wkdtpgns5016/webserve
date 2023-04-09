@@ -4,52 +4,43 @@
 #include <cstdlib>
 #include <locale>
 
+ServerParser::~ServerParser() { }
+int	ServerParser::getPort() const { return _port; }
+std::string	ServerParser::getAddr() const { return _addr; }
+std::string	ServerParser::getServerName() const { return _server_name; }
+std::string	ServerParser::getIndex() const { return _index; }
+std::string	ServerParser::getDefaultErrorPaget() const { return _default_error_page; }
+int	ServerParser::getClientBodySize() const { return _client_body_size; }
+//std::string	ServerParser::getLocations() const { return _locations; }
 
 ServerParser::ServerParser(const std::string& server_block)
 {
-	parseServerBlock(server_block);
+	std::string	server_block_cpy = server_block;
+
+	parseServerBrace(&server_block_cpy);
+	parseLocationBlock(&server_block_cpy);
+	parseServerBlock(server_block_cpy);
 }
 
-ServerParser::~ServerParser()
+void	ServerParser::parseServerBrace(std::string* script)
 {
+	if (script->compare(0, 10, "server\n{\n") == 0)
+		return ; //throw
+	script->erase(0, 10);
+
+	size_t	last_brace_pos = script->find_last_of('}');
+	if (script->compare(last_brace_pos - 1, 3, "\n}\n") == 0)
+		return; //throw
+	script->erase(last_brace_pos - 1, 3);
 }
 
-int	ServerParser::getPort() const
+void	ServerParser::parseLocationBlock(std::string* script) //location parser에 location블록을 넘겨주고, script에서 삭제
 {
-	return _port;
-}
-std::string	ServerParser::getAddr() const
-{
-	return _addr;
+	//ft::splitString(*script);
+	//deleteLocationBlock();
 }
 
-std::string	ServerParser::getServerName() const
-{
-	return _server_name;
-}
-
-std::string	ServerParser::getIndex() const
-{
-	return _index;
-}
-
-std::string	ServerParser::getDefaultErrorPaget() const
-{
-	return _default_error_page;
-}
-
-int	ServerParser::getClientBodySize() const
-{
-	return _client_body_size;
-}
-
-//std::string	ServerParser::getLocations() const
-//{
-//	return _locations;
-//}
-
-
-void	removeFirstWhiteSpaces(std::vector<std::string> *block_lines)
+void	ServerParser::removeFirstWhiteSpaces(std::vector<std::string> *block_lines)
 {
 	std::vector<std::string>::iterator ite = block_lines->end();
 
@@ -69,7 +60,7 @@ void	removeFirstWhiteSpaces(std::vector<std::string> *block_lines)
 	}
 }
 
-bool	checkIdentifier(const std::string& line, const std::string& identifier)
+bool	ServerParser::checkIdentifier(const std::string& line, const std::string& identifier)
 {
 	size_t	id_length = identifier.length();
 
@@ -80,37 +71,8 @@ bool	checkIdentifier(const std::string& line, const std::string& identifier)
 	return false;
 }
 
-void	parseServerBrace(std::string* script)
-{
-	if (script->compare(0, 10, "server\n{\n") == 0)
-		return ; //throw
-	script->erase(0, 10);
 
-	size_t	last_brace_pos = script->find_last_of('}');
-	if (script->compare(last_brace_pos - 1, 3, "\n}\n") == 0)
-		return; //throw
-	script->erase(last_brace_pos - 1, 3);
-}
-
-void	parseLocationBlock(std::string* script) //location parser에 location블록을 넘겨주고, script에서 삭제
-{
-	//ft::splitString(*script);
-	//deleteLocationBlock();
-}
-
-void	ServerParser::parseServerBlock(const std::string& server_block)
-{
-	std::string	server_block_cpy = server_block;
-
-	parseServerBrace(&server_block_cpy);
-	parseLocationBlock(&server_block_cpy);
-	std::vector<std::string> block_lines = ft::splitString(server_block_cpy, ";");
-	removeFirstWhiteSpaces(&block_lines);
-	parsePort(&block_lines);
-}
-
-
-std::vector<std::string>	extractContents(std::string line)
+std::vector<std::string>	ServerParser::extractContents(std::string line)
 {
 	std::vector<std::string> ret = ft::splitString(line, " ");
 
@@ -118,19 +80,29 @@ std::vector<std::string>	extractContents(std::string line)
 	return ret;
 }
 
-void	ServerParser::parsePort(std::vector<std::string> *block_lines)
+void	ServerParser::loopForParsing(std::vector<std::string>* block_lines, const std::string& keyword, bool (ServerParser::*parseFuntion)(std::vector<std::string>))
 {
 	std::vector<std::string>::iterator ite = block_lines->end();
-
+	
 	for (std::vector<std::string>::iterator it = block_lines->begin(); it != ite; it++)
 	{
-		if (checkIdentifier(*it, "listen"))
-		{
-			std::vector<std::string>	contents = extractContents(*it);
-			if (contents.size() != 1)
-				return;
-			_port = std::strtol(contents.begin()->c_str(), NULL, 10);
+		if (checkIdentifier(*it, keyword)
+				&& (this->*parseFuntion)(extractContents(*it)))
 			block_lines->erase(it);
-		}
 	}
+}
+void	ServerParser::parseServerBlock(const std::string& server_block)
+{
+	std::vector<std::string> block_lines = ft::splitString(server_block, ";");
+
+	removeFirstWhiteSpaces(&block_lines);
+	loopForParsing(&block_lines, "listen", &ServerParser::parsePort);
+}
+
+bool	ServerParser::parsePort(std::vector<std::string> contents)
+{
+		if (contents.size() != 1)
+			return false; // throw
+		_port = std::strtol(contents.begin()->c_str(), NULL, 10);
+		return true;
 }
