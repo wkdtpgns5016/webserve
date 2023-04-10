@@ -37,6 +37,11 @@ std::string StartLine::getHttpVersion(void) const
     return (_http_version);
 }
 
+bool        checkHttpVersion(std::string http_version)
+{
+    return (true);
+}
+
 StatusLine::StatusLine(void) : StartLine()
 {
 
@@ -48,7 +53,6 @@ StatusLine::StatusLine(std::string start_line)
     int status_code;
 
     arr = ft::splitString(start_line, " ");
-    // arr 유효성 검사
     _http_version = arr[0];
     _status_code = std::atoi(arr[1].c_str());
     _status_message = arr[2];
@@ -89,8 +93,26 @@ std::string StatusLine::getStatusMessage(void) const
     return (_status_message);
 }
 
-bool    StatusLine::isVaild(void)
+bool StatusLine::checkStatusCode(std::string status_code)
 {
+    return (true);
+}
+
+bool StatusLine::checkStatusMessage(std::string status_message)
+{
+    return (true);
+}
+
+bool    StatusLine::isVaild(std::vector<std::string> arr)
+{
+    if (arr.size() != 3)
+        return (false);
+    if (!::checkHttpVersion(arr[0]))
+        return (false);
+    if (!checkStatusCode(arr[1]))
+        return (false);
+    if (!checkStatusMessage(arr[2]))
+        return (false);
     return (true);
 }
 
@@ -112,7 +134,6 @@ RequestLine::RequestLine(std::string start_line)
     int status_code;
 
     arr = ft::splitString(start_line, " ");
-    // arr 유효성 검사
     _http_method = arr[0];
     _request_target = arr[1];
     _http_version = arr[2];
@@ -153,8 +174,26 @@ std::string RequestLine::getRequestTarget(void) const
     return (_request_target);
 }
 
-bool RequestLine::isVaild(void)
+bool RequestLine::checkHttpMethod(std::string http_method)
 {
+    return (true);
+}
+
+bool RequestLine::checkRequestTarget(std::string request_target)
+{
+    return (true);
+}
+
+bool RequestLine::isVaild(std::vector<std::string> arr)
+{
+    if (arr.size() != 3)
+        return (false);
+    if (!checkHttpMethod(arr[0]))
+        return (false);
+    if (!checkRequestTarget(arr[1]))
+        return (false);
+    if (!::checkHttpVersion(arr[2]))
+        return (false);
     return (true);
 }
 
@@ -168,6 +207,11 @@ HttpMessage::HttpMessage(void)
 
 }
 
+bool HttpMessage::checkHeaders(std::vector<std::string> arr)
+{
+    return (true);
+}
+
 void HttpMessage::setHeaders(std::string header)
 {
     std::vector<std::string> arr;
@@ -176,6 +220,7 @@ void HttpMessage::setHeaders(std::string header)
     int pos;
 
     arr = ft::splitString(header, "\r\n");
+    // header 유효성 검사
     for (std::vector<std::string>::iterator it = arr.begin(); it < arr.end(); it++)
     {
         pos = (*it).find(':');
@@ -228,6 +273,10 @@ HttpMessage& HttpMessage::operator=(const HttpMessage& http_message)
     return (*this);
 }
 
+StartLine*  HttpMessage::getStartLine(void) const
+{
+    return (_start_line);
+}
 
 std::map<std::string, std::string> HttpMessage::getHeaders(void) const
 {
@@ -238,3 +287,17 @@ std::string HttpMessage::getMessageBody(void) const
 {
     return (_message_body);
 }
+
+std::string HttpMessage::getString(void)
+{
+    std::string str;
+
+    str = _start_line->getString() + "\r\n";
+    for (std::map<std::string, std::string>::iterator it = _headers.begin(); it != _headers.end(); it++)
+    {
+        str += (*it).first + ": " + (*it).second + "\r\n";
+    }
+    str += _message_body;
+    return (str);
+}
+

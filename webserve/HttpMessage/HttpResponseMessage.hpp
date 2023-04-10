@@ -5,9 +5,8 @@
 
 class HttpResponseMessage : public HttpMessage
 {
-
 private:
-    StatusLine _status_line;
+    StatusLine _start_line;
 
 public:
     HttpResponseMessage(void);
