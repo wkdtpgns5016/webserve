@@ -27,7 +27,14 @@ private:
 	void	parseLocationBlock(std::string*);
 	void	parseServerBlock(const std::string&);
 	
-	void	loopForParsing(std::vector<std::string>*, const std::string&, bool (ServerParser::*)(std::vector<std::string>));	bool	parsePort(std::vector<std::string>);
+	void	loopForParsing(std::vector<std::string>*, const std::string&, bool (ServerParser::*)(std::vector<std::string>));
+	bool	parsePort(std::vector<std::string>);
+	bool	parseAddr(std::vector<std::string>);
+	bool	parseServerName(std::vector<std::string>);
+	bool	parseIndex(std::vector<std::string>);
+	bool	parseDefaultErrorPage(std::vector<std::string>);
+	bool	parseClientBodySize(std::vector<std::string>);
+
 
 	bool	checkIdentifier(const std::string&, const std::string&);
 	void	removeFirstWhiteSpaces(std::vector<std::string> *);

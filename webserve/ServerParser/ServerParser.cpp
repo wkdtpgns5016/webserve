@@ -97,12 +97,65 @@ void	ServerParser::parseServerBlock(const std::string& server_block)
 
 	removeFirstWhiteSpaces(&block_lines);
 	loopForParsing(&block_lines, "listen", &ServerParser::parsePort);
+	loopForParsing(&block_lines, "root", &ServerParser::parseAddr);
+	loopForParsing(&block_lines, "server_name", &ServerParser::parseServerName);
+	loopForParsing(&block_lines, "index", &ServerParser::parseIndex);
+	loopForParsing(&block_lines, "error_page", &ServerParser::parseDefaultErrorPage);
+	loopForParsing(&block_lines, "client_max_body_size", &ServerParser::parseClientBodySize);
+
+
 }
 
 bool	ServerParser::parsePort(std::vector<std::string> contents)
 {
-		if (contents.size() != 1)
-			return false; // throw
-		_port = std::strtol(contents.begin()->c_str(), NULL, 10);
-		return true;
+	if (contents.size() != 1)
+		return false; // throw
+	_port = std::strtol(contents.begin()->c_str(), NULL, 10);
+	return true;
+}
+
+bool	ServerParser::parseAddr(std::vector<std::string> contents)
+{
+	if (contents.size() != 1)
+		return false; // throw
+	_addr = *contents.begin();
+	return true;
+}
+
+bool	ServerParser::parseServerName(std::vector<std::string> contents)
+{
+	if (contents.size() != 1)
+		return false; // throw
+	_server_name = *contents.begin();
+	return true;
+}
+
+bool	ServerParser::parseIndex(std::vector<std::string> contents)
+{
+	if (contents.size() != 1)
+		return false; // throw
+	_index = *contents.begin();
+	return true;
+}
+
+bool	ServerParser::parseDefaultErrorPage(std::vector<std::string> contents)
+{
+	if (contents.empty() == true)
+		return false; // throw
+	std::vector<std::string>::iterator	ite = contents.end();
+	for (std::vector<std::string>::iterator it = contents.begin(); it != ite; it++)
+	{
+		_default_error_page += *it;
+		_default_error_page += " ";
+	}
+	_default_error_page.erase(_default_error_page.length() - 1, 1);
+	return true;
+}
+
+bool	ServerParser::parseClientBodySize(std::vector<std::string> contents)
+{
+	if (contents.size() != 1)
+		return false; // throw
+	_client_body_size = std::strtol(contents.begin()->c_str(), NULL, 10);
+	return true;
 }
