@@ -14,12 +14,27 @@
 ------------------------------------------
 
 ## **Server**
+> 서버 객체
+
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> |  ServerParser  | _config_module | private | 서버 설정 객체  |
+> |  ServerRun  | _run_moudle | private | 서버 구동 객체  |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | void run(void) | public | 서버 작동 메서드 |
+
+------------------------------------------
+
+## **ServerRun**
 > 실제 구동하는 서버 객체
 
 **Attribute**
 > | 타입 | 이름 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------|:----------:|
-> |  ServerParser  | _server_config | private | 서버 설정 객체  |
 
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
@@ -106,8 +121,8 @@
 **Attribute**
 > | 타입 | 이름 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------|:----------:|
-> | string | _http_method | private | http 버전 |
-> | string | _request_target | private | 요청 타켓 |
+> | string | _http_method | protected | http 버전 |
+> | string | _request_target | protected | 요청 타켓 |
 > |  |  |  |  |
 
 **Method**
@@ -126,8 +141,8 @@
 **Attribute**
 > | 타입 | 이름 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------|:----------:
-> | int | _status_code | private | 상태 코드 |
-> | string | _status_message | private | 상태 메세지 |
+> | int | _status_code | protected | 상태 코드 |
+> | string | _status_message | protected | 상태 메세지 |
 > |  |  |  |  |
 
 **Method**

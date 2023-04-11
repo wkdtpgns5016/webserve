@@ -273,11 +273,6 @@ HttpMessage& HttpMessage::operator=(const HttpMessage& http_message)
     return (*this);
 }
 
-StartLine*  HttpMessage::getStartLine(void) const
-{
-    return (_start_line);
-}
-
 std::map<std::string, std::string> HttpMessage::getHeaders(void) const
 {
     return (_headers);
@@ -287,17 +282,3 @@ std::string HttpMessage::getMessageBody(void) const
 {
     return (_message_body);
 }
-
-std::string HttpMessage::getString(void)
-{
-    std::string str;
-
-    str = _start_line->getString() + "\r\n";
-    for (std::map<std::string, std::string>::iterator it = _headers.begin(); it != _headers.end(); it++)
-    {
-        str += (*it).first + ": " + (*it).second + "\r\n";
-    }
-    str += _message_body;
-    return (str);
-}
-

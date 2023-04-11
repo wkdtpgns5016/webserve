@@ -23,6 +23,7 @@ TEST(HttpMessageUnitTest, HttpRequestMessageTest)
 
     // then
     EXPECT_EQ(http_message->getStartLine().getString(), start_line);
+    std::cout << http_message->getString() << std::endl;
     EXPECT_EQ(http_message->getMessageBody(), message_body);
     delete http_message;
 }

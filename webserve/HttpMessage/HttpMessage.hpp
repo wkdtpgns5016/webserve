@@ -72,7 +72,7 @@ public:
 class HttpMessage
 {
 protected:
-    StartLine*                          _start_line;
+    
     std::map<std::string, std::string>  _headers;
     std::string                         _message_body;
 
@@ -87,10 +87,9 @@ public:
     ~HttpMessage(void);
     HttpMessage& operator=(const HttpMessage& http_message);
 
-    StartLine*                          getStartLine(void) const;
     std::map<std::string, std::string>  getHeaders(void) const;
     std::string                         getMessageBody(void) const;
-    std::string                         getString(void);
+    virtual std::string                 getString(void) = 0;
     virtual bool                        isVaild(void) = 0;
 };
 
