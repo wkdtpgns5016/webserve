@@ -1,8 +1,8 @@
-#include "../../include/test_client.hpp"
+#include "../include/test_client.hpp"
 
 int main()
 {
-  test_client client("127.0.0.1", 500);
+  test_client client("10.28.8.3", 8080);
   client.run();
   return (0);
 }

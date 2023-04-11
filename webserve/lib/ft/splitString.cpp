@@ -1,5 +1,6 @@
 #include "ft.hpp"
 
+
 std::vector<std::string> ft::splitString(std::string str, std::string split)
 {
     std::vector<std::string> arr;

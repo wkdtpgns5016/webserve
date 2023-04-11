@@ -14,12 +14,27 @@
 ------------------------------------------
 
 ## **Server**
+> 서버 객체
+
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> |  ServerParser  | _config_module | private | 서버 설정 객체  |
+> |  ServerRun  | _run_moudle | private | 서버 구동 객체  |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | void run(void) | public | 서버 작동 메서드 |
+
+------------------------------------------
+
+## **ServerRun**
 > 실제 구동하는 서버 객체
 
 **Attribute**
 > | 타입 | 이름 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------|:----------:|
-> |  ServerParser  | _server_config | private | 서버 설정 객체  |
 
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
@@ -92,10 +107,10 @@
 > Start Line 추상화 객체
 
 **Attribute**
-> | 타입 | 이름 | 접근 제한 | 설명 |
+> | 타입 | 이름 | 접근 제한     | 설명 |
 > |:----------|:----------|:----------|:----------:|
-> | string | _http_version | private | http 버전 |
-> |  |  |  |  |
+> | string | _http_version | protected | http 버전 |
+> |  |  |           |  |
 
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
@@ -112,8 +127,8 @@
 **Attribute**
 > | 타입 | 이름 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------|:----------:|
-> | string | _http_method | private | http 버전 |
-> | string | _request_target | private | 요청 타켓 |
+> | string | _http_method | protected | http 버전 |
+> | string | _request_target | protected | 요청 타켓 |
 > |  |  |  |  |
 
 **Method**
@@ -131,9 +146,9 @@
 
 **Attribute**
 > | 타입 | 이름 | 접근 제한 | 설명 |
-> |:----------|:----------|:----------|:----------:|
-> | int | _status_code | private | 상태 코드 |
-> | string | _status_message | private | 상태 메세지 |
+> |:----------|:----------|:----------|:----------:
+> | int | _status_code | protected | 상태 코드 |
+> | string | _status_message | protected | 상태 메세지 |
 > |  |  |  |  |
 
 **Method**
@@ -150,19 +165,19 @@
 > Http Message 추상화 객체
 
 **Attribute**
-> | 타입 | 이름 | 접근 제한 | 설명 |
+> | 타입 | 이름 | 접근 제한     | 설명 |
 > |:----------|:----------|:----------|:----------:|
-> | map&#60;string, string&#62; | _headers | private | http 헤더 |
-> | string | _message_body | private | 메세지 바디 |
+> | map&#60;string, string&#62; | _headers | protected | http 헤더 |
+> | string | _message_body | protected   | 메세지 바디 |
 
 **Method**
-> | 함수 원형 | 접근 제한 | 설명 |
-> |:----------|:----------|:----------:|
-> | StartLine* getStartLine(void) const | public | start line getter |
-> | list&#60;HttpHeader&#62; getHeaders(void) const | public | http header getter |
-> | string getMessageBody(void) const | public | message body getter |
-> | virtual bool isVaild(void) = 0 | public | 유효성 검사 가상 메소드 |
-> | virtual string getString(void) = 0 | public | 문자열 반환 가상 메소드 |
+> | 함수 원형                                              | 접근 제한   |         설명          |
+> |:---------------------------------------------------|:--------|:-------------------:|
+> | void setHeader(string)                             | private |   http 헤더 초기화 메소드   |
+> | map&#60;string, string&#62; getHeaders(void) const | public  | http header getter  |
+> | string getMessageBody(void) const                  | public  | message body getter |
+> | virtual bool isVaild(void) = 0                     | public  |    유효성 검사 가상 메소드    |
+> | virtual string getString(void) = 0                 | public  |    문자열 반환 가상 메소드    |
 
 ------------------------------------------------
 
@@ -178,6 +193,7 @@
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------:|
+> | string getRequestLine(void) const | public | request line getter |
 > | bool isVaild(void) | public | 유효성 검사 메소드 |
 > | string getString(void) | public | 문자열 반환 메소드 |
 
