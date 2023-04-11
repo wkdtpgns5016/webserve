@@ -67,8 +67,14 @@
 > | string getDefaultErrorPage(void) const | public | default_error_page getter |
 > | string getClinetBodySize(void) const | public | client_body_size getter |
 > | list&#60;LocationParser&#62; getLocations(void) const | public | locations getter |
-> | void serverBlockParsing(string) | public | 문자열을 인자로 받아 객체를 파싱하는 함수 |
-
+> | void parseServerBlock(string) | private | serverblock parsing |
+> | void parsePort(string) | private | port parsing |
+> | void parseAddr(string) | private | server address parsing |
+> | void parseServerName(string) | private | server name parsing |
+> | void parseIndex(string) | private | index parsing |
+> | void parseDefaultErroPage(string) | private | errorpage parsing |
+> | void parseClientBodySize(string) | private | client body size parsing |
+> | void passLocationBlock(string) | private | pass location block to LocationParser |
 ------------------------------------------
 
 ## **LocationParser**
