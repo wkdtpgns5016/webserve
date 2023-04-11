@@ -13,10 +13,7 @@ void ServerRun::socket_init(int &server_socket, struct sockaddr_in &server_addr,
     //     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
     // else
     //     server_addr.sin_addr.s_addr = inet_addr(ip_addr.c_str());
-    if (port == 0)
-        server_addr.sin_port = htons(80);
-    else
-        server_addr.sin_port = htons(port);
+    server_addr.sin_port = htons(port);
     
     if (bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) == -1)
         exit(1);

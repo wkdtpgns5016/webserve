@@ -6,7 +6,7 @@
 
 ServerParser::ServerParser()
 {
-    _port = 0;
+    _port = 80;
     _addr = "";
     _client_body_size = 0;
     _server_name = "";
@@ -27,7 +27,7 @@ ServerParser::ServerParser(const std::string& server_block)
 {
 	std::string	server_block_cpy = server_block;
 
-	_port = 0;
+	_port = 80;
     _addr = "";
     _client_body_size = 0;
     _server_name = "";
