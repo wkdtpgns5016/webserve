@@ -2,9 +2,20 @@
 // Created by Sehoon Jang on 3/29/23.
 //
 
-#include <iostream>
+#include "WebServer/WebServer.hpp"
 
-int main()
+int main(int argc, char *argv[])
 {
-    std::cout << "hello world!" << std::endl;
+    if (argc ==  2)
+    {
+        WebServer webserver(argv[1]);
+        webserver.run();
+    }
+    else
+    {
+        std::cout << "Argument Error!\n";
+        exit(1);
+    }
+
+    return (0);
 }
