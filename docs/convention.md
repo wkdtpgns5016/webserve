@@ -81,5 +81,5 @@
 
 	    CommonLogFormat 객체, 로그 객체 출력 기능 구현
 
-	    Resolved: #31
+	    Resolved: #31 
 <br/>
