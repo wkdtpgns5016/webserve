@@ -21,6 +21,7 @@ public:
     Server(const std::string sBlock);
 
     pthread_t getThread(void);
+    int  getPort(void);
 
     static void *run(void *temp);
     void threading(void);

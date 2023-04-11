@@ -40,10 +40,13 @@ WebServer::WebServer(std::string path)
 
 void WebServer::run(void)
 {
+    int last_port = -1;
     std::list<Server>::iterator iter = _servers.begin();
     for (; iter != _servers.end(); iter++)
     {
-        (*iter).threading();
+        if ((*iter).getPort() != last_port)
+            (*iter).threading();
+        last_port = (*iter).getPort();
     }
     iter = _servers.begin();
     for (; iter != _servers.end(); iter++)

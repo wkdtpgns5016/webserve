@@ -19,6 +19,7 @@ protected:
 //	std::list<LocationParser>	_locations;
 
 private:
+public:
 	ServerParser();
 	ServerParser(const ServerParser&);
 	ServerParser& operator=(const ServerParser&);
@@ -39,7 +40,6 @@ private:
 	bool	checkIdentifier(const std::string&, const std::string&);
 	void	removeFirstWhiteSpaces(std::vector<std::string> *);
 	std::vector<std::string>	extractContents(std::string line);
-public:
 	ServerParser(const std::string&);
 	~ServerParser();
 

@@ -57,7 +57,8 @@ class test_client
         {
             /* 메세지 입력, 전송 */
             std::cout << "전송할 메시지를 입력 하세요 (q to quit) : ";
-            std::cin >> mesg;
+            // std::cin >> mesg;
+            std::getline(std::cin, mesg);
             if (!mesg.compare("q")) 
                 break;
             message = (char *)mesg.c_str();

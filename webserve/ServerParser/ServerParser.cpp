@@ -4,6 +4,16 @@
 #include <cstdlib>
 #include <locale>
 
+ServerParser::ServerParser()
+{
+    _port = 0;
+    _addr = "";
+    _client_body_size = 0;
+    _server_name = "";
+    _index = "";
+    _default_error_page = "";
+}
+
 ServerParser::~ServerParser() { }
 int	ServerParser::getPort() const { return _port; }
 std::string	ServerParser::getAddr() const { return _addr; }
@@ -17,9 +27,27 @@ ServerParser::ServerParser(const std::string& server_block)
 {
 	std::string	server_block_cpy = server_block;
 
+	_port = 0;
+    _addr = "";
+    _client_body_size = 0;
+    _server_name = "";
+    _index = "";
+    _default_error_page = "";
+
 	parseServerBrace(&server_block_cpy);
 	parseLocationBlock(&server_block_cpy);
 	parseServerBlock(server_block_cpy);
+}
+
+ServerParser &ServerParser::operator=(const ServerParser& obj)
+{
+    _port = obj._port;
+    _addr = obj._addr;
+    _client_body_size = obj._client_body_size;
+    _server_name = obj._server_name;
+    _index = obj._index;
+    _default_error_page = obj._default_error_page;
+    return (*this);
 }
 
 void	ServerParser::parseServerBrace(std::string* script)
@@ -36,6 +64,7 @@ void	ServerParser::parseServerBrace(std::string* script)
 
 void	ServerParser::parseLocationBlock(std::string* script) //location parser에 location블록을 넘겨주고, script에서 삭제
 {
+	(void)script;
 	//ft::splitString(*script);
 	//deleteLocationBlock();
 }

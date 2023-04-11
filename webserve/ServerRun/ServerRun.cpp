@@ -2,15 +2,17 @@
 
 void ServerRun::socket_init(int &server_socket, struct sockaddr_in &server_addr, int port, std::string ip_addr)
 {
+    (void)ip_addr;
     if ((server_socket = socket(PF_INET, SOCK_STREAM, 0)) == -1)
         exit(1);
 
     memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
-    if (ip_addr.empty())
-        server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    else
-        server_addr.sin_addr.s_addr = inet_addr(ip_addr.c_str());
+    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    // if (ip_addr.empty())
+    //     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    // else
+    //     server_addr.sin_addr.s_addr = inet_addr(ip_addr.c_str());
     if (port == 0)
         server_addr.sin_port = htons(80);
     else
