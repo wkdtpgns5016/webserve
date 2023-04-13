@@ -4,5 +4,6 @@
 ### **필요 함수**
 > | 함수 원형 | 설명 |
 > |:----------|:----------:|
+> | string readFileIntoString(string) | 파일 안에 있는 문자열 반환 |
 > | vector&#60;string&#62; splitString(string, string) | 문자열을 특정 문자열 기준으로 자르는 함수 |
 > | vector&#60;string&#62; splitBlockWithString(string) | Block을 기준으로 문자열을 자르는 함수  |

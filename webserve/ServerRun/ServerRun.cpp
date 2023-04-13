@@ -1,6 +1,12 @@
 #include "ServerRun.hpp"
+#include "../Server/Server.hpp"
 
-ServerRun::ServerRun()
+ServerRun::ServerRun() : ServerModule()
+{
+
+}
+
+ServerRun::ServerRun(Server* self) : ServerModule(self)
 {
 
 }
@@ -23,12 +29,6 @@ ServerRun& ServerRun::operator=(const ServerRun&server_run)
         return (*this);
     _self = server_run._self;
     return (*this);
-}
-
-
-void ServerRun::setServer(Server* serever)
-{
-    _self = serever;
 }
 
 void ServerRun::socket_init(int port, std::string ip_addr)
@@ -87,7 +87,7 @@ void ServerRun::accept_new_client()
 void ServerRun::receiveMessage()
 {
     /* read data from client */
-    ServerController* controller = _self->getServerController();
+    ServerController* controller = (ServerController *)_self->selectModule("ServerController");
     char buf[1024];
     int n = read(_curr_event->ident, buf, sizeof(buf));
 
@@ -134,8 +134,8 @@ void ServerRun::sendMessage()
 void ServerRun::run()
 {
     /* init server socket and listen */
-
-    socket_init(_self->getServerParser()->getPort(), _self->getServerParser()->getAddr());
+    ServerParser* parser_module = (ServerParser *)_self->selectModule("ServerParser");
+    socket_init(parser_module->getPort(), parser_module->getAddr());
     fcntl(_server_socket, F_SETFL, O_NONBLOCK);
 
     /* init kqueue */

@@ -304,3 +304,9 @@ std::string HttpMessage::getMessageBody(void) const
 {
     return (_message_body);
 }
+
+
+void HttpMessage::setMessageBody(std::string message_body)
+{
+    _message_body = message_body;
+}

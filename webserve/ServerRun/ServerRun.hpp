@@ -28,15 +28,14 @@
 // kqueue를 위한 헤더파일
 #include <sys/event.h>
 
-#include "../Server/Server.hpp"
+#include "../ServerModule/ServerModule.hpp"
 
 #define BUFSIZE 1024
 
 class Server;
-class ServerRun
+class ServerRun : public ServerModule
 {
 private:
-    Server*                     _self;
     int                         _server_socket;
     struct sockaddr_in          _server_addr;
     std::vector<struct kevent>  _change_list;
@@ -53,11 +52,11 @@ private:
     void sendMessage();
 public:
     ServerRun();
+    ServerRun(Server* self);
     ServerRun(const ServerRun&server_run);
     ~ServerRun();
     ServerRun& operator=(const ServerRun&server_run);
     void run();
-    void setServer(Server* serever);
 };
 
 

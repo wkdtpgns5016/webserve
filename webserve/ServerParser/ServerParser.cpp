@@ -1,10 +1,21 @@
 #include "ServerParser.hpp"
+#include "../Server/Server.hpp"
 #include <cctype>
 #include <cstddef>
 #include <cstdlib>
 #include <locale>
 
-ServerParser::ServerParser()
+ServerParser::ServerParser() : ServerModule()
+{
+    _port = 80;
+    _addr = "";
+    _client_body_size = 0;
+    _server_name = "";
+    _index = "";
+    _default_error_page = "";
+}
+
+ServerParser::ServerParser(Server* self) : ServerModule(self)
 {
     _port = 80;
     _addr = "";
@@ -25,11 +36,6 @@ ServerParser::ServerParser(const ServerParser& parser)
 	_self = parser._self;
 }
 
-void ServerParser::setServer(Server* server)
-{
-	_self = server;
-}
-
 ServerParser::~ServerParser() { }
 int	ServerParser::getPort() const { return _port; }
 std::string	ServerParser::getAddr() const { return _addr; }
@@ -39,7 +45,7 @@ std::string	ServerParser::getDefaultErrorPaget() const { return _default_error_p
 int	ServerParser::getClientBodySize() const { return _client_body_size; }
 //std::string	ServerParser::getLocations() const { return _locations; }
 
-ServerParser::ServerParser(const std::string& server_block)
+ServerParser::ServerParser(const std::string& server_block, Server* self) : ServerModule(self)
 {
 	std::string	server_block_cpy = server_block;
 

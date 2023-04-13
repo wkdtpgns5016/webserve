@@ -4,6 +4,19 @@ WebServer::WebServer()
 {
 }
 
+WebServer::~WebServer()
+{
+    std::vector<Server *>::iterator iter = _servers.begin();
+    for (; iter != _servers.end(); iter++)
+    {
+        if (*iter != NULL)
+        {
+            delete (*iter);
+            *iter = NULL;
+        }
+    }
+}
+
 WebServer::WebServer(std::string path)
 {
     std::string config = ft::readFileIntoString(path);

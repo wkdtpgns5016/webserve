@@ -1,10 +1,11 @@
 #ifndef WEBSERVER_HPP
 #define WEBSERVER_HPP
 
-#include "../Server/Server.hpp"
 #include "../lib/ft/ft.hpp"
 #include <list>
 #include <vector>
+#include "../Server/Server.hpp"
+
 class WebServer
 {
 private:
@@ -12,6 +13,7 @@ private:
 
 public:
     WebServer();
+    ~WebServer();
     WebServer(std::string path);
 
     void run(void);
