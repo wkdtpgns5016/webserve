@@ -6,11 +6,14 @@
 #include <string>
 #include "../lib/ft/ft.hpp"
 #include <vector>
+#include "../Server/Server.hpp"
 
+class Server;
 class ServerParser
 {
 protected:
-	int	_port;
+	Server*		_self;
+	int			_port;
 	std::string	_addr;
 	std::string	_server_name;
 	std::string	_index;
@@ -50,6 +53,8 @@ public:
 	std::string	getDefaultErrorPaget() const;
 	int	getClientBodySize() const;
 	std::string	getLocations() const;
+
+    void setServer(Server* server);
 };
 
 #endif

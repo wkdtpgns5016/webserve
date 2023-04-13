@@ -4,11 +4,11 @@
 #include "../Server/Server.hpp"
 #include "../lib/ft/ft.hpp"
 #include <list>
-
+#include <vector>
 class WebServer
 {
 private:
-    std::list<Server> _servers;
+    std::vector<Server *> _servers;
 
 public:
     WebServer();

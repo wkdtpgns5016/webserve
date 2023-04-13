@@ -22,6 +22,12 @@ ServerParser::ServerParser(const ServerParser& parser)
     _server_name = parser._server_name;
     _index = parser._index;
     _default_error_page = parser._default_error_page;
+	_self = parser._self;
+}
+
+void ServerParser::setServer(Server* server)
+{
+	_self = server;
 }
 
 ServerParser::~ServerParser() { }
@@ -57,6 +63,7 @@ ServerParser &ServerParser::operator=(const ServerParser& obj)
     _server_name = obj._server_name;
     _index = obj._index;
     _default_error_page = obj._default_error_page;
+	_self = obj._self;
     return (*this);
 }
 

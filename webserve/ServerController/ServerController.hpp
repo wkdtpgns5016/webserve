@@ -4,12 +4,15 @@
 #include "../lib/ft/ft.hpp"
 #include "../HttpMessage/HttpRequestMessage.hpp"
 #include "../HttpMessage/HttpResponseMessage.hpp"
+#include "../Server/Server.hpp"
 
 #define HTML_PATH "var/html/"
 
+class Server;
 class ServerController
 {
     private:
+    Server*            _self;
     HttpRequestMessage _request_message;
 
     HttpResponseMessage getHandler();
@@ -24,7 +27,9 @@ class ServerController
 
     HttpRequestMessage& getRequestMessage(void);
     void setRequestMessage(const std::string& message);
+    void setServer(Server* server);
     HttpResponseMessage requestHandler();
+
 };
 
 #endif

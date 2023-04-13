@@ -5,11 +5,6 @@ ServerController::ServerController() : _request_message()
 
 }
 
-// ServerController::ServerController(Server* self) : _self(self), _request_message()
-// {
-    
-// }
-
 ServerController::ServerController(const ServerController& server_controller)
 {
     if (this == &server_controller)
@@ -43,6 +38,11 @@ void ServerController::setRequestMessage(const std::string& message)
     _request_message = HttpRequestMessage(message);
 }
 
+void ServerController::setServer(Server* server)
+{
+    _self = server;
+}
+
 HttpResponseMessage ServerController::getHandler()
 {
     StatusLine start_line("HTTP/1.1", 200, "OK");
@@ -65,7 +65,6 @@ HttpResponseMessage ServerController::postHandler()
 
 HttpResponseMessage ServerController::deleteHandler()
 {
-    std::cout << "delteHandler()" << std::endl;
     StatusLine start_line("HTTP/1.1", 200, "OK");
     std::map<std::string, std::string> headers;
     std::string message_body("This is DELETE Method");

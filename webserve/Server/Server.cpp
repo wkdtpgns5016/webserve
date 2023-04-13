@@ -1,7 +1,11 @@
 #include "Server.hpp"
 
-Server::Server() : _s_thread(), _s_parser("")
+Server::Server()
+ : _s_thread(), _s_parser(new ServerParser()), _s_controller(new ServerController()), _s_run(new ServerRun())
 {
+    _s_parser->setServer(this);
+    _s_controller->setServer(this);
+    _s_run->setServer(this);
 }
 
 Server::Server(const Server &obj)
@@ -18,12 +22,21 @@ Server &Server::operator=(const Server &obj)
 }
 
 Server::Server(const std::string sBlock)
- : _s_thread(), _s_parser(ServerParser(sBlock))
+ : _s_thread(), _s_parser(new ServerParser(sBlock)), _s_controller(new ServerController()), _s_run(new ServerRun())
 {
+    _s_parser->setServer(this);
+    _s_controller->setServer(this);
+    _s_run->setServer(this);
 }
 
 Server::~Server()
 {
+    if (_s_parser != NULL)
+        delete _s_parser;
+    if (_s_controller != NULL)
+        delete _s_controller;
+    if (_s_run != NULL)
+        delete _s_run;
 }
 
 pthread_t Server::getThread(void)
@@ -33,25 +46,28 @@ pthread_t Server::getThread(void)
 
 int  Server::getPort(void)
 {
-    return (this->_s_parser.getPort());
+    return (this->_s_parser->getPort());
 }
 
-ServerParser Server::getServerParser(void)
+ServerParser* Server::getServerParser(void)
 {
     return (_s_parser);
 }
 
-ServerController Server::getServerController(void)
+ServerController* Server::getServerController(void)
 {
     return (_s_controller);
+}
+
+ServerRun* Server::getServerRun(void)
+{
+    return (_s_run);
 }
 
 void *Server::run(void *temp)
 {
     Server *self = (Server *)temp;
-    ServerParser parser = self->getServerParser();
-    ServerController controller = self->getServerController();
-    ServerRun::run(&parser, &controller);
+    self->getServerRun()->run();
     return NULL;
 }
 
