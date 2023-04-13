@@ -7,12 +7,16 @@ SRCS =	main.cpp \
 		Server/Server.cpp \
 		ServerRun/ServerRun.cpp \
 		ServerParser/ServerParser.cpp \
+		ServerHandler/ServerHandler.cpp \
 		WebServer/WebServer.cpp \
+		HttpMessage/HttpMessage.cpp \
+		HttpMessage/HttpRequestMessage.cpp \
+		HttpMessage/HttpResponseMessage.cpp \
 		lib/ft/splitBlockString.cpp \
 		lib/ft/splitString.cpp
 
 OBJS = $(SRCS:.cpp=.o)
-HEAD = ./Server -I./ServerParser -I./ServerRun -I./WebServer -I./lib/ft
+HEAD = ./Server -I./ServerParser -I./ServerRun -I./ServerHandler -I./WebServer -I./HttpMessage -I./lib/ft
 
 all: $(NAME)
 

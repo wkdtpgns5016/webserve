@@ -14,6 +14,16 @@ ServerParser::ServerParser()
     _default_error_page = "";
 }
 
+ServerParser::ServerParser(const ServerParser& parser)
+{
+    _port = parser._port;
+    _addr = parser._addr;
+    _client_body_size = parser._client_body_size;
+    _server_name = parser._server_name;
+    _index = parser._index;
+    _default_error_page = parser._default_error_page;
+}
+
 ServerParser::~ServerParser() { }
 int	ServerParser::getPort() const { return _port; }
 std::string	ServerParser::getAddr() const { return _addr; }

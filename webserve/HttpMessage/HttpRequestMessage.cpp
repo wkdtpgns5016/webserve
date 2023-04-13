@@ -17,6 +17,14 @@ HttpRequestMessage::HttpRequestMessage(std::string http_message) : HttpMessage(h
     return ;
 }
 
+HttpRequestMessage::HttpRequestMessage(RequestLine                         start_line,
+                                       std::map<std::string, std::string>  headers, 
+                                       std::string                         message_body)
+: HttpMessage(headers, message_body), _start_line(start_line)
+{
+
+}
+
 HttpRequestMessage::HttpRequestMessage(const HttpRequestMessage& http_message) : HttpMessage()
 {
     if (this == &http_message)
@@ -62,6 +70,7 @@ std::string HttpRequestMessage::getString(void)
     {
         str += (*it).first + ": " + (*it).second + "\r\n";
     }
+    str += "\r\n";
     str += _message_body;
     return (str);
 }

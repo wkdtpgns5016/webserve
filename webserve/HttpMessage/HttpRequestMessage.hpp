@@ -11,6 +11,9 @@ private:
 public:
     HttpRequestMessage(void);
     HttpRequestMessage(std::string http_message);
+    HttpRequestMessage(RequestLine                         start_line,
+                       std::map<std::string, std::string>  headers, 
+                       std::string                         message_body);
     HttpRequestMessage(const HttpRequestMessage& http_meesage);
     ~HttpRequestMessage(void);
     HttpRequestMessage& operator=(const HttpRequestMessage& http_meesage);

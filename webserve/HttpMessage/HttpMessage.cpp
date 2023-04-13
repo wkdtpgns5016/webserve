@@ -39,6 +39,7 @@ std::string StartLine::getHttpVersion(void) const
 
 bool        checkHttpVersion(std::string http_version)
 {
+    (void)http_version;
     return (true);
 }
 
@@ -50,12 +51,17 @@ StatusLine::StatusLine(void) : StartLine()
 StatusLine::StatusLine(std::string start_line)
 {
     std::vector<std::string> arr;
-    int status_code;
 
     arr = ft::splitString(start_line, " ");
     _http_version = arr[0];
     _status_code = std::atoi(arr[1].c_str());
     _status_message = arr[2];
+}
+
+StatusLine::StatusLine(std::string start_line, int status_code, std::string status_message)
+: StartLine(start_line), _status_code(status_code), _status_message(status_message)
+{
+
 }
 
 StatusLine::StatusLine(const StatusLine& status_line)
@@ -95,11 +101,13 @@ std::string StatusLine::getStatusMessage(void) const
 
 bool StatusLine::checkStatusCode(std::string status_code)
 {
+    (void)status_code;
     return (true);
 }
 
 bool StatusLine::checkStatusMessage(std::string status_message)
 {
+    (void)status_message;
     return (true);
 }
 
@@ -131,12 +139,17 @@ RequestLine::RequestLine(void)
 RequestLine::RequestLine(std::string start_line)
 {
     std::vector<std::string> arr;
-    int status_code;
 
     arr = ft::splitString(start_line, " ");
     _http_method = arr[0];
     _request_target = arr[1];
     _http_version = arr[2];
+}
+
+RequestLine::RequestLine(std::string http_method, std::string request_target, std::string http_version)
+: StartLine(http_version), _http_method(http_method), _request_target(request_target)
+{
+
 }
 
 RequestLine::RequestLine(const RequestLine& request_line)
@@ -176,11 +189,13 @@ std::string RequestLine::getRequestTarget(void) const
 
 bool RequestLine::checkHttpMethod(std::string http_method)
 {
+    (void)http_method;
     return (true);
 }
 
 bool RequestLine::checkRequestTarget(std::string request_target)
 {
+    (void)request_target;
     return (true);
 }
 
@@ -209,6 +224,7 @@ HttpMessage::HttpMessage(void)
 
 bool HttpMessage::checkHeaders(std::vector<std::string> arr)
 {
+    (void)arr;
     return (true);
 }
 
@@ -248,6 +264,12 @@ HttpMessage::HttpMessage(std::string http_message)
     while (std::getline(iss, token, '\n'))
         s += token + "\n";
     _message_body = s.substr(0, s.length() - 1);
+}
+
+HttpMessage::HttpMessage(std::map<std::string, std::string>  headers, std::string message_body)
+: _headers(headers), _message_body(message_body)
+{
+
 }
 
 HttpMessage::HttpMessage(const HttpMessage& http_message)

@@ -53,7 +53,9 @@ void ServerRun::accept_new_client(int server_socket, std::map<int, std::string> 
     clients[client_socket] = "";
 }
 
-void ServerRun::receive(std::map<int, std::string> &clients, struct kevent *curr_event)
+void ServerRun::receive(std::map<int, std::string> &clients, 
+                        struct kevent *curr_event, 
+                        ServerHandler *handler)
 {
     /* read data from client */
     char buf[1024];
@@ -69,7 +71,12 @@ void ServerRun::receive(std::map<int, std::string> &clients, struct kevent *curr
     {
         buf[n] = '\0';
         clients[curr_event->ident] += buf;
-        std::cout << "received data from " << curr_event->ident << ": " << clients[curr_event->ident] << std::endl;
+        handler->setRequestMessage(clients[curr_event->ident]);
+        HttpResponseMessage message = handler->requestHandler();
+        std::string start_line = message.getStartLine().getString() + "\r\n";
+        
+        write(curr_event->ident, start_line.c_str(), start_line.size());
+        // std::cout << "received data from " << curr_event->ident << ": " << clients[curr_event->ident] << std::endl;
     }
 }
 
@@ -93,13 +100,13 @@ void ServerRun::send(std::map<int, std::string> &clients, struct kevent *curr_ev
     }
 }
 
-void ServerRun::run(int port, std::string ip_addr)
+void ServerRun::run(ServerParser* parser, ServerHandler *handler)
 {
     /* init server socket and listen */
     int server_socket;
     struct sockaddr_in server_addr;
 
-    socket_init(server_socket, server_addr, port, ip_addr);
+    socket_init(server_socket, server_addr, parser->getPort(), parser->getAddr());
     fcntl(server_socket, F_SETFL, O_NONBLOCK);
 
     /* init kqueue */
@@ -150,7 +157,7 @@ void ServerRun::run(int port, std::string ip_addr)
                 }
                 else if (clients.find(curr_event->ident) != clients.end())
                 {
-                    receive(clients, curr_event);
+                    receive(clients, curr_event, handler);
                 }
             }
             else if (curr_event->filter == EVFILT_WRITE)

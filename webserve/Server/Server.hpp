@@ -1,6 +1,7 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+#include "../ServerHandler/ServerHandler.hpp"
 #include "../ServerParser/ServerParser.hpp"
 #include "../ServerRun/ServerRun.hpp"
 
@@ -9,8 +10,9 @@
 class Server
 {
 private:
+    pthread_t       _s_thread;
     ServerParser    _s_parser;
-    pthread_t       thread;
+    ServerHandler   _s_handler;
     // ServerRun       _s_run;
 
 public:
@@ -21,6 +23,8 @@ public:
     Server(const std::string sBlock);
 
     pthread_t getThread(void);
+    ServerParser getServerParser(void);
+    ServerHandler getServerHandler(void);
     int  getPort(void);
 
     static void *run(void *temp);
