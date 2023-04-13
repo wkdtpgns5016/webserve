@@ -40,16 +40,7 @@ HttpRequestMessage& ServerHandler::getRequestMessage(void)
 
 void ServerHandler::setRequestMessage(const std::string& message)
 {
-    std::cout << "setReqeustMessage()" << std::endl;
-    std::cout << "===========================" << std::endl;
-    std::cout << message << std::endl;
-    std::cout << "===========================" << std::endl;
     _request_message = HttpRequestMessage(message);
-    std::cout << "HttpRequestMessage()" << std::endl;
-    std::cout << "===========================" << std::endl;
-    std::cout << _request_message.getString() << std::endl;
-    std::cout << "===========================" << std::endl;
-
 }
 
 HttpResponseMessage ServerHandler::getHandler()
@@ -60,12 +51,12 @@ HttpResponseMessage ServerHandler::getHandler()
     std::string message_body("This is GET Method");
 
     HttpResponseMessage response_message(start_line, headers, message_body);
-
     return (response_message);
 }
 
 HttpResponseMessage ServerHandler::postHandler()
 {
+    std::cout << "postHandler()" << std::endl;
     StatusLine start_line("HTTP/1.1", 200, "OK");
     std::map<std::string, std::string> headers;
     std::string message_body("This is POST Method");
@@ -76,6 +67,7 @@ HttpResponseMessage ServerHandler::postHandler()
 
 HttpResponseMessage ServerHandler::deleteHandler()
 {
+    std::cout << "delteHandler()" << std::endl;
     StatusLine start_line("HTTP/1.1", 200, "OK");
     std::map<std::string, std::string> headers;
     std::string message_body("This is DELETE Method");
@@ -89,9 +81,7 @@ HttpResponseMessage ServerHandler::requestHandler()
     std::string http_method;
     HttpResponseMessage response_message;
 
-    std::cout << "requestHandler()" << std::endl;
     http_method = _request_message.getStartLine().getHttpMethod();
-    std::cout << http_method << std::endl;
     if (http_method.compare("GET") == 0)
         response_message = getHandler();
     if (http_method.compare("POST") == 0)

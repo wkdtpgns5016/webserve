@@ -53,7 +53,7 @@ void ServerRun::accept_new_client(int server_socket, std::map<int, std::string> 
     clients[client_socket] = "";
 }
 
-void ServerRun::receive(std::map<int, std::string> &clients, 
+void ServerRun::receiveMessage(std::map<int, std::string> &clients, 
                         struct kevent *curr_event, 
                         ServerHandler *handler)
 {
@@ -75,12 +75,13 @@ void ServerRun::receive(std::map<int, std::string> &clients,
         HttpResponseMessage message = handler->requestHandler();
         std::string start_line = message.getStartLine().getString() + "\r\n";
         
-        write(curr_event->ident, start_line.c_str(), start_line.size());
-        // std::cout << "received data from " << curr_event->ident << ": " << clients[curr_event->ident] << std::endl;
+        std::cout << message.getString() << std::endl;
+        write(curr_event->ident, message.getString().c_str(), message.getString().size());
+        disconnect_client(curr_event->ident, clients);
     }
 }
 
-void ServerRun::send(std::map<int, std::string> &clients, struct kevent *curr_event)
+void ServerRun::sendMessage(std::map<int, std::string> &clients, struct kevent *curr_event)
 {
     /* send data to client */
     std::map<int, std::string>::iterator it = clients.find(curr_event->ident);
@@ -157,12 +158,12 @@ void ServerRun::run(ServerParser* parser, ServerHandler *handler)
                 }
                 else if (clients.find(curr_event->ident) != clients.end())
                 {
-                    receive(clients, curr_event, handler);
+                    receiveMessage(clients, curr_event, handler);
                 }
             }
             else if (curr_event->filter == EVFILT_WRITE)
             {
-                send(clients, curr_event);
+                sendMessage(clients, curr_event);
             }
         }
     }

@@ -39,10 +39,10 @@ private:
     static void change_events(std::vector<struct kevent> &change_list, uintptr_t ident, int16_t filter, uint16_t flags, uint32_t fflags, intptr_t data, void *udata);
     static void disconnect_client(int client_fd, std::map<int, std::string> &clients);
     static void accept_new_client(int server_socket, std::map<int, std::string> &clients, std::vector<struct kevent> &change_list);
-    static void receive(std::map<int, std::string> &clients, 
+    static void receiveMessage(std::map<int, std::string> &clients, 
                         struct kevent *curr_event, 
                         ServerHandler *handler);
-    static void send(std::map<int, std::string> &clients, struct kevent *curr_event);
+    static void sendMessage(std::map<int, std::string> &clients, struct kevent *curr_event);
 public:
     static void run(ServerParser* parser, ServerHandler *handler);
 };

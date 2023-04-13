@@ -1,8 +1,11 @@
 #ifndef SERVER_HANDLER_HPP
 #define SERVER_HANDLER_HPP
 
+#include "../lib/ft/ft.hpp"
 #include "../HttpMessage/HttpRequestMessage.hpp"
 #include "../HttpMessage/HttpResponseMessage.hpp"
+
+#define HTML_PATH "var/html/"
 
 class ServerHandler
 {
