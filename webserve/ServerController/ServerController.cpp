@@ -1,51 +1,50 @@
-#include "ServerHandler.hpp"
+#include "ServerController.hpp"
 
-ServerHandler::ServerHandler() : _request_message()
+ServerController::ServerController() : _request_message()
 {
 
 }
 
-// ServerHandler::ServerHandler(Server* self) : _self(self), _request_message()
+// ServerController::ServerController(Server* self) : _self(self), _request_message()
 // {
     
 // }
 
-ServerHandler::ServerHandler(const ServerHandler& server_handler)
+ServerController::ServerController(const ServerController& server_controller)
 {
-    if (this == &server_handler)
+    if (this == &server_controller)
         return ;
-    // _self = server_handler._self;
+    // _self = server_controller._self;
     
-    _request_message = server_handler._request_message;
+    _request_message = server_controller._request_message;
 }
 
-ServerHandler::~ServerHandler()
+ServerController::~ServerController()
 {
 
 }
 
-ServerHandler& ServerHandler::operator=(const ServerHandler& server_handler)
+ServerController& ServerController::operator=(const ServerController& server_controller)
 {
-    if (this == &server_handler)
+    if (this == &server_controller)
         return (*this);
-    // _self = server_handler._self;
-    _request_message = server_handler._request_message;
+    // _self = server_controller._self;
+    _request_message = server_controller._request_message;
     return (*this);
 }
 
-HttpRequestMessage& ServerHandler::getRequestMessage(void)
+HttpRequestMessage& ServerController::getRequestMessage(void)
 {
     return (_request_message);
 }
 
-void ServerHandler::setRequestMessage(const std::string& message)
+void ServerController::setRequestMessage(const std::string& message)
 {
     _request_message = HttpRequestMessage(message);
 }
 
-HttpResponseMessage ServerHandler::getHandler()
+HttpResponseMessage ServerController::getHandler()
 {
-    std::cout << "getHandler()" << std::endl;
     StatusLine start_line("HTTP/1.1", 200, "OK");
     std::map<std::string, std::string> headers;
     std::string message_body("This is GET Method");
@@ -54,9 +53,8 @@ HttpResponseMessage ServerHandler::getHandler()
     return (response_message);
 }
 
-HttpResponseMessage ServerHandler::postHandler()
+HttpResponseMessage ServerController::postHandler()
 {
-    std::cout << "postHandler()" << std::endl;
     StatusLine start_line("HTTP/1.1", 200, "OK");
     std::map<std::string, std::string> headers;
     std::string message_body("This is POST Method");
@@ -65,7 +63,7 @@ HttpResponseMessage ServerHandler::postHandler()
     return (response_message);
 }
 
-HttpResponseMessage ServerHandler::deleteHandler()
+HttpResponseMessage ServerController::deleteHandler()
 {
     std::cout << "delteHandler()" << std::endl;
     StatusLine start_line("HTTP/1.1", 200, "OK");
@@ -76,7 +74,7 @@ HttpResponseMessage ServerHandler::deleteHandler()
     return (response_message);
 }
 
-HttpResponseMessage ServerHandler::requestHandler()
+HttpResponseMessage ServerController::requestHandler()
 {
     std::string http_method;
     HttpResponseMessage response_message;

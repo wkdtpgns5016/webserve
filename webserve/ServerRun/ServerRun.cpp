@@ -55,7 +55,7 @@ void ServerRun::accept_new_client(int server_socket, std::map<int, std::string> 
 
 void ServerRun::receiveMessage(std::map<int, std::string> &clients, 
                         struct kevent *curr_event, 
-                        ServerHandler *handler)
+                        ServerController *controller)
 {
     /* read data from client */
     char buf[1024];
@@ -71,8 +71,8 @@ void ServerRun::receiveMessage(std::map<int, std::string> &clients,
     {
         buf[n] = '\0';
         clients[curr_event->ident] += buf;
-        handler->setRequestMessage(clients[curr_event->ident]);
-        HttpResponseMessage message = handler->requestHandler();
+        controller->setRequestMessage(clients[curr_event->ident]);
+        HttpResponseMessage message = controller->requestHandler();
         std::string start_line = message.getStartLine().getString() + "\r\n";
         
         std::cout << message.getString() << std::endl;
@@ -101,7 +101,7 @@ void ServerRun::sendMessage(std::map<int, std::string> &clients, struct kevent *
     }
 }
 
-void ServerRun::run(ServerParser* parser, ServerHandler *handler)
+void ServerRun::run(ServerParser* parser, ServerController *controller)
 {
     /* init server socket and listen */
     int server_socket;
@@ -158,7 +158,7 @@ void ServerRun::run(ServerParser* parser, ServerHandler *handler)
                 }
                 else if (clients.find(curr_event->ident) != clients.end())
                 {
-                    receiveMessage(clients, curr_event, handler);
+                    receiveMessage(clients, curr_event, controller);
                 }
             }
             else if (curr_event->filter == EVFILT_WRITE)

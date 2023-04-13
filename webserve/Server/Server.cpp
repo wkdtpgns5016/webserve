@@ -13,7 +13,7 @@ Server &Server::operator=(const Server &obj)
 {
     _s_thread = obj._s_thread;
     _s_parser = obj._s_parser;
-    _s_handler = obj._s_handler;
+    _s_controller = obj._s_controller;
     return (*this);
 }
 
@@ -41,17 +41,17 @@ ServerParser Server::getServerParser(void)
     return (_s_parser);
 }
 
-ServerHandler Server::getServerHandler(void)
+ServerController Server::getServerController(void)
 {
-    return (_s_handler);
+    return (_s_controller);
 }
 
 void *Server::run(void *temp)
 {
     Server *self = (Server *)temp;
     ServerParser parser = self->getServerParser();
-    ServerHandler handler = self->getServerHandler();
-    ServerRun::run(&parser, &handler);
+    ServerController controller = self->getServerController();
+    ServerRun::run(&parser, &controller);
     return NULL;
 }
 

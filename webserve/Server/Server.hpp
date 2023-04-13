@@ -1,7 +1,7 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#include "../ServerHandler/ServerHandler.hpp"
+#include "../ServerController/ServerController.hpp"
 #include "../ServerParser/ServerParser.hpp"
 #include "../ServerRun/ServerRun.hpp"
 
@@ -10,9 +10,9 @@
 class Server
 {
 private:
-    pthread_t       _s_thread;
-    ServerParser    _s_parser;
-    ServerHandler   _s_handler;
+    pthread_t           _s_thread;
+    ServerParser        _s_parser;
+    ServerController    _s_controller;
     // ServerRun       _s_run;
 
 public:
@@ -24,7 +24,7 @@ public:
 
     pthread_t getThread(void);
     ServerParser getServerParser(void);
-    ServerHandler getServerHandler(void);
+    ServerController getServerController(void);
     int  getPort(void);
 
     static void *run(void *temp);

@@ -41,10 +41,10 @@ private:
     static void accept_new_client(int server_socket, std::map<int, std::string> &clients, std::vector<struct kevent> &change_list);
     static void receiveMessage(std::map<int, std::string> &clients, 
                         struct kevent *curr_event, 
-                        ServerHandler *handler);
+                        ServerController *controller);
     static void sendMessage(std::map<int, std::string> &clients, struct kevent *curr_event);
 public:
-    static void run(ServerParser* parser, ServerHandler *handler);
+    static void run(ServerParser* parser, ServerController *controller);
 };
 
 
