@@ -87,7 +87,7 @@ void ServerRun::accept_new_client()
 void ServerRun::receiveMessage()
 {
     /* read data from client */
-    ServerController* controller = (ServerController *)_self->selectModule("ServerController");
+    ServerHandler* controller = (ServerHandler *)_self->selectModule("ServerHandler");
     char buf[1024];
     int n = read(_curr_event->ident, buf, sizeof(buf));
 
@@ -103,9 +103,6 @@ void ServerRun::receiveMessage()
         _clients[_curr_event->ident] += buf;
         controller->setRequestMessage(_clients[_curr_event->ident]);
         HttpResponseMessage message = controller->requestHandler();
-        std::string start_line = message.getStartLine().getString() + "\r\n";
-        
-        std::cout << message.getString() << std::endl;
         write(_curr_event->ident, message.getString().c_str(), message.getString().size());
         disconnect_client(_curr_event->ident, _clients);
     }
@@ -144,7 +141,7 @@ void ServerRun::run()
 
     /* add event for server socket */
     change_events(_server_socket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
-    std::cout << "echo server started" << std::endl;
+    std::cout << "server started" << std::endl;
 
     /* main loop */
     int new_events;
@@ -175,18 +172,12 @@ void ServerRun::run()
             else if (_curr_event->filter == EVFILT_READ)
             {
                 if (_curr_event->ident == (uintptr_t)_server_socket)
-                {
                     accept_new_client();
-                }
                 else if (_clients.find(_curr_event->ident) != _clients.end())
-                {
                     receiveMessage();
-                }
             }
             else if (_curr_event->filter == EVFILT_WRITE)
-            {
                 sendMessage();
-            }
         }
     }
 }

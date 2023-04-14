@@ -4,11 +4,11 @@
 Server::Server() : _s_thread()
 {
     ServerModule* parser = new ServerParser(this);
-    ServerModule* controller = new ServerController(this);
+    ServerModule* controller = new ServerHandler(this);
     ServerModule* run = new ServerRun(this);
 
     insertModule("ServerParser", parser);
-    insertModule("ServerController", controller);
+    insertModule("ServerHandler", controller);
     insertModule("ServerRun", run);
 }
 
@@ -27,11 +27,11 @@ Server &Server::operator=(const Server &obj)
 Server::Server(const std::string sBlock) : _s_thread()
 {
     ServerModule* parser = new ServerParser(sBlock, this);
-    ServerModule* controller = new ServerController(this);
+    ServerModule* controller = new ServerHandler(this);
     ServerModule* run = new ServerRun(this);
 
     insertModule("ServerParser", parser);
-    insertModule("ServerController", controller);
+    insertModule("ServerHandler", controller);
     insertModule("ServerRun", run);
 }
 
@@ -75,24 +75,6 @@ int  Server::getPort(void)
     ServerParser* parser = (ServerParser *)selectModule("ServerParser");
     return (parser->getPort());
 }
-
-// ServerParser* Server::getServerParser(void)
-// {
-//     ServerModule* module = selectModule("ServerParser");
-//     return ((ServerParser *)module);
-// }
-
-// ServerController* Server::getServerController(void)
-// {
-//     ServerModule* module = selectModule("ServerController");
-//     return ((ServerController *)module);
-// }
-
-// ServerRun* Server::getServerRun(void)
-// {
-//     ServerModule* module = selectModule("ServerRun");
-//     return ((ServerRun *)module);
-// }
 
 void *Server::run(void *temp)
 {

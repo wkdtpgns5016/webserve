@@ -1,17 +1,17 @@
-#include "ServerController.hpp"
+#include "ServerHandler.hpp"
 #include "../Server/Server.hpp"
 
-ServerController::ServerController() : ServerModule(), _request_message()
+ServerHandler::ServerHandler() : ServerModule(), _request_message()
 {
     init_status();
 }
 
-ServerController::ServerController(Server* self) : ServerModule(self), _request_message()
+ServerHandler::ServerHandler(Server* self) : ServerModule(self), _request_message()
 {
     init_status();
 }
 
-ServerController::ServerController(const ServerController& server_controller)
+ServerHandler::ServerHandler(const ServerHandler& server_controller)
 {
     if (this == &server_controller)
         return ;
@@ -20,12 +20,12 @@ ServerController::ServerController(const ServerController& server_controller)
     _request_message = server_controller._request_message;
 }
 
-ServerController::~ServerController()
+ServerHandler::~ServerHandler()
 {
 
 }
 
-ServerController& ServerController::operator=(const ServerController& server_controller)
+ServerHandler& ServerHandler::operator=(const ServerHandler& server_controller)
 {
     if (this == &server_controller)
         return (*this);
@@ -35,7 +35,7 @@ ServerController& ServerController::operator=(const ServerController& server_con
     return (*this);
 }
 
-void ServerController::init_status()
+void ServerHandler::init_status()
 {
     _status[100] = "Continue";
     _status[101] = "Switching Protocols";
@@ -85,56 +85,95 @@ void ServerController::init_status()
     _status[505] = "HTTP Version Not Supported";
 }
 
-HttpRequestMessage& ServerController::getRequestMessage(void)
+HttpRequestMessage& ServerHandler::getRequestMessage(void)
 {
     return (_request_message);
 }
 
-void ServerController::setRequestMessage(const std::string& message)
+void ServerHandler::setRequestMessage(const std::string& message)
 {
     _request_message = HttpRequestMessage(message);
 }
 
-HttpResponseMessage ServerController::getResponseMessage(int status_code)
+HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::string message_body)
 {
     StatusLine start_line = StatusLine(_request_message.getStartLine().getHttpVersion(), status_code, _status[status_code]);
     std::map<std::string, std::string> headers;
-    std::string message_body;
     HttpResponseMessage response_message = HttpResponseMessage(start_line, headers, message_body);
     return (response_message);
 }
 
-HttpResponseMessage ServerController::getHandler()
+bool ServerHandler::checkFile(std::string request_target)
+{
+    if (request_target.rfind(".php") == std::string::npos)
+        return (true);
+    else
+        return (false);
+}
+
+std::string ServerHandler::findPath(std::string request_target)
+{
+    // ServerParser안에 Location 블록에 따라 file 찾기
+    // ServerParser* parser = (ServerParser *)_self->selectModule("ServerParser");
+    // std::list<LocationParser> locations = parser->getLocations();
+
+    return("var/html" + request_target);
+}
+
+std::string ServerHandler::openFile(std::string request_target)
+{
+    std::string file_path = findPath(request_target);
+    return (ft::readFileIntoString(file_path));
+}
+
+std::string ServerHandler::executeCgi(std::string request_target)
+{
+    std::string file_path = findPath(request_target);
+    // fork 후 cgi 실행
+    return ("");
+}
+
+HttpResponseMessage ServerHandler::getHandler()
 {
     int status_code = 200;
-
-    HttpResponseMessage response_message = getResponseMessage(status_code);
     std::string message_body = "GET";
-    response_message.setMessageBody(message_body);
+    std::string request_target = _request_message.getStartLine().getRequestTarget();
+
+    if (request_target.compare("/") == 0)
+    {
+        HttpResponseMessage response_message = getResponseMessage(status_code, message_body);
+        return (response_message);
+    }
+
+    // 파일인지 cgi인지 검사
+    if (checkFile(request_target))
+        message_body = openFile(request_target);
+    else
+        message_body = executeCgi(request_target);
+    // 응답 생성
+    HttpResponseMessage response_message = getResponseMessage(status_code, message_body);
     return (response_message);
 }
 
-HttpResponseMessage ServerController::postHandler()
+HttpResponseMessage ServerHandler::postHandler()
 {
     int status_code = 200;
-
-    HttpResponseMessage response_message = getResponseMessage(status_code);
     std::string message_body = "POST";
-    response_message.setMessageBody(message_body);
+
+    HttpResponseMessage response_message = getResponseMessage(status_code, message_body);
     return (response_message);
 }
 
-HttpResponseMessage ServerController::deleteHandler()
+HttpResponseMessage ServerHandler::deleteHandler()
 {
     int status_code = 200;
-
-    HttpResponseMessage response_message = getResponseMessage(status_code);
     std::string message_body = "DELETE";
-    response_message.setMessageBody(message_body);
+
+    HttpResponseMessage response_message = getResponseMessage(status_code, message_body);
     return (response_message);
 }
 
-HttpResponseMessage ServerController::requestHandler()
+HttpResponseMessage ServerHandler::requestHandler()
 {
     std::string http_method;
     HttpResponseMessage response_message;

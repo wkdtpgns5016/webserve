@@ -8,7 +8,7 @@ SRCS =	webserve/main.cpp \
 		webserve/ServerModule/ServerModule.cpp \
 		webserve/ServerRun/ServerRun.cpp \
 		webserve/ServerParser/ServerParser.cpp \
-		webserve/ServerController/ServerController.cpp \
+		webserve/ServerHandler/ServerHandler.cpp \
 		webserve/WebServer/WebServer.cpp \
 		webserve/HttpMessage/HttpMessage.cpp \
 		webserve/HttpMessage/HttpRequestMessage.cpp \
@@ -22,7 +22,7 @@ HEAD =  -I./webserve/Server \
 		-I./webserve/ServerModule \
 		-I./webserve/ServerParser \
 		-I./webserve/ServerRun \
-		-I./webserve/ServerController \
+		-I./webserve/ServerHandler \
 		-I./WebServer \
 		-I./webserve/HttpMessage \
 		-I./webserve/lib/ft

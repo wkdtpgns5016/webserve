@@ -1,7 +1,7 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#include "../ServerController/ServerController.hpp"
+#include "../ServerHandler/ServerHandler.hpp"
 #include "../ServerParser/ServerParser.hpp"
 #include "../ServerRun/ServerRun.hpp"
 #include <map>
