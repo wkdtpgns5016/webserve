@@ -87,7 +87,7 @@ void ServerRun::accept_new_client()
 void ServerRun::receiveMessage()
 {
     /* read data from client */
-    ServerHandler* controller = (ServerHandler *)_self->selectModule("ServerHandler");
+    ServerHandler* handler = (ServerHandler *)_self->selectModule("ServerHandler");
     char buf[1024];
     int n = read(_curr_event->ident, buf, sizeof(buf));
 
@@ -101,8 +101,8 @@ void ServerRun::receiveMessage()
     {
         buf[n] = '\0';
         _clients[_curr_event->ident] += buf;
-        controller->setRequestMessage(_clients[_curr_event->ident]);
-        HttpResponseMessage message = controller->requestHandler();
+        handler->setRequestMessage(_clients[_curr_event->ident]);
+        HttpResponseMessage message = handler->requestHandler();
         write(_curr_event->ident, message.getString().c_str(), message.getString().size());
         disconnect_client(_curr_event->ident, _clients);
     }

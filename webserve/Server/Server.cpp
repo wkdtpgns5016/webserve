@@ -50,6 +50,8 @@ Server::~Server()
 }
 ServerModule*   Server::selectModule(std::string key)
 {
+    if (!_modules.count(key))
+        return (NULL);
     return ((*(_modules.find(key))).second);
 }
 
@@ -80,7 +82,8 @@ void *Server::run(void *temp)
 {
     Server* self = (Server *)temp;
     ServerRun* run_module = (ServerRun *)self->selectModule("ServerRun");
-    run_module->run();
+    if (run_module != NULL)
+        run_module->run();
     return NULL;
 }
 

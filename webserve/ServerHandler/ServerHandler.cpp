@@ -105,10 +105,15 @@ HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::stri
 
 bool ServerHandler::checkFile(std::string request_target)
 {
-    if (request_target.rfind(".php") == std::string::npos)
-        return (true);
-    else
+    int len = request_target.length();
+    if (request_target.substr(len - 4, 3).compare("php") == 0)
         return (false);
+    else if (request_target.substr(len - 4, 3).compare("cgi") == 0)
+        return (false);
+    else if (request_target.substr(len - 3, 2).compare("pl") == 0)
+        return (false);
+    else
+        return (true);
 }
 
 std::string ServerHandler::findPath(std::string request_target)
