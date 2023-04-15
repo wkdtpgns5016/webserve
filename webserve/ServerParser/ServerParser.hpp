@@ -6,11 +6,13 @@
 #include <string>
 #include "../lib/ft/ft.hpp"
 #include <vector>
+#include "../ServerModule/ServerModule.hpp"
 
-class ServerParser
+class Server;
+class ServerParser : public ServerModule
 {
 protected:
-	int	_port;
+	int			_port;
 	std::string	_addr;
 	std::string	_server_name;
 	std::string	_index;
@@ -21,6 +23,7 @@ protected:
 private:
 public:
 	ServerParser();
+	ServerParser(Server* self);
 	ServerParser(const ServerParser&);
 	ServerParser& operator=(const ServerParser&);
 
@@ -40,7 +43,7 @@ public:
 	bool	checkIdentifier(const std::string&, const std::string&);
 	void	removeFirstWhiteSpaces(std::vector<std::string> *);
 	std::vector<std::string>	extractContents(std::string line);
-	ServerParser(const std::string&);
+	ServerParser(const std::string&, Server* self);
 	~ServerParser();
 
 	int	getPort() const;

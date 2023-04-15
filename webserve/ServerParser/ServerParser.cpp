@@ -1,10 +1,11 @@
 #include "ServerParser.hpp"
+#include "../Server/Server.hpp"
 #include <cctype>
 #include <cstddef>
 #include <cstdlib>
 #include <locale>
 
-ServerParser::ServerParser()
+ServerParser::ServerParser() : ServerModule()
 {
     _port = 80;
     _addr = "";
@@ -12,6 +13,27 @@ ServerParser::ServerParser()
     _server_name = "";
     _index = "";
     _default_error_page = "";
+}
+
+ServerParser::ServerParser(Server* self) : ServerModule(self)
+{
+    _port = 80;
+    _addr = "";
+    _client_body_size = 0;
+    _server_name = "";
+    _index = "";
+    _default_error_page = "";
+}
+
+ServerParser::ServerParser(const ServerParser& parser)
+{
+    _port = parser._port;
+    _addr = parser._addr;
+    _client_body_size = parser._client_body_size;
+    _server_name = parser._server_name;
+    _index = parser._index;
+    _default_error_page = parser._default_error_page;
+	_self = parser._self;
 }
 
 ServerParser::~ServerParser() { }
@@ -23,7 +45,7 @@ std::string	ServerParser::getDefaultErrorPaget() const { return _default_error_p
 int	ServerParser::getClientBodySize() const { return _client_body_size; }
 //std::string	ServerParser::getLocations() const { return _locations; }
 
-ServerParser::ServerParser(const std::string& server_block)
+ServerParser::ServerParser(const std::string& server_block, Server* self) : ServerModule(self)
 {
 	std::string	server_block_cpy = server_block;
 
@@ -47,6 +69,7 @@ ServerParser &ServerParser::operator=(const ServerParser& obj)
     _server_name = obj._server_name;
     _index = obj._index;
     _default_error_page = obj._default_error_page;
+	_self = obj._self;
     return (*this);
 }
 

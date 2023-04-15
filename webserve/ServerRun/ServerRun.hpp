@@ -28,19 +28,35 @@
 // kqueue를 위한 헤더파일
 #include <sys/event.h>
 
+#include "../ServerModule/ServerModule.hpp"
+
 #define BUFSIZE 1024
 
-class ServerRun
+class Server;
+class ServerRun : public ServerModule
 {
 private:
-    static void socket_init(int &server_socket, struct sockaddr_in &server_addr, int port, std::string ip_addr);
-    static void change_events(std::vector<struct kevent> &change_list, uintptr_t ident, int16_t filter, uint16_t flags, uint32_t fflags, intptr_t data, void *udata);
-    static void disconnect_client(int client_fd, std::map<int, std::string> &clients);
-    static void accept_new_client(int server_socket, std::map<int, std::string> &clients, std::vector<struct kevent> &change_list);
-    static void receive(std::map<int, std::string> &clients, struct kevent *curr_event); 
-    static void send(std::map<int, std::string> &clients, struct kevent *curr_event);
+    int                         _server_socket;
+    struct sockaddr_in          _server_addr;
+    std::vector<struct kevent>  _change_list;
+    struct kevent*              _curr_event;
+    std::map<int, std::string>  _clients;
+    int                         _kqueue;
+    struct kevent               _event_list[8];
+    
+    void socket_init(int port, std::string ip_addr);
+    void change_events(uintptr_t ident, int16_t filter, uint16_t flags, uint32_t fflags, intptr_t data, void *udata);
+    void disconnect_client(int client_fd, std::map<int, std::string> &clients);
+    void accept_new_client();
+    void receiveMessage();
+    void sendMessage();
 public:
-    static void run(int port, std::string ip_addr);
+    ServerRun();
+    ServerRun(Server* self);
+    ServerRun(const ServerRun&server_run);
+    ~ServerRun();
+    ServerRun& operator=(const ServerRun&server_run);
+    void run();
 };
 
 

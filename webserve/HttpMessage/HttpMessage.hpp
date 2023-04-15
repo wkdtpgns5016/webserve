@@ -37,6 +37,7 @@ private:
 public:
     StatusLine(void);
     StatusLine(std::string start_line);
+    StatusLine(std::string http_version, int status_code, std::string status_message);
     StatusLine(const StatusLine& status_line);
     ~StatusLine(void);
     StatusLine& operator=(const StatusLine& status_line);
@@ -59,6 +60,7 @@ private:
 public:
     RequestLine(void);
     RequestLine(std::string start_line);
+    RequestLine(std::string http_method, std::string request_target, std::string http_version);
     RequestLine(const RequestLine& request_line);
     ~RequestLine(void);
     RequestLine& operator=(const RequestLine& request_line);
@@ -83,12 +85,14 @@ private:
 public:
     HttpMessage(void);
     HttpMessage(std::string http_message);
+    HttpMessage(std::map<std::string, std::string>  headers, std::string message_body);
     HttpMessage(const HttpMessage& http_message);
     ~HttpMessage(void);
     HttpMessage& operator=(const HttpMessage& http_message);
 
     std::map<std::string, std::string>  getHeaders(void) const;
     std::string                         getMessageBody(void) const;
+    void                                setMessageBody(std::string message_body);
     virtual std::string                 getString(void) = 0;
     virtual bool                        isVaild(void) = 0;
 };

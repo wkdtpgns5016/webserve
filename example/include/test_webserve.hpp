@@ -39,14 +39,14 @@ class test_webserve : public test_server
         // html 페이지 path를 찾아 클라이언트에게 전송
         if ((fd = open(final_path.c_str(), O_RDONLY)) != -1)
         {
-            send(sock, "HTTP/1.0 200 OK\n\n", 17 ,0);
-            while (1)
-            {
-                str_len = read(fd, data, SEND_MESSAGE_BUFSIZE);
-                if (str_len <= 0)
-                    break;
-                write(sock, data, str_len);
-            }
+            write(sock, "HTTP/1.0 200 OK\r\n\r\nhello word\n", 30);
+            // while (1)
+            // {
+            //     str_len = read(fd, data, SEND_MESSAGE_BUFSIZE);
+            //     if (str_len <= 0)
+            //         break;
+            //     write(sock, data, str_len);
+            // }
         }
         // html 페이지가 없으면 404 error
         else
