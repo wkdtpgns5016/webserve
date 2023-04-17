@@ -57,14 +57,14 @@ void LocationParser::setAttributes(std::string line)
     if (i == std::string::npos)
         throw std::exception();
     std::string key = line.substr(0, i);
-    std::string value = line.substr(3, line.length() - i - 1);
+    std::string value = line.substr(i + 1, line.length() - i - 2);
     if (key.compare("root") == 0)
         _root = value;
     else if (key.compare("index") == 0)
         _index = value;
     else if (key.compare("upload_path") == 0)
         _upload_path = value;
-    else if (key.compare("auto_index") == 0)
+    else if (key.compare("autoindex") == 0)
     {
         if (value.compare("on") == 0)
             _auto_index = true;
@@ -106,7 +106,7 @@ std::string LocationParser::deleteBlock(std::vector<std::string> arr)
     std::vector<std::string>::iterator it = arr.begin();
     it++;
     for (; it != arr.end() - 1; it++)
-        str = *it + "\n";
+        str += *it + "\n";
     return (str);
 }
 

@@ -5,14 +5,14 @@
 TEST(LocationParserTest, LocationParserUnitTest)
 {
 	// given
-	std::string a = "location / {"
-    "    root /var/html;"
-    "    index index.html;"
-    "    autoindex on;"
-    "    upload_path /var/download;"
-    "    allow_method GET POST DELETE;"
-    "    try_files $uri $uri/ 404;"
-    "}";
+	std::string a = "location / {\n"
+    "    root /var/html;\n"
+    "    index index.html;\n"
+    "    autoindex on;\n"
+    "    upload_path /var/download;\n"
+    "    allow_method GET POST DELETE;\n"
+    "    try_files $uri $uri/ 404;\n"
+    "}\n";
 
 	// when
     LocationParser l_parser(a);
