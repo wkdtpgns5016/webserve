@@ -57,7 +57,7 @@ void LocationParser::setAttributes(std::string line)
     if (i == std::string::npos)
         throw std::exception();
     std::string key = line.substr(0, i);
-    std::string value = line.substr(3, line.length() - i);
+    std::string value = line.substr(3, line.length() - i - 1);
     if (key.compare("root") == 0)
         _root = value;
     else if (key.compare("index") == 0)
@@ -72,6 +72,16 @@ void LocationParser::setAttributes(std::string line)
             _auto_index = false;
     }
     else if (key.compare("allow_method") == 0)
+    {
+        std::vector<std::string> methods = ft::splitString(value, " ");
+        std::vector<std::string>::iterator it = methods.begin();
+        for (;it != methods.end(); it++)
+        {
+            if (check_method(*it))
+                _allow_method.push_back(*it);
+        }
+    }
+    else if (key.compare("try_files") == 0)
     {
         std::vector<std::string> methods = ft::splitString(value, " ");
         std::vector<std::string>::iterator it = methods.begin();

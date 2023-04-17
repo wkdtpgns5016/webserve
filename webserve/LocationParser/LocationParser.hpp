@@ -12,6 +12,7 @@ private:
     std::string	_index;
     std::string	_upload_path;
     std::list<std::string>	_allow_method;
+    std::list<std::string>	_try_files;
     bool _auto_index;
 
     std::string deleteBlock(std::vector<std::string> arr);
