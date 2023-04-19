@@ -6,10 +6,8 @@
 #include <string>
 #include "../lib/ft/ft.hpp"
 #include <vector>
-#include "../ServerModule/ServerModule.hpp"
 
-class Server;
-class ServerParser : public ServerModule
+class ServerParser
 {
 protected:
 	int			_port;
@@ -20,11 +18,11 @@ protected:
 	int	_client_body_size;
 //	std::list<LocationParser>	_locations;
 
-private:
 public:
 	ServerParser();
-	ServerParser(Server* self);
+	ServerParser(const std::string&);
 	ServerParser(const ServerParser&);
+	~ServerParser();
 	ServerParser& operator=(const ServerParser&);
 
 	void	parseServerBrace(std::string*);
@@ -43,8 +41,6 @@ public:
 	bool	checkIdentifier(const std::string&, const std::string&);
 	void	removeFirstWhiteSpaces(std::vector<std::string> *);
 	std::vector<std::string>	extractContents(std::string line);
-	ServerParser(const std::string&, Server* self);
-	~ServerParser();
 
 	int	getPort() const;
 	std::string	getAddr() const;

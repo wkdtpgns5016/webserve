@@ -1,21 +1,10 @@
 #include "ServerParser.hpp"
-#include "../Server/Server.hpp"
 #include <cctype>
 #include <cstddef>
 #include <cstdlib>
 #include <locale>
 
-ServerParser::ServerParser() : ServerModule()
-{
-    _port = 80;
-    _addr = "";
-    _client_body_size = 0;
-    _server_name = "";
-    _index = "";
-    _default_error_page = "";
-}
-
-ServerParser::ServerParser(Server* self) : ServerModule(self)
+ServerParser::ServerParser()
 {
     _port = 80;
     _addr = "";
@@ -33,19 +22,9 @@ ServerParser::ServerParser(const ServerParser& parser)
     _server_name = parser._server_name;
     _index = parser._index;
     _default_error_page = parser._default_error_page;
-	_self = parser._self;
 }
 
-ServerParser::~ServerParser() { }
-int	ServerParser::getPort() const { return _port; }
-std::string	ServerParser::getAddr() const { return _addr; }
-std::string	ServerParser::getServerName() const { return _server_name; }
-std::string	ServerParser::getIndex() const { return _index; }
-std::string	ServerParser::getDefaultErrorPaget() const { return _default_error_page; }
-int	ServerParser::getClientBodySize() const { return _client_body_size; }
-//std::string	ServerParser::getLocations() const { return _locations; }
-
-ServerParser::ServerParser(const std::string& server_block, Server* self) : ServerModule(self)
+ServerParser::ServerParser(const std::string& server_block)
 {
 	std::string	server_block_cpy = server_block;
 
@@ -69,9 +48,17 @@ ServerParser &ServerParser::operator=(const ServerParser& obj)
     _server_name = obj._server_name;
     _index = obj._index;
     _default_error_page = obj._default_error_page;
-	_self = obj._self;
     return (*this);
 }
+
+ServerParser::~ServerParser() { }
+int	ServerParser::getPort() const { return _port; }
+std::string	ServerParser::getAddr() const { return _addr; }
+std::string	ServerParser::getServerName() const { return _server_name; }
+std::string	ServerParser::getIndex() const { return _index; }
+std::string	ServerParser::getDefaultErrorPaget() const { return _default_error_page; }
+int	ServerParser::getClientBodySize() const { return _client_body_size; }
+//std::string	ServerParser::getLocations() const { return _locations; }
 
 void	ServerParser::parseServerBrace(std::string* script)
 {
