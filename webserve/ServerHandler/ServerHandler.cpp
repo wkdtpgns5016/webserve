@@ -1,23 +1,22 @@
 #include "ServerHandler.hpp"
-#include "../Server/Server.hpp"
 
-ServerHandler::ServerHandler() : ServerModule(), _request_message()
+ServerHandler::ServerHandler() : _request_message()
 {
     init_status();
 }
 
-ServerHandler::ServerHandler(Server* self) : ServerModule(self), _request_message()
+ServerHandler::ServerHandler(ServerParser server_parser)
 {
     init_status();
+    _server_parser = server_parser;
 }
-
-ServerHandler::ServerHandler(const ServerHandler& server_controller)
+ServerHandler::ServerHandler(const ServerHandler& server_handler)
 {
-    if (this == &server_controller)
+    if (this == &server_handler)
         return ;
-    _status = server_controller._status;
-    _self = server_controller._self;
-    _request_message = server_controller._request_message;
+    _status = server_handler._status;
+    _request_message = server_handler._request_message;
+    _server_parser = server_handler._server_parser;
 }
 
 ServerHandler::~ServerHandler()
@@ -30,7 +29,6 @@ ServerHandler& ServerHandler::operator=(const ServerHandler& server_controller)
     if (this == &server_controller)
         return (*this);
     _status = server_controller._status;
-    _self = server_controller._self;
     _request_message = server_controller._request_message;
     return (*this);
 }
