@@ -27,11 +27,12 @@ TEST(ServerParserTest, parsePortTest)
 
 	// when
 	int	answer1 = sv_parser.getPort();
-	std::string	answer2 = sv_parser.getAddr();
+	std::string	answer2 = sv_parser.getRoot();
 	std::string	answer3 = sv_parser.getServerName();
 	std::string	answer4 = sv_parser.getIndex();
 	std::string	answer5 = sv_parser.getDefaultErrorPaget();
 	int	answer6 = sv_parser.getClientBodySize();
+	std::string answer7 = sv_parser.getAddr();
 
 
     // then
@@ -41,6 +42,7 @@ TEST(ServerParserTest, parsePortTest)
     EXPECT_EQ(answer4, "index.html");
     EXPECT_EQ(answer5, "501 502 503 /50x.html");
     EXPECT_EQ(answer6, 10240);
+    EXPECT_EQ(answer7.empty(), true);
 }
 
 int main(int argc, char **argv)
