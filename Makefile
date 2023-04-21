@@ -6,6 +6,7 @@ NAME = webserv
 SRCS =	webserve/main.cpp \
 		webserve/Server/Server.cpp \
 		webserve/ServerParser/ServerParser.cpp \
+		webserve/LocationParser/LocationParser.cpp \
 		webserve/ServerHandler/ServerHandler.cpp \
 		webserve/WebServer/WebServer.cpp \
 		webserve/HttpMessage/HttpMessage.cpp \
@@ -19,6 +20,7 @@ OBJS = $(SRCS:.cpp=.o)
 HEAD =  -I./webserve/Server \
 		-I./webserve/ServerParser \
 		-I./webserve/ServerHandler \
+		-I./webserve/LocationParser \
 		-I./WebServer \
 		-I./webserve/HttpMessage \
 		-I./webserve/lib/ft
