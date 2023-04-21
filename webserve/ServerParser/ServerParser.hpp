@@ -11,6 +11,7 @@ class ServerParser
 {
 protected:
 	int			_port;
+	std::string	_root;
 	std::string	_addr;
 	std::string	_server_name;
 	std::string	_index;
@@ -31,7 +32,7 @@ public:
 	
 	void	loopForParsing(std::vector<std::string>*, const std::string&, bool (ServerParser::*)(std::vector<std::string>));
 	bool	parsePort(std::vector<std::string>);
-	bool	parseAddr(std::vector<std::string>);
+	bool	parseRoot(std::vector<std::string>);
 	bool	parseServerName(std::vector<std::string>);
 	bool	parseIndex(std::vector<std::string>);
 	bool	parseDefaultErrorPage(std::vector<std::string>);
@@ -43,6 +44,7 @@ public:
 	std::vector<std::string>	extractContents(std::string line);
 
 	int	getPort() const;
+	std::string	getRoot() const;
 	std::string	getAddr() const;
 	std::string	getServerName() const;
 	std::string	getIndex() const;

@@ -1,17 +1,13 @@
 #include "ServerParser.hpp"
+#include <algorithm>
 #include <cctype>
 #include <cstddef>
 #include <cstdlib>
 #include <locale>
+#include <sys/_types/_size_t.h>
 
 ServerParser::ServerParser()
 {
-    _port = 80;
-    _addr = "";
-    _client_body_size = 0;
-    _server_name = "";
-    _index = "";
-    _default_error_page = "";
 }
 
 ServerParser::ServerParser(const ServerParser& parser)
@@ -27,13 +23,6 @@ ServerParser::ServerParser(const ServerParser& parser)
 ServerParser::ServerParser(const std::string& server_block)
 {
 	std::string	server_block_cpy = server_block;
-
-	_port = 80;
-    _addr = "";
-    _client_body_size = 0;
-    _server_name = "";
-    _index = "";
-    _default_error_page = "";
 
 	parseServerBrace(&server_block_cpy);
 	parseLocationBlock(&server_block_cpy);
@@ -53,6 +42,7 @@ ServerParser &ServerParser::operator=(const ServerParser& obj)
 
 ServerParser::~ServerParser() { }
 int	ServerParser::getPort() const { return _port; }
+std::string	ServerParser::getRoot() const { return _root; }
 std::string	ServerParser::getAddr() const { return _addr; }
 std::string	ServerParser::getServerName() const { return _server_name; }
 std::string	ServerParser::getIndex() const { return _index; }
@@ -136,28 +126,39 @@ void	ServerParser::parseServerBlock(const std::string& server_block)
 
 	removeFirstWhiteSpaces(&block_lines);
 	loopForParsing(&block_lines, "listen", &ServerParser::parsePort);
-	loopForParsing(&block_lines, "root", &ServerParser::parseAddr);
+	loopForParsing(&block_lines, "root", &ServerParser::parseRoot);
 	loopForParsing(&block_lines, "server_name", &ServerParser::parseServerName);
 	loopForParsing(&block_lines, "index", &ServerParser::parseIndex);
 	loopForParsing(&block_lines, "error_page", &ServerParser::parseDefaultErrorPage);
 	loopForParsing(&block_lines, "client_max_body_size", &ServerParser::parseClientBodySize);
-
-
 }
 
 bool	ServerParser::parsePort(std::vector<std::string> contents)
 {
+	std::string content;
+	size_t pos;
+
 	if (contents.size() != 1)
 		return false; // throw
-	_port = std::strtol(contents.begin()->c_str(), NULL, 10);
+
+	content = *contents.begin();
+	pos = content.find(":");
+	if (pos == std::string::npos)
+		_port = std::strtol(content.c_str(), NULL, 10);
+	else
+	{
+		_addr = content.substr(0, pos);
+		content = content.substr(pos, std::string::npos);
+		_port = std::strtol(content.c_str(), NULL, 10);
+	}
 	return true;
 }
 
-bool	ServerParser::parseAddr(std::vector<std::string> contents)
+bool	ServerParser::parseRoot(std::vector<std::string> contents)
 {
 	if (contents.size() != 1)
 		return false; // throw
-	_addr = *contents.begin();
+	_root = *contents.begin();
 	return true;
 }
 

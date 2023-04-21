@@ -38,13 +38,13 @@ target_link_libraries(libftUnitTest gtest gtest_main)
 target_link_libraries(libftUnitTest libft)
 
 ## server parser 라이브러리 단위테스트 빌드
-#include_directories(libft)
-#include_directories(${gtest_SRC_DIR}/googletest/include)
-#include_directories(sv_parser)
-#add_executable(ServerParserTest webserve/ServerParser/testServerParser.cpp)
-#target_link_libraries(ServerParserTest gtest gtest_main)
-#target_link_libraries(ServerParserTest libft)
-#target_link_libraries(ServerParserTest sv_parser)
+include_directories(libft)
+include_directories(${gtest_SRC_DIR}/googletest/include)
+include_directories(sv_parser)
+add_executable(ServerParserTest webserve/ServerParser/testServerParser.cpp)
+target_link_libraries(ServerParserTest gtest gtest_main)
+target_link_libraries(ServerParserTest libft)
+target_link_libraries(ServerParserTest sv_parser)
 
 # location parser 라이브러리 단위테스트 빌드
 include_directories(libft)
