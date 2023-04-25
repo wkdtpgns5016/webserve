@@ -1,4 +1,4 @@
-#include "ServerParser.hpp"
+#include "ServerBlock.hpp"
 #include "gtest/gtest.h"
 #include <iostream>
 #include <fstream>
@@ -19,20 +19,20 @@ std::string	read_file_into_string(std::string filename)
     return str;
 }
 
-TEST(ServerParserTest, parsePortTest)
+TEST(ServerBlockTest, parsePortTest)
 {
 	// given
 	std::string a = read_file_into_string("../var/conf/test1.conf");
-	ServerParser sv_parser(a);
+	ServerBlock sv_block(a);
 
 	// when
-	int	answer1 = sv_parser.getPort();
-	std::string	answer2 = sv_parser.getRoot();
-	std::string	answer3 = sv_parser.getServerName();
-	std::string	answer4 = sv_parser.getIndex();
-	std::string	answer5 = sv_parser.getDefaultErrorPaget();
-	int	answer6 = sv_parser.getClientBodySize();
-	std::string answer7 = sv_parser.getAddr();
+	int	answer1 = sv_block.getPort();
+	std::string	answer2 = sv_block.getRoot();
+	std::string	answer3 = sv_block.getServerName();
+	std::string	answer4 = sv_block.getIndex();
+	std::string	answer5 = sv_block.getDefaultErrorPaget();
+	int	answer6 = sv_block.getClientBodySize();
+	std::string answer7 = sv_block.getAddr();
 
 
     // then

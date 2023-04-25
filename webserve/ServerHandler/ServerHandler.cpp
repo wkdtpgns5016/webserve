@@ -5,10 +5,10 @@ ServerHandler::ServerHandler() : _request_message()
     init_status();
 }
 
-ServerHandler::ServerHandler(ServerParser server_parser)
+ServerHandler::ServerHandler(ServerBlock server_block)
 {
     init_status();
-    _server_parser = server_parser;
+    _server_block = server_block;
 }
 ServerHandler::ServerHandler(const ServerHandler& server_handler)
 {
@@ -16,7 +16,7 @@ ServerHandler::ServerHandler(const ServerHandler& server_handler)
         return ;
     _status = server_handler._status;
     _request_message = server_handler._request_message;
-    _server_parser = server_handler._server_parser;
+    _server_block = server_handler._server_block;
 }
 
 ServerHandler::~ServerHandler()
@@ -116,9 +116,9 @@ bool ServerHandler::checkFile(std::string request_target)
 
 std::string ServerHandler::findPath(std::string request_target)
 {
-    // ServerParser안에 Location 블록에 따라 file 찾기
-    // ServerParser* parser = (ServerParser *)_self->selectModule("ServerParser");
-    // std::list<LocationParser> locations = parser->getLocations();
+    // ServerBlock안에 Location 블록에 따라 file 찾기
+    // ServerBlock* block = (ServerBlock *)_self->selectModule("ServerBlock");
+    // std::list<LocationBlock> locations = block->getLocations();
 
     return("var/html" + request_target);
 }

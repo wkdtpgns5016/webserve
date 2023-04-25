@@ -1,6 +1,6 @@
-#include "LocationParser.hpp"
+#include "LocationBlock.hpp"
 
-LocationParser::LocationParser()
+LocationBlock::LocationBlock()
 {
 	_url = "";
 	_root = "";
@@ -9,7 +9,7 @@ LocationParser::LocationParser()
     _auto_index = false;
 }
 
-LocationParser::LocationParser(const std::string& block)
+LocationBlock::LocationBlock(const std::string& block)
 {
     std::vector<std::string> arr = ft::splitString(block, "\n");
     std::string head = arr[0];
@@ -21,37 +21,37 @@ LocationParser::LocationParser(const std::string& block)
         setAttributes(*it);
 }
 
-LocationParser::LocationParser(const LocationParser& location_parser)
+LocationBlock::LocationBlock(const LocationBlock& location_block)
 {
-    if (this == &location_parser)
+    if (this == &location_block)
         return ;
-	_url = location_parser._url;
-	_root = location_parser._root;
-	_index = location_parser._index;
-	_upload_path = location_parser._upload_path;
-    _allow_method = location_parser._allow_method;
-    _auto_index = location_parser._auto_index;
+	_url = location_block._url;
+	_root = location_block._root;
+	_index = location_block._index;
+	_upload_path = location_block._upload_path;
+    _allow_method = location_block._allow_method;
+    _auto_index = location_block._auto_index;
 }
 
-LocationParser::~LocationParser()
+LocationBlock::~LocationBlock()
 {
 
 }
 
-LocationParser& LocationParser::operator=(const LocationParser& location_parser)
+LocationBlock& LocationBlock::operator=(const LocationBlock& location_block)
 {
-    if (this == &location_parser)
+    if (this == &location_block)
         return (*this);
-	_url = location_parser._url;
-	_root = location_parser._root;
-	_index = location_parser._index;
-	_upload_path = location_parser._upload_path;
-    _allow_method = location_parser._allow_method;
-    _auto_index = location_parser._auto_index;
+	_url = location_block._url;
+	_root = location_block._root;
+	_index = location_block._index;
+	_upload_path = location_block._upload_path;
+    _allow_method = location_block._allow_method;
+    _auto_index = location_block._auto_index;
     return (*this);
 }
 
-void LocationParser::setAttributes(std::string line)
+void LocationBlock::setAttributes(std::string line)
 {
     std::string::size_type i = line.find(" ");
     if (i == std::string::npos)
@@ -93,13 +93,13 @@ void LocationParser::setAttributes(std::string line)
     }
 }
 
-void LocationParser::setUrl(std::string url)
+void LocationBlock::setUrl(std::string url)
 {
     std::vector<std::string> arr = ft::splitString(url, " ");
     _url = arr[1];
 }
 
-std::string LocationParser::deleteBlock(std::vector<std::string> arr)
+std::string LocationBlock::deleteBlock(std::vector<std::string> arr)
 {
     std::string str;
 
@@ -110,7 +110,7 @@ std::string LocationParser::deleteBlock(std::vector<std::string> arr)
     return (str);
 }
 
-void LocationParser::removeFirstWhiteSpaces(std::vector<std::string> *block_lines)
+void LocationBlock::removeFirstWhiteSpaces(std::vector<std::string> *block_lines)
 {
 	std::vector<std::string>::iterator ite = block_lines->end();
 
@@ -130,7 +130,7 @@ void LocationParser::removeFirstWhiteSpaces(std::vector<std::string> *block_line
 	}
 }
 
-bool LocationParser::check_method(std::string method)
+bool LocationBlock::check_method(std::string method)
 {
     if (method.compare("GET") == 0)
         return (true);
@@ -141,32 +141,32 @@ bool LocationParser::check_method(std::string method)
     return (false);
 }
 
-std::string LocationParser::getUrl() const
+std::string LocationBlock::getUrl() const
 {
     return (_url);
 }
 
-std::string LocationParser::getRoot() const
+std::string LocationBlock::getRoot() const
 {
     return (_root);
 }
 
-std::string LocationParser::getIndex() const
+std::string LocationBlock::getIndex() const
 {
     return (_index);
 }
 
-std::string LocationParser::getUploadPath() const
+std::string LocationBlock::getUploadPath() const
 {
     return (_upload_path);
 }
 
-std::list<std::string> LocationParser::getAllowMethod() const
+std::list<std::string> LocationBlock::getAllowMethod() const
 {
     return (_allow_method);
 }
 
-bool LocationParser::getAutoIndex() const
+bool LocationBlock::getAutoIndex() const
 {
     return (_auto_index);
 }

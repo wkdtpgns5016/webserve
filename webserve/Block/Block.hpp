@@ -1,9 +1,9 @@
-#ifndef PARSER_HPP
-# define PARSER_HPP
+#ifndef BLOCK_HPP
+# define BLOCK_HPP
 
 #include <iostream>
 
-class Parser
+class Block
 {
 public:
 	size_t	jumpTrash(const std::string& str, size_t pos);

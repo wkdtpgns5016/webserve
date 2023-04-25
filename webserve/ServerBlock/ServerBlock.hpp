@@ -1,14 +1,14 @@
-#ifndef SERVERPARSER_HPP
-# define SERVERPARSER_HPP
+#ifndef SERVERBLOCK_HPP
+# define SERVERBLOCK_HPP
 
 #include <iostream>
 #include <list>
 #include <string>
 #include "../lib/ft/ft.hpp"
 #include <vector>
-#include "../Parser/Parser.hpp"
+#include "../Block/Block.hpp"
 
-class ServerParser : public Parser
+class ServerBlock : public Block
 {
 protected:
 
@@ -19,16 +19,16 @@ protected:
 	std::string	_index;
 	std::string	_default_error_page;
 	int	_client_body_size;
-//	std::list<LocationParser>	_locations;
+//	std::list<LocationBlock>	_locations;
 	std::vector<std::string> _blocks;
 
-	void	(ServerParser::*_parsing_func[7])(const std::string&);
+	void	(ServerBlock::*_parsing_func[7])(const std::string&);
 public:
-	ServerParser();
-	ServerParser(const std::string&);
-	ServerParser(const ServerParser&);
-	~ServerParser();
-	ServerParser& operator=(const ServerParser&);
+	ServerBlock();
+	ServerBlock(const std::string&);
+	ServerBlock(const ServerBlock&);
+	~ServerBlock();
+	ServerBlock& operator=(const ServerBlock&);
 
 	size_t	parseElement(const std::string& script);
 	size_t	parseBlock(const std::string& script);

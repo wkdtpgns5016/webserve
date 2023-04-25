@@ -1,28 +1,28 @@
-#include "Parser.hpp"
+#include "Block.hpp"
 
 
-size_t	Parser::jumpTrash(const std::string& str, size_t pos)
+size_t	Block::jumpTrash(const std::string& str, size_t pos)
 {
 	while (std::isspace(str[pos], std::locale()) == true || str[pos] == '\n')
 		pos++;
 	return pos;
 }
 
-size_t	Parser::jumpElement(const std::string& str, size_t pos)
+size_t	Block::jumpElement(const std::string& str, size_t pos)
 {
 	pos = str.find(';', pos);
 	
 	return pos + 1;
 }
 
-size_t	Parser::jumpBlockId(const std::string& str, size_t pos)
+size_t	Block::jumpBlockId(const std::string& str, size_t pos)
 {
 	pos = str.find('{', pos);
 
 	return pos;
 }
 
-size_t	Parser::jumpBlock(const std::string& str, size_t pos)
+size_t	Block::jumpBlock(const std::string& str, size_t pos)
 {
 	size_t	last = str.find('}', pos);
 
@@ -32,7 +32,7 @@ size_t	Parser::jumpBlock(const std::string& str, size_t pos)
 	return last + 1;
 }
 
-size_t	Parser::jumpElementId(const std::string &str, size_t pos)
+size_t	Block::jumpElementId(const std::string &str, size_t pos)
 {
 	while (std::isspace(str[pos], std::locale()) != true
 			&& str[pos] != '\n' && str[pos] != '\0')
@@ -40,14 +40,14 @@ size_t	Parser::jumpElementId(const std::string &str, size_t pos)
 	return pos;
 }
 
-size_t	Parser::jumpElementValue(const std::string& str, size_t pos)
+size_t	Block::jumpElementValue(const std::string& str, size_t pos)
 {
 	pos = str.find(';', pos);
 
 	return pos;
 }
 
-std::pair<std::string, std::string>	Parser::divideElementIdAndValue(const std::string &str, size_t pos)
+std::pair<std::string, std::string>	Block::divideElementIdAndValue(const std::string &str, size_t pos)
 {
 	size_t	last;
 	std::string	id;
@@ -65,7 +65,7 @@ std::pair<std::string, std::string>	Parser::divideElementIdAndValue(const std::s
 	return std::make_pair(id, value);
 }
 
-//bool	Parser::isAlpha(const char& c) const
+//bool	Block::isAlpha(const char& c) const
 //{
 //	if ('a' <= c && c<= 'z' || 'A' <= c && c <= 'Z')
 //		return true;
@@ -75,14 +75,14 @@ std::pair<std::string, std::string>	Parser::divideElementIdAndValue(const std::s
 //
 // iterator function
 //
-//std::string::iterator	Parser::jumpTrash(std::string::iterator it)
+//std::string::iterator	Block::jumpTrash(std::string::iterator it)
 //{
 //	while (std::isspace(*it, std::locale()) == true || *it == '\n') 
 //		it++;
 //	return it;
 //}
 //
-//std::pair<std::string::iterator, std::string::iterator>	Parser::extractElement(std::string::iterator it, std::string::iterator ite)
+//std::pair<std::string::iterator, std::string::iterator>	Block::extractElement(std::string::iterator it, std::string::iterator ite)
 //{
 //	std::string::iterator	last = std::find(it, ite, ';');
 //	if (last == ite)
@@ -90,7 +90,7 @@ std::pair<std::string, std::string>	Parser::divideElementIdAndValue(const std::s
 //	return std::make_pair(it, last + 1);
 //}
 //
-//std::pair<std::string::iterator, std::string::iterator>	Parser::extractBlockID(std::string::iterator it, std::string::iterator ite)
+//std::pair<std::string::iterator, std::string::iterator>	Block::extractBlockID(std::string::iterator it, std::string::iterator ite)
 //{
 //	std::string::iterator	last = std::find(it, ite, '{');
 //	if (last == ite)
@@ -99,7 +99,7 @@ std::pair<std::string, std::string>	Parser::divideElementIdAndValue(const std::s
 //
 //}
 //
-//std::pair<std::string::iterator, std::string::iterator>	Parser::extractBraces(std::string::iterator it, std::string::iterator ite)
+//std::pair<std::string::iterator, std::string::iterator>	Block::extractBraces(std::string::iterator it, std::string::iterator ite)
 //{
 //	std::string::iterator	start = it;
 //	std::string::iterator	last = std::find(it, ite, '}');
