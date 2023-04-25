@@ -22,7 +22,7 @@ std::string	read_file_into_string(std::string filename)
 TEST(ServerParserTest, parsePortTest)
 {
 	// given
-	std::string a = read_file_into_string("../var/conf/test.conf");
+	std::string a = read_file_into_string("../var/conf/test1.conf");
 	ServerParser sv_parser(a);
 
 	// when
