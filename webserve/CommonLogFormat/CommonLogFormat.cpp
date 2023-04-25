@@ -60,13 +60,13 @@ void CommonLogFormat::initTimeStamp(void)
     std::vector<std::string> arr;
 
     timer = time(NULL);
-    timer += 3600 * 9;
+    //timer += 3600 * 9;
     t = std::string(std::ctime(&timer));
     arr = ft::splitString(t, " ");
     _time_stamp = "[" + arr[2] + "/"
                 + arr[1] + "/"
-                + arr[4] + ":"
-                + arr[3] + " +0900";
+                + arr[4].substr(0, arr[4].length() - 1) + ":"
+                + arr[3] + " +0900]";
 }
     
 std::string CommonLogFormat::getString(void)
@@ -87,4 +87,40 @@ void CommonLogFormat::wirteLogMessage(int fd)
 {
     std::string log = getString();
     write(fd, log.c_str(), log.length());
+}
+
+
+std::string CommonLogFormat::getRemoteHost(void) const
+{
+    return (_remote_host);
+}
+
+std::string CommonLogFormat::getUserName(void) const
+{
+    return (_user_name);
+}
+
+std::string CommonLogFormat::getAuthUserName(void) const
+{
+    return (_auth_user_name);
+}
+
+std::string CommonLogFormat::getTimeStamp(void) const
+{
+    return (_time_stamp);
+}
+
+RequestLine CommonLogFormat::getRequestLine(void) const
+{
+    return (_request_line);
+}
+
+int CommonLogFormat::getStatusCode(void) const
+{
+    return (_status_code);
+}
+
+std::string CommonLogFormat::getResponseSize(void) const
+{
+    return (_response_size);
 }

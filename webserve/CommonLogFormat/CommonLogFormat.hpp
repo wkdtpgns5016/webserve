@@ -3,6 +3,7 @@
 
 #include "../HttpMessage/HttpRequestMessage.hpp"
 #include "../HttpMessage/HttpResponseMessage.hpp"
+#include "../lib/ft/ft.hpp"
 #include <unistd.h>
 #include <iostream>
 #include <ctime>
@@ -29,6 +30,14 @@ class CommonLogFormat
     void initTimeStamp(void);
     std::string getString(void);
     void wirteLogMessage(int fd);
+
+    std::string getRemoteHost(void) const;
+    std::string getUserName(void) const;
+    std::string getAuthUserName(void) const;
+    std::string getTimeStamp(void) const;
+    RequestLine getRequestLine(void) const;
+    int getStatusCode(void) const;
+    std::string getResponseSize(void) const;
 };
 
 #endif
