@@ -1,28 +1,14 @@
 #include "ServerParser.hpp"
-#include "../Server/Server.hpp"
+#include <algorithm>
 #include <cctype>
 #include <cstddef>
 #include <cstdlib>
+#include <exception>
 #include <locale>
+#include <sys/_types/_size_t.h>
 
-ServerParser::ServerParser() : ServerModule()
+ServerParser::ServerParser()
 {
-    _port = 80;
-    _addr = "";
-    _client_body_size = 0;
-    _server_name = "";
-    _index = "";
-    _default_error_page = "";
-}
-
-ServerParser::ServerParser(Server* self) : ServerModule(self)
-{
-    _port = 80;
-    _addr = "";
-    _client_body_size = 0;
-    _server_name = "";
-    _index = "";
-    _default_error_page = "";
 }
 
 ServerParser::ServerParser(const ServerParser& parser)
@@ -33,32 +19,6 @@ ServerParser::ServerParser(const ServerParser& parser)
     _server_name = parser._server_name;
     _index = parser._index;
     _default_error_page = parser._default_error_page;
-	_self = parser._self;
-}
-
-ServerParser::~ServerParser() { }
-int	ServerParser::getPort() const { return _port; }
-std::string	ServerParser::getAddr() const { return _addr; }
-std::string	ServerParser::getServerName() const { return _server_name; }
-std::string	ServerParser::getIndex() const { return _index; }
-std::string	ServerParser::getDefaultErrorPaget() const { return _default_error_page; }
-int	ServerParser::getClientBodySize() const { return _client_body_size; }
-//std::string	ServerParser::getLocations() const { return _locations; }
-
-ServerParser::ServerParser(const std::string& server_block, Server* self) : ServerModule(self)
-{
-	std::string	server_block_cpy = server_block;
-
-	_port = 80;
-    _addr = "";
-    _client_body_size = 0;
-    _server_name = "";
-    _index = "";
-    _default_error_page = "";
-
-	parseServerBrace(&server_block_cpy);
-	parseLocationBlock(&server_block_cpy);
-	parseServerBlock(server_block_cpy);
 }
 
 ServerParser &ServerParser::operator=(const ServerParser& obj)
@@ -69,145 +29,101 @@ ServerParser &ServerParser::operator=(const ServerParser& obj)
     _server_name = obj._server_name;
     _index = obj._index;
     _default_error_page = obj._default_error_page;
-	_self = obj._self;
     return (*this);
 }
 
-void	ServerParser::parseServerBrace(std::string* script)
+ServerParser::ServerParser(const std::string& script)
 {
-	if (script->compare(0, 10, "server\n{\n") == 0)
-		return ; //throw
-	script->erase(0, 10);
+	size_t	pos = jumpTrash(script, 1);
+	size_t	element_end = 0;
+	size_t	block_id_end = 0;
 
-	size_t	last_brace_pos = script->find_last_of('}');
-	if (script->compare(last_brace_pos - 1, 3, "\n}\n") == 0)
-		return; //throw
-	script->erase(last_brace_pos - 1, 3);
-}
-
-void	ServerParser::parseLocationBlock(std::string* script) //location parser에 location블록을 넘겨주고, script에서 삭제
-{
-	(void)script;
-	//ft::splitString(*script);
-	//deleteLocationBlock();
-}
-
-void	ServerParser::removeFirstWhiteSpaces(std::vector<std::string> *block_lines)
-{
-	std::vector<std::string>::iterator ite = block_lines->end();
-
-	for (std::vector<std::string>::iterator it = block_lines->begin(); it != ite; it++)
+	setParsingFunctionArray();
+	while (pos != std::string::npos
+			&& pos + 1 < script.length())
 	{
-		std::string	line = *it;
-		size_t		line_length = line.size();
-		size_t		space_end = 0;
-
-		for (; space_end < line_length ; space_end++)
-			if(std::isspace(line[space_end], std::locale()) == false)
-				break;
-
-		it->erase(0, space_end);
-		if (it->empty())
-			block_lines->erase(it);
+		element_end = jumpElement(script, pos);
+		block_id_end = jumpBlockId(script, pos);
+		if (element_end < block_id_end)
+			pos += parseElement(script.substr(pos, element_end - pos));
+		else
+			pos += parseBlock(script.substr(pos, jumpBlock(script, block_id_end) - pos));
 	}
 }
 
-bool	ServerParser::checkIdentifier(const std::string& line, const std::string& identifier)
+size_t	ServerParser::parseElement(const std::string& script)
 {
-	size_t	id_length = identifier.length();
-
-	if (line.compare(0, id_length, identifier) == 0
-			&& line.size() > id_length
-			&& std::isspace(line.at(id_length), std::locale()) == true)
-		return true;
-	return false;
-}
-
-
-std::vector<std::string>	ServerParser::extractContents(std::string line)
-{
-	std::vector<std::string> ret = ft::splitString(line, " ");
-
-	ret.erase(ret.begin());
-	return ret;
-}
-
-void	ServerParser::loopForParsing(std::vector<std::string>* block_lines, const std::string& keyword, bool (ServerParser::*parseFuntion)(std::vector<std::string>))
-{
-	std::vector<std::string>::iterator ite = block_lines->end();
+	const std::string	element_id[7] = {"listen", "root", "server_name", "index", "error_page", "client_max_body_size", ""};
 	
-	for (std::vector<std::string>::iterator it = block_lines->begin(); it != ite; it++)
-	{
-		if (checkIdentifier(*it, keyword)
-				&& (this->*parseFuntion)(extractContents(*it)))
-			block_lines->erase(it);
-	}
+	std::pair<std::string, std::string>	id_value_pair = divideElementIdAndValue(script, 0);
+	int i = 0;
+	for (; i < 6; i++)
+		if (id_value_pair.first == element_id[i])
+			break;
+	(this->*_parsing_func[i])(id_value_pair.second);
+	return script.length();
 }
-void	ServerParser::parseServerBlock(const std::string& server_block)
+
+size_t	ServerParser::parseBlock(const std::string& script)
 {
-	std::vector<std::string> block_lines = ft::splitString(server_block, ";");
+	_blocks.push_back(script);
 
-	removeFirstWhiteSpaces(&block_lines);
-	loopForParsing(&block_lines, "listen", &ServerParser::parsePort);
-	loopForParsing(&block_lines, "root", &ServerParser::parseAddr);
-	loopForParsing(&block_lines, "server_name", &ServerParser::parseServerName);
-	loopForParsing(&block_lines, "index", &ServerParser::parseIndex);
-	loopForParsing(&block_lines, "error_page", &ServerParser::parseDefaultErrorPage);
-	loopForParsing(&block_lines, "client_max_body_size", &ServerParser::parseClientBodySize);
-
-
+	return script.length();
 }
 
-bool	ServerParser::parsePort(std::vector<std::string> contents)
+void	ServerParser::setParsingFunctionArray()
 {
-	if (contents.size() != 1)
-		return false; // throw
-	_port = std::strtol(contents.begin()->c_str(), NULL, 10);
-	return true;
+	_parsing_func[0] = &ServerParser::parsePort;
+	_parsing_func[1] = &ServerParser::parseRoot;
+	_parsing_func[2] = &ServerParser::parseServerName;
+	_parsing_func[3] = &ServerParser::parseIndex;
+	_parsing_func[4] = &ServerParser::parseDefaultErrorPage;
+	_parsing_func[5] = &ServerParser::parseClientBodySize;
+	_parsing_func[6] = &ServerParser::parseNoMatchId;
 }
 
-bool	ServerParser::parseAddr(std::vector<std::string> contents)
+void	ServerParser::parsePort(const std::string& value)
 {
-	if (contents.size() != 1)
-		return false; // throw
-	_addr = *contents.begin();
-	return true;
+	_port = std::strtol(value.c_str(), NULL, 10);
 }
 
-bool	ServerParser::parseServerName(std::vector<std::string> contents)
+void	ServerParser::parseRoot(const std::string& value)
 {
-	if (contents.size() != 1)
-		return false; // throw
-	_server_name = *contents.begin();
-	return true;
+	_root = value;
 }
 
-bool	ServerParser::parseIndex(std::vector<std::string> contents)
+void	ServerParser::parseServerName(const std::string& value)
 {
-	if (contents.size() != 1)
-		return false; // throw
-	_index = *contents.begin();
-	return true;
+	_server_name = value;
 }
 
-bool	ServerParser::parseDefaultErrorPage(std::vector<std::string> contents)
+void	ServerParser::parseIndex(const std::string& value)
 {
-	if (contents.empty() == true)
-		return false; // throw
-	std::vector<std::string>::iterator	ite = contents.end();
-	for (std::vector<std::string>::iterator it = contents.begin(); it != ite; it++)
-	{
-		_default_error_page += *it;
-		_default_error_page += " ";
-	}
-	_default_error_page.erase(_default_error_page.length() - 1, 1);
-	return true;
+	_index = value;
 }
 
-bool	ServerParser::parseClientBodySize(std::vector<std::string> contents)
+void	ServerParser::parseDefaultErrorPage(const std::string& value)
 {
-	if (contents.size() != 1)
-		return false; // throw
-	_client_body_size = std::strtol(contents.begin()->c_str(), NULL, 10);
-	return true;
+	_default_error_page = value;
 }
+
+void	ServerParser::parseClientBodySize(const std::string& value)
+{
+	_client_body_size = std::strtol(value.c_str(), NULL, 10);
+}
+
+void	ServerParser::parseNoMatchId(const std::string& value)
+{
+	if (value.empty() || 1)
+		throw std::exception();
+}
+
+ServerParser::~ServerParser() { }
+int	ServerParser::getPort() const { return _port; }
+std::string	ServerParser::getRoot() const { return _root; }
+std::string	ServerParser::getAddr() const { return _addr; }
+std::string	ServerParser::getServerName() const { return _server_name; }
+std::string	ServerParser::getIndex() const { return _index; }
+std::string	ServerParser::getDefaultErrorPaget() const { return _default_error_page; }
+int	ServerParser::getClientBodySize() const { return _client_body_size; }
+std::vector<std::string>	ServerParser::getLocations() const { return _blocks; }

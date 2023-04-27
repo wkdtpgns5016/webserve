@@ -2,11 +2,12 @@ cmake_minimum_required(VERSION 3.24)
 project(webserve)
 
 set(CMAKE_CXX_STANDARD 17)
-
+ADD_COMPILE_OPTIONS( -g3)
 # 객체 빌드
 add_library(obj SHARED webserve/TestExample/TestExample.cpp webserve/TestExample/TestExample.hpp)
 add_library(libft webserve/lib/ft/ft.hpp webserve/lib/ft/splitBlockString.cpp webserve/lib/ft/splitString.cpp )
 add_library(sv_parser webserve/ServerParser/ServerParser.hpp webserve/ServerParser/ServerParser.cpp)
+add_library(parser webserve/Parser/Parser.hpp webserve/Parser/Parser.cpp)
 add_library(location_parser webserve/LocationParser/LocationParser.hpp webserve/LocationParser/LocationParser.cpp)
 add_library(http_message webserve/HttpMessage/HttpMessage.cpp
                         webserve/HttpMessage/HttpMessage.hpp
@@ -38,13 +39,13 @@ target_link_libraries(libftUnitTest gtest gtest_main)
 target_link_libraries(libftUnitTest libft)
 
 ## server parser 라이브러리 단위테스트 빌드
-#include_directories(libft)
-#include_directories(${gtest_SRC_DIR}/googletest/include)
-#include_directories(sv_parser)
-#add_executable(ServerParserTest webserve/ServerParser/testServerParser.cpp)
-#target_link_libraries(ServerParserTest gtest gtest_main)
-#target_link_libraries(ServerParserTest libft)
-#target_link_libraries(ServerParserTest sv_parser)
+include_directories(libft)
+include_directories(${gtest_SRC_DIR}/googletest/include)
+include_directories(sv_parser)
+add_executable(ServerParserTest webserve/ServerParser/testServerParser.cpp)
+target_link_libraries(ServerParserTest gtest gtest_main)
+target_link_libraries(ServerParserTest libft)
+target_link_libraries(ServerParserTest sv_parser)
 
 # location parser 라이브러리 단위테스트 빌드
 include_directories(libft)
@@ -61,3 +62,12 @@ add_executable(HttpMessageUnitTest webserve/HttpMessage/HttpMessage.test.cpp)
 target_link_libraries(HttpMessageUnitTest gtest gtest_main)
 target_link_libraries(HttpMessageUnitTest http_message)
 target_link_libraries(HttpMessageUnitTest libft)
+
+#paresr 단위테스트 빌드
+include_directories(libft)
+include_directories(${gtest_SRC_DIR}/googletest/include)
+include_directories(parser)
+add_executable(ParserTest webserve/Parser/Parser.test.cpp)
+target_link_libraries(ParserTest gtest gtest_main)
+target_link_libraries(ParserTest libft)
+target_link_libraries(ParserTest parser)
