@@ -4,17 +4,17 @@
 #include "../Block/Block.hpp"
 #include "../ServerBlock/ServerBlock.hpp"
 
-class Conf : Block
+class Conf : public Block
 {
-public:
-	Conf();
+private:
 	Conf(const Conf& other);
 	Conf& operator=(const Conf& other);
-	~Conf();
+public:
 	Conf(const std::string& script);
 	ServerBlock*	generateInnerBlock(const std::string& script);
-	
 
+	Conf();
+	~Conf();
 };
 
 #endif
