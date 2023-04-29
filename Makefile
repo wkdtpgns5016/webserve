@@ -23,6 +23,7 @@ HEAD =  -I./webserve/Server \
 		-I./webserve/ServerBlock \
 		-I./webserve/LocationBlock \
 		-I./webserve/ServerHandler \
+		-I./webserve/LocationParser \
 		-I./WebServer \
 		-I./webserve/HttpMessage \
 		-I./webserve/lib/ft

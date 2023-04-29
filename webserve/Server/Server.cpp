@@ -105,7 +105,6 @@ void Server::accept_new_client()
 void Server::receiveMessage()
 {
     /* read data from client */
-    ServerHandler handler = ServerHandler();
     char buf[1024];
     int n = read(_curr_event->ident, buf, sizeof(buf));
 
@@ -119,7 +118,7 @@ void Server::receiveMessage()
     {
         buf[n] = '\0';
         _clients[_curr_event->ident] += buf;
-        handler.setRequestMessage(_clients[_curr_event->ident]);
+        ServerHandler handler = ServerHandler(_server_parser, _clients[_curr_event->ident]);
         HttpResponseMessage message = handler.requestHandler();
         write(_curr_event->ident, message.getString().c_str(), message.getString().size());
         disconnect_client(_curr_event->ident, _clients);

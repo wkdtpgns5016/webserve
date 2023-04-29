@@ -1,4 +1,6 @@
 #include "ServerHandler.hpp"
+#include <stdio.h>
+#include <stdlib.h>
 
 ServerHandler::ServerHandler() : _request_message()
 {
@@ -10,6 +12,7 @@ ServerHandler::ServerHandler(ServerBlock server_block)
     init_status();
     _server_block = server_block;
 }
+
 ServerHandler::ServerHandler(const ServerHandler& server_handler)
 {
     if (this == &server_handler)
@@ -88,11 +91,6 @@ HttpRequestMessage& ServerHandler::getRequestMessage(void)
     return (_request_message);
 }
 
-void ServerHandler::setRequestMessage(const std::string& message)
-{
-    _request_message = HttpRequestMessage(message);
-}
-
 HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::string message_body)
 {
     StatusLine start_line = StatusLine(_request_message.getStartLine().getHttpVersion(), status_code, _status[status_code]);
@@ -104,6 +102,8 @@ HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::stri
 bool ServerHandler::checkFile(std::string request_target)
 {
     int len = request_target.length();
+    if (len < 4)
+        return (true);
     if (request_target.substr(len - 4, 3).compare("php") == 0)
         return (false);
     else if (request_target.substr(len - 4, 3).compare("cgi") == 0)
@@ -114,13 +114,64 @@ bool ServerHandler::checkFile(std::string request_target)
         return (true);
 }
 
+std::vector<std::string> ServerHandler::getIndexPath(std::string root, std::string index)
+{
+    std::vector<std::string> index_path;
+    std::vector<std::string> indexs;
+
+    if (index.empty())
+        return (index_path);
+
+    indexs = ft::splitString(index, " ");
+    std::vector<std::string>::iterator it = indexs.begin();
+    for (; it != indexs.end(); it++)
+    {
+        index_path.push_back(root + "/" + *it);
+    }
+    return (index_path);
+}
+
+LocationParser ServerHandler::findLocationParser(std::list<LocationParser> locations, std::string request_target)
+{
+    std::list<LocationParser>::iterator it = locations.begin();
+    LocationParser location;
+    for (; it != locations.end(); it++)
+    {
+        std::string url = (*it).getUrl();
+        if (request_target.find(url) == 0)
+        {
+            location = (*it);
+            break ;
+        }
+    }
+    return (location);
+}
+
 std::string ServerHandler::findPath(std::string request_target)
 {
     // ServerBlock안에 Location 블록에 따라 file 찾기
     // ServerBlock* block = (ServerBlock *)_self->selectModule("ServerBlock");
     // std::list<LocationBlock> locations = block->getLocations();
 
-    return("var/html" + request_target);
+    std::string directory;
+    if (request_target.compare("/") != 0)
+        directory = path + "/";
+
+    // 디렉토리이거나, 파일이 존재하지 않으면
+    if (access(path.c_str(), F_OK) == -1 ||
+        (access(path.c_str(), F_OK) == 0 && access(directory.c_str(), F_OK) == 0))
+    {
+        // index 파일 찾기
+        std::vector<std::string>::iterator it = index_path.begin();
+        for (; it != index_path.end(); it++)
+        {
+            if (access((*it).c_str(), F_OK) == 0)
+                return (*it);
+        }
+
+        // 404 error
+    }
+    return(path);
 }
 
 std::string ServerHandler::openFile(std::string request_target)
@@ -141,12 +192,6 @@ HttpResponseMessage ServerHandler::getHandler()
     int status_code = 200;
     std::string message_body = "GET";
     std::string request_target = _request_message.getStartLine().getRequestTarget();
-
-    if (request_target.compare("/") == 0)
-    {
-        HttpResponseMessage response_message = getResponseMessage(status_code, message_body);
-        return (response_message);
-    }
 
     // 파일인지 cgi인지 검사
     if (checkFile(request_target))
