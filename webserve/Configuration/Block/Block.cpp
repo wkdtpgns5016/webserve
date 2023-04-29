@@ -1,6 +1,8 @@
 #include "Block.hpp"
 
-//compiler
+/**
+ * @details config파일을 문자열 형태의 스크립트로 받아 서버 속성들로 바꿉니다.
+ */
 void	Block::compile(const std::string& script)
 {
 	if (script.length() == std::string::npos)
@@ -21,7 +23,12 @@ void	Block::compile(const std::string& script)
 	}
 }
 
-//jumper
+/**
+ * @details 연속정인 개행과 공백들의 끝을 가르킵니다.
+ * @param[in] str 문자열
+ * @param[in] pos 문자열의 첫번째 인덱스
+ * @param[out] pos 마지막 인덱스 + 1
+ */
 size_t	Block::jumpTrash(const std::string& str, size_t pos) const
 {
 	while (std::isspace(str[pos], std::locale()) == true || str[pos] == '\n')
@@ -29,6 +36,14 @@ size_t	Block::jumpTrash(const std::string& str, size_t pos) const
 	return pos;
 }
 
+/**
+ * @details simple directives의 끝(';')을 가르킵니다.
+ * @param[in] str 문자열
+ * @param[in] pos 문자열의 첫번째 인덱스
+ * @param[out] pos 마지막 인덱스 + 1
+ * @exception 다음 simple directives를 찾지 못할 경우 std::exception을 던집니다.
+ * @warning 문자열의 시작이 Trash면 안됩니다. 즉, 이 함수 호출전에 jumpTrash 를 먼저 호출해야 합니다.
+ */
 size_t	Block::jumpSimple(const std::string& str, size_t pos) const
 {
 	pos = str.find(';', pos);
@@ -37,6 +52,13 @@ size_t	Block::jumpSimple(const std::string& str, size_t pos) const
 	return pos + 1;
 }
 
+/**
+ * @details block directives의 identifier의 끝{'{'}을 가르킵니다.
+ * @param[in] str 문자열
+ * @param[in] pos 문자열의 첫번째 인덱스
+ * @param[out] pos 마지막 인덱스 + 1
+ * @warning 문자열의 시작이 Trash면 안됩니다. 즉, 이 함수 호출전에 jumpTrash 를 먼저 호출해야 합니다.
+ */
 size_t	Block::jumpBlockId(const std::string& str, size_t pos) const
 {
 	pos = str.find('{', pos);
@@ -44,6 +66,15 @@ size_t	Block::jumpBlockId(const std::string& str, size_t pos) const
 	return pos;
 }
 
+
+/**
+ * @details block directives의 identifier의 끝{'}'}을 가르킵니다.
+ * @param[in] str 문자열
+ * @param[in] pos 문자열의 첫번째 인덱스
+ * @param[out] pos 마지막 인덱스 + 1
+ * @warning 문자열의 시작이 '{'임을 보장해야 합니다. 즉, 이 함수 호출전에 jumpBlockId를 먼저 호출해야 합니다.
+ * 
+ */
 size_t	Block::jumpBlock(const std::string& str, size_t pos) const
 {
 	size_t	end = str.find('}', pos);
@@ -56,6 +87,14 @@ size_t	Block::jumpBlock(const std::string& str, size_t pos) const
 	return end + 1;
 }
 
+/**
+ * @details 한 단어의 끝을 가르킵니다. 한 단어란, trash가 아닌 문자들로 이어진 연속적인 문자열입니다.
+ * @param[in] str 문자열
+ * @param[in] pos 문자열의 첫번째 인덱스
+ * @param[out] pos 마지막 인덱스 + 1
+ * @warning 문자열의 시작이 '{'임을 보장해야 합니다. 즉, 이 함수 호출전에 jumpBlockId를 먼저 호출해야 합니다.
+ * 
+ */
 size_t	Block::jumpWord(const std::string &str, size_t pos) const
 {
 	while (std::isspace(str[pos], std::locale()) != true
@@ -64,6 +103,9 @@ size_t	Block::jumpWord(const std::string &str, size_t pos) const
 	return pos;
 }
 
+/**
+ * @details simple_directives 하나를 id와 value로 나눕니다.
+ */
 std::pair<std::string, std::string>	Block::divideSimpleIdAndValue(const std::string &str, size_t pos) const
 {
 	size_t	end;
@@ -82,6 +124,9 @@ std::pair<std::string, std::string>	Block::divideSimpleIdAndValue(const std::str
 	return std::make_pair(id, value);
 }
 
+/**
+ * @details block_directives 하나를 id와 value로 나눕니다.
+ */
 std::pair<std::string, std::string>	Block::divideBlockIdAndValue(const std::string& str, size_t pos) const
 {
 	size_t	end;
@@ -99,7 +144,9 @@ std::pair<std::string, std::string>	Block::divideBlockIdAndValue(const std::stri
 	return std::make_pair(id, value);
 }
 
-//parser
+/**
+ * @details simple_directives 하나를 파싱합니다.
+ */
 size_t	Block::parseSimple(const std::string& script)
 {
 	const std::string	simple_id[11] = {"listen", "root", "server_name", "index", "error_page", "client_max_body_size", "upload_path", "allow_method", "try_files", "autoindex", ""};
@@ -113,72 +160,81 @@ size_t	Block::parseSimple(const std::string& script)
 	return script.length();
 }
 
+/**
+ * @details block_directives 하나를 파싱합니다.
+ */
 size_t	Block::parseInnerBlock(const std::string& script)
 {
 	_inner_blocks.push_back(generateInnerBlock(script));
 	return script.length();
 }
 
-void	Block::setParsingFunctionArray()
-{
-	_parsing_func[0] = &Block::parsePort;
-	_parsing_func[1] = &Block::parseRoot;
-	_parsing_func[2] = &Block::parseServerName;
-	_parsing_func[3] = &Block::parseIndex;
-	_parsing_func[4] = &Block::parseDefaultErrorPage;
-	_parsing_func[5] = &Block::parseClientBodySize;
-	_parsing_func[6] = &Block::parseUploadPath;
-	_parsing_func[7] = &Block::parseAllowMethod;
-	_parsing_func[8] = &Block::parseTryFiles;
-	_parsing_func[9] = &Block::parseAutoindex;
-	_parsing_func[10] = &Block::parseNoMatchId;
-}
 
+/** @details 포트번호 파싱함수
+ */
 void	Block::parsePort(const std::string& value)
 {
 	_port = std::strtol(value.c_str(), NULL, 10);
 }
 
+/** @details 루트경로 파싱함수
+ */
 void	Block::parseRoot(const std::string& value)
 {
 	_root = value;
 }
 
+/** @details 서버이름 파싱함수
+ */
 void	Block::parseServerName(const std::string& value)
 {
 	_server_name = value;
 }
 
+/** @details 인덱스파일이름 파싱함수
+ */
 void	Block::parseIndex(const std::string& value)
 {
 	_index = value;
 }
 
+/** @details 에러페이지 경로 파싱함수
+ */
 void	Block::parseDefaultErrorPage(const std::string& value)
 {
 	_default_error_page = value;
 }
 
+/** @details 클라이언트 바디의 최대바이트수 파싱함수
+ */
 void	Block::parseClientBodySize(const std::string& value)
 {
 	_client_body_size = std::strtol(value.c_str(), NULL, 10);
 }
 
+/** @details 업로드 경로 파싱함수
+ */
 void	Block::parseUploadPath(const std::string& value)
 {
 	_upload_path = value;
 }
 
+/** @details 허용메소드 파싱함수
+ */
 void	Block::parseAllowMethod(const std::string& value)
 {
 	_allow_method.push_back(value);
 }
 
+/** @details 특정 파일형식을 찾을 경로 파싱함수
+ */
 void	Block::parseTryFiles(const std::string& value)
 {
 	_try_files.push_back(value);
 }
 
+/** @details autoindex여부  파싱함수
+ */
 void	Block::parseAutoindex(const std::string& value)
 {
 	if (value == "on")
@@ -189,6 +245,8 @@ void	Block::parseAutoindex(const std::string& value)
 		throw std::exception();
 }
 
+/** @details simple_directives의 id가 이상할 경우의 예외처리를 던지는 파싱함수
+ */
 void	Block::parseNoMatchId(const std::string& value)
 {
 	if (value.empty() || 1)
@@ -238,3 +296,18 @@ Block::~Block()
 		delete *it;
 }
 
+//private function
+void	Block::setParsingFunctionArray()
+{
+	_parsing_func[0] = &Block::parsePort;
+	_parsing_func[1] = &Block::parseRoot;
+	_parsing_func[2] = &Block::parseServerName;
+	_parsing_func[3] = &Block::parseIndex;
+	_parsing_func[4] = &Block::parseDefaultErrorPage;
+	_parsing_func[5] = &Block::parseClientBodySize;
+	_parsing_func[6] = &Block::parseUploadPath;
+	_parsing_func[7] = &Block::parseAllowMethod;
+	_parsing_func[8] = &Block::parseTryFiles;
+	_parsing_func[9] = &Block::parseAutoindex;
+	_parsing_func[10] = &Block::parseNoMatchId;
+}

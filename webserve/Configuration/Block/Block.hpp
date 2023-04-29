@@ -4,8 +4,10 @@
 #include <iostream>
 #include <vector>
 
-///@file	Block.hpp
-///@brief	시험작성
+/**
+ * @class	Block
+ * @brief	Config파일의 기본단위가 되는 클래스
+ */
 class Block
 {
 private:
