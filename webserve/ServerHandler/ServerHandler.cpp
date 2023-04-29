@@ -7,11 +7,10 @@ ServerHandler::ServerHandler() : _request_message()
     init_status();
 }
 
-ServerHandler::ServerHandler(ServerParser server_parser, const std::string& message)
- : _request_message(HttpRequestMessage(message))
+ServerHandler::ServerHandler(ServerBlock server_block)
 {
     init_status();
-    _server_parser = server_parser;
+    _server_block = server_block;
 }
 
 ServerHandler::ServerHandler(const ServerHandler& server_handler)
@@ -20,7 +19,7 @@ ServerHandler::ServerHandler(const ServerHandler& server_handler)
         return ;
     _status = server_handler._status;
     _request_message = server_handler._request_message;
-    _server_parser = server_handler._server_parser;
+    _server_block = server_handler._server_block;
 }
 
 ServerHandler::~ServerHandler()
@@ -150,18 +149,9 @@ LocationParser ServerHandler::findLocationParser(std::list<LocationParser> locat
 
 std::string ServerHandler::findPath(std::string request_target)
 {
-    // std::list<LocationParser> locations;
-    std::string root = "var/html";
-    std::string index = "index.html index.htm";
-
-    // location redirect
-    // LocationParser location = findLocationParser(locations, request_target);
-
-    // 요청 url
-    std::string path = root + request_target;
-
-    // 인덱싱 url
-    std::vector<std::string> index_path = getIndexPath(root, index);
+    // ServerBlock안에 Location 블록에 따라 file 찾기
+    // ServerBlock* block = (ServerBlock *)_self->selectModule("ServerBlock");
+    // std::list<LocationBlock> locations = block->getLocations();
 
     std::string directory;
     if (request_target.compare("/") != 0)

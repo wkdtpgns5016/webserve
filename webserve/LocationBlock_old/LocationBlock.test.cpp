@@ -1,8 +1,8 @@
-#include "LocationParser.hpp"
+#include "LocationBlock.hpp"
 #include "gtest/gtest.h"
 #include <string>
 
-TEST(LocationParserTest, LocationParserUnitTest)
+TEST(LocationBlockTest, LocationBlockUnitTest)
 {
 	// given
 	std::string a = "location / {\n"
@@ -15,11 +15,11 @@ TEST(LocationParserTest, LocationParserUnitTest)
     "}\n";
 
 	// when
-    LocationParser l_parser(a);
-    std::string url = l_parser.getUrl();
-    std::string root = l_parser.getRoot();
-    std::string upload_path = l_parser.getUploadPath();
-    bool auto_index = l_parser.getAutoIndex();
+    LocationBlock l_block(a);
+    std::string url = l_block.getUrl();
+    std::string root = l_block.getRoot();
+    std::string upload_path = l_block.getUploadPath();
+    bool auto_index = l_block.getAutoIndex();
 
     // then
     EXPECT_EQ(url, "/");

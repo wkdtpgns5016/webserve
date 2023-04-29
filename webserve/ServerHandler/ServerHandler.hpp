@@ -4,9 +4,7 @@
 #include "../lib/ft/ft.hpp"
 #include "../HttpMessage/HttpRequestMessage.hpp"
 #include "../HttpMessage/HttpResponseMessage.hpp"
-#include "../ServerParser/ServerParser.hpp"
-#include "../LocationParser/LocationParser.hpp"
-#include <unistd.h>
+#include "../ServerBlock/ServerBlock.hpp"
 #include <map>
 
 class ServerHandler
@@ -14,7 +12,7 @@ class ServerHandler
     private:
     std::map<int, std::string>  _status;
     HttpRequestMessage          _request_message;
-    ServerParser                _server_parser;
+    ServerBlock                _server_block;
 
     void init_status();
     bool checkFile(std::string request_target);
@@ -32,7 +30,7 @@ class ServerHandler
 
     public:
     ServerHandler();
-    ServerHandler(ServerParser server_parser, const std::string& message);
+    ServerHandler(ServerBlock server_block);
     ServerHandler(const ServerHandler& server_handler);
     ~ServerHandler();
     ServerHandler& operator=(const ServerHandler& server_handler);

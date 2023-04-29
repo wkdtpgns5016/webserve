@@ -1,9 +1,10 @@
-#ifndef LOCATION_PARSER_HPP
-#define LOCATION_PARSER_HPP
+#ifndef LOCATION_BLOCK_HPP
+#define LOCATION_BLOCK_HPP
 
 #include "../lib/ft/ft.hpp"
+#include "../Block/Block.hpp"
 #include <list>
-class LocationParser
+class LocationBlock : public Block
 {
 
 private:
@@ -22,11 +23,11 @@ private:
     bool check_method(std::string method);
 
 public:
-    LocationParser();
-    LocationParser(const std::string& block);
-    LocationParser(const LocationParser& location_parser);
-    ~LocationParser();
-    LocationParser& operator=(const LocationParser& location_parser);
+    LocationBlock();
+    LocationBlock(const std::string& block);
+    LocationBlock(const LocationBlock& location_block);
+    ~LocationBlock();
+    LocationBlock& operator=(const LocationBlock& location_block);
 
     std::string getUrl() const;
     std::string getRoot() const;

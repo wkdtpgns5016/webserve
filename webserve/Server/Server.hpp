@@ -28,7 +28,7 @@
 // kqueue를 위한 헤더파일
 #include <sys/event.h>
 
-#include "../ServerParser/ServerParser.hpp"
+#include "../ServerBlock/ServerBlock.hpp"
 #include "../ServerHandler/ServerHandler.hpp"
 
 #define BUFSIZE 1024
@@ -44,7 +44,7 @@ private:
     std::map<int, std::string>  _clients;
     int                         _kqueue;
     struct kevent               _event_list[8];
-    ServerParser                _server_parser;
+    ServerBlock                _server_block;
     
     void socket_init(int port, std::string ip_addr);
     void change_events(uintptr_t ident, int16_t filter, uint16_t flags, uint32_t fflags, intptr_t data, void *udata);

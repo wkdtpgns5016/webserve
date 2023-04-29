@@ -1,4 +1,4 @@
-#include "./Parser.hpp"
+#include "./Block.hpp"
 #include "gtest/gtest.h"
 #include <iostream>
 #include <fstream>
@@ -19,19 +19,19 @@ std::string	read_file_into_string(std::string filename)
     return str;
 }
 
-TEST(ParserTest, jumpTrashTest)
+TEST(BlockTest, jumpTrashTest)
 {
 	// given
 	std::string a = "    listen 80;\n"
                     "    root /var/html;\n";
 	std::string b = "    listen 80;";
-	Parser	parser;
+	Block	block;
 
 	// when
 	
-	size_t	answer1 = parser.jumpTrash(a, 0);
-	size_t	answer2 = parser.jumpTrash(a, a.find(';') + 1);
-	std::pair<std::string, std::string> answer3 = parser.divideElementIdAndValue(b, 0);
+	size_t	answer1 = block.jumpTrash(a, 0);
+	size_t	answer2 = block.jumpTrash(a, a.find(';') + 1);
+	std::pair<std::string, std::string> answer3 = block.divideElementIdAndValue(b, 0);
 	// then
     EXPECT_EQ(a[answer1], 'l');
     EXPECT_EQ(a[answer2], 'r');
@@ -49,14 +49,14 @@ std::string	makeString(std::pair<std::string::iterator, std::string::iterator> a
 	return ret;
 }
 
-//TEST(ParserTest, extractTest)
+//TEST(BlockTest, extractTest)
 //{
 //	std::string a = read_file_into_string("../var/conf/test.conf");
 //	
-//	Parser parser;
-//	std::pair<std::string::iterator, std::string::iterator> answer1 = parser.extractBlockID(a.begin(), a.end());
-//	std::pair<std::string::iterator, std::string::iterator> answer2 = parser.extractElement(answer1.second, a.end());
-//	std::pair<std::string::iterator, std::string::iterator> answer3 = parser.extractBraces(answer1.second, a.end());
+//	Block Block;
+//	std::pair<std::string::iterator, std::string::iterator> answer1 = Block.extractBlockID(a.begin(), a.end());
+//	std::pair<std::string::iterator, std::string::iterator> answer2 = Block.extractElement(answer1.second, a.end());
+//	std::pair<std::string::iterator, std::string::iterator> answer3 = Block.extractBraces(answer1.second, a.end());
 //
 //	std::string str1 =	"server\n";
 //	std::string str2 = "{\n	listen 80;";
