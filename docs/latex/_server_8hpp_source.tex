@@ -1,0 +1,77 @@
+\hypertarget{_server_8hpp_source}{}\doxysection{Server.\+hpp}
+\label{_server_8hpp_source}\index{webserve/Server/Server.hpp@{webserve/Server/Server.hpp}}
+\mbox{\hyperlink{_server_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ SERVER\_HPP}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ SERVER\_HPP}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <fcntl.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00015}00015\ \textcolor{comment}{//\ socket을\ 위한\ 헤더파일}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <sys/types.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <sys/time.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <sys/socket.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00019}00019\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <arpa/inet.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00022}00022\ \textcolor{comment}{//\ select을\ 위한\ 헤더파일}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00023}00023\ \textcolor{preprocessor}{\#include\ <sys/select.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00025}00025\ \textcolor{comment}{//\ poll을\ 위한\ 헤더파일}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00026}00026\ \textcolor{preprocessor}{\#include\ <poll.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00028}00028\ \textcolor{comment}{//\ kqueue를\ 위한\ 헤더파일}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00029}00029\ \textcolor{preprocessor}{\#include\ <sys/event.h>}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00031}00031\ \textcolor{preprocessor}{\#include\ "{}../ServerBlock/ServerBlock.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00032}00032\ \textcolor{preprocessor}{\#include\ "{}../ServerHandler/ServerHandler.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00034}\mbox{\hyperlink{_server_8hpp_aeca034f67218340ecb2261a22c2f3dcd}{00034}}\ \textcolor{preprocessor}{\#define\ BUFSIZE\ 1024}}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00036}\mbox{\hyperlink{class_server}{00036}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_server}{Server}}\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00037}00037\ \{}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00038}00038\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00039}00039\ \ \ \ \ pthread\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_s\_thread;}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_server\_socket;}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00041}00041\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ \ \ \ \ \ \ \ \ \ \_server\_addr;}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00042}00042\ \ \ \ \ std::vector<struct\ kevent>\ \ \_change\_list;}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00043}00043\ \ \ \ \ \textcolor{keyword}{struct\ }kevent*\ \ \ \ \ \ \ \ \ \ \ \ \ \ \_curr\_event;}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00044}00044\ \ \ \ \ std::map<int,\ std::string>\ \ \_clients;}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_kqueue;}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00046}00046\ \ \ \ \ \textcolor{keyword}{struct\ }kevent\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_event\_list[8];}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00047}00047\ \ \ \ \ \mbox{\hyperlink{class_server_block}{ServerBlock}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_server\_block;}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00048}00048\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{void}\ socket\_init(\textcolor{keywordtype}{int}\ port,\ std::string\ ip\_addr);}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{void}\ change\_events(uintptr\_t\ ident,\ int16\_t\ filter,\ uint16\_t\ flags,\ uint32\_t\ fflags,\ intptr\_t\ data,\ \textcolor{keywordtype}{void}\ *udata);}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00051}00051\ \ \ \ \ \textcolor{keywordtype}{void}\ disconnect\_client(\textcolor{keywordtype}{int}\ client\_fd,\ std::map<int,\ std::string>\ \&clients);}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00052}00052\ \ \ \ \ \textcolor{keywordtype}{void}\ accept\_new\_client();}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordtype}{void}\ receiveMessage();}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00054}00054\ \ \ \ \ \textcolor{keywordtype}{void}\ sendMessage();}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00056}00056\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}*\ threadFunction(\textcolor{keywordtype}{void}\ *);}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00057}00057\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00058}00058\ \ \ \ \ \mbox{\hyperlink{class_server_ad5ec9462b520e59f7ea831e157ee5e59}{Server}}();}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00059}00059\ \ \ \ \ \mbox{\hyperlink{class_server_ad5ec9462b520e59f7ea831e157ee5e59}{Server}}(std::string\ block);}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00060}00060\ \ \ \ \ \mbox{\hyperlink{class_server_ad5ec9462b520e59f7ea831e157ee5e59}{Server}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_server}{Server}}\&\ server);}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00061}00061\ \ \ \ \ \mbox{\hyperlink{class_server_a4b3aa2579cb1c8cd1d069582c14d0fa6}{\string~Server}}();}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00062}00062\ \ \ \ \ \mbox{\hyperlink{class_server}{Server}}\&\ \mbox{\hyperlink{class_server_a33ec649318654c84af2fb3a75f363ae0}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_server}{Server}}\&\ server);}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00064}00064\ \ \ \ \ pthread\_t\ \mbox{\hyperlink{class_server_a5ef1fcca261e2b0eeae2086dc312675a}{getThread}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00065}00065\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \mbox{\hyperlink{class_server_a228e9412c741ab91d8db584a62e63ecb}{getPort}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00066}00066\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_server_abb27d30b40a94326e3fd629d3b30b7d5}{run}}();}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00067}00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_server_a57b525899914e178a65276ca1339a64a}{threading}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00068}00068\ \};}
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{_server_8hpp_source_l00071}00071\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

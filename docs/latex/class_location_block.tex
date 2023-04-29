@@ -1,0 +1,401 @@
+\hypertarget{class_location_block}{}\doxysection{Location\+Block Class Reference}
+\label{class_location_block}\index{LocationBlock@{LocationBlock}}
+
+
+{\ttfamily \#include $<$Location\+Block.\+hpp$>$}
+
+Inheritance diagram for Location\+Block\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_location_block}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_location_block_a340279b9bf4e16f4fe0e7ab021ce6e89}{Location\+Block}} (const \mbox{\hyperlink{class_block}{Block}} \&outer\+\_\+block, const std\+::string \&script, const std\+::string \&url)
+\item 
+\mbox{\hyperlink{class_block}{Block}} $\ast$ \mbox{\hyperlink{class_location_block_a0364605374123c8554df92b2aacb3531}{generate\+Inner\+Block}} (const std\+::string \&script)
+\item 
+const std\+::string \& \mbox{\hyperlink{class_location_block_a8cc57a5199f3aa816b9975b7a009c7c7}{get\+Url}} () const
+\item 
+\mbox{\hyperlink{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}{Location\+Block}} ()
+\item 
+\mbox{\hyperlink{class_location_block_ae528ac2a17f0726f79ff8a37b9763779}{$\sim$\+Location\+Block}} ()
+\item 
+\mbox{\hyperlink{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}{Location\+Block}} ()
+\item 
+\mbox{\hyperlink{class_location_block_aa6d86706c4dec17bbc0e46c201ab0537}{Location\+Block}} (const std\+::string \&block)
+\item 
+\mbox{\hyperlink{class_location_block_a27f931ff04e248bf3e1c2c68bedf9929}{Location\+Block}} (const \mbox{\hyperlink{class_location_block}{Location\+Block}} \&location\+\_\+block)
+\item 
+\mbox{\hyperlink{class_location_block_ae528ac2a17f0726f79ff8a37b9763779}{$\sim$\+Location\+Block}} ()
+\item 
+\mbox{\hyperlink{class_location_block}{Location\+Block}} \& \mbox{\hyperlink{class_location_block_aa856abae747c829c075f1f770c6d7544}{operator=}} (const \mbox{\hyperlink{class_location_block}{Location\+Block}} \&location\+\_\+block)
+\item 
+std\+::string \mbox{\hyperlink{class_location_block_a8cc57a5199f3aa816b9975b7a009c7c7}{get\+Url}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_location_block_a91ef47ec00f9988b9ffc6070b3eb9d3b}{get\+Root}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_location_block_acc29fe8fdfb8ec40c9702a0758a3bb69}{get\+Index}} () const
+\item 
+std\+::string \mbox{\hyperlink{class_location_block_aa19ce102d838297893df98cb2857dac7}{get\+Upload\+Path}} () const
+\item 
+std\+::list$<$ std\+::string $>$ \mbox{\hyperlink{class_location_block_a7dcd18f06c05c4610df86a56b6cb753f}{get\+Allow\+Method}} () const
+\item 
+bool \mbox{\hyperlink{class_location_block_a31cc4d786e5bd02b4aff0013034ee8ab}{get\+Auto\+Index}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_block}{Block}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_block_a37658a946bf5067ad01d68d9ff086adc}{Block}} ()
+\item 
+virtual \mbox{\hyperlink{class_block_a19d1bd0e1cef6a865ed2745a2e648405}{$\sim$\+Block}} ()
+\item 
+virtual \mbox{\hyperlink{class_block}{Block}} $\ast$ \mbox{\hyperlink{class_block_a16823eaa1eb0989c412ec79ac1148295}{generate\+Inner\+Block}} (const std\+::string \&script)=0
+\item 
+void \mbox{\hyperlink{class_block_a73716df851a226dc4e8a60128c2d2d80}{compile}} (const std\+::string \&script)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_a7342594ed13e9ad1c4cfb734db98246d}{jump\+Trash}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_a40ddfd3c554dbab531a4628b2c380631}{jump\+Simple}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_a1f8ba9febe5022e8ab4d11b10238d3bb}{jump\+Block}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_af84a9ae98faf806e0cb1c353ce106f7c}{jump\+Block\+Id}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_ab491bdd704015ad2bbad02ed192ac172}{jump\+Word}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+std\+::pair$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{class_block_a3d39478a68924d11ae61b4140da2bb1c}{divide\+Simple\+Id\+And\+Value}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+std\+::pair$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{class_block_a0f70077149b79c84f0b446ade2313b29}{divide\+Block\+Id\+And\+Value}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_ad4aaf19dccf006b1c5a789c3f771bd03}{parse\+Simple}} (const std\+::string \&script)
+\item 
+virtual size\+\_\+t \mbox{\hyperlink{class_block_af8a2bcb16ce953ac29962f5a14eb70b2}{parse\+Inner\+Block}} (const std\+::string \&script)
+\item 
+void \mbox{\hyperlink{class_block_aa3c91a2f404986e9c049604a7833e5e6}{parse\+Port}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_ae41540ff65ec4c997edc7fcb5002472f}{parse\+Root}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a0fca54980a210de5987fcbb63e62efd4}{parse\+Server\+Name}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a829c3183763bffdff25f07780ffabe7c}{parse\+Index}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a2e25a9a6b25846a2cdde8fac50d48bcf}{parse\+Default\+Error\+Page}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_ab6a84057cd93d61d1e53c571170c0130}{parse\+Client\+Body\+Size}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a115ffb81328d743eef1699bfc0716683}{parse\+Upload\+Path}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a15a7cbbcd980b9ca9954a44f38799665}{parse\+Allow\+Method}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a30ede4ec81711333affebe8b4ed9578f}{parse\+Try\+Files}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a9d7f30a76a313f458c71912b8fc805df}{parse\+Autoindex}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a3025eda5eb796a48c232fb818a69a470}{parse\+No\+Match\+Id}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a7de6d0e843cfdaaf7dfb4ed41cd89fc6}{copy\+Without\+Inner\+Block}} (const \mbox{\hyperlink{class_block}{Block}} \&)
+\item 
+void \mbox{\hyperlink{class_block_a29f8988dc869c0316e2cf21a8599d2ee}{set\+Parsing\+Function\+Array}} ()
+\item 
+const int \& \mbox{\hyperlink{class_block_a600e63dd526de11efcbd2396ceb0dbdd}{get\+Port}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_a7107e22cb229326327a1ca4f9304da3d}{get\+Root}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_a2494a5326173eb8e1953b0a569fcdc1b}{get\+Addr}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_ac9c34579b9decb84412621cb6b27d354}{get\+Server\+Name}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_a16773b3ed0e55d5cd319f43253ef0950}{get\+Index}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_afec977ed6f227cf6b463dbd47b5b71f8}{get\+Default\+Error\+Page}} () const
+\item 
+const int \& \mbox{\hyperlink{class_block_aaedb4acadb7e052dbdbee43984ebfd4a}{get\+Client\+Body\+Size}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_a502ab154d8576cde92b540e526207183}{get\+Upload\+Path}} () const
+\item 
+const std\+::vector$<$ std\+::string $>$ \& \mbox{\hyperlink{class_block_a32678f73e00e322d1d131f597041c993}{get\+Allow\+Method}} () const
+\item 
+const std\+::vector$<$ std\+::string $>$ \& \mbox{\hyperlink{class_block_a2754124d5779870fecf088600bd01e1e}{get\+Try\+Files}} () const
+\item 
+const bool \& \mbox{\hyperlink{class_block_aeae123cccc7843e84e9052ebf6adbdcf}{get\+Autoindex}} () const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{class_block}{Block}} $\ast$ $>$ \& \mbox{\hyperlink{class_block_a33463928825fd56d0f9aa83385bce9de}{get\+Inner\+Block}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+\doxysubsubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_block}{Block}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_block_a8e643e4cd3f7f00ad7ca76f97113f7b7}{\+\_\+port}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a5d20905005f57ed77dbc47f577995b1f}{\+\_\+root}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a23dc7149af47dbf9c0546c9fac27d25c}{\+\_\+addr}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a5756a8fe1331ab0c169ed16ffe009f67}{\+\_\+server\+\_\+name}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_ade6e3ebbf51f0dcf29eb7d9d3db018ba}{\+\_\+index}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a6be61af6054f467d08d214e4a761a3d8}{\+\_\+default\+\_\+error\+\_\+page}}
+\item 
+int \mbox{\hyperlink{class_block_aad1998f40d66ac00105423d5e1250b6a}{\+\_\+client\+\_\+body\+\_\+size}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a3f072edfb5acfb40e233bdc8b1f64459}{\+\_\+upload\+\_\+path}}
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_block_a9e03d08d678f3462389cc67f84821c2a}{\+\_\+allow\+\_\+method}}
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_block_ae477f3c4da6557e2012de014f52b4d10}{\+\_\+try\+\_\+files}}
+\item 
+bool \mbox{\hyperlink{class_block_a388724905eb981b98a94cb369017fd53}{\+\_\+autoindex}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_block}{Block}} $\ast$ $>$ \mbox{\hyperlink{class_block_a1b20e5cebed33904dbdee0a026053bd4}{\+\_\+inner\+\_\+blocks}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8hpp_source_l00006}{6}} of file \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8hpp_source}{Location\+Block.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_location_block_a340279b9bf4e16f4fe0e7ab021ce6e89}\label{class_location_block_a340279b9bf4e16f4fe0e7ab021ce6e89}} 
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{LocationBlock()}{LocationBlock()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily Location\+Block\+::\+Location\+Block (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_block}{Block}} \&}]{outer\+\_\+block,  }\item[{const std\+::string \&}]{script,  }\item[{const std\+::string \&}]{url }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00004\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \_url(url)}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \ \ \ \ \mbox{\hyperlink{class_block_a7de6d0e843cfdaaf7dfb4ed41cd89fc6}{copyWithoutInnerBlock}}(outer\_block);}
+\DoxyCodeLine{00007\ \ \ \ \ \mbox{\hyperlink{class_block_a73716df851a226dc4e8a60128c2d2d80}{compile}}(script);}
+\DoxyCodeLine{00008\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}\label{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}} 
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{LocationBlock()}{LocationBlock()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily Location\+Block\+::\+Location\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021\ \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_ae528ac2a17f0726f79ff8a37b9763779}\label{class_location_block_ae528ac2a17f0726f79ff8a37b9763779}} 
+\index{LocationBlock@{LocationBlock}!````~LocationBlock@{$\sim$LocationBlock}}
+\index{````~LocationBlock@{$\sim$LocationBlock}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{$\sim$LocationBlock()}{~LocationBlock()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Location\+Block\+::$\sim$\+Location\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022\ \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}\label{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}} 
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{LocationBlock()}{LocationBlock()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily Location\+Block\+::\+Location\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_location_block_aa6d86706c4dec17bbc0e46c201ab0537}\label{class_location_block_aa6d86706c4dec17bbc0e46c201ab0537}} 
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{LocationBlock()}{LocationBlock()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily Location\+Block\+::\+Location\+Block (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{block }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ std::vector<std::string>\ arr\ =\ \mbox{\hyperlink{namespaceft_a51c6d900d78ff6611d62c848b3c7e421}{ft::splitString}}(block,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00015\ \ \ \ \ std::string\ head\ =\ arr[0];}
+\DoxyCodeLine{00016\ \ \ \ \ std::string\ body\ =\ deleteBlock(arr);}
+\DoxyCodeLine{00017\ \ \ \ \ std::vector<std::string>\ lines\ =\ \mbox{\hyperlink{namespaceft_a51c6d900d78ff6611d62c848b3c7e421}{ft::splitString}}(body,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00018\ \ \ \ \ removeFirstWhiteSpaces(\&lines);}
+\DoxyCodeLine{00019\ \ \ \ \ setUrl(head);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::vector<std::string>::iterator\ it\ =\ lines.begin();\ it\ !=\ lines.end();\ it++)}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ setAttributes(*it);}
+\DoxyCodeLine{00022\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_a27f931ff04e248bf3e1c2c68bedf9929}\label{class_location_block_a27f931ff04e248bf3e1c2c68bedf9929}} 
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\index{LocationBlock@{LocationBlock}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{LocationBlock()}{LocationBlock()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily Location\+Block\+::\+Location\+Block (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_location_block}{Location\+Block}} \&}]{location\+\_\+block }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_location_block_ae528ac2a17f0726f79ff8a37b9763779}\label{class_location_block_ae528ac2a17f0726f79ff8a37b9763779}} 
+\index{LocationBlock@{LocationBlock}!````~LocationBlock@{$\sim$LocationBlock}}
+\index{````~LocationBlock@{$\sim$LocationBlock}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{$\sim$LocationBlock()}{~LocationBlock()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Location\+Block\+::$\sim$\+Location\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_location_block_a0364605374123c8554df92b2aacb3531}\label{class_location_block_a0364605374123c8554df92b2aacb3531}} 
+\index{LocationBlock@{LocationBlock}!generateInnerBlock@{generateInnerBlock}}
+\index{generateInnerBlock@{generateInnerBlock}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{generateInnerBlock()}{generateInnerBlock()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_block}{Block}} $\ast$ Location\+Block\+::generate\+Inner\+Block (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{script }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_block_a16823eaa1eb0989c412ec79ac1148295}{Block}}.
+
+
+
+Definition at line \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::exception();}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordflow}{if}\ (script.empty()\ ||\ 1)}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}{LocationBlock}}();}
+\DoxyCodeLine{00016\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_a7dcd18f06c05c4610df86a56b6cb753f}\label{class_location_block_a7dcd18f06c05c4610df86a56b6cb753f}} 
+\index{LocationBlock@{LocationBlock}!getAllowMethod@{getAllowMethod}}
+\index{getAllowMethod@{getAllowMethod}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{getAllowMethod()}{getAllowMethod()}}
+{\footnotesize\ttfamily std\+::list$<$ std\+::string $>$ Location\+Block\+::get\+Allow\+Method (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source_l00164}{164}} of file \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00165\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_allow\_method);}
+\DoxyCodeLine{00167\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_a31cc4d786e5bd02b4aff0013034ee8ab}\label{class_location_block_a31cc4d786e5bd02b4aff0013034ee8ab}} 
+\index{LocationBlock@{LocationBlock}!getAutoIndex@{getAutoIndex}}
+\index{getAutoIndex@{getAutoIndex}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{getAutoIndex()}{getAutoIndex()}}
+{\footnotesize\ttfamily bool Location\+Block\+::get\+Auto\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source_l00169}{169}} of file \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00170\ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_auto\_index);}
+\DoxyCodeLine{00172\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_acc29fe8fdfb8ec40c9702a0758a3bb69}\label{class_location_block_acc29fe8fdfb8ec40c9702a0758a3bb69}} 
+\index{LocationBlock@{LocationBlock}!getIndex@{getIndex}}
+\index{getIndex@{getIndex}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{getIndex()}{getIndex()}}
+{\footnotesize\ttfamily std\+::string Location\+Block\+::get\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source_l00154}{154}} of file \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00155\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_index);}
+\DoxyCodeLine{00157\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_a91ef47ec00f9988b9ffc6070b3eb9d3b}\label{class_location_block_a91ef47ec00f9988b9ffc6070b3eb9d3b}} 
+\index{LocationBlock@{LocationBlock}!getRoot@{getRoot}}
+\index{getRoot@{getRoot}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{getRoot()}{getRoot()}}
+{\footnotesize\ttfamily std\+::string Location\+Block\+::get\+Root (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source_l00149}{149}} of file \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00150\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_root);}
+\DoxyCodeLine{00152\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_aa19ce102d838297893df98cb2857dac7}\label{class_location_block_aa19ce102d838297893df98cb2857dac7}} 
+\index{LocationBlock@{LocationBlock}!getUploadPath@{getUploadPath}}
+\index{getUploadPath@{getUploadPath}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{getUploadPath()}{getUploadPath()}}
+{\footnotesize\ttfamily std\+::string Location\+Block\+::get\+Upload\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source_l00159}{159}} of file \mbox{\hyperlink{_location_block__old_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00160\ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_upload\_path);}
+\DoxyCodeLine{00162\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_a8cc57a5199f3aa816b9975b7a009c7c7}\label{class_location_block_a8cc57a5199f3aa816b9975b7a009c7c7}} 
+\index{LocationBlock@{LocationBlock}!getUrl@{getUrl}}
+\index{getUrl@{getUrl}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{getUrl()}{getUrl()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily std\+::string Location\+Block\+::get\+Url (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp_source}{Location\+Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \{\ \textcolor{keywordflow}{return}\ \_url;\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_location_block_a8cc57a5199f3aa816b9975b7a009c7c7}\label{class_location_block_a8cc57a5199f3aa816b9975b7a009c7c7}} 
+\index{LocationBlock@{LocationBlock}!getUrl@{getUrl}}
+\index{getUrl@{getUrl}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{getUrl()}{getUrl()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily std\+::string Location\+Block\+::get\+Url (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_location_block_aa856abae747c829c075f1f770c6d7544}\label{class_location_block_aa856abae747c829c075f1f770c6d7544}} 
+\index{LocationBlock@{LocationBlock}!operator=@{operator=}}
+\index{operator=@{operator=}!LocationBlock@{LocationBlock}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_location_block}{Location\+Block}} \& Location\+Block\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_location_block}{Location\+Block}} \&}]{location\+\_\+block }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+webserve/\+Configuration/\+Location\+Block/\mbox{\hyperlink{_configuration_2_location_block_2_location_block_8hpp}{Location\+Block.\+hpp}}\item 
+webserve/\+Location\+Block\+\_\+old/\mbox{\hyperlink{_location_block__old_2_location_block_8hpp}{Location\+Block.\+hpp}}\item 
+webserve/\+Configuration/\+Location\+Block/\mbox{\hyperlink{_configuration_2_location_block_2_location_block_8cpp}{Location\+Block.\+cpp}}\item 
+webserve/\+Location\+Block\+\_\+old/\mbox{\hyperlink{_location_block__old_2_location_block_8cpp}{Location\+Block.\+cpp}}\end{DoxyCompactItemize}

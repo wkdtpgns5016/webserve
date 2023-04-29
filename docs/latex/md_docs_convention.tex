@@ -1,0 +1,72 @@
+\begin{quote}
+웹서브 팀프로젝트 협업을 위한 코드 / 커밋 컨벤션 정리 \end{quote}
+\hypertarget{md_docs_convention_autotoc_md28}{}\doxysubsection{$<$strong$>$\+Code 컨벤션$<$/strong$>$}\label{md_docs_convention_autotoc_md28}
+
+\begin{DoxyItemize}
+\item {\bfseries{공통}} ~\newline
+ \begin{DoxyVerb}  - 웬만하면 norm 준수 ex) space 대신 tap 쓰기
+  - 추가 기능 또는 추가 객체 작성이 필요한 경우 팀원과 상의 후 코드 작성 진행
+  - 약어 사용X ex) count -> cnt
+\end{DoxyVerb}
+
+\item {\bfseries{클래스}} ~\newline
+ \begin{DoxyVerb}  - 클래스 명은 파스칼 케이스로 작성 ex) HttpMessage
+  - 클래스에 Orthodox canonical form 적용
+  - 맴버변수에 대한 getter, setter 구현
+\end{DoxyVerb}
+
+\item {\bfseries{변수}} ~\newline
+ \begin{DoxyVerb}  - 변수나 맴버변수 이름은 스네이크 케이스로 작성 ex) word_count
+  - 맴버변수 이름의 시작은 언더바(_)로 시작 ex) _server_fd
+\end{DoxyVerb}
+
+\item {\bfseries{함수}} ~\newline
+ \begin{DoxyVerb}  - 함수나 메소드명은 카멜 케이스로 작성 ex) toString()
+\end{DoxyVerb}
+ ~\newline
+
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md_docs_convention_autotoc_md30}{}\doxysubsection{$<$strong$>$\+Git Commit 컨벤션$<$/strong$>$}\label{md_docs_convention_autotoc_md30}
+
+\begin{DoxyItemize}
+\item {\bfseries{커밋 메시지 Format}} \begin{DoxyVerb}  머릿말
+  (빈줄) 
+  본문
+  (빈줄) 
+  꼬릿말
+\end{DoxyVerb}
+
+\item {\bfseries{머릿말 양식}} \begin{DoxyVerb}  [type] 제목
+\end{DoxyVerb}
+
+\begin{DoxyItemize}
+\item {\bfseries{type}} \texorpdfstring{$>$}{>} $\vert$ type 종류 $\vert$ $\vert$ \texorpdfstring{$>$}{>} $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ \texorpdfstring{$>$}{>} $\vert$ {\bfseries{Feat}} $\vert$ 새로운 기능 추가 $\vert$ \texorpdfstring{$>$}{>} $\vert$ {\bfseries{Fix}} $\vert$ 오류 수정 $\vert$ \texorpdfstring{$>$}{>} $\vert$ {\bfseries{Docs}} $\vert$ 문서 작성 및 수정 $\vert$ \texorpdfstring{$>$}{>} $\vert$ {\bfseries{Refactor}} $\vert$ 코드 리팩토링 $\vert$ \texorpdfstring{$>$}{>} $\vert$ {\bfseries{Test}} $\vert$ 테스트 코드 작성 및 테스트 진행 $\vert$
+\item {\bfseries{제목}} \texorpdfstring{$>$}{>} 1. $\ast$$\ast$개조식 서술$\ast$$\ast$로 작성 ~\newline
+ \texorpdfstring{$>$}{>} 2. 최대한 간결하고 해당 커밋에 대한 요점을 기입
+\item {\bfseries{머릿말 예시}} \texorpdfstring{$>$}{>} 1. \mbox{[}Feat\mbox{]} HTTP 메시지 객체 구현 ~\newline
+ \texorpdfstring{$>$}{>} 2. \mbox{[}Fix\mbox{]} \mbox{\hyperlink{class_server}{Server}} 객체 OO기능 수정 ~\newline
+ \texorpdfstring{$>$}{>} 3. \mbox{[}Docs\mbox{]} Config file 작성 ~\newline
+ \texorpdfstring{$>$}{>} …
+\end{DoxyItemize}
+\item {\bfseries{본문 양식}} \begin{DoxyVerb}  - 한 줄당 72자로 제한
+  - 어떤 걸 작성하였고 (WHAT), 왜 작성하였는지 작성 (WHY)
+\end{DoxyVerb}
+
+\item {\bfseries{꼬릿말 양식}} \begin{DoxyVerb}  유형: #이슈번호
+\end{DoxyVerb}
+
+\begin{DoxyItemize}
+\item {\bfseries{유형 양식}} \texorpdfstring{$>$}{>} $\vert$ 유형 종류 $\vert$ $\vert$ \texorpdfstring{$>$}{>} $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ \texorpdfstring{$>$}{>} $\vert$ {\bfseries{Fixes}} $\vert$ 해당 이슈 해결 중 $\vert$ \texorpdfstring{$>$}{>} $\vert$ {\bfseries{Resolved}} $\vert$ 해당 이슈 해결 $\vert$ \texorpdfstring{$>$}{>} $\vert$ {\bfseries{Ref}} $\vert$ 참고해야 할 이슈 번호 $\vert$ \texorpdfstring{$>$}{>} $\vert$ {\bfseries{Related to}} $\vert$ 해당 커밋에 관련된 이슈 번호 (아직 해결 못함) $\vert$
+\item {\bfseries{꼬릿말 예시}} \texorpdfstring{$>$}{>} Fixes\+: \#45, Related to\+: \#34, \#23
+\end{DoxyItemize}
+\item {\bfseries{커밋메시지 전체 예시}} \begin{DoxyVerb}  [Feat] 로그 메시지 출력 기능 구현
+
+  CommonLogFormat 객체, 로그 객체 출력 기능 구현
+
+  Resolved: #31 
+\end{DoxyVerb}
+ ~\newline
+ 
+\end{DoxyItemize}

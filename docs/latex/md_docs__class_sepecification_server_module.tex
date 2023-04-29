@@ -1,0 +1,57 @@
+\begin{quote}
+{\bfseries{서버 모듈 개요}}
+\begin{DoxyItemize}
+\item 3-\/1. Server\+Module
+\item 3-\/2. 서버 파싱 모듈
+\begin{DoxyItemize}
+\item Location\+Parser
+\item Server\+Parser
+\end{DoxyItemize}
+\item 3-\/3. 서버 컨트롤러 모듈
+\begin{DoxyItemize}
+\item Server\+Controller
+\end{DoxyItemize}
+\item 3-\/4. 서버 실행 모듈
+\begin{DoxyItemize}
+\item Server\+Run 
+\end{DoxyItemize}
+\end{DoxyItemize}\end{quote}
+\hypertarget{md_docs__class_sepecification_server_module_autotoc_md18}{}\doxysubsection{$<$strong$>$3-\/1. 서버 모듈$<$/strong$>$}\label{md_docs__class_sepecification_server_module_autotoc_md18}
+{\bfseries{class Server\+Module}} \begin{quote}
+서버 모듈 부모 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ \mbox{\hyperlink{class_server}{Server}} $\ast$ $\vert$ \+\_\+self $\vert$ protected $\vert$ 서버 객체를 가리키는 포인터 변수 $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_server_module_autotoc_md19}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_server_module_autotoc_md19}
+\hypertarget{md_docs__class_sepecification_server_module_autotoc_md20}{}\doxysubsection{$<$strong$>$3-\/2. 서버 파싱 모듈$<$/strong$>$}\label{md_docs__class_sepecification_server_module_autotoc_md20}
+{\bfseries{class Location\+Parser}} \begin{quote}
+설정파일 내의 loaction block 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ string $\vert$ \+\_\+url $\vert$ private $\vert$ url $\vert$ $\vert$ string $\vert$ \+\_\+root $\vert$ private $\vert$ 기본적으로 파일을 검색하는 경로 $\vert$ $\vert$ string $\vert$ \+\_\+index $\vert$ private $\vert$ 파일 명시 안되었을 경우 리다이렉션 하는 파일 경로 $\vert$ $\vert$ string $\vert$ \+\_\+upload\+\_\+path $\vert$ private $\vert$ 파일 업로드 위치 $\vert$ $\vert$ bool $\vert$ \+\_\+auto\+\_\+index $\vert$ private $\vert$ autoindex 설정 여부 $\vert$ $\vert$ list\&\#60;string\&\#62; $\vert$ \+\_\+allow\+\_\+method $\vert$ private $\vert$ 허용 http 메소드 목록 $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ string get\+Url(void) const $\vert$ public $\vert$ url getter $\vert$ $\vert$ string get\+Root(void) const $\vert$ public $\vert$ root getter $\vert$ $\vert$ string get\+Index(void) const $\vert$ public $\vert$ index getter $\vert$ $\vert$ string get\+Upload\+Path(void) const $\vert$ public $\vert$ upload\+\_\+path getter $\vert$ $\vert$ bool get\+Auto\+Index(void) const $\vert$ public $\vert$ auto\+\_\+index getter $\vert$ $\vert$ list\&\#60;string\&\#62; get\+Allow\+Method(void) const $\vert$ public $\vert$ allow\+\_\+method getter $\vert$ $\vert$ void location\+Block\+Parsing(string) $\vert$ public $\vert$ 문자열을 인자로 받아 객체를 파싱하는 함수 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_server_module_autotoc_md21}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_server_module_autotoc_md21}
+{\bfseries{class Server\+Parser}} \begin{quote}
+설정파일 내의 server block 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ int $\vert$ \+\_\+port $\vert$ private $\vert$ 포트 번호 $\vert$ $\vert$ string $\vert$ \+\_\+addr $\vert$ private $\vert$ 서버 주소 $\vert$ $\vert$ string $\vert$ \+\_\+server\+\_\+name $\vert$ private $\vert$ 서버 이름 $\vert$ $\vert$ string $\vert$ \+\_\+index $\vert$ private $\vert$ 파일 명시 안되었을 경우 리다이렉션 하는 파일 경로 $\vert$ $\vert$ string $\vert$ \+\_\+default\+\_\+error\+\_\+page $\vert$ private $\vert$ 기본 에러 페이지 위치 $\vert$ $\vert$ int $\vert$ \+\_\+client\+\_\+body\+\_\+size $\vert$ private $\vert$ 클라이언트 바디 길이 제한 $\vert$ $\vert$ list\&\#60;Location\+Parser\&\#62; $\vert$ \+\_\+locations $\vert$ private $\vert$ location block 리스트 $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ int get\+Port(void) const $\vert$ public $\vert$ port getter $\vert$ $\vert$ string get\+Addr(void) const $\vert$ public $\vert$ addr getter $\vert$ $\vert$ string get\+Server\+Name(void) const $\vert$ public $\vert$ server\+\_\+name getter $\vert$ $\vert$ string get\+Index(void) const $\vert$ public $\vert$ index getter $\vert$ $\vert$ string get\+Default\+Error\+Page(void) const $\vert$ public $\vert$ default\+\_\+error\+\_\+page getter $\vert$ $\vert$ string get\+Clinet\+Body\+Size(void) const $\vert$ public $\vert$ client\+\_\+body\+\_\+size getter $\vert$ $\vert$ list\&\#60;Location\+Parser\&\#62; get\+Locations(void) const $\vert$ public $\vert$ locations getter $\vert$ $\vert$ void parse\+Server\+Block(string) $\vert$ private $\vert$ serverblock parsing $\vert$ $\vert$ void parse\+Port(string) $\vert$ private $\vert$ port parsing $\vert$ $\vert$ void parse\+Addr(string) $\vert$ private $\vert$ server address parsing $\vert$ $\vert$ void parse\+Server\+Name(string) $\vert$ private $\vert$ server name parsing $\vert$ $\vert$ void parse\+Index(string) $\vert$ private $\vert$ index parsing $\vert$ $\vert$ void parse\+Default\+Erro\+Page(string) $\vert$ private $\vert$ errorpage parsing $\vert$ $\vert$ void parse\+Client\+Body\+Size(string) $\vert$ private $\vert$ client body size parsing $\vert$ $\vert$ void pass\+Location\+Block(string) $\vert$ private $\vert$ pass location block to Location\+Parser $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_server_module_autotoc_md22}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_server_module_autotoc_md22}
+\hypertarget{md_docs__class_sepecification_server_module_autotoc_md23}{}\doxysubsection{$<$strong$>$3-\/3. 서버 컨트롤러 모듈$<$/strong$>$}\label{md_docs__class_sepecification_server_module_autotoc_md23}
+{\bfseries{3-\/3. Server\+Controller}} \begin{quote}
+서버 컨트롤러 모듈 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ \mbox{\hyperlink{class_http_request_message}{Http\+Request\+Message}} $\vert$ \+\_\+request\+\_\+message $\vert$ private $\vert$ http 요청 메세지 $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ \mbox{\hyperlink{class_http_response_message}{Http\+Response\+Message}} get\+Handler(void) $\vert$ private $\vert$ GET 메소드 핸들러 $\vert$ $\vert$ \mbox{\hyperlink{class_http_response_message}{Http\+Response\+Message}} post\+Handler(void) $\vert$ private $\vert$ POST 메소드 핸들러 $\vert$ $\vert$ \mbox{\hyperlink{class_http_response_message}{Http\+Response\+Message}} delete\+Handler(void) $\vert$ private $\vert$ DELETE 메소드 핸들러 $\vert$ $\vert$ \mbox{\hyperlink{class_http_response_message}{Http\+Response\+Message}} request\+Handler(void) $\vert$ public $\vert$ Http 요청 메세지 핸들러 $\vert$ $\vert$ \mbox{\hyperlink{class_http_request_message}{Http\+Request\+Message}} \mbox{\hyperlink{class_http_request_message}{Http\+Request\+Message(void)}} $\vert$ public $\vert$ 요청 메세지 getter $\vert$ $\vert$ void set\+Request\+Message(string) $\vert$ public $\vert$ Http 요청 메세지 setter $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_server_module_autotoc_md24}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_server_module_autotoc_md24}
+\hypertarget{md_docs__class_sepecification_server_module_autotoc_md25}{}\doxysubsection{$<$strong$>$3-\/4. 서버 실행 모듈$<$/strong$>$}\label{md_docs__class_sepecification_server_module_autotoc_md25}
+{\bfseries{3-\/3. Server\+Run}} \begin{quote}
+서버 실행 모듈 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ void run(void) $\vert$ public $\vert$ 서버 작동 메서드 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_server_module_autotoc_md26}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_server_module_autotoc_md26}

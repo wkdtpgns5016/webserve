@@ -1,0 +1,222 @@
+\hypertarget{test__webserve_8hpp_source}{}\doxysection{test\+\_\+webserve.\+hpp}
+\label{test__webserve_8hpp_source}\index{example/include/test\_webserve.hpp@{example/include/test\_webserve.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ TEST\_WEBSERVE\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ TEST\_WEBSERVE\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}test\_server.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}http\_request\_message.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <fcntl.h>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ SEND\_MESSAGE\_BUFSIZE\ 1024}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ HTML\_PATH\ "{}/var/www/html"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtest__webserve}{test\_webserve}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classtest__server}{test\_server}}}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ GET\_handler(\mbox{\hyperlink{classhttp__request__message}{http\_request\_message}}\ hrm,\ \textcolor{keywordtype}{int}\ sock,\ std::string\ path)\ }
+\DoxyCodeLine{00020\ \ \ \ \ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ std::string\ final\_path;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ fd;}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ str\_len;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ data[SEND\_MESSAGE\_BUFSIZE];}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ version\ 확인}}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hrm.header.request\_line.version.compare(\textcolor{stringliteral}{"{}HTTP/1.0"{}})\ !=\ 0\ \&\&\ \(\backslash\)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ hrm.header.request\_line.version.compare(\textcolor{stringliteral}{"{}HTTP/1.1"{}})\ !=\ 0)}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ write(sock,\ \textcolor{stringliteral}{"{}HTTP/1.1\ 400\ Bad\ Request\(\backslash\)n"{}},\ 25);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ "{}빈\ path일\ 경우\ /index.html로\ 리다이렉션"{}}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hrm.header.request\_line.url.length()\ ==\ 1\ \&\&\ \(\backslash\)}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ !strncmp(hrm.header.request\_line.url.c\_str(),\ \textcolor{stringliteral}{"{}/"{}},\ 1))}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ hrm.header.request\_line.url\ =\ \textcolor{stringliteral}{"{}/index.html"{}};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ html\ 페이지\ path\ 설정}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ final\_path\ =\ path\ +\ hrm.header.request\_line.url;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ html\ 페이지\ path를\ 찾아\ 클라이언트에게\ 전송}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((fd\ =\ open(final\_path.c\_str(),\ O\_RDONLY))\ !=\ -\/1)}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ write(sock,\ \textcolor{stringliteral}{"{}HTTP/1.0\ 200\ OK\(\backslash\)r\(\backslash\)n\(\backslash\)r\(\backslash\)nhello\ word\(\backslash\)n"{}},\ 30);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ while\ (1)}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ str\_len\ =\ read(fd,\ data,\ SEND\_MESSAGE\_BUFSIZE);}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (str\_len\ <=\ 0)}}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ break;}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ write(sock,\ data,\ str\_len);}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ html\ 페이지가\ 없으면\ 404\ error}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ write(sock,\ \textcolor{stringliteral}{"{}HTTP/1.1\ 404\ Not\ Fount\(\backslash\)n"{}},\ 23);}
+\DoxyCodeLine{00054\ \ \ \ \ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ POST\_handler(\mbox{\hyperlink{classhttp__request__message}{http\_request\_message}}\ hrm,\ \textcolor{keywordtype}{int}\ sock)\ }
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ std::string\ final\_path;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ str\_len;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ data[SEND\_MESSAGE\_BUFSIZE];}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ version\ 확인}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hrm.header.request\_line.version.compare(\textcolor{stringliteral}{"{}HTTP/1.0"{}})\ !=\ 0\ \&\&\ \(\backslash\)}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ hrm.header.request\_line.version.compare(\textcolor{stringliteral}{"{}HTTP/1.1"{}})\ !=\ 0)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ write(sock,\ \textcolor{stringliteral}{"{}HTTP/1.1\ 400\ Bad\ Request\(\backslash\)n"{}},\ 25);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ html\ 페이지\ path를\ 찾아\ 클라이언트에게\ 전송}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ send(sock,\ \textcolor{stringliteral}{"{}HTTP/1.1\ 200\ OK\(\backslash\)n\(\backslash\)n"{}},\ 17,\ 0);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ write(sock,\ hrm.body.c\_str(),\ hrm.body.length());}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ request\_handler(\textcolor{keywordtype}{void}\ *clnt\_sock,\ \textcolor{keywordtype}{int}\ str\_len,\ \textcolor{keywordtype}{char}\ *message)}
+\DoxyCodeLine{00080\ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ sock;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ sock\ =\ *((\textcolor{keywordtype}{int}\ *)clnt\_sock);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ HTTP\ REQUSET\ MESSAGE\ 출력}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/Request\ message\ from\ Client-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ std::string\ str(message,\ str\_len);}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ std::cout\ <<\ str\ <<\ std::endl;}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ HTTP\ REQUSET\ MESSAGE\ 구조체\ 초기화}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classhttp__request__message}{http\_request\_message}}\ hrm(str);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ html\ 페이지\ 경로}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ std::string\ path(getenv(\textcolor{stringliteral}{"{}PWD"{}}));}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ path.resize(path.length()\ -\/\ 5);}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ path\ +=\ HTML\_PATH;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ HTTP\ REQUEST\ METHOD\ 종류에\ 따라\ 다르게\ 동작}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (hrm.header.request\_line.method\ ==\ GET)\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ GET\_handler(hrm,\ sock,\ path);}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (hrm.header.request\_line.method\ ==\ POST)\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ POST\_handler(hrm,\ sock);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 연결\ 종료}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ shutdown(sock,\ SHUT\_RDWR);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ close(sock);}
+\DoxyCodeLine{00108\ \ \ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{void}\ simple\_run()}
+\DoxyCodeLine{00114\ \ \ \ \ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clnt\_sock;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ str\_len;}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ message[BUFSIZE];}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (1)}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ clnt\_sock\ =\ accept\_server();}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (clnt\_sock\ ==\ -\/1)}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ break\ ;}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ read\ data}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 클라이언트는\ 서버에게\ HTTP\ REQUSET\ MESSAGE를\ 전송}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((str\_len\ =\ read(clnt\_sock,\ message,\ BUFSIZE))\ <\ 0)}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::exception();}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ request\ handler}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ request\_handler(\&clnt\_sock,\ str\_len,\ message);}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 연결\ 종료}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ shutdown(clnt\_sock,\ SHUT\_RDWR);}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ close(clnt\_sock);}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{void}\ multi\_plexing\_run\_with\_epoll()}
+\DoxyCodeLine{00149\ \ \ \ \ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ kq,\ event\_num;}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ std::vector<struct\ kevent>\ change\_list;\ \textcolor{comment}{//\ kqueue에\ 등록할\ event\ list}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }kevent\ event\_list[10];\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ event\ 리스트}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }kevent\ event\_temp;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ event\ 임시\ 변수}}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }kevent*\ curr\_event;}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clnt\_sock;}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ str\_len;}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ message[BUFSIZE];}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ kqueue\ 초기화}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((kq\ =\ kqueue())\ ==\ -\/1)}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::exception();}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 서버\ 리스닝\ 소켓\ change\ list에\ 추가}}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ EV\_SET(\&event\_temp,\ socket\_fd,\ EVFILT\_READ,\ EV\_ADD\ |\ EV\_ENABLE,\ 0,\ 0,\ NULL);}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ change\_list.push\_back(event\_temp);}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (1)}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ kevent()\ change\ list\ 안에\ 이벤트들을\ 새로\ 등록하고,\ 이벤트\ 발생\ 감지}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ -\/1\ :\ 오류\ 발생}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 0\ :\ 타임\ 아웃}}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 1\ 이상\ :\ 이벤트\ 발생한\ 개수}}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ event\_num\ =\ kevent(kq,\ \&change\_list[0],\ change\_list.size(),\ event\_list,\ 10,\ NULL);}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (event\_num\ ==\ -\/1)}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ change\_list.clear();\ \textcolor{comment}{//\ change\ list\ 초기화}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ event\_num;\ i++)}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ curr\_event\ =\ \&event\_list[i];}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 현재\ 이벤트가\ 에러\ 발생}}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (curr\_event-\/>flags\ \&\ EV\_ERROR)}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (curr\_event-\/>ident\ ==\ socket\_fd)}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::exception();}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ close(curr\_event-\/>ident);}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 현재\ 이벤트가\ read일\ 경우}}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (curr\_event-\/>filter\ ==\ EVFILT\_READ)}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 서버\ 리스닝\ 소켓에서\ 이벤트\ 발생}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (curr\_event-\/>ident\ ==\ socket\_fd)}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ client\ accpet}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clnt\_sock\ =\ accept\_server();}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 클라이언트\ 소켓\ change\ list에\ 추가}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EV\_SET(\&event\_temp,\ clnt\_sock,\ EVFILT\_READ,\ EV\_ADD\ |\ EV\_ENABLE,\ 0,\ 0,\ NULL);}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ change\_list.push\_back(event\_temp);}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ EV\_SET(\&event\_temp,\ clnt\_sock,\ EVFILT\_WRITE,\ EV\_ADD\ |\ EV\_ENABLE,\ 0,\ 0,\ NULL);}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ change\_list.push\_back(event\_temp);}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 클라이언트\ 소켓에서\ 이벤트\ 발생}}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ read\ 에러이거나\ 클라이언트\ disconnect\ 요청}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((str\_len\ =\ read(curr\_event-\/>ident,\ message,\ BUFSIZE))\ ==\ 0)}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ close(curr\_event-\/>ident);}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ read\ data}}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ request\_handler(\&curr\_event-\/>ident,\ str\_len,\ message);}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ close(socket\_fd);}
+\DoxyCodeLine{00222\ \ \ \ \ \}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00225\ \ \ \ \ \mbox{\hyperlink{classtest__webserve}{test\_webserve}}(\textcolor{keywordtype}{int}\ port)\ :\ \mbox{\hyperlink{classtest__server}{test\_server}}(port)\ \{\};}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordtype}{int}\ run()}
+\DoxyCodeLine{00228\ \ \ \ \ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ bind\_server();}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ listen\_server();}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ simple\_run();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ 다중\ 연결\ 고려하지\ 않은\ 웹서버\ 구동}}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ multi\_plexing\_run\_with\_epoll();\ \textcolor{comment}{//\ 멀티\ 플렉싱\ 기반\ 웹서버\ 구동}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (0);}
+\DoxyCodeLine{00234\ \ \ \ \ \}}
+\DoxyCodeLine{00235\ \};}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

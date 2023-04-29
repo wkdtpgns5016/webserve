@@ -1,0 +1,174 @@
+\begin{quote}
+웹서브 테스트 주도 개발 프로그래밍  출처 \+: \href{https://mangkyu.tistory.com/182\#recentComments}{\texttt{ https\+://mangkyu.\+tistory.\+com/182\#recent\+Comments}} \end{quote}
+\hypertarget{md_docs__study_test_driven_development_autotoc_md49}{}\doxysubsection{$<$strong$>$좋은 테스트 코드 특징 (\+FIRST)$<$/strong$>$}\label{md_docs__study_test_driven_development_autotoc_md49}
+
+\begin{DoxyEnumerate}
+\item Fast\+: 테스트는 빠르게 동작하여 자주 돌릴 수 있어야 한다.
+\item Independent\+: 각각의 테스트는 독립적이며 서로 의존해서는 안된다.
+\item Repeatable\+: 어느 환경에서도 반복 가능해야 한다.
+\item Self-\/\+Validating\+: 테스트는 성공 또는 실패로 bool 값으로 결과를 내어 자체적으로 검증되어야 한다.
+\item Timely\+: 테스트는 적시에 즉, 테스트하려는 실제 코드를 구현하기 직전에 구현해야 한다. 좋은 테스트는 \uline{빠르게 독립적으로 어느 환경에서든 실행이 가능하고 검증}할 수 있어야 한다는 것이다. 만약 테스트를 실행하는 비용이 크다면 그럴 바에는 통합테스트를 하는게 더 나을 수도 있다. 그리고 우리는 위의 5가지 규칙 중에서 Timely에 주목해야 할 필요가 있다. 테스트 코드를 작성하는 시점에 대한 이야기인데, Clean\+Code에서는 \uline{테스트 코드를 실제 코드를 구현하기 직전에 구현}하라고 설명하고 있다. 즉, 테스트 코드를 먼저 작성하라는 것이다. 우리는 왜 테스트 코드를 먼저 작성해야 하고, 어떻게 테스트 코드를 먼저 작성할 수 있는지에 대해 알아야 한다.
+\end{DoxyEnumerate}\hypertarget{md_docs__study_test_driven_development_autotoc_md50}{}\doxysubsection{$<$strong$>$테스트 코드를 먼저 작성해야 하는 이유$<$/strong$>$}\label{md_docs__study_test_driven_development_autotoc_md50}
+
+\begin{DoxyEnumerate}
+\item 깔끔한 코드를 작성할 수 있다.
+\item 장기적으로 개발 비용을 절감할 수 있다.
+\item 개발이 끝나면 테스트 코드를 작성하는 것은 매우 귀찮다. 실패 케이스면 더욱 그렇다.
+\end{DoxyEnumerate}\hypertarget{md_docs__study_test_driven_development_autotoc_md51}{}\doxysubsection{$<$strong$>$\+TDD(test-\/driven development)$<$/strong$>$}\label{md_docs__study_test_driven_development_autotoc_md51}
+\begin{quote}
+테스트 주도 개발(test-\/driven development, TDD)은 소프트웨어 개발 방법론 중의 하나로, 선 개발 후 테스트 방식이 아닌 선 테스트 후 개발 방식의 프로그래밍 방법을 말한다. 다시 말해 먼저 자동화된 테스트 코드를 작성한 후 테스트를 통과하기 위한 코드를 개발하는 방식의 개발 방식을 말한다. \end{quote}
+\hypertarget{md_docs__study_test_driven_development_autotoc_md52}{}\doxysubsection{$<$strong$>$\+TDD를 이용한 개발 프로세스$<$/strong$>$}\label{md_docs__study_test_driven_development_autotoc_md52}
+
+\begin{DoxyEnumerate}
+\item 테스트 케이스 작성
+\item 테스트 케이스를 통과하는 코드 작성
+\item 코드 리팩토링
+\item 1번 부터 반복 먼저 테스트 케이스와 테스트 코드를 작성한다. 테스트 코드가 개발을 주도하기 위해서는 \uline{반드시 실패를 포함하는 테스트 코드의 작성이 앞서야 한다.} 다음으로는 테스트 케이스를 통과하는 코드를 작성한다. 작성된 코드는 개선될 수 있는 많은 여지를 포함한 코드이다. 마지막으로 리팩토링 단계에서 이를 개선한다.
+\end{DoxyEnumerate}\hypertarget{md_docs__study_test_driven_development_autotoc_md53}{}\doxysubsection{$<$strong$>$\+TDD 접근 방법$<$/strong$>$}\label{md_docs__study_test_driven_development_autotoc_md53}
+
+\begin{DoxyEnumerate}
+\item 빨간 막대, 초록 막대
+\item given / when / then 패턴
+\item 가짜로 구현하기
+\item 삼각 측량법
+\item 명확하게 구현하기
+\item \mbox{\hyperlink{class_mock}{Mock}} 활용
+\end{DoxyEnumerate}
+
+{\bfseries{빨간 막대, 초록 막대}} \begin{quote}
+{\bfseries{빨간 막대}} \+: 실패하는 작은 테스트를 작성  {\bfseries{초록 막대}} \+: 코드가 테스트를 통과하도록 신속하게 작동하는 코드 작성. 빨리 테스트가 작동하여, 통과하도록 함. \end{quote}
+
+
+
+\begin{DoxyItemize}
+\item {\bfseries{given / when / then 패턴}} \begin{quote}
+{\bfseries{Given}} \+: 테스트에 사용되는 변수, 입력 값을 정의하거나 \mbox{\hyperlink{class_mock}{Mock}} 객체를 정의하는 구문 포함 {\bfseries{When}} \+: 실제로 액션을 하는 테스트  {\bfseries{Then}} \+: 테스트를 검증. 예상한 값과 실제 실행을 통해 나온 값을 검증한다.  
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \{c++\}}
+\DoxyCodeLine{\ \ \ \ /**\ }
+\DoxyCodeLine{\ \ \ \ *\ test\ code}
+\DoxyCodeLine{\ \ \ \ *\ sum(a,\ b)\ 이라는\ 기능을\ 테스트}
+\DoxyCodeLine{\ \ \ \ */}
+\DoxyCodeLine{\ \ \ \ void\ sumUnitTest()}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ //\ given\ :\ 준비}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ int\ a\ =\ 3;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ int\ b\ =\ 3;}
+\DoxyCodeLine{</blockquote>}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ //\ when\ :\ 실행}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ int\ result\ =\ sum(a,\ b);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ //\ then\ :\ 검증}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ assertThat(result).isEqualTo(6);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ @icode}
+\DoxyCodeLine{-\/\ **가짜로\ 구현하기**}
+\DoxyCodeLine{\ \ \ \ >\ 위의\ 테스트를\ 가장\ 빠르게\ 통과하는\ 방법은\ 6을\ 반환하는\ 것이다.}
+\DoxyCodeLine{\ \ \ \ \ ```c++}
+\DoxyCodeLine{\ \ \ \ /**\ }
+\DoxyCodeLine{\ \ \ \ *\ test\ code}
+\DoxyCodeLine{\ \ \ \ *\ sum(a,\ b)\ 이라는\ 기능을\ 테스트}
+\DoxyCodeLine{\ \ \ \ */}
+\DoxyCodeLine{\ \ \ \ int\ sum(int\ a,\ int\ b)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ return\ (6);}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+ 이렇게 변수를 사용하지 않고 상수를 반환하며, 답이 아닌 방법으로 가짜 구현하여 최대한 빨리 테스트를 통과하는 것이 가짜 구현 방법이다. 가짜 구현으로 개발하면 다음과 같은 2가지 효과를 얻을 수 있다.  \texorpdfstring{$>$}{>}{\bfseries{심리학적}}\+: 빨간 막대와 초록 막대 상태는 완전히 다르다. 막대가 초록색이라면 어느 위치인지 알고 거기부터 리팩토링해 갈 수 있다.  {\bfseries{범위 조절}}\+: 하나의 구체적인 예에서 일반화를 함으로써, 불필요한 고민으로 혼동되는 일을 예방할 수 있다.\end{quote}
+
+\item {\bfseries{삼각 측량법}} \begin{quote}
+삼각 측량은 테스트 주도로 추상화된 과정을 일반화하는 과정이다. 삼각 측량 방법은 테스트 예시가 2개 이상일 때에만 추상화를 해야 한다. \end{quote}
+\`{}\`{}\`{}c++ /$\ast$$\ast$
+\begin{DoxyItemize}
+\item test code
+\item sum(a, b) 이라는 기능을 테스트 $\ast$/ void sum\+Unit\+Test() \{ // given \+: 준비
+
+// when \+: 실행 int result1 = sum(1, 3); int result2 = sum(4, 7);
+
+// then \+: 검증 assert\+That(result1).is\+Equal\+To(4); assert\+That(result2).is\+Equal\+To(11); \}
+\end{DoxyItemize}
+\item {\bfseries{명확하게 구현하기}} \begin{quote}
+명백하게 구현하는 방법은 가짜 구현이나 삼각 측량 방법을 사용하지 않고 바로 정답을 구현하는 방법이다.  현재 사용하는 더하기와 같은 문제는 쉬우므로 다음과 같이 바로 진짜 구현을 해도 괜찮다. \end{quote}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{c++\}}
+\DoxyCodeLine{\ \ \ /**\ }
+\DoxyCodeLine{\ \ \ *\ test\ code}
+\DoxyCodeLine{\ \ \ *\ sum(a,\ b)\ 이라는\ 기능을\ 테스트}
+\DoxyCodeLine{\ \ \ */}
+\DoxyCodeLine{\ \ \ int\ sum(int\ a,\ int\ b)}
+\DoxyCodeLine{\ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ return\ (a\ +\ b);}
+\DoxyCodeLine{\ \ \ \}}
+
+\end{DoxyCode}
+
+\item {\bfseries{\mbox{\hyperlink{class_mock}{Mock}} 활용}} \begin{quote}
+\href{https://heegs.tistory.com/16}{\texttt{ https\+://heegs.\+tistory.\+com/16}}  실제 객체를 다양한 조건으로 인해 제대로 구현하기 어려울 경우 가짜로 만들어 사용하는데, 이를 \mbox{\hyperlink{class_mock}{Mock}} 이라 한다 \end{quote}
+{\bfseries{Mcok 개념 분류}} \begin{quote}
+$\vert$ 유형 종류 $\vert$ $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ {\bfseries{테스트더블}} $\vert$ -\/ 테스트를 진행하기 어려운 경우 대신해 테스트를 진행할 수 있도록 만들어주는 객체 ~\newline
+ -\/ Mock객체와 유사한 의미, 테스트 더블이 좀더 상위 의미로 사용. $\vert$ $\vert$ {\bfseries{더미객체(\+Dommy Object)}} $\vert$ -\/ 단순히 인스턴스화될 수 있는 수준으로만 객체를 구현 ~\newline
+ -\/ 객체가 필요할 뿐 객체의 기능까지는 필요하지 않은 경우에 사용. $\vert$ $\vert$ {\bfseries{테스트스텁(\+Test Stub)}} $\vert$ -\/ 더미 객체가 실제로 동작하는 것처럼 보이게 만들어놓은 객체 ~\newline
+ -\/ 특정 값을 리턴해 주거나 특정 메시지를 출력해주는 작업 ~\newline
+ -\/ 특정 상태를 가정하여 하드코딩된 형태이기 때문에, 로직에 따른 값의 변경을 테스트 할 수 없다. $\vert$ $\vert$ {\bfseries{페이크객체(\+Fake Object)}} $\vert$ -\/ 여러 상태를 대표할 수 있도록 구현된 객체로, 실제 로직이 구현된 것 처럼 보이게 한다  -\/ 실 DB에 접속해 동일한 모양이 보이도록 객체 내부에 구현할 수 있다. $\vert$ $\vert$ {\bfseries{테스트스파이(\+Test Spy)}} $\vert$ -\/ 테스트 더블로 구현된 객체에 자기 자신이 호출 되었을 떄 확인이 필요한 부분을 기록하도록 구현  -\/ 행위 기반 테스트가 필요한 경우 사용. $\vert$ $\vert$ {\bfseries{\mbox{\hyperlink{class_mock}{Mock}} 객체}} $\vert$ 행위를 검증하기 위해 사용되는 객체를 지칭  -\/ 수동으로 만들 수도 있고 프레임 워크를 사용해 만들 수 있다 $\vert$ \end{quote}
+\begin{quote}
+\mbox{\hyperlink{class_mock}{Mock}} 객체는 $\ast$$\ast$행위 검증$\ast$$\ast$에 사용하고, Stub은 $\ast$$\ast$상태 검증$\ast$$\ast$에 사용한다. \end{quote}
+
+\end{DoxyItemize}\hypertarget{md_docs__study_test_driven_development_autotoc_md54}{}\doxysubsection{$<$strong$>$\+Google Test 사용$<$/strong$>$}\label{md_docs__study_test_driven_development_autotoc_md54}
+{\bfseries{1. cmake 설치}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{brew\ install\ cmake}
+
+\end{DoxyCode}
+
+
+{\bfseries{2. Google Test 환경 구성}}  \begin{quote}
+1. github에 있는 Google Test 릴리즈 버전을 선택하여 내려 받는다  (\href{https://github.com/google/googletest/releases}{\texttt{ https\+://github.\+com/google/googletest/releases}}) 
+\begin{DoxyEnumerate}
+\item 프로젝트 내 test 디렉토리에 붙여 넣는다
+\item 테스트 코드 작성
+\item CMake\+List.\+txt 작성 테스트 실행 
+\end{DoxyEnumerate}\end{quote}
+{\bfseries{3. CMake\+List.\+txt 작성}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ cmake\ 버전}
+\DoxyCodeLine{cmake\_minimum\_required(VERSION\ 3.24)}
+\DoxyCodeLine{\#\ 프로젝트\ 이름}
+\DoxyCodeLine{project(webserve-\/test)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ c++\ 지원\ 버전}
+\DoxyCodeLine{set(CMAKE\_CXX\_STANDARD\ 17)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ 라이브러리\ 빌드\ (C\ 코드)}
+\DoxyCodeLine{add\_library(sum\ SHARED\ lib/sum.c\ lib/sum.h)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ 실행\ 프로그램\ 빌드\ (C\ 코드)}
+\DoxyCodeLine{include\_directories(lib)}
+\DoxyCodeLine{add\_executable(webserve-\/test\ main.cpp)}
+\DoxyCodeLine{target\_link\_libraries(webserve-\/test\ sum)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ gtest\ 빌드\ (C++\ 코드)}
+\DoxyCodeLine{set(gtest\_SRC\_DIR\ test/googletest-\/1.13.0)}
+\DoxyCodeLine{add\_subdirectory(\$\{gtest\_SRC\_DIR\})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ 테스트\ 프로그램\ 빌드\ (C++\ 코드)}
+\DoxyCodeLine{include\_directories(lib)}
+\DoxyCodeLine{include\_directories(\$\{gtest\_SRC\_DIR\}/googletest/include)}
+\DoxyCodeLine{add\_executable(테스트실행파일명\ test/sum\_test.cc)}
+\DoxyCodeLine{target\_link\_libraries(테스트실행파일명\ gtest\ gtest\_main)}
+\DoxyCodeLine{target\_link\_libraries(테스트실행파일명\ sum)}
+
+\end{DoxyCode}
+
+
+{\bfseries{4. 테스트 실행}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ -\/S\ .\ -\/B\ build\ }
+\DoxyCodeLine{cmake\ -\/-\/build\ build}
+\DoxyCodeLine{cd\ build}
+\DoxyCodeLine{./테스트실행파일명}
+
+\end{DoxyCode}
+ 

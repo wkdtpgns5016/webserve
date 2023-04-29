@@ -1,0 +1,94 @@
+\hypertarget{http__request__message_8hpp_source}{}\doxysection{http\+\_\+request\+\_\+message.\+hpp}
+\label{http__request__message_8hpp_source}\index{example/include/http\_request\_message.hpp@{example/include/http\_request\_message.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ HTTP\_REQUEST\_MESSAGE\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ HTTP\_REQUEST\_MESSAGE\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{enum}\ request\_method}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ GET\ =\ 0,}
+\DoxyCodeLine{00016\ \ \ \ \ POST\ =\ 1}
+\DoxyCodeLine{00017\ \};}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrequest__line}{request\_line}}}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ request\_method\ method;}
+\DoxyCodeLine{00025\ \ \ \ \ std::string\ url;}
+\DoxyCodeLine{00026\ \ \ \ \ std::string\ version;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{structrequest__line}{request\_line}}()\ \{\ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{structrequest__line}{request\_line}}(std::string\ \mbox{\hyperlink{structrequest__line}{request\_line}})}
+\DoxyCodeLine{00030\ \ \ \ \ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::istringstream\ ss(\mbox{\hyperlink{structrequest__line}{request\_line}});}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ std::vector<std::string>\ result;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ std::string\ temp;}
+\DoxyCodeLine{00034\ \ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(ss,\ temp,\ \textcolor{charliteral}{'\ '}))\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ result.push\_back(temp);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!result.at(0).compare(\textcolor{stringliteral}{"{}GET"{}}))}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ method\ =\ GET;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (!result.at(0).compare(\textcolor{stringliteral}{"{}POST"{}}))}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ method\ =\ POST;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ url\ =\ result.at(1);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ version\ =\ result.at(2);}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \}\ \mbox{\hyperlink{structrequest__line}{request\_line}};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structrequest__message__header}{request\_message\_header}}}
+\DoxyCodeLine{00050\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{structrequest__line}{request\_line}}\ \mbox{\hyperlink{structrequest__line}{request\_line}};}
+\DoxyCodeLine{00052\ \ \ \ \ std::string\ request\_header;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{structrequest__message__header}{request\_message\_header}}()\ :\ \mbox{\hyperlink{structrequest__line}{request\_line}}()\ \{\};}
+\DoxyCodeLine{00055\ \}\ \mbox{\hyperlink{structrequest__message__header}{request\_message\_header}};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhttp__request__message}{http\_request\_message}}}
+\DoxyCodeLine{00061\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{structrequest__message__header}{request\_message\_header}}\ header;}
+\DoxyCodeLine{00064\ \ \ \ \ std::string\ body;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \mbox{\hyperlink{classhttp__request__message}{http\_request\_message}}(std::string\ messages)}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ std::stringstream\ ss(messages);}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ std::vector<std::string>\ result;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ std::string\ temp;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 1;}
+\DoxyCodeLine{00072\ \ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(ss,\ temp,\ \textcolor{charliteral}{'\(\backslash\)n'}))}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ result.push\_back(temp);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ header.request\_line\ =\ \mbox{\hyperlink{structrequest__line}{request\_line}}(result.at(0));}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ temp\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (result.at(i).length()\ !=\ 1)}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ temp\ +=\ result.at(i)\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ header.request\_header\ =\ temp;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ temp\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (result.size()\ >\ i\ +\ 1)}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (i\ <\ result.size())}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp\ +=\ result.at(i);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ body\ =\ temp;}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \};}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

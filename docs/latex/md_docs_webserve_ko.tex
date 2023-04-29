@@ -1,0 +1,76 @@
+\hypertarget{md_docs_webserve_ko_autotoc_md56}{}\doxysection{Mandatory part}\label{md_docs_webserve_ko_autotoc_md56}
+\begin{quote}
+$\vert$ Program name $\vert$ webserv $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ {\bfseries{Turn in files}} $\vert$ Makefile, $\ast$.\{h, hpp\}, $\ast$.cpp, $\ast$.tpp, $\ast$.ipp, configuration files $\vert$ $\vert$ {\bfseries{Makefile}} $\vert$ NAME, all, clean, fclean, re $\vert$ $\vert$ {\bfseries{Arguments}} $\vert$ \mbox{[}A configuration file\mbox{]} $\vert$ $\vert$ {\bfseries{External functs.}} $\vert$ Everything in C++ 98. execve, dup, dup2, pipe, strerror, gai\+\_\+strerror,errno, dup, dup2, fork, htons, htonl, ntohs, ntohl,select, poll, epoll (epoll\+\_\+create, epoll\+\_\+ctl,epoll\+\_\+wait), kqueue (kqueue, kevent), socket,accept, listen, send, recv, bind, connect,getaddrinfo, freeaddrinfo, setsockopt, getsockname,getprotobyname, fcntl $\vert$ $\vert$ {\bfseries{Libft authorized}} $\vert$ n/a $\vert$ $\vert$ {\bfseries{Description}} $\vert$ A HTTP server in C++ 98 $\vert$ \end{quote}
+당신은 C++ 98로 HTTP 서버를 작성해야 합니다.  실행 파일은 다음과 같이 실행됩니다\+:  ./webserv \mbox{[}configuration file\mbox{]}  \begin{quote}
+주제와 평가 척도에 poll()이 언급되어 있더라도, select(), kqueue() 또는 epoll()과 같은 동등한 함수를 사용할 수 있습니다. \begin{DoxyVerb}이 프로젝트를 시작하기 전에 RFC를 읽고 텔넷과 NGINX로 몇 가지 테스트를 수행하세요.
+모든 RFC를 구현할 필요는 없더라도 읽어보면 필요한 기능을 개발하는 데 필요한 기능을 개발하는 데 도움이 됩니다.
+\end{DoxyVerb}
+ \end{quote}
+\hypertarget{md_docs_webserve_ko_autotoc_md57}{}\doxysubsection{1. Requirements}\label{md_docs_webserve_ko_autotoc_md57}
+
+\begin{DoxyItemize}
+\item 프로그램은 구성 파일을 인자로 받거나 기본 경로를 사용해야 합니다.
+\item 다른 웹 서버를 실행할 수 없습니다.
+\item 서버는 절대로 차단해서는 안 되며 필요한 경우 클라이언트가 제대로 바운스될 수 있어야 합니다.
+\item 서버는 비차단 상태여야 하며 클라이언트-\/서버 간의 모든 I/O 연산에 대해 poll()(또는 이에 상응하는) 연산(수신 포함)에 대해 1개만 사용해야 합니다.
+\item poll()(또는 이와 동등한 함수)는 읽기와 쓰기를 동시에 확인해야 합니다.
+\item poll()(또는 이와 동등한 함수)를 거치지 않고 읽기 또는 쓰기 작업을 수행해서는 안 됩니다.
+\item 읽기 또는 쓰기 작업 후 errno 값을 확인하는 것은 엄격히 금지되어 있습니다.
+\item 구성 파일을 읽기 전에 poll()(또는 이와 동등한 함수)를 사용할 필요는 없습니다.
+\end{DoxyItemize}
+
+\begin{DoxyVerb}비차단 파일 기술자를 사용해야 하므로 poll()(또는 이에 상응하는 함수)를 사용하지 않고 읽기/받기 또는 쓰기/보내기 함수를 사용할 수 있으며 
+서버가 차단되지 않습니다. 하지만 시스템 리소스를 더 많이 소비하게 됩니다.
+따라서 poll()(또는 이와 동등한 함수)를 사용하지 않고 파일 설명자에서 읽기/받기 또는 쓰기/전송을 시도하면 등급이 0이 됩니다.
+\end{DoxyVerb}
+
+\begin{DoxyItemize}
+\item 모든 매크로를 사용할 수 있으며 FD\+\_\+\+SET, FD\+\_\+\+CLR, FD\+\_\+\+ISSET, FD\+\_\+\+ZERO와 같이 정의할 수 있습니다(매크로가 무엇을 어떻게 수행하는지 이해하는 것이 매우 유용합니다).
+\item 서버에 대한 요청이 영원히 중단되어서는 안 됩니다.
+\item 서버는 선택한 웹 브라우저와 호환되어야 합니다.
+\item NGINX는 HTTP 1.\+1을 준수하며 헤더와 응답 동작을 비교하는 데 사용할 수 있습니다. 헤더와 응답 동작을 비교하는 데 사용할 수 있습니다.
+\item HTTP 응답 상태 코드가 정확해야 합니다.
+\item 기본 오류 페이지가 제공되지 않는 경우 서버에 기본 오류 페이지가 있어야 합니다.
+\item 포크를 CGI가 아닌 다른 것(예\+: PHP, Python 등)에 사용할 수 없습니다.
+\item 완전히 정적인 웹사이트를 제공할 수 있어야 합니다.
+\item 클라이언트가 파일을 업로드할 수 있어야 합니다.
+\item 최소한 GET, POST, DELETE 메서드가 필요합니다.
+\item 서버에 대한 스트레스 테스트를 실시하세요. 서버는 항상 사용 가능한 상태를 유지해야 합니다.
+\item 서버가 여러 포트를 수신할 수 있어야 합니다(구성 파일 참조).
+\end{DoxyItemize}\hypertarget{md_docs_webserve_ko_autotoc_md58}{}\doxysubsection{2 For Mac\+OS only}\label{md_docs_webserve_ko_autotoc_md58}
+\begin{quote}
+Mac\+OS는 다른 Unix와 같은 방식으로 write()를 구현하지 않으므로 fcntl()을 사용할 수 있습니다.  다른 유닉스 OS와 유사한 동작을 얻으려면 비차단 모드에서 파일 기술자를 사용해야 합니다.  동작을 얻으려면 비차단 모드에서 파일 기술자를 사용해야 합니다. \end{quote}
+그러나 다음과 같은 경우에만 fcntl()을 사용할 수 있습니다\+: fcntl(fd, F\+\_\+\+SETFL, O\+\_\+\+NONBLOCK); 다른 플래그는 금지되어 있습니다.\hypertarget{md_docs_webserve_ko_autotoc_md59}{}\doxysubsection{3 Configuration file}\label{md_docs_webserve_ko_autotoc_md59}
+{\bfseries{NGINX 구성 파일의 \textquotesingle{}server\textquotesingle{} 부분에서 영감을 얻을 수 있습니다.}}
+
+구성 파일에서 다음을 수행할 수 있어야 합니다\+:
+\begin{DoxyItemize}
+\item 각 \textquotesingle{}서버\textquotesingle{}의 포트와 호스트를 선택합니다.
+\item server\+\_\+names를 설정할지 여부를 설정합니다.
+\item 호스트\+:포트의 첫 번째 서버가 이 호스트\+:포트의 기본값이 됩니다(즉, 다른 서버에 속하지 않은 모든 요청에 다른 서버에 속하지 않은 모든 요청에 응답한다는 의미).
+\item 기본 오류 페이지를 설정합니다.
+\item 클라이언트 본문 크기를 제한합니다.
+\item 다음 규칙/구성 중 하나 또는 여러 개를 사용하여 라우트를 설정합니다(라우트에는 정규식을 사용하지 않습니다)\+:
+\begin{DoxyItemize}
+\item 경로에 허용되는 HTTP 메소드 목록을 정의합니다.
+\item HTTP 리디렉션을 정의합니다.
+\item 파일을 검색할 디렉토리 또는 파일을 정의합니다(예, URL /kapouet이 /tmp/www에 루팅된 경우, URL /kapouet/pouic/toto/pouet은 /tmp/www/pouic/toto/pouet).
+\item 디렉토리 목록을 켜거나 끕니다.
+\item 요청이 디렉토리일 경우 응답할 기본 파일을 설정합니다.
+\item 특정 파일 확장자(예\+: .php)를 기준으로 CGI를 실행합니다.
+\item POST 및 GET 메소드와 함께 작동하도록 설정합니다.
+\item 업로드된 파일을 허용하고 저장 위치를 설정할 수 있도록 경로를 설정합니다.
+\item 저장할 위치를 설정합니다.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+CGI가 뭔지 궁금하신가요?  ∗ CGI를 직접 호출하지 않으므로 전체 경로를 PATH\+\_\+\+INFO로 사용합니다.  ∗ 청크 요청의 경우, 서버가 청크를 언청크해야 한다는 점만 기억하세요. 하지 않으면 CGI는 본문의 끝을 EOF로 예상합니다.  ∗ CGI의 출력도 마찬가지입니다. CGI에서 content\+\_\+length가 반환되지 않으면 가 반환되지 않으면, EOF는 반환된 데이터의 끝을 표시합니다.  ∗ 프로그램은 요청된 파일을 첫 번째 인자로 사용하여 CGI를 호출해야 합니다.  ∗ CGI는 상대 경로 파일 액세스를 위해 올바른 디렉토리에서 실행되어야 합니다.  ∗ 서버는 하나의 CGI(php-\/\+CGI, Python 등)로 작동해야 합니다. 
+
+평가 과정에서 모든 기능이 작동하는지 테스트하고 시연할 수 있도록 일부 구성 파일과 기본 기본 파일을 제공해야 합니다. \begin{quote}
+한 동작에 대한 질문이 있는 경우, 여러분의 프로그램 동작을 프로그램 동작과 NGINX의 동작을 비교해야 합니다.  \end{quote}
+예를 들어 server\+\_\+name이 어떻게 작동하는지 확인하세요.  작은 테스터를 공유해 드렸습니다. 반드시 통과해야 하는 것은 아닙니다.  브라우저와 테스트에서 모든 것이 정상적으로 작동한다면 반드시 통과해야 하는 것은 아니지만 도움이 될 수 있습니다. \begin{DoxyVerb}중요한 것은 복원력입니다. 서버가 죽어서는 안 됩니다.
+
+하나의 프로그램으로만 테스트하지 마세요. 파이썬이나 파이썬이나 골랑 등 편리한 언어로 테스트를 작성하세요. 
+심지어 C 또는 C++로도 가능합니다.
+\end{DoxyVerb}
+ 

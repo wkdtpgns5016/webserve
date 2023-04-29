@@ -1,0 +1,61 @@
+\begin{quote}
+{\bfseries{Http 메세지 개요}}
+\begin{DoxyItemize}
+\item 4-\/1. Http 메세지 요소
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{class_start_line}{Start\+Line}}
+\item \mbox{\hyperlink{class_request_line}{Request\+Line}}
+\item \mbox{\hyperlink{class_status_line}{Status\+Line}}
+\end{DoxyItemize}
+\item 4-\/2. Http 메세지
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{class_http_message}{Http\+Message}}
+\item \mbox{\hyperlink{class_http_request_message}{Http\+Request\+Message}}
+\item \mbox{\hyperlink{class_http_response_message}{Http\+Response\+Message}} 
+\end{DoxyItemize}
+\end{DoxyItemize}\end{quote}
+\#\#\# {\bfseries{4-\/1. Http 메세지 요소}}
+
+{\bfseries{class \mbox{\hyperlink{class_start_line}{Start\+Line}}}} \begin{quote}
+Start Line 추상화 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ string $\vert$ \+\_\+http\+\_\+version $\vert$ protected $\vert$ http 버전 $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ string get\+Http\+Version(void) const $\vert$ public $\vert$ http version getter $\vert$ $\vert$ virtual bool is\+Vaild(void) = 0 $\vert$ public $\vert$ 유효성 검사 가상 메소드 $\vert$ $\vert$ virtual string get\+String(void) = 0 $\vert$ public $\vert$ 문자열 반환 가상 메소드 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_http_message_autotoc_md8}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_http_message_autotoc_md8}
+{\bfseries{class \mbox{\hyperlink{class_request_line}{Request\+Line}}}} \begin{quote}
+Request Line 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ string $\vert$ \+\_\+http\+\_\+method $\vert$ protected $\vert$ http 버전 $\vert$ $\vert$ string $\vert$ \+\_\+request\+\_\+target $\vert$ protected $\vert$ 요청 타켓 $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ string get\+Http\+Method(void) const $\vert$ public $\vert$ http method getter $\vert$ $\vert$ string get\+Request\+Target(void) const $\vert$ public $\vert$ request target getter $\vert$ $\vert$ virtual bool is\+Vaild(void) = 0 $\vert$ public $\vert$ 유효성 검사 가상 메소드 $\vert$ $\vert$ virtual string get\+String(void) = 0 $\vert$ public $\vert$ 문자열 반환 가상 메소드 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_http_message_autotoc_md9}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_http_message_autotoc_md9}
+{\bfseries{class \mbox{\hyperlink{class_status_line}{Status\+Line}}}} \begin{quote}
+Status Line 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+: $\vert$ int $\vert$ \+\_\+status\+\_\+code $\vert$ protected $\vert$ 상태 코드 $\vert$ $\vert$ string $\vert$ \+\_\+status\+\_\+message $\vert$ protected $\vert$ 상태 메세지 $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ string get\+Status\+Code(void) const $\vert$ public $\vert$ status code getter $\vert$ $\vert$ string get\+Status\+Message(void) const $\vert$ public $\vert$ status message getter $\vert$ $\vert$ virtual bool is\+Vaild(void) = 0 $\vert$ public $\vert$ 유효성 검사 가상 메소드 $\vert$ $\vert$ virtual string get\+String(void) = 0 $\vert$ public $\vert$ 문자열 반환 가상 메소드 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_http_message_autotoc_md10}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_http_message_autotoc_md10}
+\hypertarget{md_docs__class_sepecification_http_message_autotoc_md11}{}\doxysubsection{$<$strong$>$4-\/2. Http 요청 메세지$<$/strong$>$}\label{md_docs__class_sepecification_http_message_autotoc_md11}
+{\bfseries{class \mbox{\hyperlink{class_http_message}{Http\+Message}}}} \begin{quote}
+Http Message 추상화 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ map\&\#60;string, string\&\#62; $\vert$ \+\_\+headers $\vert$ protected $\vert$ http 헤더 $\vert$ $\vert$ string $\vert$ \+\_\+message\+\_\+body $\vert$ protected $\vert$ 메세지 바디 $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ void set\+Header(string) $\vert$ private $\vert$ http 헤더 초기화 메소드 $\vert$ $\vert$ map\&\#60;string, string\&\#62; get\+Headers(void) const $\vert$ public $\vert$ http header getter $\vert$ $\vert$ string get\+Message\+Body(void) const  $\vert$ public $\vert$ message body getter $\vert$ $\vert$ virtual bool is\+Vaild(void) = 0 $\vert$ public $\vert$ 유효성 검사 가상 메소드 $\vert$ $\vert$ virtual string get\+String(void) = 0 $\vert$ public $\vert$ 문자열 반환 가상 메소드 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_http_message_autotoc_md12}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_http_message_autotoc_md12}
+{\bfseries{\mbox{\hyperlink{class_http_request_message}{Http\+Request\+Message}}}} \begin{quote}
+Http Request Message 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ \mbox{\hyperlink{class_request_line}{Request\+Line}} $\vert$ \+\_\+start\+\_\+line $\vert$ private $\vert$ 시작 줄 $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ string get\+Request\+Line(void) const $\vert$ public $\vert$ request line getter $\vert$ $\vert$ bool is\+Vaild(void) $\vert$ public $\vert$ 유효성 검사 메소드 $\vert$ $\vert$ string get\+String(void) $\vert$ public $\vert$ 문자열 반환 메소드 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_http_message_autotoc_md13}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_http_message_autotoc_md13}
+{\bfseries{\mbox{\hyperlink{class_http_response_message}{Http\+Response\+Message}}}} \begin{quote}
+Http Response Message 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ \mbox{\hyperlink{class_status_line}{Status\+Line}} $\vert$ \+\_\+start\+\_\+line $\vert$ private $\vert$ 시작 줄 $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ bool is\+Vaild(void) $\vert$ public $\vert$ 유효성 검사 메소드 $\vert$ $\vert$ string get\+String(void) $\vert$ public $\vert$ 문자열 반환 메소드 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_http_message_autotoc_md14}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_http_message_autotoc_md14}

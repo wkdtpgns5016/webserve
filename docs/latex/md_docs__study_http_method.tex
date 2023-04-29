@@ -1,0 +1,29 @@
+\hypertarget{md_docs__study_http_method_autotoc_md40}{}\doxysection{$<$strong$>$\+GET 메소드$<$/strong$>$}\label{md_docs__study_http_method_autotoc_md40}
+\begin{quote}
+HTTP GET 메서드는 특정한 리소스를 가져오도록 요청합니다. GET 요청은 데이터를 가져올 때만 사용해야 합니다. \end{quote}
+\hypertarget{md_docs__study_http_method_autotoc_md41}{}\doxysection{$<$strong$>$\+POST 메소드$<$/strong$>$}\label{md_docs__study_http_method_autotoc_md41}
+\begin{quote}
+HTTP POST 메서드는 서버로 데이터를 전송합니다. 요청 본문의 유형은 Content-\/\+Type 헤더로 나타냅니다. \end{quote}
+\hypertarget{md_docs__study_http_method_autotoc_md42}{}\doxysubsection{$<$strong$>$예제$<$/strong$>$}\label{md_docs__study_http_method_autotoc_md42}
+{\bfseries{요청}} \begin{quote}
+POST / HTTP/1.\+1  Host\+: foo.\+com  Content-\/\+Type\+: application/x-\/www-\/form-\/urlencoded  Content-\/\+Length\+: 13   say=Hi\&to=Mom  \end{quote}
+{\bfseries{응답}} \begin{quote}
+POST /test.html HTTP/1.\+1  Host\+: example.\+org  Content-\/\+Type\+: multipart/form-\/data;boundary=\char`\"{}boundary\char`\"{}   --boundary  Content-\/\+Disposition\+: form-\/data; name=\char`\"{}field1\char`\"{}   value1  --boundary  Content-\/\+Disposition\+: form-\/data; name=\char`\"{}field2\char`\"{}; filename=\char`\"{}example.\+txt\char`\"{}   value2  --boundary--  \end{quote}
+\hypertarget{md_docs__study_http_method_autotoc_md43}{}\doxysection{$<$strong$>$\+DELETE 메소드$<$/strong$>$}\label{md_docs__study_http_method_autotoc_md43}
+\begin{quote}
+HTTP DELETE 메서드는 지정한 리소스를 삭제합니다. \end{quote}
+\hypertarget{md_docs__study_http_method_autotoc_md44}{}\doxysubsection{$<$strong$>$예제$<$/strong$>$}\label{md_docs__study_http_method_autotoc_md44}
+{\bfseries{요청}} \begin{quote}
+DELETE /file.html HTTP/1.\+1 \end{quote}
+{\bfseries{응답}}
+
+DELETE 메서드를 성공적으로 적용한 후에 사용할 수 있는 응답 상태 코드는 다음과 같이 몇 가지가 있습니다.
+
+\begin{quote}
+1. 아마도 명령을 성공적으로 수행할 것 같으나 아직은 실행하지 않은 경우 202 (Accepted) 상태 코드.
+\begin{DoxyEnumerate}
+\item 명령을 수행했고 더 이상 제공할 정보가 없는 경우 204 (No Content) 상태 코드.
+\item 명령을 수행했고 응답 메시지가 이후의 상태를 설명하는 경우 200 (OK) 상태 코드. 
+\end{DoxyEnumerate}\end{quote}
+\begin{quote}
+HTTP/1.\+1 200 OK  Date\+: Wed, 21 Oct 2015 07\+:28\+:00 GMT   \&\#60;html\&\#62;  \&\#60;body\texorpdfstring{$>$}{>}\&\#62;  \&\#60;h1\&\#62;File deleted.\&\#60;/h1\&\#62;  \&\#60;/body\&\#62;  \&\#60;/html\&\#62;  \end{quote}

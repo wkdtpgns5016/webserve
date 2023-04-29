@@ -1,0 +1,289 @@
+\hypertarget{class_status_line}{}\doxysection{Status\+Line Class Reference}
+\label{class_status_line}\index{StatusLine@{StatusLine}}
+
+
+{\ttfamily \#include $<$Http\+Message.\+hpp$>$}
+
+Inheritance diagram for Status\+Line\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_status_line}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_status_line_ae9f1a3409e29c4a6c66230b896d8d4e2}{Status\+Line}} (void)
+\item 
+\mbox{\hyperlink{class_status_line_a29db1d7f915f40955a68c60fcb817125}{Status\+Line}} (std\+::string start\+\_\+line)
+\item 
+\mbox{\hyperlink{class_status_line_a6d6ed0a6e07babe8c5315ea4eaeb57e8}{Status\+Line}} (std\+::string http\+\_\+version, int status\+\_\+code, std\+::string status\+\_\+message)
+\item 
+\mbox{\hyperlink{class_status_line_af4a59ae319bc233e8227e0dd73e759a5}{Status\+Line}} (const \mbox{\hyperlink{class_status_line}{Status\+Line}} \&status\+\_\+line)
+\item 
+\mbox{\hyperlink{class_status_line_a9a492cc2a38652613ca6c838898d7da6}{$\sim$\+Status\+Line}} (void)
+\item 
+\mbox{\hyperlink{class_status_line}{Status\+Line}} \& \mbox{\hyperlink{class_status_line_aa357ccac9b74969ee3a8e76f0ff3fb0d}{operator=}} (const \mbox{\hyperlink{class_status_line}{Status\+Line}} \&status\+\_\+line)
+\item 
+int \mbox{\hyperlink{class_status_line_a86641c3e465ef0767a3a135e51e635c5}{get\+Status\+Code}} (void) const
+\item 
+std\+::string \mbox{\hyperlink{class_status_line_ae3238e271b4c2e632045c012b678e50c}{get\+Status\+Message}} (void) const
+\item 
+bool \mbox{\hyperlink{class_status_line_a73d4a85a56b3988b90f324065b0bb13c}{is\+Vaild}} (std\+::vector$<$ std\+::string $>$ arr)
+\item 
+std\+::string \mbox{\hyperlink{class_status_line_af1fcae5f5ca07450e7284d2b1063c1ed}{get\+String}} (void)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_start_line}{Start\+Line}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_start_line_a12f0b25bfafb0ca5973157b703eaaaef}{Start\+Line}} (void)
+\item 
+\mbox{\hyperlink{class_start_line_a3fcca98f772ddc63338624beba9a4b1e}{Start\+Line}} (std\+::string http\+\_\+version)
+\item 
+\mbox{\hyperlink{class_start_line_a8c714a31b71f4fcb5ab40bfc7d6623e4}{Start\+Line}} (const \mbox{\hyperlink{class_start_line}{Start\+Line}} \&start\+\_\+line)
+\item 
+\mbox{\hyperlink{class_start_line_a2f9fe3c0ba207c47c10e0ab33a54a65a}{$\sim$\+Start\+Line}} (void)
+\item 
+\mbox{\hyperlink{class_start_line}{Start\+Line}} \& \mbox{\hyperlink{class_start_line_a8538f4cb8bfa0f1c897d45d412761bb1}{operator=}} (const \mbox{\hyperlink{class_start_line}{Start\+Line}} \&start\+\_\+line)
+\item 
+std\+::string \mbox{\hyperlink{class_start_line_a49fd7d2286b7057d9a1c7b2f4512403c}{get\+Http\+Version}} (void) const
+\item 
+virtual bool \mbox{\hyperlink{class_start_line_ae1466045b578e0852117f8cf9d413358}{is\+Vaild}} (std\+::vector$<$ std\+::string $>$ arr)=0
+\item 
+virtual std\+::string \mbox{\hyperlink{class_start_line_a084fc740f9ab2245eab6d12d48a66e93}{get\+String}} (void)=0
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+\doxysubsubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_start_line}{Start\+Line}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_start_line_a89cabf5822234e187a36ec041e97e59a}{check\+Http\+Version}} (std\+::string http\+\_\+version)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_start_line}{Start\+Line}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\+\_\+http\+\_\+version}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_http_message_8hpp_source_l00029}{29}} of file \mbox{\hyperlink{_http_message_8hpp_source}{Http\+Message.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_status_line_ae9f1a3409e29c4a6c66230b896d8d4e2}\label{class_status_line_ae9f1a3409e29c4a6c66230b896d8d4e2}} 
+\index{StatusLine@{StatusLine}!StatusLine@{StatusLine}}
+\index{StatusLine@{StatusLine}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{StatusLine()}{StatusLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Status\+Line\+::\+Status\+Line (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00046}{46}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_start_line_a12f0b25bfafb0ca5973157b703eaaaef}{StartLine}}()}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_status_line_a29db1d7f915f40955a68c60fcb817125}\label{class_status_line_a29db1d7f915f40955a68c60fcb817125}} 
+\index{StatusLine@{StatusLine}!StatusLine@{StatusLine}}
+\index{StatusLine@{StatusLine}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{StatusLine()}{StatusLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Status\+Line\+::\+Status\+Line (\begin{DoxyParamCaption}\item[{std\+::string}]{start\+\_\+line }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00051}{51}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ std::vector<std::string>\ arr;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ arr\ =\ \mbox{\hyperlink{namespaceft_a51c6d900d78ff6611d62c848b3c7e421}{ft::splitString}}(start\_line,\ \textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\_http\_version}}\ =\ arr[0];}
+\DoxyCodeLine{00057\ \ \ \ \ \_status\_code\ =\ std::atoi(arr[1].c\_str());}
+\DoxyCodeLine{00058\ \ \ \ \ \_status\_message\ =\ arr[2];}
+\DoxyCodeLine{00059\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_status_line_a6d6ed0a6e07babe8c5315ea4eaeb57e8}\label{class_status_line_a6d6ed0a6e07babe8c5315ea4eaeb57e8}} 
+\index{StatusLine@{StatusLine}!StatusLine@{StatusLine}}
+\index{StatusLine@{StatusLine}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{StatusLine()}{StatusLine()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Status\+Line\+::\+Status\+Line (\begin{DoxyParamCaption}\item[{std\+::string}]{http\+\_\+version,  }\item[{int}]{status\+\_\+code,  }\item[{std\+::string}]{status\+\_\+message }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00061}{61}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00062\ :\ \mbox{\hyperlink{class_start_line_a12f0b25bfafb0ca5973157b703eaaaef}{StartLine}}(start\_line),\ \_status\_code(status\_code),\ \_status\_message(status\_message)}
+\DoxyCodeLine{00063\ \{}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_status_line_af4a59ae319bc233e8227e0dd73e759a5}\label{class_status_line_af4a59ae319bc233e8227e0dd73e759a5}} 
+\index{StatusLine@{StatusLine}!StatusLine@{StatusLine}}
+\index{StatusLine@{StatusLine}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{StatusLine()}{StatusLine()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Status\+Line\+::\+Status\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_status_line}{Status\+Line}} \&}]{status\+\_\+line }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00067}{67}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&status\_line)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ return\ ;}
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\_http\_version}}\ =\ status\_line.\mbox{\hyperlink{class_start_line_a49fd7d2286b7057d9a1c7b2f4512403c}{getHttpVersion}}();}
+\DoxyCodeLine{00072\ \ \ \ \ \_status\_code\ =\ status\_line.\mbox{\hyperlink{class_status_line_a86641c3e465ef0767a3a135e51e635c5}{getStatusCode}}();}
+\DoxyCodeLine{00073\ \ \ \ \ \_status\_message\ =\ status\_line.\mbox{\hyperlink{class_status_line_ae3238e271b4c2e632045c012b678e50c}{getStatusMessage}}();}
+\DoxyCodeLine{00074\ \ \ \ \ return\ ;}
+\DoxyCodeLine{00075\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_status_line_a9a492cc2a38652613ca6c838898d7da6}\label{class_status_line_a9a492cc2a38652613ca6c838898d7da6}} 
+\index{StatusLine@{StatusLine}!````~StatusLine@{$\sim$StatusLine}}
+\index{````~StatusLine@{$\sim$StatusLine}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{$\sim$StatusLine()}{~StatusLine()}}
+{\footnotesize\ttfamily Status\+Line\+::$\sim$\+Status\+Line (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00077}{77}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00078\ \{}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_status_line_a86641c3e465ef0767a3a135e51e635c5}\label{class_status_line_a86641c3e465ef0767a3a135e51e635c5}} 
+\index{StatusLine@{StatusLine}!getStatusCode@{getStatusCode}}
+\index{getStatusCode@{getStatusCode}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{getStatusCode()}{getStatusCode()}}
+{\footnotesize\ttfamily int Status\+Line\+::get\+Status\+Code (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00092}{92}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_status\_code);}
+\DoxyCodeLine{00095\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_status_line_ae3238e271b4c2e632045c012b678e50c}\label{class_status_line_ae3238e271b4c2e632045c012b678e50c}} 
+\index{StatusLine@{StatusLine}!getStatusMessage@{getStatusMessage}}
+\index{getStatusMessage@{getStatusMessage}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{getStatusMessage()}{getStatusMessage()}}
+{\footnotesize\ttfamily std\+::string Status\+Line\+::get\+Status\+Message (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00097}{97}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00098\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_status\_message);}
+\DoxyCodeLine{00100\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_status_line_af1fcae5f5ca07450e7284d2b1063c1ed}\label{class_status_line_af1fcae5f5ca07450e7284d2b1063c1ed}} 
+\index{StatusLine@{StatusLine}!getString@{getString}}
+\index{getString@{getString}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{getString()}{getString()}}
+{\footnotesize\ttfamily std\+::string Status\+Line\+::get\+String (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_start_line_a084fc740f9ab2245eab6d12d48a66e93}{Start\+Line}}.
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00127}{127}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00128\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ std::stringstream\ ss;}
+\DoxyCodeLine{00130\ \ \ \ \ ss\ <<\ \_status\_code;}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\_http\_version}}\ +\ \textcolor{stringliteral}{"{}\ "{}}\ +\ ss.str()\ +\ \textcolor{stringliteral}{"{}\ "{}}\ +\ \_status\_message);}
+\DoxyCodeLine{00132\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_status_line_a73d4a85a56b3988b90f324065b0bb13c}\label{class_status_line_a73d4a85a56b3988b90f324065b0bb13c}} 
+\index{StatusLine@{StatusLine}!isVaild@{isVaild}}
+\index{isVaild@{isVaild}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{isVaild()}{isVaild()}}
+{\footnotesize\ttfamily bool Status\+Line\+::is\+Vaild (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$}]{arr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_start_line_ae1466045b578e0852117f8cf9d413358}{Start\+Line}}.
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00114}{114}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{if}\ (arr.size()\ !=\ 3)}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{false});}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{class_start_line_a89cabf5822234e187a36ec041e97e59a}{::checkHttpVersion}}(arr[0]))}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{false});}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordflow}{if}\ (!checkStatusCode(arr[1]))}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{false});}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{if}\ (!checkStatusMessage(arr[2]))}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{false});}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{true});}
+\DoxyCodeLine{00125\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_status_line_aa357ccac9b74969ee3a8e76f0ff3fb0d}\label{class_status_line_aa357ccac9b74969ee3a8e76f0ff3fb0d}} 
+\index{StatusLine@{StatusLine}!operator=@{operator=}}
+\index{operator=@{operator=}!StatusLine@{StatusLine}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_status_line}{Status\+Line}} \& Status\+Line\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_status_line}{Status\+Line}} \&}]{status\+\_\+line }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00082}{82}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083\ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&status\_line)}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (*\textcolor{keyword}{this});}
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\_http\_version}}\ =\ status\_line.\mbox{\hyperlink{class_start_line_a49fd7d2286b7057d9a1c7b2f4512403c}{getHttpVersion}}();}
+\DoxyCodeLine{00087\ \ \ \ \ \_status\_code\ =\ status\_line.\mbox{\hyperlink{class_status_line_a86641c3e465ef0767a3a135e51e635c5}{getStatusCode}}();}
+\DoxyCodeLine{00088\ \ \ \ \ \_status\_message\ =\ status\_line.\mbox{\hyperlink{class_status_line_ae3238e271b4c2e632045c012b678e50c}{getStatusMessage}}();}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordflow}{return}\ (*\textcolor{keyword}{this});}
+\DoxyCodeLine{00090\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+webserve/\+Http\+Message/\mbox{\hyperlink{_http_message_8hpp}{Http\+Message.\+hpp}}\item 
+webserve/\+Http\+Message/\mbox{\hyperlink{_http_message_8cpp}{Http\+Message.\+cpp}}\end{DoxyCompactItemize}

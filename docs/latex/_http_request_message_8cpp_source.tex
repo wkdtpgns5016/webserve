@@ -1,0 +1,82 @@
+\hypertarget{_http_request_message_8cpp_source}{}\doxysection{Http\+Request\+Message.\+cpp}
+\label{_http_request_message_8cpp_source}\index{webserve/HttpMessage/HttpRequestMessage.cpp@{webserve/HttpMessage/HttpRequestMessage.cpp}}
+\mbox{\hyperlink{_http_request_message_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_http_request_message_8hpp}{HttpRequestMessage.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00003}\mbox{\hyperlink{class_http_request_message_abd23fb3bd40932fa95822d2007267792}{00003}}\ \mbox{\hyperlink{class_http_request_message_abd23fb3bd40932fa95822d2007267792}{HttpRequestMessage::HttpRequestMessage}}(\textcolor{keywordtype}{void})\ :\ \mbox{\hyperlink{class_http_message}{HttpMessage}}()}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00004}00004\ \{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00006}00006\ \}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00008}\mbox{\hyperlink{class_http_request_message_ae3ca1a52d5a42bbe7748584f259b9628}{00008}}\ \mbox{\hyperlink{class_http_request_message_abd23fb3bd40932fa95822d2007267792}{HttpRequestMessage::HttpRequestMessage}}(std::string\ http\_message)\ :\ \mbox{\hyperlink{class_http_message}{HttpMessage}}(http\_message)}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00009}00009\ \{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00010}00010\ \ \ \ \ std::string\ start\_line;}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00011}00011\ \ \ \ \ std::vector<std::string>\ arr;}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00012}00012\ \ \ \ \ \textcolor{keywordtype}{int}\ pos;}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00014}00014\ \ \ \ \ pos\ =\ http\_message.find(\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00015}00015\ \ \ \ \ start\_line\ =\ http\_message.substr(0,\ pos);}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00016}00016\ \ \ \ \ \_start\_line\ =\ \mbox{\hyperlink{class_request_line}{RequestLine}}(start\_line);}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00017}00017\ \ \ \ \ return\ ;}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00018}00018\ \}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00020}\mbox{\hyperlink{class_http_request_message_a4edea38d07c6ff7bb9210239067eff52}{00020}}\ \mbox{\hyperlink{class_http_request_message_abd23fb3bd40932fa95822d2007267792}{HttpRequestMessage::HttpRequestMessage}}(\mbox{\hyperlink{class_request_line}{RequestLine}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ start\_line,}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::map<std::string,\ std::string>\ \ headers,\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ message\_body)}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00023}00023\ :\ \mbox{\hyperlink{class_http_message}{HttpMessage}}(headers,\ message\_body),\ \_start\_line(start\_line)}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00024}00024\ \{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00026}00026\ \}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00028}\mbox{\hyperlink{class_http_request_message_a7f55b0e59cf708e231eadc0d6b7c8ba5}{00028}}\ \mbox{\hyperlink{class_http_request_message_abd23fb3bd40932fa95822d2007267792}{HttpRequestMessage::HttpRequestMessage}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_http_request_message}{HttpRequestMessage}}\&\ http\_message)\ :\ \mbox{\hyperlink{class_http_message}{HttpMessage}}()}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00029}00029\ \{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&http\_message)}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ return\ ;}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00032}00032\ \ \ \ \ \_start\_line\ =\ http\_message.\mbox{\hyperlink{class_http_request_message_a990a5360ec0684a02b58a6a2b70ae34b}{getStartLine}}();}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{class_http_message_a45059564e455aca0d6b883faac68c4ef}{\_headers}}\ =\ http\_message.\mbox{\hyperlink{class_http_message_a86fe0a6273af5138f939dd5e7dcfcf9b}{getHeaders}}();}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00034}00034\ \ \ \ \ \mbox{\hyperlink{class_http_message_a6fbd5267aadf4c971d43ccbbbd4f20e8}{\_message\_body}}\ =\ http\_message.\mbox{\hyperlink{class_http_message_ae4a2209beb6dce84641b7911f456060a}{getMessageBody}}();}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00035}00035\ \ \ \ \ return\ ;}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00038}\mbox{\hyperlink{class_http_request_message_a736dfc6963da1ea0b3586a36af813702}{00038}}\ \mbox{\hyperlink{class_http_request_message_a736dfc6963da1ea0b3586a36af813702}{HttpRequestMessage::\string~HttpRequestMessage}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00039}00039\ \{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00041}00041\ \}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00043}\mbox{\hyperlink{class_http_request_message_a610bb8eb777181fbc754407e7f928808}{00043}}\ \mbox{\hyperlink{class_http_request_message}{HttpRequestMessage}}\&\ \mbox{\hyperlink{class_http_request_message_a610bb8eb777181fbc754407e7f928808}{HttpRequestMessage::operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_http_request_message}{HttpRequestMessage}}\&\ http\_message)}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00044}00044\ \{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&http\_message)}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (*\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00047}00047\ \ \ \ \ \_start\_line\ =\ http\_message.\mbox{\hyperlink{class_http_request_message_a990a5360ec0684a02b58a6a2b70ae34b}{getStartLine}}();}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00048}00048\ \ \ \ \ \mbox{\hyperlink{class_http_message_a45059564e455aca0d6b883faac68c4ef}{\_headers}}\ =\ http\_message.\mbox{\hyperlink{class_http_message_a86fe0a6273af5138f939dd5e7dcfcf9b}{getHeaders}}();}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00049}00049\ \ \ \ \ \mbox{\hyperlink{class_http_message_a6fbd5267aadf4c971d43ccbbbd4f20e8}{\_message\_body}}\ =\ http\_message.\mbox{\hyperlink{class_http_message_ae4a2209beb6dce84641b7911f456060a}{getMessageBody}}();}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{return}\ (*\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00051}00051\ \}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00054}\mbox{\hyperlink{class_http_request_message_a990a5360ec0684a02b58a6a2b70ae34b}{00054}}\ \mbox{\hyperlink{class_request_line}{RequestLine}}\ \mbox{\hyperlink{class_http_request_message_a990a5360ec0684a02b58a6a2b70ae34b}{HttpRequestMessage::getStartLine}}(\textcolor{keywordtype}{void})\textcolor{keyword}{\ const}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00055}00055\ \textcolor{keyword}{}\{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_start\_line);}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00057}00057\ \}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00059}\mbox{\hyperlink{class_http_request_message_acf92683ab6ab49decd66f08887769ee7}{00059}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_http_request_message_acf92683ab6ab49decd66f08887769ee7}{HttpRequestMessage::isVaild}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00060}00060\ \{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00061}00061\ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00062}00062\ \}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00064}\mbox{\hyperlink{class_http_request_message_a08f939bd4060db3ef7c0d3b230d50c16}{00064}}\ std::string\ \mbox{\hyperlink{class_http_request_message_a08f939bd4060db3ef7c0d3b230d50c16}{HttpRequestMessage::getString}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00065}00065\ \{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00066}00066\ \ \ \ \ std::string\ str;}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00068}00068\ \ \ \ \ str\ =\ \_start\_line.\mbox{\hyperlink{class_request_line_abadab8126f22e850eea7520c633ad04b}{getString}}()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::map<std::string,\ std::string>::iterator\ it\ =\ \mbox{\hyperlink{class_http_message_a45059564e455aca0d6b883faac68c4ef}{\_headers}}.begin();\ it\ !=\ \mbox{\hyperlink{class_http_message_a45059564e455aca0d6b883faac68c4ef}{\_headers}}.end();\ it++)}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00070}00070\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ str\ +=\ (*it).first\ +\ \textcolor{stringliteral}{"{}:\ "{}}\ +\ (*it).second\ +\ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00072}00072\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00073}00073\ \ \ \ \ str\ +=\ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00074}00074\ \ \ \ \ str\ +=\ \mbox{\hyperlink{class_http_message_a6fbd5267aadf4c971d43ccbbbd4f20e8}{\_message\_body}};}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{return}\ (str);}
+\DoxyCodeLine{\Hypertarget{_http_request_message_8cpp_source_l00076}00076\ \}}
+
+\end{DoxyCode}

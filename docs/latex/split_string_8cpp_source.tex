@@ -1,0 +1,29 @@
+\hypertarget{split_string_8cpp_source}{}\doxysection{split\+String.\+cpp}
+\label{split_string_8cpp_source}\index{webserve/lib/ft/splitString.cpp@{webserve/lib/ft/splitString.cpp}}
+\mbox{\hyperlink{split_string_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ft_8hpp}{ft.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00004}\mbox{\hyperlink{namespaceft_a51c6d900d78ff6611d62c848b3c7e421}{00004}}\ std::vector<std::string>\ \mbox{\hyperlink{namespaceft_a51c6d900d78ff6611d62c848b3c7e421}{ft::splitString}}(std::string\ str,\ std::string\ split)}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00005}00005\ \{}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00006}00006\ \ \ \ \ std::vector<std::string>\ arr;}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00007}00007\ \ \ \ \ std::string::size\_type\ n;}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00009}00009\ \ \ \ \ \textcolor{keywordflow}{while}\ (str.length()\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00010}00010\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00011}00011\ \ \ \ \ \ \ \ \ n\ =\ str.find(split,\ 0);}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00012}00012\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ ==\ std::string::npos)}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00013}00013\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ \ \ \ \ arr.push\_back(str.substr(0));}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ std::string\ temp\ =\ str.substr(0,\ n);}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (temp.length()\ >\ 0)}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ arr.push\_back(temp);}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ str\ =\ str.substr(n\ +\ split.length());}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00021}00021\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{return}\ (arr);}
+\DoxyCodeLine{\Hypertarget{split_string_8cpp_source_l00023}00023\ \}}
+
+\end{DoxyCode}

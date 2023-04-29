@@ -1,0 +1,286 @@
+\hypertarget{class_request_line}{}\doxysection{Request\+Line Class Reference}
+\label{class_request_line}\index{RequestLine@{RequestLine}}
+
+
+{\ttfamily \#include $<$Http\+Message.\+hpp$>$}
+
+Inheritance diagram for Request\+Line\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_request_line}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_request_line_a5b12559a86a16e1c7a30e7e25dece518}{Request\+Line}} (void)
+\item 
+\mbox{\hyperlink{class_request_line_a1d0904d9c993e2c3ad58094e4ded4ef6}{Request\+Line}} (std\+::string start\+\_\+line)
+\item 
+\mbox{\hyperlink{class_request_line_aa5815dc6b545998ec53c6b08055d8cd4}{Request\+Line}} (std\+::string http\+\_\+method, std\+::string request\+\_\+target, std\+::string http\+\_\+version)
+\item 
+\mbox{\hyperlink{class_request_line_aabc166127ac9adbcf68c7c9d758bfc46}{Request\+Line}} (const \mbox{\hyperlink{class_request_line}{Request\+Line}} \&request\+\_\+line)
+\item 
+\mbox{\hyperlink{class_request_line_ac8af537eb0155d17e1fdc1bada119b04}{$\sim$\+Request\+Line}} (void)
+\item 
+\mbox{\hyperlink{class_request_line}{Request\+Line}} \& \mbox{\hyperlink{class_request_line_aea1e001e1863baee0455e16d90ff70db}{operator=}} (const \mbox{\hyperlink{class_request_line}{Request\+Line}} \&request\+\_\+line)
+\item 
+std\+::string \mbox{\hyperlink{class_request_line_a0baa16ddb97cd1a7f28e58a326052c19}{get\+Http\+Method}} (void) const
+\item 
+std\+::string \mbox{\hyperlink{class_request_line_aa94b98d85d55ea3709cd5ca8c988f86c}{get\+Request\+Target}} (void) const
+\item 
+bool \mbox{\hyperlink{class_request_line_a678580e8ab10e6acc385c466eb8566b8}{is\+Vaild}} (std\+::vector$<$ std\+::string $>$ arr)
+\item 
+std\+::string \mbox{\hyperlink{class_request_line_abadab8126f22e850eea7520c633ad04b}{get\+String}} (void)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_start_line}{Start\+Line}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_start_line_a12f0b25bfafb0ca5973157b703eaaaef}{Start\+Line}} (void)
+\item 
+\mbox{\hyperlink{class_start_line_a3fcca98f772ddc63338624beba9a4b1e}{Start\+Line}} (std\+::string http\+\_\+version)
+\item 
+\mbox{\hyperlink{class_start_line_a8c714a31b71f4fcb5ab40bfc7d6623e4}{Start\+Line}} (const \mbox{\hyperlink{class_start_line}{Start\+Line}} \&start\+\_\+line)
+\item 
+\mbox{\hyperlink{class_start_line_a2f9fe3c0ba207c47c10e0ab33a54a65a}{$\sim$\+Start\+Line}} (void)
+\item 
+\mbox{\hyperlink{class_start_line}{Start\+Line}} \& \mbox{\hyperlink{class_start_line_a8538f4cb8bfa0f1c897d45d412761bb1}{operator=}} (const \mbox{\hyperlink{class_start_line}{Start\+Line}} \&start\+\_\+line)
+\item 
+std\+::string \mbox{\hyperlink{class_start_line_a49fd7d2286b7057d9a1c7b2f4512403c}{get\+Http\+Version}} (void) const
+\item 
+virtual bool \mbox{\hyperlink{class_start_line_ae1466045b578e0852117f8cf9d413358}{is\+Vaild}} (std\+::vector$<$ std\+::string $>$ arr)=0
+\item 
+virtual std\+::string \mbox{\hyperlink{class_start_line_a084fc740f9ab2245eab6d12d48a66e93}{get\+String}} (void)=0
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+\doxysubsubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_start_line}{Start\+Line}}}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_start_line_a89cabf5822234e187a36ec041e97e59a}{check\+Http\+Version}} (std\+::string http\+\_\+version)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes inherited from \mbox{\hyperlink{class_start_line}{Start\+Line}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\+\_\+http\+\_\+version}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_http_message_8hpp_source_l00051}{51}} of file \mbox{\hyperlink{_http_message_8hpp_source}{Http\+Message.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_request_line_a5b12559a86a16e1c7a30e7e25dece518}\label{class_request_line_a5b12559a86a16e1c7a30e7e25dece518}} 
+\index{RequestLine@{RequestLine}!RequestLine@{RequestLine}}
+\index{RequestLine@{RequestLine}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{RequestLine()}{RequestLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Request\+Line\+::\+Request\+Line (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00134}{134}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00135\ \{}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_request_line_a1d0904d9c993e2c3ad58094e4ded4ef6}\label{class_request_line_a1d0904d9c993e2c3ad58094e4ded4ef6}} 
+\index{RequestLine@{RequestLine}!RequestLine@{RequestLine}}
+\index{RequestLine@{RequestLine}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{RequestLine()}{RequestLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Request\+Line\+::\+Request\+Line (\begin{DoxyParamCaption}\item[{std\+::string}]{start\+\_\+line }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00139}{139}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ std::vector<std::string>\ arr;}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ arr\ =\ \mbox{\hyperlink{namespaceft_a51c6d900d78ff6611d62c848b3c7e421}{ft::splitString}}(start\_line,\ \textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00144\ \ \ \ \ \_http\_method\ =\ arr[0];}
+\DoxyCodeLine{00145\ \ \ \ \ \_request\_target\ =\ arr[1];}
+\DoxyCodeLine{00146\ \ \ \ \ \mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\_http\_version}}\ =\ arr[2];}
+\DoxyCodeLine{00147\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_request_line_aa5815dc6b545998ec53c6b08055d8cd4}\label{class_request_line_aa5815dc6b545998ec53c6b08055d8cd4}} 
+\index{RequestLine@{RequestLine}!RequestLine@{RequestLine}}
+\index{RequestLine@{RequestLine}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{RequestLine()}{RequestLine()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Request\+Line\+::\+Request\+Line (\begin{DoxyParamCaption}\item[{std\+::string}]{http\+\_\+method,  }\item[{std\+::string}]{request\+\_\+target,  }\item[{std\+::string}]{http\+\_\+version }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00149}{149}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00150\ :\ \mbox{\hyperlink{class_start_line_a12f0b25bfafb0ca5973157b703eaaaef}{StartLine}}(http\_version),\ \_http\_method(http\_method),\ \_request\_target(request\_target)}
+\DoxyCodeLine{00151\ \{}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_request_line_aabc166127ac9adbcf68c7c9d758bfc46}\label{class_request_line_aabc166127ac9adbcf68c7c9d758bfc46}} 
+\index{RequestLine@{RequestLine}!RequestLine@{RequestLine}}
+\index{RequestLine@{RequestLine}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{RequestLine()}{RequestLine()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Request\+Line\+::\+Request\+Line (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_request_line}{Request\+Line}} \&}]{request\+\_\+line }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00155}{155}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00156\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&request\_line)}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ return\ ;}
+\DoxyCodeLine{00159\ \ \ \ \ \mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\_http\_version}}\ =\ request\_line.\mbox{\hyperlink{class_start_line_a49fd7d2286b7057d9a1c7b2f4512403c}{getHttpVersion}}();}
+\DoxyCodeLine{00160\ \ \ \ \ \_http\_method\ =\ request\_line.\mbox{\hyperlink{class_request_line_a0baa16ddb97cd1a7f28e58a326052c19}{getHttpMethod}}();}
+\DoxyCodeLine{00161\ \ \ \ \ \_request\_target\ =\ request\_line.\mbox{\hyperlink{class_request_line_aa94b98d85d55ea3709cd5ca8c988f86c}{getRequestTarget}}();}
+\DoxyCodeLine{00162\ \ \ \ \ return\ ;}
+\DoxyCodeLine{00163\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_request_line_ac8af537eb0155d17e1fdc1bada119b04}\label{class_request_line_ac8af537eb0155d17e1fdc1bada119b04}} 
+\index{RequestLine@{RequestLine}!````~RequestLine@{$\sim$RequestLine}}
+\index{````~RequestLine@{$\sim$RequestLine}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{$\sim$RequestLine()}{~RequestLine()}}
+{\footnotesize\ttfamily Request\+Line\+::$\sim$\+Request\+Line (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00165}{165}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00166\ \{}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_request_line_a0baa16ddb97cd1a7f28e58a326052c19}\label{class_request_line_a0baa16ddb97cd1a7f28e58a326052c19}} 
+\index{RequestLine@{RequestLine}!getHttpMethod@{getHttpMethod}}
+\index{getHttpMethod@{getHttpMethod}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{getHttpMethod()}{getHttpMethod()}}
+{\footnotesize\ttfamily std\+::string Request\+Line\+::get\+Http\+Method (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00180}{180}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181\ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_http\_method);}
+\DoxyCodeLine{00183\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_request_line_aa94b98d85d55ea3709cd5ca8c988f86c}\label{class_request_line_aa94b98d85d55ea3709cd5ca8c988f86c}} 
+\index{RequestLine@{RequestLine}!getRequestTarget@{getRequestTarget}}
+\index{getRequestTarget@{getRequestTarget}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{getRequestTarget()}{getRequestTarget()}}
+{\footnotesize\ttfamily std\+::string Request\+Line\+::get\+Request\+Target (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00185}{185}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00186\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_request\_target);}
+\DoxyCodeLine{00188\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_request_line_abadab8126f22e850eea7520c633ad04b}\label{class_request_line_abadab8126f22e850eea7520c633ad04b}} 
+\index{RequestLine@{RequestLine}!getString@{getString}}
+\index{getString@{getString}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{getString()}{getString()}}
+{\footnotesize\ttfamily std\+::string Request\+Line\+::get\+String (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_start_line_a084fc740f9ab2245eab6d12d48a66e93}{Start\+Line}}.
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00215}{215}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00216\ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordflow}{return}\ (\_http\_method\ +\ \textcolor{stringliteral}{"{}\ "{}}\ +\ \_request\_target\ +\ \textcolor{stringliteral}{"{}\ "{}}\ +\ \mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\_http\_version}});}
+\DoxyCodeLine{00218\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_request_line_a678580e8ab10e6acc385c466eb8566b8}\label{class_request_line_a678580e8ab10e6acc385c466eb8566b8}} 
+\index{RequestLine@{RequestLine}!isVaild@{isVaild}}
+\index{isVaild@{isVaild}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{isVaild()}{isVaild()}}
+{\footnotesize\ttfamily bool Request\+Line\+::is\+Vaild (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$}]{arr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_start_line_ae1466045b578e0852117f8cf9d413358}{Start\+Line}}.
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00202}{202}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00203\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordflow}{if}\ (arr.size()\ !=\ 3)}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{false});}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordflow}{if}\ (!checkHttpMethod(arr[0]))}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{false});}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordflow}{if}\ (!checkRequestTarget(arr[1]))}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{false});}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{class_start_line_a89cabf5822234e187a36ec041e97e59a}{::checkHttpVersion}}(arr[2]))}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{false});}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keyword}{true});}
+\DoxyCodeLine{00213\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_request_line_aea1e001e1863baee0455e16d90ff70db}\label{class_request_line_aea1e001e1863baee0455e16d90ff70db}} 
+\index{RequestLine@{RequestLine}!operator=@{operator=}}
+\index{operator=@{operator=}!RequestLine@{RequestLine}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_request_line}{Request\+Line}} \& Request\+Line\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_request_line}{Request\+Line}} \&}]{request\+\_\+line }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_http_message_8cpp_source_l00170}{170}} of file \mbox{\hyperlink{_http_message_8cpp_source}{Http\+Message.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171\ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&request\_line)}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (*\textcolor{keyword}{this});}
+\DoxyCodeLine{00174\ \ \ \ \ \mbox{\hyperlink{class_start_line_acb613409d62776dc676bdbd0a995c261}{\_http\_version}}\ =\ request\_line.\mbox{\hyperlink{class_start_line_a49fd7d2286b7057d9a1c7b2f4512403c}{getHttpVersion}}();}
+\DoxyCodeLine{00175\ \ \ \ \ \_http\_method\ =\ request\_line.\mbox{\hyperlink{class_request_line_a0baa16ddb97cd1a7f28e58a326052c19}{getHttpMethod}}();}
+\DoxyCodeLine{00176\ \ \ \ \ \_request\_target\ =\ request\_line.\mbox{\hyperlink{class_request_line_aa94b98d85d55ea3709cd5ca8c988f86c}{getRequestTarget}}();}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordflow}{return}\ (*\textcolor{keyword}{this});}
+\DoxyCodeLine{00178\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+webserve/\+Http\+Message/\mbox{\hyperlink{_http_message_8hpp}{Http\+Message.\+hpp}}\item 
+webserve/\+Http\+Message/\mbox{\hyperlink{_http_message_8cpp}{Http\+Message.\+cpp}}\end{DoxyCompactItemize}
