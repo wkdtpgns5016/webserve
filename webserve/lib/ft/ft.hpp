@@ -11,6 +11,8 @@ namespace ft
     std::string	readFileIntoString(std::string filename);
     std::vector<std::string> splitString(std::string str, std::string split);
     std::vector<std::string> splitBlockString(std::string str);
+    std::string itos(int num);
+    int stoi(std::string str);
 }
 
 #endif

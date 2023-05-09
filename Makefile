@@ -15,8 +15,13 @@ SRCS =	webserve/main.cpp \
 		webserve/WebServer/WebServer.cpp \
 		webserve/HttpMessage/HttpMessage.cpp \
 		webserve/HttpMessage/HttpRequestMessage.cpp \
-		webserve/HttpMessage/HttpResponseMessage.cpp 
-
+		webserve/HttpMessage/HttpResponseMessage.cpp \
+		webserve/lib/ft/readFileIntoString.cpp \
+		webserve/lib/ft/splitBlockString.cpp \
+		webserve/lib/ft/splitString.cpp \
+		webserve/lib/ft/itos.cpp \
+		webserve/lib/ft/stoi.cpp 
+    
 OBJS = $(SRCS:.cpp=.o)
 HEAD =  -I./webserve/Server \
 		-I./webserve/Block \
