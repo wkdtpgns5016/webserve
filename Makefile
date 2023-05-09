@@ -4,8 +4,13 @@ CFLAGS = -Wall -Werror -Wextra -std=c++98 -g
 NAME = webserv
 
 SRCS =	webserve/main.cpp \
+		webserve/lib/ft/readFileIntoString.cpp \
+		webserve/lib/ft/splitBlockString.cpp \
+		webserve/lib/ft/splitString.cpp \
 		webserve/Server/Server.cpp \
-		webserve/ServerParser/ServerParser.cpp \
+		webserve/Block/Block.cpp \
+		webserve/ServerBlock/ServerBlock.cpp \
+		webserve/LocationBlock/LocationBlock.cpp \
 		webserve/ServerHandler/ServerHandler.cpp \
 		webserve/WebServer/WebServer.cpp \
 		webserve/HttpMessage/HttpMessage.cpp \
@@ -16,10 +21,14 @@ SRCS =	webserve/main.cpp \
 		webserve/lib/ft/splitString.cpp \
 		webserve/lib/ft/itos.cpp \
 		webserve/lib/ft/stoi.cpp 
+    
 OBJS = $(SRCS:.cpp=.o)
 HEAD =  -I./webserve/Server \
-		-I./webserve/ServerParser \
+		-I./webserve/Block \
+		-I./webserve/ServerBlock \
+		-I./webserve/LocationBlock \
 		-I./webserve/ServerHandler \
+		-I./webserve/LocationParser \
 		-I./WebServer \
 		-I./webserve/HttpMessage \
 		-I./webserve/lib/ft

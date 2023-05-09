@@ -1,5 +1,4 @@
 #include "Server.hpp"
-#include "../Server/Server.hpp"
 
 Server::Server()
 {
@@ -8,7 +7,7 @@ Server::Server()
 
 Server::Server(std::string block)
 {
-    _server_parser = ServerParser(block);
+    _server_block = ServerBlock(block);
 }
 
 
@@ -25,7 +24,7 @@ Server::Server(const Server& server)
     _kqueue = server._kqueue;
     for (int i = 0; i < 8; i++)
         _event_list[i] = server._event_list[i];
-    _server_parser = server._server_parser;
+    _server_block = server._server_block;
 }
 
 Server::~Server()
@@ -46,7 +45,7 @@ Server& Server::operator=(const Server& server)
     _kqueue = server._kqueue;
     for (int i = 0; i < 8; i++)
         _event_list[i] = server._event_list[i];
-    _server_parser = server._server_parser;
+    _server_block = server._server_block;
     return (*this);
 }
 
@@ -106,7 +105,6 @@ void Server::accept_new_client()
 void Server::receiveMessage()
 {
     /* read data from client */
-    ServerHandler handler = ServerHandler();
     char buf[1024];
     int n = read(_curr_event->ident, buf, sizeof(buf));
 
@@ -120,7 +118,7 @@ void Server::receiveMessage()
     {
         buf[n] = '\0';
         _clients[_curr_event->ident] += buf;
-        handler.setRequestMessage(_clients[_curr_event->ident]);
+        ServerHandler handler = ServerHandler(_server_parser, _clients[_curr_event->ident]);
         HttpResponseMessage message = handler.requestHandler();
         write(_curr_event->ident, message.getString().c_str(), message.getString().size());
         disconnect_client(_curr_event->ident, _clients);
@@ -150,7 +148,8 @@ void Server::sendMessage()
 void Server::run()
 {
     /* init server socket and listen */
-    socket_init(_server_parser.getPort(), _server_parser.getAddr());
+    std::cout << _server_block.getPort() << std::endl;
+    socket_init(_server_block.getPort(), _server_block.getAddr());
     fcntl(_server_socket, F_SETFL, O_NONBLOCK);
 
     /* init kqueue */
@@ -207,7 +206,7 @@ pthread_t Server::getThread(void)
 
 int  Server::getPort(void)
 {
-    return (_server_parser.getPort());
+    return (_server_block.getPort());
 }
 
 void *Server::threadFunction(void *temp)
