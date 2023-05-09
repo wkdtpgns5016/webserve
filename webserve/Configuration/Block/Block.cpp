@@ -98,7 +98,8 @@ size_t	Block::jumpBlock(const std::string& str, size_t pos) const
 size_t	Block::jumpWord(const std::string &str, size_t pos) const
 {
 	while (std::isspace(str[pos], std::locale()) != true
-			&& str[pos] != '\n' && str[pos] != '\0')
+			&& str[pos] != '\n' && str[pos] != '\0'
+			&& str[pos] != '{' && str[pos] != '}' && str[pos] != ';')
 		pos++;
 	return pos;
 }
@@ -223,7 +224,15 @@ void	Block::parseUploadPath(const std::string& value)
  */
 void	Block::parseAllowMethod(const std::string& value)
 {
-	_allow_method.push_back(value);
+	size_t	pos = 0;
+	size_t	end = 0;
+
+	while (pos + 1 < value.length())
+	{
+		end = jumpWord(value, pos);
+		_allow_method.push_back(value.substr(pos, end - pos));
+		pos = jumpTrash(value, end);
+	}
 }
 
 /** @details 특정 파일형식을 찾을 경로 파싱함수
