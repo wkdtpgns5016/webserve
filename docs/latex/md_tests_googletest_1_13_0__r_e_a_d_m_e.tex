@@ -1,0 +1,55 @@
+\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md473}{}\doxysubsection{Announcements}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md473}
+\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md474}{}\doxysubsubsection{Live at Head}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md474}
+Google\+Test now follows the \href{https://abseil.io/about/philosophy\#upgrade-support}{\texttt{ Abseil Live at Head philosophy}}. We recommend \href{https://github.com/abseil/abseil-cpp/blob/master/FAQ.md\#what-is-live-at-head-and-how-do-i-do-it}{\texttt{ updating to the latest commit in the {\ttfamily main} branch as often as possible}}.\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md475}{}\doxysubsubsection{Documentation Updates}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md475}
+Our documentation is now live on Git\+Hub Pages at \href{https://google.github.io/googletest/}{\texttt{ https\+://google.\+github.\+io/googletest/}}. We recommend browsing the documentation on Git\+Hub Pages rather than directly in the repository.\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md476}{}\doxysubsubsection{Release 1.\+12.\+1}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md476}
+\href{https://github.com/google/googletest/releases/tag/release-1.12.1}{\texttt{ Release 1.\+12.\+1}} is now available.
+
+The 1.\+12.\+x branch will be the last to support C++11. Future releases will require at least C++14.\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md477}{}\doxysubsubsection{Coming Soon}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md477}
+
+\begin{DoxyItemize}
+\item We are planning to take a dependency on \href{https://github.com/abseil/abseil-cpp}{\texttt{ Abseil}}.
+\item More documentation improvements are planned.
+\end{DoxyItemize}\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md478}{}\doxysection{Welcome to $<$strong$>$\+Google\+Test$<$/strong$>$, Google\textquotesingle{}s C++ test framework!}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md478}
+This repository is a merger of the formerly separate Google\+Test and Google\+Mock projects. These were so closely related that it makes sense to maintain and release them together.\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md479}{}\doxysubsection{Getting Started}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md479}
+See the \href{https://google.github.io/googletest/}{\texttt{ Google\+Test User\textquotesingle{}s Guide}} for documentation. We recommend starting with the \href{https://google.github.io/googletest/primer.html}{\texttt{ Google\+Test Primer}}.
+
+More information about building Google\+Test can be found at \mbox{\hyperlink{md_tests_googletest_1_13_0_googletest__r_e_a_d_m_e}{googletest/\+README.md}}.\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md480}{}\doxysection{Features}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md480}
+
+\begin{DoxyItemize}
+\item An \href{https://en.wikipedia.org/wiki/XUnit}{\texttt{ x\+Unit}} test framework.
+\item Test discovery.
+\item A rich set of assertions.
+\item User-\/defined assertions.
+\item Death tests.
+\item Fatal and non-\/fatal failures.
+\item Value-\/parameterized tests.
+\item Type-\/parameterized tests.
+\item Various options for running the tests.
+\item XML test report generation.
+\end{DoxyItemize}\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md481}{}\doxysection{Supported Platforms}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md481}
+Google\+Test follows Google\textquotesingle{}s \href{https://opensource.google/documentation/policies/cplusplus-support}{\texttt{ Foundational C++ Support Policy}}. See \href{https://github.com/google/oss-policies-info/blob/main/foundational-cxx-support-matrix.md}{\texttt{ this table}} for a list of currently supported versions compilers, platforms, and build tools.\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md482}{}\doxysection{Who Is Using Google\+Test?}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md482}
+In addition to many internal projects at Google, Google\+Test is also used by the following notable projects\+:
+
+
+\begin{DoxyItemize}
+\item The \href{http://www.chromium.org/}{\texttt{ Chromium projects}} (behind the Chrome browser and Chrome OS).
+\item The \href{http://llvm.org/}{\texttt{ LLVM}} compiler.
+\item \href{https://github.com/google/protobuf}{\texttt{ Protocol Buffers}}, Google\textquotesingle{}s data interchange format.
+\item The \href{http://opencv.org/}{\texttt{ Open\+CV}} computer vision library.
+\end{DoxyItemize}\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md483}{}\doxysection{Related Open Source Projects}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md483}
+\href{https://github.com/nholthaus/gtest-runner}{\texttt{ GTest Runner}} is a Qt5 based automated test-\/runner and Graphical User \mbox{\hyperlink{class_interface}{Interface}} with powerful features for Windows and Linux platforms.
+
+\href{https://github.com/ospector/gtest-gbar}{\texttt{ Google\+Test UI}} is a test runner that runs your test binary, allows you to track its progress via a progress bar, and displays a list of test failures. Clicking on one shows failure text. Google\+Test UI is written in C\#.
+
+\href{https://github.com/kinow/gtest-tap-listener}{\texttt{ GTest TAP Listener}} is an event listener for Google\+Test that implements the \href{https://en.wikipedia.org/wiki/Test_Anything_Protocol}{\texttt{ TAP protocol}} for test result output. If your test runner understands TAP, you may find it useful.
+
+\href{https://github.com/google/gtest-parallel}{\texttt{ gtest-\/parallel}} is a test runner that runs tests from your binary in parallel to provide significant speed-\/up.
+
+\href{https://marketplace.visualstudio.com/items?itemName=DavidSchuldenfrei.gtest-adapter}{\texttt{ Google\+Test Adapter}} is a VS Code extension allowing to view Google\+Test in a tree view and run/debug your tests.
+
+\href{https://github.com/matepek/vscode-catch2-test-adapter}{\texttt{ C++ Test\+Mate}} is a VS Code extension allowing to view Google\+Test in a tree view and run/debug your tests.
+
+\href{https://pypi.org/project/cornichon/}{\texttt{ Cornichon}} is a small Gherkin DSL parser that generates stub code for Google\+Test.\hypertarget{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md484}{}\doxysection{Contributing Changes}\label{md_tests_googletest_1_13_0__r_e_a_d_m_e_autotoc_md484}
+Please read \href{https://github.com/google/googletest/blob/main/CONTRIBUTING.md}{\texttt{ {\ttfamily CONTRIBUTING.\+md}}} for details on how to contribute to this project.
+
+Happy testing! 

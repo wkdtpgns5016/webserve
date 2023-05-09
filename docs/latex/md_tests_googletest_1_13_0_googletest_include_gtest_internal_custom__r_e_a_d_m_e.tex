@@ -1,0 +1,33 @@
+The custom directory is an injection point for custom user configurations.\hypertarget{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md453}{}\doxysection{Header $<$tt$>$gtest.\+h$<$/tt$>$}\label{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md453}
+\hypertarget{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md454}{}\doxysubsection{The following macros can be defined\+:}\label{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md454}
+
+\begin{DoxyItemize}
+\item {\ttfamily GTEST\+\_\+\+OS\+\_\+\+STACK\+\_\+\+TRACE\+\_\+\+GETTER\+\_\+} -\/ The name of an implementation of {\ttfamily Os\+Stack\+Trace\+Getter\+Interface}.
+\item {\ttfamily GTEST\+\_\+\+CUSTOM\+\_\+\+TEMPDIR\+\_\+\+FUNCTION\+\_\+} -\/ An override for {\ttfamily testing\+::\+Temp\+Dir()}. See {\ttfamily testing\+::\+Temp\+Dir} for semantics and signature.
+\end{DoxyItemize}\hypertarget{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md455}{}\doxysection{Header $<$tt$>$gtest-\/port.\+h$<$/tt$>$}\label{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md455}
+The following macros can be defined\+:\hypertarget{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md456}{}\doxysubsection{Logging\+:}\label{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md456}
+
+\begin{DoxyItemize}
+\item {\ttfamily GTEST\+\_\+\+LOG\+\_\+(severity)}
+\item {\ttfamily GTEST\+\_\+\+CHECK\+\_\+(condition)}
+\item Functions {\ttfamily Log\+To\+Stderr()} and {\ttfamily Flush\+Info\+Log()} have to be provided too.
+\end{DoxyItemize}\hypertarget{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md457}{}\doxysubsection{Threading\+:}\label{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md457}
+
+\begin{DoxyItemize}
+\item {\ttfamily GTEST\+\_\+\+HAS\+\_\+\+NOTIFICATION\+\_\+} -\/ Enabled if Notification is already provided.
+\item {\ttfamily GTEST\+\_\+\+HAS\+\_\+\+MUTEX\+\_\+\+AND\+\_\+\+THREAD\+\_\+\+LOCAL\+\_\+} -\/ Enabled if {\ttfamily Mutex} and {\ttfamily Thread\+Local} are already provided. Must also provide {\ttfamily GTEST\+\_\+\+DECLARE\+\_\+\+STATIC\+\_\+\+MUTEX\+\_\+(mutex)} and {\ttfamily GTEST\+\_\+\+DEFINE\+\_\+\+STATIC\+\_\+\+MUTEX\+\_\+(mutex)}
+\item {\ttfamily GTEST\+\_\+\+EXCLUSIVE\+\_\+\+LOCK\+\_\+\+REQUIRED\+\_\+(locks)}
+\item {\ttfamily GTEST\+\_\+\+LOCK\+\_\+\+EXCLUDED\+\_\+(locks)}
+\end{DoxyItemize}\hypertarget{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md458}{}\doxysubsection{Underlying library support features}\label{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md458}
+
+\begin{DoxyItemize}
+\item {\ttfamily GTEST\+\_\+\+HAS\+\_\+\+CXXABI\+\_\+\+H\+\_\+}
+\end{DoxyItemize}\hypertarget{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md459}{}\doxysubsection{Exporting API symbols\+:}\label{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md459}
+
+\begin{DoxyItemize}
+\item {\ttfamily GTEST\+\_\+\+API\+\_\+} -\/ Specifier for exported symbols.
+\end{DoxyItemize}\hypertarget{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md460}{}\doxysection{Header $<$tt$>$gtest-\/printers.\+h$<$/tt$>$}\label{md_tests_googletest_1_13_0_googletest_include_gtest_internal_custom__r_e_a_d_m_e_autotoc_md460}
+
+\begin{DoxyItemize}
+\item See documentation at {\ttfamily \mbox{\hyperlink{gtest-printers_8h_source}{gtest/gtest-\/printers.\+h}}} for details on how to define a custom printer. 
+\end{DoxyItemize}

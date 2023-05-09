@@ -1,0 +1,47 @@
+\hypertarget{_location_block__old_2_location_block_8hpp_source}{}\doxysection{Location\+Block.\+hpp}
+\label{_location_block__old_2_location_block_8hpp_source}\index{webserve/LocationBlock\_old/LocationBlock.hpp@{webserve/LocationBlock\_old/LocationBlock.hpp}}
+\mbox{\hyperlink{_location_block__old_2_location_block_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ LOCATION\_BLOCK\_HPP}}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ LOCATION\_BLOCK\_HPP}}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../lib/ft/ft.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}../Block/Block.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00007}00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_location_block}{LocationBlock}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_block}{Block}}}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00008}00008\ \{}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00010}00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00011}00011\ \ \ \ \ std::string\ \_url;}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00012}00012\ \ \ \ \ std::string\ \_root;}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00013}00013\ \ \ \ \ std::string\ \_index;}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00014}00014\ \ \ \ \ std::string\ \_upload\_path;}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00015}00015\ \ \ \ \ std::list<std::string>\ \ \_allow\_method;}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00016}00016\ \ \ \ \ std::list<std::string>\ \ \_try\_files;}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{bool}\ \_auto\_index;}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00019}00019\ \ \ \ \ std::string\ deleteBlock(std::vector<std::string>\ arr);}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00020}00020\ \ \ \ \ \textcolor{keywordtype}{void}\ setUrl(std::string\ url);}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{void}\ setAttributes(std::string\ body);}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordtype}{void}\ removeFirstWhiteSpaces(std::vector<std::string>\ *block\_lines);}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00023}00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ check\_method(std::string\ method);}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00025}00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00026}\mbox{\hyperlink{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}{00026}}\ \ \ \ \ \mbox{\hyperlink{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}{LocationBlock}}();}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{class_location_block_af0db3bdf785473e65a4f6f830ceb8e01}{LocationBlock}}(\textcolor{keyword}{const}\ std::string\&\ block);}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00028}\mbox{\hyperlink{class_location_block_a27f931ff04e248bf3e1c2c68bedf9929}{00028}}\ \ \ \ \ \mbox{\hyperlink{class_location_block_a27f931ff04e248bf3e1c2c68bedf9929}{LocationBlock}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_location_block}{LocationBlock}}\&\ location\_block);}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00029}\mbox{\hyperlink{class_location_block_ae528ac2a17f0726f79ff8a37b9763779}{00029}}\ \ \ \ \ \mbox{\hyperlink{class_location_block_ae528ac2a17f0726f79ff8a37b9763779}{\string~LocationBlock}}();}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00030}\mbox{\hyperlink{class_location_block_aa856abae747c829c075f1f770c6d7544}{00030}}\ \ \ \ \ \mbox{\hyperlink{class_location_block}{LocationBlock}}\&\ \mbox{\hyperlink{class_location_block_aa856abae747c829c075f1f770c6d7544}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_location_block}{LocationBlock}}\&\ location\_block);}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00032}\mbox{\hyperlink{class_location_block_a8cc57a5199f3aa816b9975b7a009c7c7}{00032}}\ \ \ \ \ std::string\ \mbox{\hyperlink{class_location_block_a8cc57a5199f3aa816b9975b7a009c7c7}{getUrl}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00033}00033\ \ \ \ \ std::string\ \mbox{\hyperlink{class_location_block_a91ef47ec00f9988b9ffc6070b3eb9d3b}{getRoot}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00034}00034\ \ \ \ \ std::string\ \mbox{\hyperlink{class_location_block_acc29fe8fdfb8ec40c9702a0758a3bb69}{getIndex}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00035}00035\ \ \ \ \ std::string\ \mbox{\hyperlink{class_location_block_aa19ce102d838297893df98cb2857dac7}{getUploadPath}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00036}00036\ \ \ \ \ std::list<std::string>\ \mbox{\hyperlink{class_location_block_a7dcd18f06c05c4610df86a56b6cb753f}{getAllowMethod}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00037}00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_location_block_a31cc4d786e5bd02b4aff0013034ee8ab}{getAutoIndex}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00039}00039\ \};}
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{_location_block__old_2_location_block_8hpp_source_l00041}00041\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

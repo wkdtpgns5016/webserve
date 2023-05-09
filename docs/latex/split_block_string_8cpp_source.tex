@@ -1,0 +1,38 @@
+\hypertarget{split_block_string_8cpp_source}{}\doxysection{split\+Block\+String.\+cpp}
+\label{split_block_string_8cpp_source}\index{webserve/lib/ft/splitBlockString.cpp@{webserve/lib/ft/splitBlockString.cpp}}
+\mbox{\hyperlink{split_block_string_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ft_8hpp}{ft.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00007}\mbox{\hyperlink{namespaceft_a07edcf8d49394d627bb79cae8ad38512}{00007}}\ std::vector<std::string>\ \mbox{\hyperlink{namespaceft_a07edcf8d49394d627bb79cae8ad38512}{ft::splitBlockString}}(std::string\ str)\ \{}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00008}00008\ \ \ \ \ std::vector<std::string>\ arr;}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00009}00009\ \ \ \ \ std::string\ token,\ s;}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00010}00010\ \ \ \ \ std::istringstream\ iss(str);}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{keywordtype}{int}\ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00012}00012\ \ \ \ \ \textcolor{keywordtype}{int}\ n1,\ n2;}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00014}00014\ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(iss,\ token,\ \textcolor{charliteral}{'\(\backslash\)n'}))}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00015}00015\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ s\ =\ s\ +\ token\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ n1\ =\ std::count(token.begin(),\ token.end(),\ \textcolor{charliteral}{'\{'});}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ n2\ =\ std::count(token.begin(),\ token.end(),\ \textcolor{charliteral}{'\}'});}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (count\ ==\ 0\ \&\&\ n1\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ s.clear();}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ count\ +=\ n1\ -\/\ n2;}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (count\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ arr.push\_back(s);}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ s.clear();}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00030}00030\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{return}\ (arr);}
+\DoxyCodeLine{\Hypertarget{split_block_string_8cpp_source_l00032}00032\ \}}
+
+\end{DoxyCode}

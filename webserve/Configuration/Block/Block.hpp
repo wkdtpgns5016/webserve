@@ -4,6 +4,10 @@
 #include <iostream>
 #include <vector>
 
+/**
+ * @class	Block
+ * @brief	Config파일의 기본단위가 되는 클래스
+ */
 class Block
 {
 private:

@@ -1,0 +1,81 @@
+\hypertarget{test__client_8hpp_source}{}\doxysection{test\+\_\+client.\+hpp}
+\label{test__client_8hpp_source}\index{example/include/test\_client.hpp@{example/include/test\_client.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ TEST\_CLIENT\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ TEST\_CLIENT\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <sys/types.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <sys/socket.h>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <netinet/in.h>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <arpa/inet.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ BUFSIZE\ 1024}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtest__client}{test\_client}}}
+\DoxyCodeLine{00017\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ socket\_fd;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ my\_port;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{char}*\ server\_ip;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ server\_addr;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ connect\_server()}
+\DoxyCodeLine{00025\ \ \ \ \ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ memset(\&server\_addr,\ 0,\ \textcolor{keyword}{sizeof}(server\_addr));}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ server\_addr.sin\_family=AF\_INET;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ server\_addr.sin\_addr.s\_addr=inet\_addr(server\_ip);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ server\_addr.sin\_port=htons(my\_port);}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(connect(socket\_fd,\ (\textcolor{keyword}{struct}\ sockaddr*)\&server\_addr,\ \textcolor{keyword}{sizeof}(server\_addr))\ ==\ -\/1)}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}server["{}}\ <<\ server\_ip\ <<\ \textcolor{stringliteral}{"{}]\ Connected...."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{classtest__client}{test\_client}}(\textcolor{keywordtype}{char}*\ addr,\ \textcolor{keywordtype}{int}\ port)}
+\DoxyCodeLine{00039\ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ server\_ip\ =\ addr;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ my\_port\ =\ port;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((socket\_fd\ =\ socket(PF\_INET,\ SOCK\_STREAM,\ 0))\ <\ 0)}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ run()}
+\DoxyCodeLine{00049\ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clnt\_sock;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ str\_len;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ message;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ std::string\ mesg;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ connect\_server();}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(1)\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 메세지\ 입력,\ 전송\ */}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}전송할\ 메시지를\ 입력\ 하세요\ (q\ to\ quit)\ :\ "{}};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cin\ >>\ mesg;}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ std::getline(std::cin,\ mesg);}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!mesg.compare(\textcolor{stringliteral}{"{}q"{}}))\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ message\ =\ (\textcolor{keywordtype}{char}\ *)mesg.c\_str();}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ write(socket\_fd,\ message,\ strlen(message));}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ 메세지\ 수신,\ 출력\ */}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ str\_len\ =\ read(socket\_fd,\ message,\ strlen(message));}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}서버로부터\ 전송된\ 메세지\ :\ "{}}\ <<\ message\ <<\ std::endl;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ close(socket\_fd);}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (0);}
+\DoxyCodeLine{00072\ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

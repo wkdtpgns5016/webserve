@@ -1,0 +1,95 @@
+\hypertarget{classtest__server}{}\doxysection{test\+\_\+server Class Reference}
+\label{classtest__server}\index{test\_server@{test\_server}}
+Inheritance diagram for test\+\_\+server\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtest__server}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtest__server_a899c6ad06b784d2b50df6b0134d30283}\label{classtest__server_a899c6ad06b784d2b50df6b0134d30283}} 
+{\bfseries test\+\_\+server} (int port)
+\item 
+\mbox{\Hypertarget{classtest__server_a86f3f7569c6705b6fe31405b7efebfe5}\label{classtest__server_a86f3f7569c6705b6fe31405b7efebfe5}} 
+virtual int {\bfseries run} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtest__server_a0b683d73e6e763f7fcf863c1751307f4}\label{classtest__server_a0b683d73e6e763f7fcf863c1751307f4}} 
+void {\bfseries bind\+\_\+server} ()
+\item 
+\mbox{\Hypertarget{classtest__server_ac8e8a4ba03755f60827551164f5d5400}\label{classtest__server_ac8e8a4ba03755f60827551164f5d5400}} 
+int {\bfseries listen\+\_\+server} ()
+\item 
+\mbox{\Hypertarget{classtest__server_a587e23ede23dfe44fa8ca20dce1e1603}\label{classtest__server_a587e23ede23dfe44fa8ca20dce1e1603}} 
+int {\bfseries accept\+\_\+server} ()
+\item 
+void \mbox{\hyperlink{classtest__server_addceebd89303988c160dfaccbb7846fc}{multi\+\_\+process\+\_\+run}} ()
+\item 
+void \mbox{\hyperlink{classtest__server_a366ef64326d65f78b22ca2731a3a89b9}{multi\+\_\+thread\+\_\+run}} ()
+\item 
+void \mbox{\hyperlink{classtest__server_a99bab1176e02535baaeba99650d9216b}{multi\+\_\+plexing\+\_\+run\+\_\+with\+\_\+select}} ()
+\item 
+void \mbox{\hyperlink{classtest__server_a5e3f3f9d9f9602756ea0d42a4b715466}{multi\+\_\+plexing\+\_\+run\+\_\+with\+\_\+poll}} ()
+\item 
+virtual void \mbox{\hyperlink{classtest__server_ae5652438711bc6f98a035c42698cdd19}{multi\+\_\+plexing\+\_\+run\+\_\+with\+\_\+epoll}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtest__server_a4b3ffc32065a9eaae9fe3b9deb59d495}\label{classtest__server_a4b3ffc32065a9eaae9fe3b9deb59d495}} 
+static void $\ast$ {\bfseries client\+\_\+thread\+\_\+handling} (void $\ast$sock)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtest__server_afa29e9916c062c8228e6964671dedabf}\label{classtest__server_afa29e9916c062c8228e6964671dedabf}} 
+int {\bfseries socket\+\_\+fd}
+\item 
+\mbox{\Hypertarget{classtest__server_abdb25b71a6174a650bfd55f04447fd0f}\label{classtest__server_abdb25b71a6174a650bfd55f04447fd0f}} 
+int {\bfseries my\+\_\+port}
+\item 
+\mbox{\Hypertarget{classtest__server_a5783d6ef0448ed97fe1d61a6f1005ab4}\label{classtest__server_a5783d6ef0448ed97fe1d61a6f1005ab4}} 
+struct sockaddr\+\_\+in {\bfseries server\+\_\+addr}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtest__server_ae5652438711bc6f98a035c42698cdd19}\label{classtest__server_ae5652438711bc6f98a035c42698cdd19}} 
+\index{test\_server@{test\_server}!multi\_plexing\_run\_with\_epoll@{multi\_plexing\_run\_with\_epoll}}
+\index{multi\_plexing\_run\_with\_epoll@{multi\_plexing\_run\_with\_epoll}!test\_server@{test\_server}}
+\doxysubsubsection{\texorpdfstring{multi\_plexing\_run\_with\_epoll()}{multi\_plexing\_run\_with\_epoll()}}
+{\footnotesize\ttfamily virtual void test\+\_\+server\+::multi\+\_\+plexing\+\_\+run\+\_\+with\+\_\+epoll (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+멀티플렉싱 기반 방법 3 epoll 사용 \+: 커널 레벨 멀티플렉싱 지원 커널에 관찰 대상에 대한 정보를 한번만 전달하고, 대상의 범위 또는 내용 변경이 있을 때만 변경사항을 알려줌 리눅스에서는 epoll(), 윈도우에서는 IOCP() 맥에서는 Kqueue() 사용 \mbox{\Hypertarget{classtest__server_a5e3f3f9d9f9602756ea0d42a4b715466}\label{classtest__server_a5e3f3f9d9f9602756ea0d42a4b715466}} 
+\index{test\_server@{test\_server}!multi\_plexing\_run\_with\_poll@{multi\_plexing\_run\_with\_poll}}
+\index{multi\_plexing\_run\_with\_poll@{multi\_plexing\_run\_with\_poll}!test\_server@{test\_server}}
+\doxysubsubsection{\texorpdfstring{multi\_plexing\_run\_with\_poll()}{multi\_plexing\_run\_with\_poll()}}
+{\footnotesize\ttfamily void test\+\_\+server\+::multi\+\_\+plexing\+\_\+run\+\_\+with\+\_\+poll (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+멀티플렉싱 기반 방법 2 poll 사용 \+: select()는 timeval 구조체를 사용하여 타임아웃 값을 세팅하지만, poll()은 타임아웃 기능을 자체 지원 \mbox{\Hypertarget{classtest__server_a99bab1176e02535baaeba99650d9216b}\label{classtest__server_a99bab1176e02535baaeba99650d9216b}} 
+\index{test\_server@{test\_server}!multi\_plexing\_run\_with\_select@{multi\_plexing\_run\_with\_select}}
+\index{multi\_plexing\_run\_with\_select@{multi\_plexing\_run\_with\_select}!test\_server@{test\_server}}
+\doxysubsubsection{\texorpdfstring{multi\_plexing\_run\_with\_select()}{multi\_plexing\_run\_with\_select()}}
+{\footnotesize\ttfamily void test\+\_\+server\+::multi\+\_\+plexing\+\_\+run\+\_\+with\+\_\+select (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+멀티 플렉싱 기반 방법 1 select 사용 \+: 이벤트(I/O) 별로 감시할 소켓fd 들을 fd\+\_\+set이라는 파일상태 테이블(fd비트배열)에 등록하고, 등록된 fd에서 이벤트가 발생했을 경우 fd\+\_\+set을 확인하는 방식으로 동작 \mbox{\Hypertarget{classtest__server_addceebd89303988c160dfaccbb7846fc}\label{classtest__server_addceebd89303988c160dfaccbb7846fc}} 
+\index{test\_server@{test\_server}!multi\_process\_run@{multi\_process\_run}}
+\index{multi\_process\_run@{multi\_process\_run}!test\_server@{test\_server}}
+\doxysubsubsection{\texorpdfstring{multi\_process\_run()}{multi\_process\_run()}}
+{\footnotesize\ttfamily void test\+\_\+server\+::multi\+\_\+process\+\_\+run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+멀티 프로세스 기반 각 클라이언트 소켓 fd 마다 프로세스를 fork() 부모 프로세스 \+: 리스닝 소켓 (server) 자식 프로세스 \+: 클라언트 소켓 (clinet) \mbox{\Hypertarget{classtest__server_a366ef64326d65f78b22ca2731a3a89b9}\label{classtest__server_a366ef64326d65f78b22ca2731a3a89b9}} 
+\index{test\_server@{test\_server}!multi\_thread\_run@{multi\_thread\_run}}
+\index{multi\_thread\_run@{multi\_thread\_run}!test\_server@{test\_server}}
+\doxysubsubsection{\texorpdfstring{multi\_thread\_run()}{multi\_thread\_run()}}
+{\footnotesize\ttfamily void test\+\_\+server\+::multi\+\_\+thread\+\_\+run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+멀티 스레드 기반 각 클라이언트 소켓 fd 마다 스레드를 생성 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+example/include/test\+\_\+server.\+hpp\end{DoxyCompactItemize}

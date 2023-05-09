@@ -1,0 +1,119 @@
+\hypertarget{namespaceft}{}\doxysection{ft Namespace Reference}
+\label{namespaceft}\index{ft@{ft}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{namespaceft_ad31a05e8c579e17ad92090028e69110e}{read\+File\+Into\+String}} (std\+::string filename)
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{namespaceft_a51c6d900d78ff6611d62c848b3c7e421}{split\+String}} (std\+::string str, std\+::string split)
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{namespaceft_a07edcf8d49394d627bb79cae8ad38512}{split\+Block\+String}} (std\+::string str)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceft_ad31a05e8c579e17ad92090028e69110e}\label{namespaceft_ad31a05e8c579e17ad92090028e69110e}} 
+\index{ft@{ft}!readFileIntoString@{readFileIntoString}}
+\index{readFileIntoString@{readFileIntoString}!ft@{ft}}
+\doxysubsubsection{\texorpdfstring{readFileIntoString()}{readFileIntoString()}}
+{\footnotesize\ttfamily std\+::string ft\+::read\+File\+Into\+String (\begin{DoxyParamCaption}\item[{std\+::string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{read_file_into_string_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{read_file_into_string_8cpp_source}{read\+File\+Into\+String.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00004\ \{}
+\DoxyCodeLine{00005\ \ \ \ \ std::ifstream\ f(filename);}
+\DoxyCodeLine{00006\ \ \ \ \ std::string\ str;}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keywordflow}{if}\ (!f.good()\ ||\ !f.is\_open())}
+\DoxyCodeLine{00009\ \ \ \ \ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Error:\ Do\ not\ stream\ open\ of\ file\ open."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (str);}
+\DoxyCodeLine{00012\ \ \ \ \ \}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordflow}{if}(f)}
+\DoxyCodeLine{00015\ \ \ \ \ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ std::ostringstream\ ss;}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ ss\ <<\ f.rdbuf();}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ str\ =\ ss.str();}
+\DoxyCodeLine{00019\ \ \ \ \ \}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{return}\ str;}
+\DoxyCodeLine{00021\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespaceft_a07edcf8d49394d627bb79cae8ad38512}\label{namespaceft_a07edcf8d49394d627bb79cae8ad38512}} 
+\index{ft@{ft}!splitBlockString@{splitBlockString}}
+\index{splitBlockString@{splitBlockString}!ft@{ft}}
+\doxysubsubsection{\texorpdfstring{splitBlockString()}{splitBlockString()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::string $>$ ft\+::split\+Block\+String (\begin{DoxyParamCaption}\item[{std\+::string}]{str }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{split_block_string_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{split_block_string_8cpp_source}{split\+Block\+String.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00007\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00008\ \ \ \ \ std::vector<std::string>\ arr;}
+\DoxyCodeLine{00009\ \ \ \ \ std::string\ token,\ s;}
+\DoxyCodeLine{00010\ \ \ \ \ std::istringstream\ iss(str);}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{int}\ count\ =\ 0;}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{int}\ n1,\ n2;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordflow}{while}\ (std::getline(iss,\ token,\ \textcolor{charliteral}{'\(\backslash\)n'}))}
+\DoxyCodeLine{00015\ \ \ \ \ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ s\ =\ s\ +\ token\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ n1\ =\ std::count(token.begin(),\ token.end(),\ \textcolor{charliteral}{'\{'});}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ n2\ =\ std::count(token.begin(),\ token.end(),\ \textcolor{charliteral}{'\}'});}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (count\ ==\ 0\ \&\&\ n1\ ==\ 0)}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ s.clear();}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ count\ +=\ n1\ -\/\ n2;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (count\ ==\ 0)}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ arr.push\_back(s);}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ s.clear();}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ (arr);}
+\DoxyCodeLine{00032\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespaceft_a51c6d900d78ff6611d62c848b3c7e421}\label{namespaceft_a51c6d900d78ff6611d62c848b3c7e421}} 
+\index{ft@{ft}!splitString@{splitString}}
+\index{splitString@{splitString}!ft@{ft}}
+\doxysubsubsection{\texorpdfstring{splitString()}{splitString()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::string $>$ ft\+::split\+String (\begin{DoxyParamCaption}\item[{std\+::string}]{str,  }\item[{std\+::string}]{split }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{split_string_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{split_string_8cpp_source}{split\+String.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \ \ \ \ std::vector<std::string>\ arr;}
+\DoxyCodeLine{00007\ \ \ \ \ std::string::size\_type\ n;}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keywordflow}{while}\ (str.length()\ >\ 0)}
+\DoxyCodeLine{00010\ \ \ \ \ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ n\ =\ str.find(split,\ 0);}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\ ==\ std::string::npos)}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \ \ \ \ arr.push\_back(str.substr(0));}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ std::string\ temp\ =\ str.substr(0,\ n);}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (temp.length()\ >\ 0)}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ arr.push\_back(temp);}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ str\ =\ str.substr(n\ +\ split.length());}
+\DoxyCodeLine{00021\ \ \ \ \ \}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{return}\ (arr);}
+\DoxyCodeLine{00023\ \}}
+
+\end{DoxyCode}

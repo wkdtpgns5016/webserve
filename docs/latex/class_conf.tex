@@ -1,0 +1,199 @@
+\hypertarget{class_conf}{}\doxysection{Conf Class Reference}
+\label{class_conf}\index{Conf@{Conf}}
+
+
+{\ttfamily \#include $<$Conf.\+hpp$>$}
+
+Inheritance diagram for Conf\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_conf}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_conf_a143db233420f3d2ad3863c5320d6796d}{Conf}} ()
+\item 
+\mbox{\hyperlink{class_conf_aa77bccd2afe07798654c3927d10c0521}{Conf}} (const \mbox{\hyperlink{class_conf}{Conf}} \&other)
+\item 
+\mbox{\hyperlink{class_conf}{Conf}} \& \mbox{\hyperlink{class_conf_a8ad7fa7eb3b1dbd4dd234331bf93f66c}{operator=}} (const \mbox{\hyperlink{class_conf}{Conf}} \&other)
+\item 
+\mbox{\hyperlink{class_conf_ae0f20490187026c7e09643ada9285b52}{$\sim$\+Conf}} ()
+\item 
+\mbox{\hyperlink{class_conf_af71e77f4d40ee7087e9a20d352fe6800}{Conf}} (const std\+::string \&script)
+\item 
+\mbox{\hyperlink{class_server_block}{Server\+Block}} $\ast$ \mbox{\hyperlink{class_conf_a9555619ffb4c874e350298f9d2bd02a8}{generate\+Inner\+Block}} (const std\+::string \&script)
+\item 
+\mbox{\hyperlink{class_conf_af71e77f4d40ee7087e9a20d352fe6800}{Conf}} (const std\+::string \&script)
+\item 
+\mbox{\hyperlink{class_server_block}{Server\+Block}} $\ast$ \mbox{\hyperlink{class_conf_a9555619ffb4c874e350298f9d2bd02a8}{generate\+Inner\+Block}} (const std\+::string \&script)
+\item 
+\mbox{\hyperlink{class_conf_a143db233420f3d2ad3863c5320d6796d}{Conf}} ()
+\item 
+\mbox{\hyperlink{class_conf_ae0f20490187026c7e09643ada9285b52}{$\sim$\+Conf}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_conf_2_conf_8hpp_source_l00007}{7}} of file \mbox{\hyperlink{_conf_2_conf_8hpp_source}{Conf.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_conf_a143db233420f3d2ad3863c5320d6796d}\label{class_conf_a143db233420f3d2ad3863c5320d6796d}} 
+\index{Conf@{Conf}!Conf@{Conf}}
+\index{Conf@{Conf}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{Conf()}{Conf()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily Conf\+::\+Conf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_conf_2_conf_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{_conf_2_conf_8cpp_source}{Conf.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00003\ \{\}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_conf_aa77bccd2afe07798654c3927d10c0521}\label{class_conf_aa77bccd2afe07798654c3927d10c0521}} 
+\index{Conf@{Conf}!Conf@{Conf}}
+\index{Conf@{Conf}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{Conf()}{Conf()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily Conf\+::\+Conf (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_conf}{Conf}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_conf_2_conf_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{_conf_2_conf_8cpp_source}{Conf.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{if}\ (\&other\ ==\ \textcolor{keyword}{this})}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ return\ ;}
+\DoxyCodeLine{00022\ \ \ \ \ *\textcolor{keyword}{this}\ =\ other;}
+\DoxyCodeLine{00023\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_conf_ae0f20490187026c7e09643ada9285b52}\label{class_conf_ae0f20490187026c7e09643ada9285b52}} 
+\index{Conf@{Conf}!````~Conf@{$\sim$Conf}}
+\index{````~Conf@{$\sim$Conf}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{$\sim$Conf()}{~Conf()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Conf\+::$\sim$\+Conf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_conf_2_conf_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{_conf_2_conf_8cpp_source}{Conf.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \ \ \ \ std::vector<Block\ *>::iterator\ ite\ =\ \mbox{\hyperlink{class_block_a1b20e5cebed33904dbdee0a026053bd4}{\_inner\_blocks}}.end();}
+\DoxyCodeLine{00007\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::vector<Block\ *>::iterator\ it;\ it\ !=\ ite;\ it++)}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ *it;}
+\DoxyCodeLine{00009\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_conf_af71e77f4d40ee7087e9a20d352fe6800}\label{class_conf_af71e77f4d40ee7087e9a20d352fe6800}} 
+\index{Conf@{Conf}!Conf@{Conf}}
+\index{Conf@{Conf}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{Conf()}{Conf()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily Conf\+::\+Conf (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{script }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_conf_2_conf_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{_conf_2_conf_8cpp_source}{Conf.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_block_a37658a946bf5067ad01d68d9ff086adc}{Block}}(script)}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_conf_af71e77f4d40ee7087e9a20d352fe6800}\label{class_conf_af71e77f4d40ee7087e9a20d352fe6800}} 
+\index{Conf@{Conf}!Conf@{Conf}}
+\index{Conf@{Conf}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{Conf()}{Conf()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily Conf\+::\+Conf (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{script }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_conf_a143db233420f3d2ad3863c5320d6796d}\label{class_conf_a143db233420f3d2ad3863c5320d6796d}} 
+\index{Conf@{Conf}!Conf@{Conf}}
+\index{Conf@{Conf}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{Conf()}{Conf()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily Conf\+::\+Conf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_conf_ae0f20490187026c7e09643ada9285b52}\label{class_conf_ae0f20490187026c7e09643ada9285b52}} 
+\index{Conf@{Conf}!````~Conf@{$\sim$Conf}}
+\index{````~Conf@{$\sim$Conf}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{$\sim$Conf()}{~Conf()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Conf\+::$\sim$\+Conf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_conf_a9555619ffb4c874e350298f9d2bd02a8}\label{class_conf_a9555619ffb4c874e350298f9d2bd02a8}} 
+\index{Conf@{Conf}!generateInnerBlock@{generateInnerBlock}}
+\index{generateInnerBlock@{generateInnerBlock}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{generateInnerBlock()}{generateInnerBlock()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_server_block}{Server\+Block}} $\ast$ Conf\+::generate\+Inner\+Block (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{script }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_block_a16823eaa1eb0989c412ec79ac1148295}{Block}}.
+
+
+
+Definition at line \mbox{\hyperlink{_conf_2_conf_8cpp_source_l00029}{29}} of file \mbox{\hyperlink{_conf_2_conf_8cpp_source}{Conf.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00030\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ std::pair<std::string,\ std::string>\ id\_value\_pair\ =\ \mbox{\hyperlink{class_block_a0f70077149b79c84f0b446ade2313b29}{divideBlockIdAndValue}}(script,\ 0);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (id\_value\_pair.first\ !=\ \textcolor{stringliteral}{"{}server"{}})}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::exception();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_server_block}{ServerBlock}}(*\textcolor{keyword}{this},\ script);}
+\DoxyCodeLine{00036\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_conf_a9555619ffb4c874e350298f9d2bd02a8}\label{class_conf_a9555619ffb4c874e350298f9d2bd02a8}} 
+\index{Conf@{Conf}!generateInnerBlock@{generateInnerBlock}}
+\index{generateInnerBlock@{generateInnerBlock}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{generateInnerBlock()}{generateInnerBlock()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_server_block}{Server\+Block}} $\ast$ Conf\+::generate\+Inner\+Block (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{script }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_block_a16823eaa1eb0989c412ec79ac1148295}{Block}}.
+
+\mbox{\Hypertarget{class_conf_a8ad7fa7eb3b1dbd4dd234331bf93f66c}\label{class_conf_a8ad7fa7eb3b1dbd4dd234331bf93f66c}} 
+\index{Conf@{Conf}!operator=@{operator=}}
+\index{operator=@{operator=}!Conf@{Conf}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_conf}{Conf}} \& Conf\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_conf}{Conf}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_conf_2_conf_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{_conf_2_conf_8cpp_source}{Conf.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordflow}{if}\ (\&other\ ==\ \textcolor{keyword}{this})}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_block}{Block}}\ \&\textcolor{keyword}{>}(*this)\ =\ other;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00016\ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+webserve/\+Conf/\mbox{\hyperlink{_conf_2_conf_8hpp}{Conf.\+hpp}}\item 
+webserve/\+Configuration/\+Conf/\mbox{\hyperlink{_configuration_2_conf_2_conf_8hpp}{Conf.\+hpp}}\item 
+webserve/\+Conf/\mbox{\hyperlink{_conf_2_conf_8cpp}{Conf.\+cpp}}\item 
+webserve/\+Configuration/\+Conf/\mbox{\hyperlink{_configuration_2_conf_2_conf_8cpp}{Conf.\+cpp}}\end{DoxyCompactItemize}

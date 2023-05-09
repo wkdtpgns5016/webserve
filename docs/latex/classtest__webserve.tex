@@ -1,0 +1,84 @@
+\hypertarget{classtest__webserve}{}\doxysection{test\+\_\+webserve Class Reference}
+\label{classtest__webserve}\index{test\_webserve@{test\_webserve}}
+Inheritance diagram for test\+\_\+webserve\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtest__webserve}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtest__webserve_a7454601327c091f2615a2ecd009dd65d}\label{classtest__webserve_a7454601327c091f2615a2ecd009dd65d}} 
+{\bfseries test\+\_\+webserve} (int port)
+\item 
+int \mbox{\hyperlink{classtest__webserve_a823aaeb7f934ad0709de502575676570}{run}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions inherited from \mbox{\hyperlink{classtest__server}{test\+\_\+server}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtest__server_a899c6ad06b784d2b50df6b0134d30283}\label{classtest__server_a899c6ad06b784d2b50df6b0134d30283}} 
+{\bfseries test\+\_\+server} (int port)
+\item 
+\mbox{\Hypertarget{classtest__server_a86f3f7569c6705b6fe31405b7efebfe5}\label{classtest__server_a86f3f7569c6705b6fe31405b7efebfe5}} 
+virtual int {\bfseries run} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+\doxysubsubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classtest__server}{test\+\_\+server}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtest__server_a0b683d73e6e763f7fcf863c1751307f4}\label{classtest__server_a0b683d73e6e763f7fcf863c1751307f4}} 
+void {\bfseries bind\+\_\+server} ()
+\item 
+\mbox{\Hypertarget{classtest__server_ac8e8a4ba03755f60827551164f5d5400}\label{classtest__server_ac8e8a4ba03755f60827551164f5d5400}} 
+int {\bfseries listen\+\_\+server} ()
+\item 
+\mbox{\Hypertarget{classtest__server_a587e23ede23dfe44fa8ca20dce1e1603}\label{classtest__server_a587e23ede23dfe44fa8ca20dce1e1603}} 
+int {\bfseries accept\+\_\+server} ()
+\item 
+void \mbox{\hyperlink{classtest__server_addceebd89303988c160dfaccbb7846fc}{multi\+\_\+process\+\_\+run}} ()
+\item 
+void \mbox{\hyperlink{classtest__server_a366ef64326d65f78b22ca2731a3a89b9}{multi\+\_\+thread\+\_\+run}} ()
+\item 
+void \mbox{\hyperlink{classtest__server_a99bab1176e02535baaeba99650d9216b}{multi\+\_\+plexing\+\_\+run\+\_\+with\+\_\+select}} ()
+\item 
+void \mbox{\hyperlink{classtest__server_a5e3f3f9d9f9602756ea0d42a4b715466}{multi\+\_\+plexing\+\_\+run\+\_\+with\+\_\+poll}} ()
+\item 
+virtual void \mbox{\hyperlink{classtest__server_ae5652438711bc6f98a035c42698cdd19}{multi\+\_\+plexing\+\_\+run\+\_\+with\+\_\+epoll}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Member Functions inherited from \mbox{\hyperlink{classtest__server}{test\+\_\+server}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtest__server_a4b3ffc32065a9eaae9fe3b9deb59d495}\label{classtest__server_a4b3ffc32065a9eaae9fe3b9deb59d495}} 
+static void $\ast$ {\bfseries client\+\_\+thread\+\_\+handling} (void $\ast$sock)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes inherited from \mbox{\hyperlink{classtest__server}{test\+\_\+server}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtest__server_afa29e9916c062c8228e6964671dedabf}\label{classtest__server_afa29e9916c062c8228e6964671dedabf}} 
+int {\bfseries socket\+\_\+fd}
+\item 
+\mbox{\Hypertarget{classtest__server_abdb25b71a6174a650bfd55f04447fd0f}\label{classtest__server_abdb25b71a6174a650bfd55f04447fd0f}} 
+int {\bfseries my\+\_\+port}
+\item 
+\mbox{\Hypertarget{classtest__server_a5783d6ef0448ed97fe1d61a6f1005ab4}\label{classtest__server_a5783d6ef0448ed97fe1d61a6f1005ab4}} 
+struct sockaddr\+\_\+in {\bfseries server\+\_\+addr}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtest__webserve_a823aaeb7f934ad0709de502575676570}\label{classtest__webserve_a823aaeb7f934ad0709de502575676570}} 
+\index{test\_webserve@{test\_webserve}!run@{run}}
+\index{run@{run}!test\_webserve@{test\_webserve}}
+\doxysubsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily int test\+\_\+webserve\+::run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classtest__server}{test\+\_\+server}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+example/include/test\+\_\+webserve.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,49 @@
+\hypertarget{_server_handler_8hpp_source}{}\doxysection{Server\+Handler.\+hpp}
+\label{_server_handler_8hpp_source}\index{webserve/ServerHandler/ServerHandler.hpp@{webserve/ServerHandler/ServerHandler.hpp}}
+\mbox{\hyperlink{_server_handler_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ SERVER\_CONTROLLER\_HPP}}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00002}00002\ \textcolor{preprocessor}{\#define\ SERVER\_CONTROLLER\_HPP}}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}../lib/ft/ft.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}../HttpMessage/HttpRequestMessage.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}../HttpMessage/HttpResponseMessage.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}../ServerBlock/ServerBlock.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00010}\mbox{\hyperlink{class_server_handler}{00010}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_server_handler}{ServerHandler}}}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00011}00011\ \{}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00012}00012\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00013}00013\ \ \ \ \ std::map<int,\ std::string>\ \ \_status;}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{class_http_request_message}{HttpRequestMessage}}\ \ \ \ \ \ \ \ \ \ \_request\_message;}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{class_server_block}{ServerBlock}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_server\_block;}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{void}\ init\_status();}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00018}00018\ \ \ \ \ \textcolor{keywordtype}{bool}\ checkFile(std::string\ request\_target);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00020}00020\ \ \ \ \ std::vector<std::string>\ getIndexPath(std::string\ root,\ std::string\ index);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00021}00021\ \ \ \ \ LocationParser\ findLocationParser(std::list<LocationParser>\ locations,\ std::string\ request\_target);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00023}00023\ \ \ \ \ std::string\ findPath(std::string\ request\_target);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00024}00024\ \ \ \ \ std::string\ openFile(std::string\ request\_target);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00025}00025\ \ \ \ \ std::string\ executeCgi(std::string\ request\_target);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{class_http_response_message}{HttpResponseMessage}}\ getHandler();}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{class_http_response_message}{HttpResponseMessage}}\ postHandler();}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{class_http_response_message}{HttpResponseMessage}}\ deleteHandler();}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00031}00031\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{class_server_handler_ad45f187793a5f69795c4a409a1425be9}{ServerHandler}}();}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{class_server_handler_ad45f187793a5f69795c4a409a1425be9}{ServerHandler}}(\mbox{\hyperlink{class_server_block}{ServerBlock}}\ server\_block);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00034}00034\ \ \ \ \ \mbox{\hyperlink{class_server_handler_ad45f187793a5f69795c4a409a1425be9}{ServerHandler}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_server_handler}{ServerHandler}}\&\ server\_handler);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00035}00035\ \ \ \ \ \mbox{\hyperlink{class_server_handler_a38748a26a3142d81018863876b06164e}{\string~ServerHandler}}();}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00036}00036\ \ \ \ \ \mbox{\hyperlink{class_server_handler}{ServerHandler}}\&\ \mbox{\hyperlink{class_server_handler_af95faea0d1edc77d90233833e59d1fe5}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_server_handler}{ServerHandler}}\&\ server\_handler);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00038}00038\ \ \ \ \ \mbox{\hyperlink{class_http_request_message}{HttpRequestMessage}}\&\ \mbox{\hyperlink{class_server_handler_a6e3e176877914766494bac904a12b9f2}{getRequestMessage}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00039}00039\ \ \ \ \ \mbox{\hyperlink{class_http_response_message}{HttpResponseMessage}}\ \mbox{\hyperlink{class_server_handler_ab4310cf9d72a0ac997c770612275523b}{getResponseMessage}}(\textcolor{keywordtype}{int}\ status\_code,\ std::string\ message\_body);}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{class_http_response_message}{HttpResponseMessage}}\ \mbox{\hyperlink{class_server_handler_afefa22b4311fadca63a545cb63e43631}{requestHandler}}();}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00041}00041\ \};}
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{_server_handler_8hpp_source_l00043}00043\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

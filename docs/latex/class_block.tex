@@ -1,0 +1,969 @@
+\hypertarget{class_block}{}\doxysection{Block Class Reference}
+\label{class_block}\index{Block@{Block}}
+
+
+{\ttfamily \#include $<$Block.\+hpp$>$}
+
+Inheritance diagram for Block\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_block}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_block_a37658a946bf5067ad01d68d9ff086adc}{Block}} ()
+\item 
+virtual \mbox{\hyperlink{class_block_a19d1bd0e1cef6a865ed2745a2e648405}{$\sim$\+Block}} ()
+\item 
+virtual \mbox{\hyperlink{class_block}{Block}} $\ast$ \mbox{\hyperlink{class_block_a16823eaa1eb0989c412ec79ac1148295}{generate\+Inner\+Block}} (const std\+::string \&script)=0
+\item 
+void \mbox{\hyperlink{class_block_a73716df851a226dc4e8a60128c2d2d80}{compile}} (const std\+::string \&script)
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_a7342594ed13e9ad1c4cfb734db98246d}{jump\+Trash}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_a40ddfd3c554dbab531a4628b2c380631}{jump\+Simple}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_a1f8ba9febe5022e8ab4d11b10238d3bb}{jump\+Block}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_af84a9ae98faf806e0cb1c353ce106f7c}{jump\+Block\+Id}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_ab491bdd704015ad2bbad02ed192ac172}{jump\+Word}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+std\+::pair$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{class_block_a3d39478a68924d11ae61b4140da2bb1c}{divide\+Simple\+Id\+And\+Value}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+std\+::pair$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{class_block_a0f70077149b79c84f0b446ade2313b29}{divide\+Block\+Id\+And\+Value}} (const std\+::string \&str, size\+\_\+t pos) const
+\item 
+size\+\_\+t \mbox{\hyperlink{class_block_ad4aaf19dccf006b1c5a789c3f771bd03}{parse\+Simple}} (const std\+::string \&script)
+\item 
+virtual size\+\_\+t \mbox{\hyperlink{class_block_af8a2bcb16ce953ac29962f5a14eb70b2}{parse\+Inner\+Block}} (const std\+::string \&script)
+\item 
+void \mbox{\hyperlink{class_block_aa3c91a2f404986e9c049604a7833e5e6}{parse\+Port}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_ae41540ff65ec4c997edc7fcb5002472f}{parse\+Root}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a0fca54980a210de5987fcbb63e62efd4}{parse\+Server\+Name}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a829c3183763bffdff25f07780ffabe7c}{parse\+Index}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a2e25a9a6b25846a2cdde8fac50d48bcf}{parse\+Default\+Error\+Page}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_ab6a84057cd93d61d1e53c571170c0130}{parse\+Client\+Body\+Size}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a115ffb81328d743eef1699bfc0716683}{parse\+Upload\+Path}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a15a7cbbcd980b9ca9954a44f38799665}{parse\+Allow\+Method}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a30ede4ec81711333affebe8b4ed9578f}{parse\+Try\+Files}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a9d7f30a76a313f458c71912b8fc805df}{parse\+Autoindex}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a3025eda5eb796a48c232fb818a69a470}{parse\+No\+Match\+Id}} (const std\+::string \&)
+\item 
+void \mbox{\hyperlink{class_block_a7de6d0e843cfdaaf7dfb4ed41cd89fc6}{copy\+Without\+Inner\+Block}} (const \mbox{\hyperlink{class_block}{Block}} \&)
+\item 
+void \mbox{\hyperlink{class_block_a29f8988dc869c0316e2cf21a8599d2ee}{set\+Parsing\+Function\+Array}} ()
+\item 
+const int \& \mbox{\hyperlink{class_block_a600e63dd526de11efcbd2396ceb0dbdd}{get\+Port}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_a7107e22cb229326327a1ca4f9304da3d}{get\+Root}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_a2494a5326173eb8e1953b0a569fcdc1b}{get\+Addr}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_ac9c34579b9decb84412621cb6b27d354}{get\+Server\+Name}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_a16773b3ed0e55d5cd319f43253ef0950}{get\+Index}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_afec977ed6f227cf6b463dbd47b5b71f8}{get\+Default\+Error\+Page}} () const
+\item 
+const int \& \mbox{\hyperlink{class_block_aaedb4acadb7e052dbdbee43984ebfd4a}{get\+Client\+Body\+Size}} () const
+\item 
+const std\+::string \& \mbox{\hyperlink{class_block_a502ab154d8576cde92b540e526207183}{get\+Upload\+Path}} () const
+\item 
+const std\+::vector$<$ std\+::string $>$ \& \mbox{\hyperlink{class_block_a32678f73e00e322d1d131f597041c993}{get\+Allow\+Method}} () const
+\item 
+const std\+::vector$<$ std\+::string $>$ \& \mbox{\hyperlink{class_block_a2754124d5779870fecf088600bd01e1e}{get\+Try\+Files}} () const
+\item 
+const bool \& \mbox{\hyperlink{class_block_aeae123cccc7843e84e9052ebf6adbdcf}{get\+Autoindex}} () const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{class_block}{Block}} $\ast$ $>$ \& \mbox{\hyperlink{class_block_a33463928825fd56d0f9aa83385bce9de}{get\+Inner\+Block}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_block_a8e643e4cd3f7f00ad7ca76f97113f7b7}{\+\_\+port}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a5d20905005f57ed77dbc47f577995b1f}{\+\_\+root}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a23dc7149af47dbf9c0546c9fac27d25c}{\+\_\+addr}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a5756a8fe1331ab0c169ed16ffe009f67}{\+\_\+server\+\_\+name}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_ade6e3ebbf51f0dcf29eb7d9d3db018ba}{\+\_\+index}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a6be61af6054f467d08d214e4a761a3d8}{\+\_\+default\+\_\+error\+\_\+page}}
+\item 
+int \mbox{\hyperlink{class_block_aad1998f40d66ac00105423d5e1250b6a}{\+\_\+client\+\_\+body\+\_\+size}}
+\item 
+std\+::string \mbox{\hyperlink{class_block_a3f072edfb5acfb40e233bdc8b1f64459}{\+\_\+upload\+\_\+path}}
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_block_a9e03d08d678f3462389cc67f84821c2a}{\+\_\+allow\+\_\+method}}
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{class_block_ae477f3c4da6557e2012de014f52b4d10}{\+\_\+try\+\_\+files}}
+\item 
+bool \mbox{\hyperlink{class_block_a388724905eb981b98a94cb369017fd53}{\+\_\+autoindex}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_block}{Block}} $\ast$ $>$ \mbox{\hyperlink{class_block_a1b20e5cebed33904dbdee0a026053bd4}{\+\_\+inner\+\_\+blocks}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00009}{9}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_block_a37658a946bf5067ad01d68d9ff086adc}\label{class_block_a37658a946bf5067ad01d68d9ff086adc}} 
+\index{Block@{Block}!Block@{Block}}
+\index{Block@{Block}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{Block()}{Block()}}
+{\footnotesize\ttfamily Block\+::\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00229}{229}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00230\ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \mbox{\hyperlink{class_block_a29f8988dc869c0316e2cf21a8599d2ee}{setParsingFunctionArray}}();}
+\DoxyCodeLine{00232\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a19d1bd0e1cef6a865ed2745a2e648405}\label{class_block_a19d1bd0e1cef6a865ed2745a2e648405}} 
+\index{Block@{Block}!````~Block@{$\sim$Block}}
+\index{````~Block@{$\sim$Block}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{$\sim$Block()}{~Block()}}
+{\footnotesize\ttfamily Block\+::$\sim$\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00234}{234}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00235\ \{}
+\DoxyCodeLine{00236\ \ \ \ \ std::vector<Block\ *>::iterator\ ite\ =\ \mbox{\hyperlink{class_block_a1b20e5cebed33904dbdee0a026053bd4}{\_inner\_blocks}}.end();}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::vector<Block\ *>::iterator\ it\ =\ \mbox{\hyperlink{class_block_a1b20e5cebed33904dbdee0a026053bd4}{\_inner\_blocks}}.begin();\ it\ !=\ ite;\ it++)}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ *it;}
+\DoxyCodeLine{00239\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_block_a73716df851a226dc4e8a60128c2d2d80}\label{class_block_a73716df851a226dc4e8a60128c2d2d80}} 
+\index{Block@{Block}!compile@{compile}}
+\index{compile@{compile}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{compile()}{compile()}}
+{\footnotesize\ttfamily void Block\+::compile (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{script }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \ \ \ \ \textcolor{keywordflow}{if}\ (script.length()\ ==\ std::string::npos)}
+\DoxyCodeLine{00007\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::exception();}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ pos\ =\ \mbox{\hyperlink{class_block_a7342594ed13e9ad1c4cfb734db98246d}{jumpTrash}}(script,\ 0);}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ simple\_end\ =\ pos;}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ block\_id\_end\ =\ pos;}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordflow}{while}\ (pos\ +\ 1\ <\ script.length())}
+\DoxyCodeLine{00013\ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ simple\_end\ =\ \mbox{\hyperlink{class_block_a40ddfd3c554dbab531a4628b2c380631}{jumpSimple}}(script,\ pos);}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ block\_id\_end\ =\ \mbox{\hyperlink{class_block_af84a9ae98faf806e0cb1c353ce106f7c}{jumpBlockId}}(script,\ pos);}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (simple\_end\ <\ block\_id\_end)}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ pos\ +=\ \mbox{\hyperlink{class_block_ad4aaf19dccf006b1c5a789c3f771bd03}{parseSimple}}(script.substr(pos,\ simple\_end\ -\/\ pos));}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ pos\ +=\ \mbox{\hyperlink{class_block_af8a2bcb16ce953ac29962f5a14eb70b2}{parseInnerBlock}}(script.substr(pos,\ \mbox{\hyperlink{class_block_a1f8ba9febe5022e8ab4d11b10238d3bb}{jumpBlock}}(script,\ block\_id\_end)\ -\/\ pos));}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ pos\ =\ \mbox{\hyperlink{class_block_a7342594ed13e9ad1c4cfb734db98246d}{jumpTrash}}(script,\ pos);}
+\DoxyCodeLine{00021\ \ \ \ \ \}}
+\DoxyCodeLine{00022\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a7de6d0e843cfdaaf7dfb4ed41cd89fc6}\label{class_block_a7de6d0e843cfdaaf7dfb4ed41cd89fc6}} 
+\index{Block@{Block}!copyWithoutInnerBlock@{copyWithoutInnerBlock}}
+\index{copyWithoutInnerBlock@{copyWithoutInnerBlock}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{copyWithoutInnerBlock()}{copyWithoutInnerBlock()}}
+{\footnotesize\ttfamily void Block\+::copy\+Without\+Inner\+Block (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_block}{Block}} \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00199}{199}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00200\ \{}
+\DoxyCodeLine{00201\ \ \ \ \ \mbox{\hyperlink{class_block_a8e643e4cd3f7f00ad7ca76f97113f7b7}{\_port}}\ =\ other.\mbox{\hyperlink{class_block_a8e643e4cd3f7f00ad7ca76f97113f7b7}{\_port}};}
+\DoxyCodeLine{00202\ \ \ \ \ \mbox{\hyperlink{class_block_a5d20905005f57ed77dbc47f577995b1f}{\_root}}\ =\ other.\mbox{\hyperlink{class_block_a5d20905005f57ed77dbc47f577995b1f}{\_root}};}
+\DoxyCodeLine{00203\ \ \ \ \ \mbox{\hyperlink{class_block_a23dc7149af47dbf9c0546c9fac27d25c}{\_addr}}\ =\ other.\mbox{\hyperlink{class_block_a23dc7149af47dbf9c0546c9fac27d25c}{\_addr}};}
+\DoxyCodeLine{00204\ \ \ \ \ \mbox{\hyperlink{class_block_a5756a8fe1331ab0c169ed16ffe009f67}{\_server\_name}}\ =\ other.\mbox{\hyperlink{class_block_a5756a8fe1331ab0c169ed16ffe009f67}{\_server\_name}};}
+\DoxyCodeLine{00205\ \ \ \ \ \mbox{\hyperlink{class_block_ade6e3ebbf51f0dcf29eb7d9d3db018ba}{\_index}}\ =\ other.\mbox{\hyperlink{class_block_ade6e3ebbf51f0dcf29eb7d9d3db018ba}{\_index}};}
+\DoxyCodeLine{00206\ \ \ \ \ \mbox{\hyperlink{class_block_a6be61af6054f467d08d214e4a761a3d8}{\_default\_error\_page}}\ =\ other.\mbox{\hyperlink{class_block_a6be61af6054f467d08d214e4a761a3d8}{\_default\_error\_page}};}
+\DoxyCodeLine{00207\ \ \ \ \ \mbox{\hyperlink{class_block_aad1998f40d66ac00105423d5e1250b6a}{\_client\_body\_size}}\ =\ other.\mbox{\hyperlink{class_block_aad1998f40d66ac00105423d5e1250b6a}{\_client\_body\_size}};}
+\DoxyCodeLine{00208\ \ \ \ \ \mbox{\hyperlink{class_block_a3f072edfb5acfb40e233bdc8b1f64459}{\_upload\_path}}\ =\ other.\mbox{\hyperlink{class_block_a3f072edfb5acfb40e233bdc8b1f64459}{\_upload\_path}};}
+\DoxyCodeLine{00209\ \ \ \ \ \mbox{\hyperlink{class_block_a9e03d08d678f3462389cc67f84821c2a}{\_allow\_method}}\ =\ other.\mbox{\hyperlink{class_block_a9e03d08d678f3462389cc67f84821c2a}{\_allow\_method}};}
+\DoxyCodeLine{00210\ \ \ \ \ \mbox{\hyperlink{class_block_ae477f3c4da6557e2012de014f52b4d10}{\_try\_files}}\ =\ other.\mbox{\hyperlink{class_block_ae477f3c4da6557e2012de014f52b4d10}{\_try\_files}};}
+\DoxyCodeLine{00211\ \ \ \ \ \mbox{\hyperlink{class_block_a388724905eb981b98a94cb369017fd53}{\_autoindex}}\ =\ other.\mbox{\hyperlink{class_block_a388724905eb981b98a94cb369017fd53}{\_autoindex}};}
+\DoxyCodeLine{00212\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a0f70077149b79c84f0b446ade2313b29}\label{class_block_a0f70077149b79c84f0b446ade2313b29}} 
+\index{Block@{Block}!divideBlockIdAndValue@{divideBlockIdAndValue}}
+\index{divideBlockIdAndValue@{divideBlockIdAndValue}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{divideBlockIdAndValue()}{divideBlockIdAndValue()}}
+{\footnotesize\ttfamily std\+::pair$<$ std\+::string, std\+::string $>$ Block\+::divide\+Block\+Id\+And\+Value (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00085}{85}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ end;}
+\DoxyCodeLine{00088\ \ \ \ \ std::string\ id;}
+\DoxyCodeLine{00089\ \ \ \ \ std::string\ value;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ end\ =\ \mbox{\hyperlink{class_block_ab491bdd704015ad2bbad02ed192ac172}{jumpWord}}(str,\ pos);}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{id}\ =\ str.substr(pos,\ end\ -\/\ pos);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ pos\ =\ \mbox{\hyperlink{class_block_a7342594ed13e9ad1c4cfb734db98246d}{jumpTrash}}(str,\ end)\ +\ 1;}
+\DoxyCodeLine{00095\ \ \ \ \ end\ =\ str.length()\ -\/\ 1;}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ <\ end)}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ value\ =\ str.substr(pos,\ end\ -\/\ pos);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_pair(\textcolor{keywordtype}{id},\ value);}
+\DoxyCodeLine{00100\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a3d39478a68924d11ae61b4140da2bb1c}\label{class_block_a3d39478a68924d11ae61b4140da2bb1c}} 
+\index{Block@{Block}!divideSimpleIdAndValue@{divideSimpleIdAndValue}}
+\index{divideSimpleIdAndValue@{divideSimpleIdAndValue}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{divideSimpleIdAndValue()}{divideSimpleIdAndValue()}}
+{\footnotesize\ttfamily std\+::pair$<$ std\+::string, std\+::string $>$ Block\+::divide\+Simple\+Id\+And\+Value (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00067}{67}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ end;}
+\DoxyCodeLine{00070\ \ \ \ \ std::string\ id;}
+\DoxyCodeLine{00071\ \ \ \ \ std::string\ value;}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ end\ =\ \mbox{\hyperlink{class_block_ab491bdd704015ad2bbad02ed192ac172}{jumpWord}}(str,\ pos);}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{id}\ =\ str.substr(pos,\ end\ -\/\ pos);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ pos\ =\ \mbox{\hyperlink{class_block_a7342594ed13e9ad1c4cfb734db98246d}{jumpTrash}}(str,\ end);}
+\DoxyCodeLine{00077\ \ \ \ \ end\ =\ str.length()\ -\/\ 1;}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ <\ end)}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ value\ =\ str.substr(pos,\ end\ -\/\ pos);}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::exception();}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_pair(\textcolor{keywordtype}{id},\ value);}
+\DoxyCodeLine{00083\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a16823eaa1eb0989c412ec79ac1148295}\label{class_block_a16823eaa1eb0989c412ec79ac1148295}} 
+\index{Block@{Block}!generateInnerBlock@{generateInnerBlock}}
+\index{generateInnerBlock@{generateInnerBlock}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{generateInnerBlock()}{generateInnerBlock()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{class_block}{Block}} $\ast$ Block\+::generate\+Inner\+Block (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{script }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{class_server_block_ad5ab6ca02b2315b524b15d33c17e8a09}{Server\+Block}}, \mbox{\hyperlink{class_conf_a9555619ffb4c874e350298f9d2bd02a8}{Conf}}, \mbox{\hyperlink{class_conf_a9555619ffb4c874e350298f9d2bd02a8}{Conf}}, and \mbox{\hyperlink{class_location_block_a0364605374123c8554df92b2aacb3531}{Location\+Block}}.
+
+\mbox{\Hypertarget{class_block_a2494a5326173eb8e1953b0a569fcdc1b}\label{class_block_a2494a5326173eb8e1953b0a569fcdc1b}} 
+\index{Block@{Block}!getAddr@{getAddr}}
+\index{getAddr@{getAddr}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getAddr()}{getAddr()}}
+{\footnotesize\ttfamily const std\+::string \& Block\+::get\+Addr (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00217}{217}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00217\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_a23dc7149af47dbf9c0546c9fac27d25c}{\_addr}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a32678f73e00e322d1d131f597041c993}\label{class_block_a32678f73e00e322d1d131f597041c993}} 
+\index{Block@{Block}!getAllowMethod@{getAllowMethod}}
+\index{getAllowMethod@{getAllowMethod}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getAllowMethod()}{getAllowMethod()}}
+{\footnotesize\ttfamily const std\+::vector$<$ std\+::string $>$ \& Block\+::get\+Allow\+Method (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00223}{223}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00223\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_a9e03d08d678f3462389cc67f84821c2a}{\_allow\_method}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_aeae123cccc7843e84e9052ebf6adbdcf}\label{class_block_aeae123cccc7843e84e9052ebf6adbdcf}} 
+\index{Block@{Block}!getAutoindex@{getAutoindex}}
+\index{getAutoindex@{getAutoindex}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getAutoindex()}{getAutoindex()}}
+{\footnotesize\ttfamily const bool \& Block\+::get\+Autoindex (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00225}{225}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00225\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_a388724905eb981b98a94cb369017fd53}{\_autoindex}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_aaedb4acadb7e052dbdbee43984ebfd4a}\label{class_block_aaedb4acadb7e052dbdbee43984ebfd4a}} 
+\index{Block@{Block}!getClientBodySize@{getClientBodySize}}
+\index{getClientBodySize@{getClientBodySize}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getClientBodySize()}{getClientBodySize()}}
+{\footnotesize\ttfamily const int \& Block\+::get\+Client\+Body\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00221}{221}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00221\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_aad1998f40d66ac00105423d5e1250b6a}{\_client\_body\_size}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_afec977ed6f227cf6b463dbd47b5b71f8}\label{class_block_afec977ed6f227cf6b463dbd47b5b71f8}} 
+\index{Block@{Block}!getDefaultErrorPage@{getDefaultErrorPage}}
+\index{getDefaultErrorPage@{getDefaultErrorPage}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getDefaultErrorPage()}{getDefaultErrorPage()}}
+{\footnotesize\ttfamily const std\+::string \& Block\+::get\+Default\+Error\+Page (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00220}{220}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00220\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_a6be61af6054f467d08d214e4a761a3d8}{\_default\_error\_page}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a16773b3ed0e55d5cd319f43253ef0950}\label{class_block_a16773b3ed0e55d5cd319f43253ef0950}} 
+\index{Block@{Block}!getIndex@{getIndex}}
+\index{getIndex@{getIndex}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getIndex()}{getIndex()}}
+{\footnotesize\ttfamily const std\+::string \& Block\+::get\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00219}{219}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00219\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_ade6e3ebbf51f0dcf29eb7d9d3db018ba}{\_index}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a33463928825fd56d0f9aa83385bce9de}\label{class_block_a33463928825fd56d0f9aa83385bce9de}} 
+\index{Block@{Block}!getInnerBlock@{getInnerBlock}}
+\index{getInnerBlock@{getInnerBlock}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getInnerBlock()}{getInnerBlock()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{class_block}{Block}} $\ast$ $>$ \& Block\+::get\+Inner\+Block (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00226}{226}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00226\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_a1b20e5cebed33904dbdee0a026053bd4}{\_inner\_blocks}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a600e63dd526de11efcbd2396ceb0dbdd}\label{class_block_a600e63dd526de11efcbd2396ceb0dbdd}} 
+\index{Block@{Block}!getPort@{getPort}}
+\index{getPort@{getPort}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getPort()}{getPort()}}
+{\footnotesize\ttfamily const int \& Block\+::get\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00215}{215}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00215\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_a8e643e4cd3f7f00ad7ca76f97113f7b7}{\_port}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a7107e22cb229326327a1ca4f9304da3d}\label{class_block_a7107e22cb229326327a1ca4f9304da3d}} 
+\index{Block@{Block}!getRoot@{getRoot}}
+\index{getRoot@{getRoot}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getRoot()}{getRoot()}}
+{\footnotesize\ttfamily const std\+::string \& Block\+::get\+Root (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00216}{216}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00216\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_a5d20905005f57ed77dbc47f577995b1f}{\_root}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_ac9c34579b9decb84412621cb6b27d354}\label{class_block_ac9c34579b9decb84412621cb6b27d354}} 
+\index{Block@{Block}!getServerName@{getServerName}}
+\index{getServerName@{getServerName}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getServerName()}{getServerName()}}
+{\footnotesize\ttfamily const std\+::string \& Block\+::get\+Server\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00218}{218}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00218\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_a5756a8fe1331ab0c169ed16ffe009f67}{\_server\_name}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a2754124d5779870fecf088600bd01e1e}\label{class_block_a2754124d5779870fecf088600bd01e1e}} 
+\index{Block@{Block}!getTryFiles@{getTryFiles}}
+\index{getTryFiles@{getTryFiles}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getTryFiles()}{getTryFiles()}}
+{\footnotesize\ttfamily const std\+::vector$<$ std\+::string $>$ \& Block\+::get\+Try\+Files (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00224}{224}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00224\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_ae477f3c4da6557e2012de014f52b4d10}{\_try\_files}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a502ab154d8576cde92b540e526207183}\label{class_block_a502ab154d8576cde92b540e526207183}} 
+\index{Block@{Block}!getUploadPath@{getUploadPath}}
+\index{getUploadPath@{getUploadPath}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{getUploadPath()}{getUploadPath()}}
+{\footnotesize\ttfamily const std\+::string \& Block\+::get\+Upload\+Path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00222}{222}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_block_a3f072edfb5acfb40e233bdc8b1f64459}{\_upload\_path}};\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a1f8ba9febe5022e8ab4d11b10238d3bb}\label{class_block_a1f8ba9febe5022e8ab4d11b10238d3bb}} 
+\index{Block@{Block}!jumpBlock@{jumpBlock}}
+\index{jumpBlock@{jumpBlock}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{jumpBlock()}{jumpBlock()}}
+{\footnotesize\ttfamily size\+\_\+t Block\+::jump\+Block (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00047}{47}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00048\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ end\ =\ str.find(\textcolor{charliteral}{'\}'},\ pos);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{while}\ ((pos\ =\ str.find(\textcolor{charliteral}{'\{'},\ pos\ +\ 1))\ <\ end}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \&\&\ pos\ !=\ std::string::npos)}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ end\ =\ str.find(\textcolor{charliteral}{'\}'},\ end\ +\ 1);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{if}\ (end\ ==\ std::string::npos)}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::exception();}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ end\ +\ 1;}
+\DoxyCodeLine{00057\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_af84a9ae98faf806e0cb1c353ce106f7c}\label{class_block_af84a9ae98faf806e0cb1c353ce106f7c}} 
+\index{Block@{Block}!jumpBlockId@{jumpBlockId}}
+\index{jumpBlockId@{jumpBlockId}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{jumpBlockId()}{jumpBlockId()}}
+{\footnotesize\ttfamily size\+\_\+t Block\+::jump\+Block\+Id (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ pos\ =\ str.find(\textcolor{charliteral}{'\{'},\ pos);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{return}\ pos;}
+\DoxyCodeLine{00045\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a40ddfd3c554dbab531a4628b2c380631}\label{class_block_a40ddfd3c554dbab531a4628b2c380631}} 
+\index{Block@{Block}!jumpSimple@{jumpSimple}}
+\index{jumpSimple@{jumpSimple}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{jumpSimple()}{jumpSimple()}}
+{\footnotesize\ttfamily size\+\_\+t Block\+::jump\+Simple (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00032}{32}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ pos\ =\ str.find(\textcolor{charliteral}{';'},\ pos);}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{if}\ (pos\ ==\ std::string::npos)}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::exception();}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{return}\ pos\ +\ 1;}
+\DoxyCodeLine{00038\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a7342594ed13e9ad1c4cfb734db98246d}\label{class_block_a7342594ed13e9ad1c4cfb734db98246d}} 
+\index{Block@{Block}!jumpTrash@{jumpTrash}}
+\index{jumpTrash@{jumpTrash}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{jumpTrash()}{jumpTrash()}}
+{\footnotesize\ttfamily size\+\_\+t Block\+::jump\+Trash (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{while}\ (std::isspace(str[pos],\ std::locale())\ ==\ \textcolor{keyword}{true}\ ||\ str[pos]\ ==\ \textcolor{charliteral}{'\(\backslash\)n'})}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{return}\ pos;}
+\DoxyCodeLine{00030\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_ab491bdd704015ad2bbad02ed192ac172}\label{class_block_ab491bdd704015ad2bbad02ed192ac172}} 
+\index{Block@{Block}!jumpWord@{jumpWord}}
+\index{jumpWord@{jumpWord}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{jumpWord()}{jumpWord()}}
+{\footnotesize\ttfamily size\+\_\+t Block\+::jump\+Word (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{str,  }\item[{size\+\_\+t}]{pos }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00060\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{while}\ (std::isspace(str[pos],\ std::locale())\ !=\ \textcolor{keyword}{true}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \&\&\ str[pos]\ !=\ \textcolor{charliteral}{'\(\backslash\)n'}\ \&\&\ str[pos]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'})}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ pos++;}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ pos;}
+\DoxyCodeLine{00065\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a15a7cbbcd980b9ca9954a44f38799665}\label{class_block_a15a7cbbcd980b9ca9954a44f38799665}} 
+\index{Block@{Block}!parseAllowMethod@{parseAllowMethod}}
+\index{parseAllowMethod@{parseAllowMethod}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseAllowMethod()}{parseAllowMethod()}}
+{\footnotesize\ttfamily void Block\+::parse\+Allow\+Method (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00172}{172}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173\ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \mbox{\hyperlink{class_block_a9e03d08d678f3462389cc67f84821c2a}{\_allow\_method}}.push\_back(value);}
+\DoxyCodeLine{00175\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a9d7f30a76a313f458c71912b8fc805df}\label{class_block_a9d7f30a76a313f458c71912b8fc805df}} 
+\index{Block@{Block}!parseAutoindex@{parseAutoindex}}
+\index{parseAutoindex@{parseAutoindex}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseAutoindex()}{parseAutoindex()}}
+{\footnotesize\ttfamily void Block\+::parse\+Autoindex (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00182}{182}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordflow}{if}\ (value\ ==\ \textcolor{stringliteral}{"{}on"{}})}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_block_a388724905eb981b98a94cb369017fd53}{\_autoindex}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (value\ ==\ \textcolor{stringliteral}{"{}off"{}})}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_block_a388724905eb981b98a94cb369017fd53}{\_autoindex}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::exception();}
+\DoxyCodeLine{00190\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_ab6a84057cd93d61d1e53c571170c0130}\label{class_block_ab6a84057cd93d61d1e53c571170c0130}} 
+\index{Block@{Block}!parseClientBodySize@{parseClientBodySize}}
+\index{parseClientBodySize@{parseClientBodySize}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseClientBodySize()}{parseClientBodySize()}}
+{\footnotesize\ttfamily void Block\+::parse\+Client\+Body\+Size (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00162}{162}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00163\ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \mbox{\hyperlink{class_block_aad1998f40d66ac00105423d5e1250b6a}{\_client\_body\_size}}\ =\ std::strtol(value.c\_str(),\ NULL,\ 10);}
+\DoxyCodeLine{00165\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a2e25a9a6b25846a2cdde8fac50d48bcf}\label{class_block_a2e25a9a6b25846a2cdde8fac50d48bcf}} 
+\index{Block@{Block}!parseDefaultErrorPage@{parseDefaultErrorPage}}
+\index{parseDefaultErrorPage@{parseDefaultErrorPage}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseDefaultErrorPage()}{parseDefaultErrorPage()}}
+{\footnotesize\ttfamily void Block\+::parse\+Default\+Error\+Page (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00157}{157}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \mbox{\hyperlink{class_block_a6be61af6054f467d08d214e4a761a3d8}{\_default\_error\_page}}\ =\ value;}
+\DoxyCodeLine{00160\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a829c3183763bffdff25f07780ffabe7c}\label{class_block_a829c3183763bffdff25f07780ffabe7c}} 
+\index{Block@{Block}!parseIndex@{parseIndex}}
+\index{parseIndex@{parseIndex}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseIndex()}{parseIndex()}}
+{\footnotesize\ttfamily void Block\+::parse\+Index (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00152}{152}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00153\ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \mbox{\hyperlink{class_block_ade6e3ebbf51f0dcf29eb7d9d3db018ba}{\_index}}\ =\ value;}
+\DoxyCodeLine{00155\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_af8a2bcb16ce953ac29962f5a14eb70b2}\label{class_block_af8a2bcb16ce953ac29962f5a14eb70b2}} 
+\index{Block@{Block}!parseInnerBlock@{parseInnerBlock}}
+\index{parseInnerBlock@{parseInnerBlock}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseInnerBlock()}{parseInnerBlock()}}
+{\footnotesize\ttfamily size\+\_\+t Block\+::parse\+Inner\+Block (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{script }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00116}{116}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00117\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{class_block_a1b20e5cebed33904dbdee0a026053bd4}{\_inner\_blocks}}.push\_back(\mbox{\hyperlink{class_block_a16823eaa1eb0989c412ec79ac1148295}{generateInnerBlock}}(script));}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordflow}{return}\ script.length();}
+\DoxyCodeLine{00120\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a3025eda5eb796a48c232fb818a69a470}\label{class_block_a3025eda5eb796a48c232fb818a69a470}} 
+\index{Block@{Block}!parseNoMatchId@{parseNoMatchId}}
+\index{parseNoMatchId@{parseNoMatchId}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseNoMatchId()}{parseNoMatchId()}}
+{\footnotesize\ttfamily void Block\+::parse\+No\+Match\+Id (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00192}{192}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00193\ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordflow}{if}\ (value.empty()\ ||\ 1)}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::exception();}
+\DoxyCodeLine{00196\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_aa3c91a2f404986e9c049604a7833e5e6}\label{class_block_aa3c91a2f404986e9c049604a7833e5e6}} 
+\index{Block@{Block}!parsePort@{parsePort}}
+\index{parsePort@{parsePort}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parsePort()}{parsePort()}}
+{\footnotesize\ttfamily void Block\+::parse\+Port (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00137}{137}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00138\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \mbox{\hyperlink{class_block_a8e643e4cd3f7f00ad7ca76f97113f7b7}{\_port}}\ =\ std::strtol(value.c\_str(),\ NULL,\ 10);}
+\DoxyCodeLine{00140\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_ae41540ff65ec4c997edc7fcb5002472f}\label{class_block_ae41540ff65ec4c997edc7fcb5002472f}} 
+\index{Block@{Block}!parseRoot@{parseRoot}}
+\index{parseRoot@{parseRoot}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseRoot()}{parseRoot()}}
+{\footnotesize\ttfamily void Block\+::parse\+Root (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00142}{142}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \mbox{\hyperlink{class_block_a5d20905005f57ed77dbc47f577995b1f}{\_root}}\ =\ value;}
+\DoxyCodeLine{00145\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a0fca54980a210de5987fcbb63e62efd4}\label{class_block_a0fca54980a210de5987fcbb63e62efd4}} 
+\index{Block@{Block}!parseServerName@{parseServerName}}
+\index{parseServerName@{parseServerName}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseServerName()}{parseServerName()}}
+{\footnotesize\ttfamily void Block\+::parse\+Server\+Name (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00147}{147}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148\ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{class_block_a5756a8fe1331ab0c169ed16ffe009f67}{\_server\_name}}\ =\ value;}
+\DoxyCodeLine{00150\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_ad4aaf19dccf006b1c5a789c3f771bd03}\label{class_block_ad4aaf19dccf006b1c5a789c3f771bd03}} 
+\index{Block@{Block}!parseSimple@{parseSimple}}
+\index{parseSimple@{parseSimple}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseSimple()}{parseSimple()}}
+{\footnotesize\ttfamily size\+\_\+t Block\+::parse\+Simple (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{script }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00103}{103}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \ \ simple\_id[11]\ =\ \{\textcolor{stringliteral}{"{}listen"{}},\ \textcolor{stringliteral}{"{}root"{}},\ \textcolor{stringliteral}{"{}server\_name"{}},\ \textcolor{stringliteral}{"{}index"{}},\ \textcolor{stringliteral}{"{}error\_page"{}},\ \textcolor{stringliteral}{"{}client\_max\_body\_size"{}},\ \textcolor{stringliteral}{"{}upload\_path"{}},\ \textcolor{stringliteral}{"{}allow\_method"{}},\ \textcolor{stringliteral}{"{}try\_files"{}},\ \textcolor{stringliteral}{"{}autoindex"{}},\ \textcolor{stringliteral}{"{}"{}}\};}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ std::pair<std::string,\ std::string>\ id\_value\_pair\ =\ \mbox{\hyperlink{class_block_a3d39478a68924d11ae61b4140da2bb1c}{divideSimpleIdAndValue}}(script,\ 0);}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\ i\ <\ 10;\ i++)}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (id\_value\_pair.first\ ==\ simple\_id[i])}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00112\ \ \ \ \ (this-\/>*\_parsing\_func[i])(id\_value\_pair.second);}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{return}\ script.length();}
+\DoxyCodeLine{00114\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a30ede4ec81711333affebe8b4ed9578f}\label{class_block_a30ede4ec81711333affebe8b4ed9578f}} 
+\index{Block@{Block}!parseTryFiles@{parseTryFiles}}
+\index{parseTryFiles@{parseTryFiles}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseTryFiles()}{parseTryFiles()}}
+{\footnotesize\ttfamily void Block\+::parse\+Try\+Files (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00177}{177}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00178\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \mbox{\hyperlink{class_block_ae477f3c4da6557e2012de014f52b4d10}{\_try\_files}}.push\_back(value);}
+\DoxyCodeLine{00180\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a115ffb81328d743eef1699bfc0716683}\label{class_block_a115ffb81328d743eef1699bfc0716683}} 
+\index{Block@{Block}!parseUploadPath@{parseUploadPath}}
+\index{parseUploadPath@{parseUploadPath}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{parseUploadPath()}{parseUploadPath()}}
+{\footnotesize\ttfamily void Block\+::parse\+Upload\+Path (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00167}{167}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00168\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \mbox{\hyperlink{class_block_a3f072edfb5acfb40e233bdc8b1f64459}{\_upload\_path}}\ =\ value;}
+\DoxyCodeLine{00170\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_block_a29f8988dc869c0316e2cf21a8599d2ee}\label{class_block_a29f8988dc869c0316e2cf21a8599d2ee}} 
+\index{Block@{Block}!setParsingFunctionArray@{setParsingFunctionArray}}
+\index{setParsingFunctionArray@{setParsingFunctionArray}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{setParsingFunctionArray()}{setParsingFunctionArray()}}
+{\footnotesize\ttfamily void Block\+::set\+Parsing\+Function\+Array (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8cpp_source_l00122}{122}} of file \mbox{\hyperlink{_block_8cpp_source}{Block.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00123\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \_parsing\_func[0]\ =\ \&\mbox{\hyperlink{class_block_aa3c91a2f404986e9c049604a7833e5e6}{Block::parsePort}};}
+\DoxyCodeLine{00125\ \ \ \ \ \_parsing\_func[1]\ =\ \&\mbox{\hyperlink{class_block_ae41540ff65ec4c997edc7fcb5002472f}{Block::parseRoot}};}
+\DoxyCodeLine{00126\ \ \ \ \ \_parsing\_func[2]\ =\ \&\mbox{\hyperlink{class_block_a0fca54980a210de5987fcbb63e62efd4}{Block::parseServerName}};}
+\DoxyCodeLine{00127\ \ \ \ \ \_parsing\_func[3]\ =\ \&\mbox{\hyperlink{class_block_a829c3183763bffdff25f07780ffabe7c}{Block::parseIndex}};}
+\DoxyCodeLine{00128\ \ \ \ \ \_parsing\_func[4]\ =\ \&\mbox{\hyperlink{class_block_a2e25a9a6b25846a2cdde8fac50d48bcf}{Block::parseDefaultErrorPage}};}
+\DoxyCodeLine{00129\ \ \ \ \ \_parsing\_func[5]\ =\ \&\mbox{\hyperlink{class_block_ab6a84057cd93d61d1e53c571170c0130}{Block::parseClientBodySize}};}
+\DoxyCodeLine{00130\ \ \ \ \ \_parsing\_func[6]\ =\ \&\mbox{\hyperlink{class_block_a115ffb81328d743eef1699bfc0716683}{Block::parseUploadPath}};}
+\DoxyCodeLine{00131\ \ \ \ \ \_parsing\_func[7]\ =\ \&\mbox{\hyperlink{class_block_a15a7cbbcd980b9ca9954a44f38799665}{Block::parseAllowMethod}};}
+\DoxyCodeLine{00132\ \ \ \ \ \_parsing\_func[8]\ =\ \&\mbox{\hyperlink{class_block_a30ede4ec81711333affebe8b4ed9578f}{Block::parseTryFiles}};}
+\DoxyCodeLine{00133\ \ \ \ \ \_parsing\_func[9]\ =\ \&\mbox{\hyperlink{class_block_a9d7f30a76a313f458c71912b8fc805df}{Block::parseAutoindex}};}
+\DoxyCodeLine{00134\ \ \ \ \ \_parsing\_func[10]\ =\ \&\mbox{\hyperlink{class_block_a3025eda5eb796a48c232fb818a69a470}{Block::parseNoMatchId}};}
+\DoxyCodeLine{00135\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_block_a23dc7149af47dbf9c0546c9fac27d25c}\label{class_block_a23dc7149af47dbf9c0546c9fac27d25c}} 
+\index{Block@{Block}!\_addr@{\_addr}}
+\index{\_addr@{\_addr}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_addr}{\_addr}}
+{\footnotesize\ttfamily std\+::string Block\+::\+\_\+addr\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00019}{19}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_a9e03d08d678f3462389cc67f84821c2a}\label{class_block_a9e03d08d678f3462389cc67f84821c2a}} 
+\index{Block@{Block}!\_allow\_method@{\_allow\_method}}
+\index{\_allow\_method@{\_allow\_method}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_allow\_method}{\_allow\_method}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::string$>$ Block\+::\+\_\+allow\+\_\+method\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00026}{26}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_a388724905eb981b98a94cb369017fd53}\label{class_block_a388724905eb981b98a94cb369017fd53}} 
+\index{Block@{Block}!\_autoindex@{\_autoindex}}
+\index{\_autoindex@{\_autoindex}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_autoindex}{\_autoindex}}
+{\footnotesize\ttfamily bool Block\+::\+\_\+autoindex\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00028}{28}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_aad1998f40d66ac00105423d5e1250b6a}\label{class_block_aad1998f40d66ac00105423d5e1250b6a}} 
+\index{Block@{Block}!\_client\_body\_size@{\_client\_body\_size}}
+\index{\_client\_body\_size@{\_client\_body\_size}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_client\_body\_size}{\_client\_body\_size}}
+{\footnotesize\ttfamily int Block\+::\+\_\+client\+\_\+body\+\_\+size\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00023}{23}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_a6be61af6054f467d08d214e4a761a3d8}\label{class_block_a6be61af6054f467d08d214e4a761a3d8}} 
+\index{Block@{Block}!\_default\_error\_page@{\_default\_error\_page}}
+\index{\_default\_error\_page@{\_default\_error\_page}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_default\_error\_page}{\_default\_error\_page}}
+{\footnotesize\ttfamily std\+::string Block\+::\+\_\+default\+\_\+error\+\_\+page\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00022}{22}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_ade6e3ebbf51f0dcf29eb7d9d3db018ba}\label{class_block_ade6e3ebbf51f0dcf29eb7d9d3db018ba}} 
+\index{Block@{Block}!\_index@{\_index}}
+\index{\_index@{\_index}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_index}{\_index}}
+{\footnotesize\ttfamily std\+::string Block\+::\+\_\+index\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00021}{21}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_a1b20e5cebed33904dbdee0a026053bd4}\label{class_block_a1b20e5cebed33904dbdee0a026053bd4}} 
+\index{Block@{Block}!\_inner\_blocks@{\_inner\_blocks}}
+\index{\_inner\_blocks@{\_inner\_blocks}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_inner\_blocks}{\_inner\_blocks}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_block}{Block}}$\ast$$>$ Block\+::\+\_\+inner\+\_\+blocks\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00030}{30}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_a8e643e4cd3f7f00ad7ca76f97113f7b7}\label{class_block_a8e643e4cd3f7f00ad7ca76f97113f7b7}} 
+\index{Block@{Block}!\_port@{\_port}}
+\index{\_port@{\_port}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_port}{\_port}}
+{\footnotesize\ttfamily int Block\+::\+\_\+port\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00017}{17}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_a5d20905005f57ed77dbc47f577995b1f}\label{class_block_a5d20905005f57ed77dbc47f577995b1f}} 
+\index{Block@{Block}!\_root@{\_root}}
+\index{\_root@{\_root}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_root}{\_root}}
+{\footnotesize\ttfamily std\+::string Block\+::\+\_\+root\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00018}{18}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_a5756a8fe1331ab0c169ed16ffe009f67}\label{class_block_a5756a8fe1331ab0c169ed16ffe009f67}} 
+\index{Block@{Block}!\_server\_name@{\_server\_name}}
+\index{\_server\_name@{\_server\_name}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_server\_name}{\_server\_name}}
+{\footnotesize\ttfamily std\+::string Block\+::\+\_\+server\+\_\+name\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00020}{20}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_ae477f3c4da6557e2012de014f52b4d10}\label{class_block_ae477f3c4da6557e2012de014f52b4d10}} 
+\index{Block@{Block}!\_try\_files@{\_try\_files}}
+\index{\_try\_files@{\_try\_files}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_try\_files}{\_try\_files}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::string$>$ Block\+::\+\_\+try\+\_\+files\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00027}{27}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+\mbox{\Hypertarget{class_block_a3f072edfb5acfb40e233bdc8b1f64459}\label{class_block_a3f072edfb5acfb40e233bdc8b1f64459}} 
+\index{Block@{Block}!\_upload\_path@{\_upload\_path}}
+\index{\_upload\_path@{\_upload\_path}!Block@{Block}}
+\doxysubsubsection{\texorpdfstring{\_upload\_path}{\_upload\_path}}
+{\footnotesize\ttfamily std\+::string Block\+::\+\_\+upload\+\_\+path\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{_block_8hpp_source_l00025}{25}} of file \mbox{\hyperlink{_block_8hpp_source}{Block.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+webserve/\+Configuration/\+Block/\mbox{\hyperlink{_block_8hpp}{Block.\+hpp}}\item 
+webserve/\+Configuration/\+Block/\mbox{\hyperlink{_block_8cpp}{Block.\+cpp}}\end{DoxyCompactItemize}

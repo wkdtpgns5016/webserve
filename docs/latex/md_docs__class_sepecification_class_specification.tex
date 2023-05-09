@@ -1,0 +1,54 @@
+\hypertarget{md_docs__class_sepecification_class_specification_autotoc_md1}{}\doxysection{$<$strong$>$개요$<$/strong$>$}\label{md_docs__class_sepecification_class_specification_autotoc_md1}
+{\bfseries{1. Webserver 객체}}  {\bfseries{2. \mbox{\hyperlink{class_server}{Server}} 객체}}  {\bfseries{\href{https://github.com/wkdtpgns5016/webserve/blob/main/docs/server_module.md}{\texttt{ 3. Server 모듈}}}} 
+\begin{DoxyItemize}
+\item 3-\/1. Server\+Module
+\item 3-\/2. 서버 파싱 모듈
+\begin{DoxyItemize}
+\item Location\+Parser
+\item Server\+Parser
+\end{DoxyItemize}
+\item 3-\/3. 서버 컨트롤러 모듈
+\begin{DoxyItemize}
+\item Server\+Controller
+\end{DoxyItemize}
+\item 3-\/4. 서버 실행 모듈
+\begin{DoxyItemize}
+\item Server\+Run
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+{\bfseries{\href{https://github.com/wkdtpgns5016/webserve/blob/main/docs/http_message.md}{\texttt{ 4. Http 메세지 객체}}}} 
+\begin{DoxyItemize}
+\item 4-\/1. Http 메세지 요소
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{class_start_line}{Start\+Line}}
+\item \mbox{\hyperlink{class_request_line}{Request\+Line}}
+\item \mbox{\hyperlink{class_status_line}{Status\+Line}}
+\end{DoxyItemize}
+\item 4-\/2. Http 메세지
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{class_http_message}{Http\+Message}}
+\item \mbox{\hyperlink{class_http_request_message}{Http\+Request\+Message}}
+\item \mbox{\hyperlink{class_http_response_message}{Http\+Response\+Message}}
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+{\bfseries{\href{https://github.com/wkdtpgns5016/webserve/blob/main/docs/lib_function.md}{\texttt{ 5. 라이브러리 함수}}}} 
+
+\DoxyHorRuler{0}
+\hypertarget{md_docs__class_sepecification_class_specification_autotoc_md3}{}\doxysection{$<$strong$>$1. Web\+Server 객체$<$/strong$>$}\label{md_docs__class_sepecification_class_specification_autotoc_md3}
+{\bfseries{class \mbox{\hyperlink{class_web_server}{Web\+Server}}}} \begin{quote}
+웹서버 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ list\&\#60;\mbox{\hyperlink{class_server}{Server}}\&\#62; $\vert$ \+\_\+servers $\vert$ private $\vert$ 서버 $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ void run(void) $\vert$ public $\vert$ 웹서버 작동 메소드 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_class_specification_autotoc_md4}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_class_specification_autotoc_md4}
+\hypertarget{md_docs__class_sepecification_class_specification_autotoc_md5}{}\doxysection{$<$strong$>$2.\+Server 객체$<$/strong$>$}\label{md_docs__class_sepecification_class_specification_autotoc_md5}
+{\bfseries{class \mbox{\hyperlink{class_server}{Server}}}} \begin{quote}
+서버 객체 \end{quote}
+{\bfseries{Attribute}} \begin{quote}
+$\vert$ 타입 $\vert$ 이름 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ pthread\+\_\+t $\vert$ \+\_\+thread $\vert$ private $\vert$ 서버 스레드 $\vert$ $\vert$ map\&\#60;string, Server\+Module $\ast$\&\#62; $\vert$ \+\_\+modules $\vert$ private $\vert$ 서버 모듈 컨테이너 $\vert$ \end{quote}
+{\bfseries{Method}} \begin{quote}
+$\vert$ 함수 원형 $\vert$ 접근 제한 $\vert$ 설명 $\vert$ $\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---$\vert$\+:-\/-\/-\/-\/-\/-\/-\/---\+:$\vert$ $\vert$ Server\+Module$\ast$ select\+Module(string) $\vert$ public $\vert$ 모듈 검색 메소드 $\vert$ $\vert$ void insert\+Module(string, Server\+Module$\ast$) $\vert$ public $\vert$ 모듈 삽입 메소드 $\vert$ $\vert$ void delete\+Module(string) $\vert$ public $\vert$ 모듈 삭제 메소드 $\vert$ $\vert$ static void run(void) $\vert$ public $\vert$ 서버 스레드 메소드 $\vert$ $\vert$ void threading(void) $\vert$ public $\vert$ 서버 스레드 시작 메소드 $\vert$ \end{quote}
+\hypertarget{md_docs__class_sepecification_class_specification_autotoc_md6}{}\doxysection{$<$/blockquote$>$}\label{md_docs__class_sepecification_class_specification_autotoc_md6}
