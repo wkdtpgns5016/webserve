@@ -156,7 +156,7 @@ std::string ServerHandler::findPath(std::string request_target)
 
     // 요청 url
     std::string path = root + request_target;
-    
+
     // 인덱싱 url
     std::vector<std::string> index_path = getIndexPath(root, index);
 
@@ -184,7 +184,6 @@ std::string ServerHandler::findPath(std::string request_target)
 std::string ServerHandler::openFile(std::string request_target)
 {
     std::string file_path = findPath(request_target);
-    std::cout << file_path << std::endl;
     return (ft::readFileIntoString(file_path));
 }
 

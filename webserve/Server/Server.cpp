@@ -82,7 +82,7 @@ void Server::change_events(uintptr_t ident, int16_t filter,
 
 void Server::disconnect_client(int client_fd, std::map<int, std::string> &clients)
 {
-    std::cout << "client disconnected: " << client_fd << std::endl;
+    // std::cout << "client disconnected: " << client_fd << std::endl;
     close(client_fd);
     clients.erase(client_fd);
 }
@@ -93,7 +93,7 @@ void Server::accept_new_client()
     int client_socket;
     if ((client_socket = accept(_server_socket, NULL, NULL)) == -1)
         exit(1);
-    std::cout << "accept new client: " << client_socket << std::endl;
+    // std::cout << "accept new client: " << client_socket << std::endl;
     fcntl(client_socket, F_SETFL, O_NONBLOCK);
 
     /* add event for client socket - add read && write event */
@@ -122,6 +122,8 @@ void Server::receiveMessage()
         HttpResponseMessage message = handler.requestHandler();
         write(_curr_event->ident, message.getString().c_str(), message.getString().size());
         disconnect_client(_curr_event->ident, _clients);
+        CommonLogFormat log = CommonLogFormat(handler.getRequestMessage(), message);
+        log.wirteLogMessage(1);
     }
 }
 
@@ -148,7 +150,6 @@ void Server::sendMessage()
 void Server::run()
 {
     /* init server socket and listen */
-    std::cout << _server_block->getPort() << std::endl;
     socket_init(_server_block->getPort(), _server_block->getAddr());
     fcntl(_server_socket, F_SETFL, O_NONBLOCK);
 
@@ -158,7 +159,9 @@ void Server::run()
 
     /* add event for server socket */
     change_events(_server_socket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
-    std::cout << "server started" << std::endl;
+
+    std::string msg = "Server started [" + ft::itos(_server_block->getPort()) + "]";
+    std::cout << msg << std::endl;
 
     /* main loop */
     int new_events;

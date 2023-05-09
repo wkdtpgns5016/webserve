@@ -19,6 +19,8 @@ SRCS =	webserve/main.cpp \
 		webserve/lib/ft/splitString.cpp \
 		webserve/lib/ft/itos.cpp \
 		webserve/lib/ft/stoi.cpp  \
+		webserve/CommonLogFormat/CommonLogFormat.cpp
+		
 		
 OBJS = $(SRCS:.cpp=.o)
 HEAD =  -I./webserve/Server \
@@ -29,7 +31,8 @@ HEAD =  -I./webserve/Server \
 		-I./webserve/Configuration/LocationBlock \
 		-I./webserve/ServerHandler \
 		-I./webserve/HttpMessage \
-		-I./webserve/lib/ft
+		-I./webserve/lib/ft \
+		-I./webserve/CommonLogFormat
 
 all: $(NAME)
 

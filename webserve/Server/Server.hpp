@@ -30,6 +30,7 @@
 
 #include "../Configuration/ServerBlock/ServerBlock.hpp"
 #include "../ServerHandler/ServerHandler.hpp"
+#include "../CommonLogFormat/CommonLogFormat.hpp"
 
 #define BUFSIZE 1024
 
