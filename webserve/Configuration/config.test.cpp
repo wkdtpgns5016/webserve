@@ -165,7 +165,7 @@ TEST(ConfigTest, Config2Test)
     EXPECT_EQ(default_error_page_result4, "");
     EXPECT_EQ(client_body_size_result4, 1024);
 	EXPECT_EQ(upload_path_result4.size(), 0);
-	EXPECT_EQ(*allow_method_result4.begin(), "GET POST DELETE");
+	EXPECT_EQ(allow_method_result4.size(), 3);
 	EXPECT_EQ(*try_files_result4.begin(), "$uri $uri/ = 404");
 	EXPECT_EQ(autoindex_result4, true);
 
