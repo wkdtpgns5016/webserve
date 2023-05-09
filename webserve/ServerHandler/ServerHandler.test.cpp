@@ -10,8 +10,9 @@ TEST(ServerHandlerTest, ServerHandlerUnitTest)
     // given
 	std::string a = ft::readFileIntoString("../var/conf/test.conf");
 	Conf conf(a);
-	Block* server_blocks = *conf.getInnerBlock().begin();
-    std::string http_message =   "GET / HTTP/1.1\r\n"
+	Block* blocks = *conf.getInnerBlock().begin();
+    ServerBlock *server_blocks = (dynamic_cast<ServerBlock *>(blocks));
+    std::string http_message =   "GET /aaaaaa.a HTTP/1.1\r\n"
                         "Host: 127.0.0.1:500\r\n"
                         "Connection: keep-alive\r\n"
                         "Accept: */*\r\n"
@@ -23,11 +24,11 @@ TEST(ServerHandlerTest, ServerHandlerUnitTest)
                         "test message body";
 
 	// when
-    ServerHandler handler = ServerHandler((ServerBlock *)server_blocks, http_message);
+    ServerHandler handler(server_blocks, http_message);
     HttpResponseMessage response = handler.requestHandler();
 
     // then
-    EXPECT_EQ(response.getStartLine().getString(), "HTTP/1.1 200 OK");
+    EXPECT_EQ(response.getStartLine().getString(), "HTTP/1.1 404 Not Found");
 }
 
 int main(int argc, char **argv)

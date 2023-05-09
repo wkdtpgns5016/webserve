@@ -55,12 +55,13 @@ private:
     void sendMessage();
 
     static void* threadFunction(void *);
+
+    Server(const Server& server);
+    Server& operator=(const Server& server);
 public:
     Server();
-    Server(Block *block);
-    Server(const Server& server);
+    Server(ServerBlock* block);
     ~Server();
-    Server& operator=(const Server& server);
 
     pthread_t getThread(void);
     int  getPort(void);
