@@ -7,6 +7,7 @@ ADD_COMPILE_OPTIONS( -g3)
 add_library(obj SHARED webserve/TestExample/TestExample.cpp webserve/TestExample/TestExample.hpp)
 add_library(libft webserve/lib/ft/ft.hpp 
                   webserve/lib/ft/splitBlockString.cpp 
+                  webserve/lib/ft/readFileIntoString.cpp 
                   webserve/lib/ft/splitString.cpp 
                   webserve/lib/ft/itos.cpp 
 		          webserve/lib/ft/stoi.cpp )
@@ -21,6 +22,7 @@ add_library(http_message webserve/HttpMessage/HttpMessage.cpp
                         webserve/HttpMessage/HttpResponseMessage.cpp
                         webserve/HttpMessage/HttpResponseMessage.hpp)
 add_library(log webserve/CommonLogFormat/CommonLogFormat.hpp webserve/CommonLogFormat/CommonLogFormat.cpp)
+add_library(handler webserve/ServerHandler/ServerHandler.hpp webserve/ServerHandler/ServerHandler.cpp)
 
 
 ## 실행 프로그램 빌드
@@ -104,3 +106,17 @@ target_link_libraries(ConfigTest conf)
 target_link_libraries(ConfigTest block)
 target_link_libraries(ConfigTest server_block)
 target_link_libraries(ConfigTest location_block)
+
+# server handler 단위 테스트 빌드
+include_directories(libft)
+include_directories(${gtest_SRC_DIR}/googletest/include)
+add_executable(ServerHandlerTest webserve/ServerHandler/ServerHandler.test.cpp)
+target_link_libraries(ServerHandlerTest gtest gtest_main)
+target_link_libraries(ServerHandlerTest libft)
+target_link_libraries(ServerHandlerTest http_message)
+target_link_libraries(ServerHandlerTest log)
+target_link_libraries(ServerHandlerTest handler)
+target_link_libraries(ServerHandlerTest conf)
+target_link_libraries(ServerHandlerTest block)
+target_link_libraries(ServerHandlerTest server_block)
+target_link_libraries(ServerHandlerTest location_block)
