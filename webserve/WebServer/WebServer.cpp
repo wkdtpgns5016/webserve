@@ -20,11 +20,12 @@ WebServer::~WebServer()
 WebServer::WebServer(std::string path)
 {
     std::string config = ft::readFileIntoString(path);
-    std::vector<std::string> sBlocks = ft::splitBlockString(config);
-
-    for (unsigned int i = 0; i < sBlocks.size(); i++)
+    Conf conf(config);
+    std::vector<Block*> s_blocks = conf.getInnerBlock();
+    std::vector<Block*>::iterator iter = s_blocks.begin();
+    for (;iter != s_blocks.end(); iter++)
     {
-        Server* server = new Server(sBlocks[i]);
+        Server* server = new Server(*iter);
         _servers.push_back(server);
     }
 }

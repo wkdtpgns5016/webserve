@@ -7,9 +7,10 @@ ServerHandler::ServerHandler() : _request_message()
     init_status();
 }
 
-ServerHandler::ServerHandler(ServerBlock server_block)
+ServerHandler::ServerHandler(ServerBlock* server_block, std::string http_message)
 {
     init_status();
+    _request_message = HttpRequestMessage(http_message);
     _server_block = server_block;
 }
 
@@ -131,29 +132,35 @@ std::vector<std::string> ServerHandler::getIndexPath(std::string root, std::stri
     return (index_path);
 }
 
-LocationParser ServerHandler::findLocationParser(std::list<LocationParser> locations, std::string request_target)
+LocationBlock* findLocationParser(std::vector<Block*> locations, std::string request_target)
 {
-    std::list<LocationParser>::iterator it = locations.begin();
-    LocationParser location;
+    std::vector<Block*>::iterator it = locations.begin();
+    LocationBlock* location;
     for (; it != locations.end(); it++)
     {
-        std::string url = (*it).getUrl();
+        location = (LocationBlock *)(*it);
+        std::string url = location->getUrl();
         if (request_target.find(url) == 0)
-        {
-            location = (*it);
             break ;
-        }
     }
     return (location);
 }
 
 std::string ServerHandler::findPath(std::string request_target)
 {
-    // ServerBlock안에 Location 블록에 따라 file 찾기
-    // ServerBlock* block = (ServerBlock *)_self->selectModule("ServerBlock");
-    // std::list<LocationBlock> locations = block->getLocations();
+    std::string root = "var/html";
+    std::string index = "index.html index.htm";
 
-    std::string directory;
+    // location redirect
+    // LocationParser location = findLocationParser(locations, request_target);
+
+    // 요청 url
+    std::string path = root + request_target;
+    
+    // 인덱싱 url
+    std::vector<std::string> index_path = getIndexPath(root, index);
+
+    std::string directory = path;
     if (request_target.compare("/") != 0)
         directory = path + "/";
 
@@ -177,6 +184,7 @@ std::string ServerHandler::findPath(std::string request_target)
 std::string ServerHandler::openFile(std::string request_target)
 {
     std::string file_path = findPath(request_target);
+    std::cout << file_path << std::endl;
     return (ft::readFileIntoString(file_path));
 }
 

@@ -5,9 +5,9 @@ Server::Server()
 
 }
 
-Server::Server(std::string block)
+Server::Server(Block* block)
 {
-    _server_block = ServerBlock(block);
+    _server_block = (ServerBlock *)block;
 }
 
 
@@ -118,7 +118,7 @@ void Server::receiveMessage()
     {
         buf[n] = '\0';
         _clients[_curr_event->ident] += buf;
-        ServerHandler handler = ServerHandler(_server_parser, _clients[_curr_event->ident]);
+        ServerHandler handler = ServerHandler(_server_block, _clients[_curr_event->ident]);
         HttpResponseMessage message = handler.requestHandler();
         write(_curr_event->ident, message.getString().c_str(), message.getString().size());
         disconnect_client(_curr_event->ident, _clients);
@@ -148,8 +148,8 @@ void Server::sendMessage()
 void Server::run()
 {
     /* init server socket and listen */
-    std::cout << _server_block.getPort() << std::endl;
-    socket_init(_server_block.getPort(), _server_block.getAddr());
+    std::cout << _server_block->getPort() << std::endl;
+    socket_init(_server_block->getPort(), _server_block->getAddr());
     fcntl(_server_socket, F_SETFL, O_NONBLOCK);
 
     /* init kqueue */
@@ -206,7 +206,7 @@ pthread_t Server::getThread(void)
 
 int  Server::getPort(void)
 {
-    return (_server_block.getPort());
+    return (_server_block->getPort());
 }
 
 void *Server::threadFunction(void *temp)
