@@ -8,7 +8,8 @@ int main(int argc, char *argv[])
 {
     if (argc ==  2)
     {
-        WebServer webserver(argv[1]);
+        Conf conf(ft::readFileIntoString(argv[1]));
+        WebServer webserver(conf);
         webserver.run();
     }
     else

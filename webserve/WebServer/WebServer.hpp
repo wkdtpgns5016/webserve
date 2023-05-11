@@ -14,12 +14,11 @@ class WebServer
 {
 private:
     std::vector<Server *> _servers;
-    Conf                  _conf;
 
 public:
     WebServer();
     ~WebServer();
-    WebServer(std::string path);
+    WebServer(const Conf &conf);
 
     void run(void);
 };

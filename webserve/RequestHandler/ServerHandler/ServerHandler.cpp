@@ -7,34 +7,18 @@ ServerHandler::ServerHandler() : _request_message()
     init_status();
 }
 
-ServerHandler::ServerHandler(ServerBlock* server_block, std::string http_message)
+ServerHandler::ServerHandler(ServerBlock* server_block, HttpRequestMessage request_message)
 {
     init_status();
-    _request_message = HttpRequestMessage(http_message);
-    _server_block = server_block;
-}
-
-ServerHandler::ServerHandler(const ServerHandler& server_handler)
-{
-    if (this == &server_handler)
-        return ;
-    _status = server_handler._status;
-    _request_message = server_handler._request_message;
-    _server_block = server_handler._server_block;
+    LocationBlock* location_block = findLocationBlock(server_block->getInnerBlock(), 
+                                                      request_message.getStartLine().getRequestTarget());
+    _request_message = request_message;
+    _config = ConfigDto(*server_block, *location_block);
 }
 
 ServerHandler::~ServerHandler()
 {
 
-}
-
-ServerHandler& ServerHandler::operator=(const ServerHandler& server_controller)
-{
-    if (this == &server_controller)
-        return (*this);
-    _status = server_controller._status;
-    _request_message = server_controller._request_message;
-    return (*this);
 }
 
 void ServerHandler::init_status()
@@ -132,7 +116,7 @@ std::vector<std::string> ServerHandler::getIndexPath(std::string root, std::stri
     return (index_path);
 }
 
-LocationBlock* findLocationParser(std::vector<Block*> locations, std::string request_target)
+LocationBlock* ServerHandler::findLocationBlock(std::vector<Block*> locations, std::string request_target)
 {
     std::vector<Block*>::iterator it = locations.begin();
     LocationBlock* location;
@@ -146,45 +130,59 @@ LocationBlock* findLocationParser(std::vector<Block*> locations, std::string req
     return (location);
 }
 
+void ServerHandler::checkAllowMethod(std::string method)
+{
+    // 임시
+    std::vector<std::string> config_method = _config.getAllowMethod();
+    std::vector<std::string> a = ft::splitString(config_method[0], " ");
+    if (std::find(a.begin(), a.end(), method) == a.end())
+        throw Error405Exceptnion();
+}
+
+
+bool ServerHandler::checkDirectory(std::string path)
+{
+    struct stat buf;
+
+    stat(path.c_str(), &buf);
+    if(S_ISDIR(buf.st_mode))
+        return (true);
+    return (false);
+}
+
+HttpResponseMessage ServerHandler::getErrorResponse(int status_code)
+{
+    std::string message_body;
+    std::stringstream ss;
+    ss << "var/html/error-page/" << status_code << ".html";
+    message_body = ft::readFileIntoString(ss.str());
+    return (getResponseMessage(status_code, message_body));
+}
+
 std::string ServerHandler::findPath(std::string request_target)
 {
-    std::string root = "var/html";
-    std::string index = "index.html index.htm";
-
-    // location redirect
-    // LocationParser location = findLocationParser(locations, request_target);
+    std::string root = _config.getRoot();
+    std::string index = _config.getIndex();
 
     // 요청 url
     std::string path = root + request_target;
 
     // 인덱싱 url
-    std::vector<std::string> index_path = getIndexPath(root, index);
+    std::vector<std::string> index_path = getIndexPath(path, index);
 
-    std::string directory = path;
-    if (request_target.compare("/") != 0)
-        directory = path + "/";
-
-    // 디렉토리이거나, 파일이 존재하지 않으면
-    if (access(path.c_str(), F_OK) == -1 ||
-        (access(path.c_str(), F_OK) == 0 && access(directory.c_str(), F_OK) == 0))
+    if (access(path.c_str(), F_OK) == -1)
     {
-        // index 파일 찾기
         std::vector<std::string>::iterator it = index_path.begin();
         for (; it != index_path.end(); it++)
         {
-            if (access((*it).c_str(), F_OK) == 0)
+            if (access((*it).c_str(), R_OK) == 0)      // 읽기 권한 있을 경우
                 return (*it);
+            else if (access((*it).c_str(), F_OK) == 0) // 권한이 없을 경우
+                throw Error500Exceptnion();
         }
-
-        // 404 error
+        throw Error404Exceptnion(); // 파일이 없을 경우
     }
     return(path);
-}
-
-std::string ServerHandler::openFile(std::string request_target)
-{
-    std::string file_path = findPath(request_target);
-    return (ft::readFileIntoString(file_path));
 }
 
 std::string ServerHandler::executeCgi(std::string request_target)
@@ -194,51 +192,18 @@ std::string ServerHandler::executeCgi(std::string request_target)
     return ("");
 }
 
-HttpResponseMessage ServerHandler::getHandler()
-{
-    int status_code = 200;
-    std::string message_body = "GET";
-    std::string request_target = _request_message.getStartLine().getRequestTarget();
-
-    // 파일인지 cgi인지 검사
-    if (checkFile(request_target))
-        message_body = openFile(request_target);
-    else
-        message_body = executeCgi(request_target);
-    // 응답 생성
-    HttpResponseMessage response_message = getResponseMessage(status_code, message_body);
-    return (response_message);
+const char* ServerHandler::AutoIndexExceptnion::what() const throw() {
+  return "Not Found";
 }
-
-HttpResponseMessage ServerHandler::postHandler()
-{
-    int status_code = 200;
-    std::string message_body = "POST";
-
-    HttpResponseMessage response_message = getResponseMessage(status_code, message_body);
-    return (response_message);
+const char* ServerHandler::Error404Exceptnion::what() const throw() {
+  return "Not Found";
 }
-
-HttpResponseMessage ServerHandler::deleteHandler()
-{
-    int status_code = 200;
-    std::string message_body = "DELETE";
-
-    HttpResponseMessage response_message = getResponseMessage(status_code, message_body);
-    return (response_message);
+const char* ServerHandler::Error405Exceptnion::what() const throw() {
+  return "Method Not Allowed";
 }
-
-HttpResponseMessage ServerHandler::requestHandler()
-{
-    std::string http_method;
-    HttpResponseMessage response_message;
-
-    http_method = _request_message.getStartLine().getHttpMethod();
-    if (http_method.compare("GET") == 0)
-        response_message = getHandler();
-    if (http_method.compare("POST") == 0)
-        response_message = postHandler();
-    if (http_method.compare("DELETE") == 0)
-        response_message = deleteHandler();
-    return (response_message);
+const char* ServerHandler::Error500Exceptnion::what() const throw() {
+  return "Internal Server Error";
+}
+const char* ServerHandler::Error503Exceptnion::what() const throw() {
+  return "Service Unavailable";
 }

@@ -28,8 +28,7 @@
 // kqueue를 위한 헤더파일
 #include <sys/event.h>
 
-#include "../Configuration/ServerBlock/ServerBlock.hpp"
-#include "../ServerHandler/ServerHandler.hpp"
+#include "../ServerController/ServerController.hpp"
 #include "../CommonLogFormat/CommonLogFormat.hpp"
 
 #define BUFSIZE 1024
@@ -55,12 +54,13 @@ private:
     void sendMessage();
 
     static void* threadFunction(void *);
+
+    Server(const Server& server);
+    Server& operator=(const Server& server);
 public:
     Server();
-    Server(Block *block);
-    Server(const Server& server);
+    Server(ServerBlock* block);
     ~Server();
-    Server& operator=(const Server& server);
 
     pthread_t getThread(void);
     int  getPort(void);

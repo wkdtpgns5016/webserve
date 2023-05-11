@@ -1,52 +1,17 @@
 #include "Server.hpp"
 
-Server::Server()
+Server::Server() : _server_block()
 {
 
 }
 
-Server::Server(Block* block)
+Server::Server(ServerBlock* block) : _server_block(block)
 {
-    _server_block = (ServerBlock *)block;
-}
-
-
-Server::Server(const Server& server)
-{
-    if (this == &server)
-        return ;
-    _s_thread = server._s_thread;
-    _server_socket = server._server_socket;
-    _server_addr = server._server_addr;
-    _change_list = server._change_list;
-    _curr_event = server._curr_event;
-    _clients = server._clients;
-    _kqueue = server._kqueue;
-    for (int i = 0; i < 8; i++)
-        _event_list[i] = server._event_list[i];
-    _server_block = server._server_block;
 }
 
 Server::~Server()
 {
 
-}
-
-Server& Server::operator=(const Server& server)
-{
-    if (this == &server)
-        return (*this);
-    _s_thread = server._s_thread;
-    _server_socket = server._server_socket;
-    _server_addr = server._server_addr;
-    _change_list = server._change_list;
-    _curr_event = server._curr_event;
-    _clients = server._clients;
-    _kqueue = server._kqueue;
-    for (int i = 0; i < 8; i++)
-        _event_list[i] = server._event_list[i];
-    _server_block = server._server_block;
-    return (*this);
 }
 
 void Server::socket_init(int port, std::string ip_addr)
@@ -118,11 +83,12 @@ void Server::receiveMessage()
     {
         buf[n] = '\0';
         _clients[_curr_event->ident] += buf;
-        ServerHandler handler = ServerHandler(_server_block, _clients[_curr_event->ident]);
-        HttpResponseMessage message = handler.requestHandler();
+        ServerController controller;
+        HttpRequestMessage request_message(_clients[_curr_event->ident]);
+        HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
         write(_curr_event->ident, message.getString().c_str(), message.getString().size());
         disconnect_client(_curr_event->ident, _clients);
-        CommonLogFormat log = CommonLogFormat(handler.getRequestMessage(), message);
+        CommonLogFormat log = CommonLogFormat(request_message, message);
         log.wirteLogMessage(1);
     }
 }
@@ -214,14 +180,14 @@ int  Server::getPort(void)
 
 void *Server::threadFunction(void *temp)
 {
-    Server* self = (Server *)temp;
+    Server* self = static_cast<Server *>(temp);
     self->run();
     return NULL;
 }
 
 void Server::threading(void)
 {
-    int tid = pthread_create(&_s_thread, NULL, Server::threadFunction, (void*)this);
+    int tid = pthread_create(&_s_thread, NULL, Server::threadFunction, static_cast<void *>(this));
     if (tid < 0)
         exit(1);
 }

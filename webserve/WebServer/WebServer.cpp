@@ -17,15 +17,14 @@ WebServer::~WebServer()
     }
 }
 
-WebServer::WebServer(std::string path)
+WebServer::WebServer(const Conf &conf)
 {
-    std::string config = ft::readFileIntoString(path);
-    Conf conf(config);
     std::vector<Block*> s_blocks = conf.getInnerBlock();
     std::vector<Block*>::iterator iter = s_blocks.begin();
     for (;iter != s_blocks.end(); iter++)
     {
-        Server* server = new Server(*iter);
+        ServerBlock* server_block = dynamic_cast<ServerBlock *>(*iter);
+        Server* server = new Server(server_block);
         _servers.push_back(server);
     }
 }
