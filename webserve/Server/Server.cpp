@@ -83,11 +83,12 @@ void Server::receiveMessage()
     {
         buf[n] = '\0';
         _clients[_curr_event->ident] += buf;
-        ServerHandler handler(_server_block, _clients[_curr_event->ident]);
-        HttpResponseMessage message = handler.requestHandler();
+        ServerController controller;
+        HttpRequestMessage request_message(_clients[_curr_event->ident]);
+        HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
         write(_curr_event->ident, message.getString().c_str(), message.getString().size());
         disconnect_client(_curr_event->ident, _clients);
-        CommonLogFormat log = CommonLogFormat(handler.getRequestMessage(), message);
+        CommonLogFormat log = CommonLogFormat(request_message, message);
         log.wirteLogMessage(1);
     }
 }

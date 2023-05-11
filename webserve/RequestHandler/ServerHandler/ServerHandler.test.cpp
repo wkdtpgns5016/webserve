@@ -22,9 +22,9 @@ TEST(ServerHandlerTest, ServerHandlerUnitTest)
                         "Accept-Encoding: gzip, deflate\r\n"
                         "\r\n"
                         "test message body";
-
+    HttpRequestMessage request_message(http_message);
 	// when
-    ServerHandler handler(server_blocks, http_message);
+    ServerHandler handler(server_blocks, request_message);
     HttpResponseMessage response = handler.requestHandler();
 
     // then

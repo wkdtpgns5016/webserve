@@ -17,44 +17,36 @@
 
 class ServerHandler
 {
-    private:
+    protected:
     std::map<int, std::string>  _status;
     HttpRequestMessage          _request_message;
     LocationBlock*              _b_config;
     ConfigDto                   _config;
 
     void init_status();
+    LocationBlock* findLocationBlock(std::vector<Block*> locations, std::string request_target);
+
+    void checkAllowMethod(std::string method);
+    bool checkDirectory(std::string path);
     bool checkFile(std::string request_target);
 
     std::vector<std::string> getIndexPath(std::string root, std::string index);
-    LocationBlock* findLocationBlock(std::vector<Block*> locations, std::string request_target);
-
-    bool checkAllowMethod(std::string method);
-    bool checkDirectory(std::string path);
-
     std::string findPath(std::string request_target);
-    std::string openFile(std::string request_target);
+
     std::string executeCgi(std::string request_target);
 
-    std::string getAutoIndexPage(std::string path, std::string request_target);
-    std::string getDirectoryList(std::string path);
-    std::string getErrorPage(int status_code);
-
-    HttpResponseMessage getHandler();
-    HttpResponseMessage postHandler();
-    HttpResponseMessage deleteHandler();
-
-    ServerHandler(const ServerHandler& server_handler);
-    ServerHandler& operator=(const ServerHandler& server_handler);
-
+    HttpResponseMessage getErrorResponse(int status_code);
+    HttpResponseMessage getResponseMessage(int status_code, std::string message_body);
+    
     public:
     ServerHandler();
-    ServerHandler(ServerBlock* server_block, std::string http_message);
-    ~ServerHandler();
+    ServerHandler(ServerBlock* server_block, HttpRequestMessage request_message);
+    ServerHandler(const ServerHandler& server_handler);
+    ServerHandler& operator=(const ServerHandler& server_handler);
+    virtual ~ServerHandler();
 
     HttpRequestMessage& getRequestMessage(void);
-    HttpResponseMessage getResponseMessage(int status_code, std::string message_body);
-    HttpResponseMessage requestHandler();
+    virtual HttpResponseMessage requestHandler() = 0;
 
     class AutoIndexExceptnion : public std::exception {
 			public:

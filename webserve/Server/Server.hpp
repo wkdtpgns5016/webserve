@@ -28,8 +28,7 @@
 // kqueue를 위한 헤더파일
 #include <sys/event.h>
 
-#include "../Configuration/ServerBlock/ServerBlock.hpp"
-#include "../ServerHandler/ServerHandler.hpp"
+#include "../ServerController/ServerController.hpp"
 #include "../CommonLogFormat/CommonLogFormat.hpp"
 
 #define BUFSIZE 1024
