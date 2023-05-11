@@ -7,6 +7,7 @@ SRCS =	webserve/main.cpp \
 		webserve/WebServer/WebServer.cpp \
 		webserve/Server/Server.cpp \
 		webserve/Configuration/Conf/Conf.cpp \
+		webserve/Configuration/ConfigDto/ConfigDto.cpp \
 		webserve/Configuration/Block/Block.cpp \
 		webserve/Configuration/LocationBlock/LocationBlock.cpp \
 		webserve/Configuration/ServerBlock/ServerBlock.cpp \
@@ -26,6 +27,7 @@ OBJS = $(SRCS:.cpp=.o)
 HEAD =  -I./webserve/Server \
 		-I./webserve/WebServer \
 		-I./webserve/Configuration/Conf \
+		-I./webserve/Configuration/ConfigDto \
 		-I./webserve/Configuration/Block \
 		-I./webserve/Configuration/ServerBlock \
 		-I./webserve/Configuration/LocationBlock \

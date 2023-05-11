@@ -11,8 +11,9 @@ ServerHandler::ServerHandler(ServerBlock* server_block, std::string http_message
 {
     init_status();
     _request_message = HttpRequestMessage(http_message);
-    _server_block = server_block;
-    _location_block = findLocationBlock(server_block->getInnerBlock(), _request_message.getStartLine().getRequestTarget());
+    LocationBlock* location_block = findLocationBlock(server_block->getInnerBlock(), 
+                                                      _request_message.getStartLine().getRequestTarget());
+    _config = ConfigDto(*server_block, *location_block);
 }
 
 ServerHandler::~ServerHandler()
@@ -131,17 +132,23 @@ LocationBlock* ServerHandler::findLocationBlock(std::vector<Block*> locations, s
 
 bool ServerHandler::checkAllowMethod(std::string method)
 {
-    std::vector<std::string> s_method = _server_block->getAllowMethod();
-    std::vector<std::string> l_method = _location_block->getAllowMethod();
+    std::vector<std::string> config_method = _config.getAllowMethod();
 
-    if (std::find(s_method.begin(), s_method.end(), method) == s_method.end())
-    {
-        // if (std::find(l_method.begin(), l_method.end(), method) == l_method.end())  
-        //     return (false);
-    }
+    if (std::find(config_method.begin(), config_method.end(), method) == config_method.end())
+        return (true);
     return (true);
 }
 
+
+bool ServerHandler::checkDirectory(std::string path)
+{
+    struct stat buf;
+
+    stat(path.c_str(), &buf);
+    if(S_ISDIR(buf.st_mode))
+        return (true);
+    return (false);
+}
 
 std::string ServerHandler::getErrorPage(int status_code)
 {
@@ -167,15 +174,74 @@ std::string ServerHandler::getErrorPage(int status_code)
     return (message_body);
 }
 
+std::string ServerHandler::getAutoIndexPage(std::string path, std::string request_target)
+{
+    std::string message;
+    try
+    {
+        message = "<!DOCTYPE html><html><head><title>";
+        message += request_target + "</title></head><body>";
+        message += "<h1>index of "+ request_target;
+        if (request_target.back() != '/')
+            message += "/";
+        message += "</h1><hr />";
+        message += getDirectoryList(path);
+        message += "<hr /></body></html>";
+    }
+    catch(const Error503Exceptnion& e)
+    {
+        throw ;
+    }
+    return (message);
+}
+
+std::string ServerHandler::getDirectoryList(std::string path)
+{
+    std::stringstream ss;
+    std::string file_name;
+    std::string file_path;
+    DIR *dp = NULL;
+    struct dirent* entry = NULL;
+
+    if ((dp = opendir(path.c_str())) == NULL)
+        throw Error503Exceptnion();
+    ss << "<table>";
+    while ((entry = readdir(dp)) != NULL)
+    {
+        struct stat buf;
+        ss << "<tr>";
+        if (std::strcmp(entry->d_name, ".") == 0)
+            continue ;
+        // file 이름
+        file_name = std::string(entry->d_name);
+        file_path = path;
+        if (file_path.back() != '/')
+            file_path += "/";
+        file_path += file_name;
+        if (checkDirectory(file_path))
+            file_name += "/";
+        ss << "<td width=\"300\"><a href=" << file_name << ">" << file_name << "</a></td>";
+        if (std::strcmp(entry->d_name, "..") == 0)
+        {
+            ss << "<td width=\"200\"></td>";
+            ss << "<td width=\"100\"></td></tr>";
+            continue ;
+        }
+        lstat(file_path.c_str(), &buf);
+        // file 수정 시간
+        ss << "<td width=\"200\">" << std::ctime(&buf.st_ctimespec.tv_sec) << "</td>";
+        // file 크기
+        ss << "<td width=\"100\">" << buf.st_size << "</td>"; 
+        ss << "</tr>";
+    }
+    ss << "</table>";
+    return (ss.str());
+}
+
 std::string ServerHandler::findPath(std::string request_target)
 {
-    std::string root = _location_block->getRoot();
-    std::string index = _location_block->getIndex();
-
-    if (root.length() == 0)
-        root = _server_block->getRoot();
-    if (index.length() == 0)
-        index = _server_block->getIndex();
+    std::string root = _config.getRoot();
+    std::string index = _config.getIndex();
 
     // 요청 url
     std::string path = root + request_target;
@@ -183,50 +249,41 @@ std::string ServerHandler::findPath(std::string request_target)
     // 인덱싱 url
     std::vector<std::string> index_path = getIndexPath(root, index);
 
-    std::string directory = path;
-    if (request_target.compare("/") != 0)
-        directory = path + "/";
-
-    // 디렉토리이거나, 파일이 존재하지 않으면
-    if (access(path.c_str(), F_OK) == -1 ||
-        (access(path.c_str(), F_OK) == 0 && access(directory.c_str(), F_OK) == 0))
+    // 디렉토리일 경우
+    if (checkDirectory(path))
     {
-        // index 파일 찾기
-        std::vector<std::string>::iterator it = index_path.begin();
-        for (; it != index_path.end(); it++)
+        // autoindex on 일경우
+        if (_config.getAutoindex())
+            throw AutoIndexExceptnion();
+    }
+    else // 파일일 경우
+    {
+        if (access(path.c_str(), F_OK) == -1)
         {
-            if (access((*it).c_str(), R_OK) == 0)
+            std::vector<std::string>::iterator it = index_path.begin();
+            for (; it != index_path.end(); it++)
             {
-                return (*it);
+                if (access((*it).c_str(), R_OK) == 0)
+                {
+                    return (*it);
+                }
+                else if (access((*it).c_str(), F_OK) == 0)
+                {
+                    // 권한이 없을 경우 [500]
+                    throw Error500Exceptnion();
+                }
             }
-            else if (access((*it).c_str(), F_OK) == 0)
-            {
-                // 권한이 없을 경우 [500]
-                throw Error500Exceptnion();
-            }
+            // 파일이 없을 경우 [404]
+            throw Error404Exceptnion();
         }
-        // 파일이 없을 경우 [404]
-        throw Error404Exceptnion();
     }
     return(path);
 }
 
 std::string ServerHandler::openFile(std::string request_target)
 {
-    try
-    {
-        std::string file_path = findPath(request_target);
-        return (ft::readFileIntoString(file_path));
-    }
-    catch(const Error404Exceptnion& e)
-    {
-        throw ;
-    }
-    catch(const Error500Exceptnion& e)
-    {
-        throw ;
-    }
-    
+    std::string file_path = findPath(request_target);
+    return (ft::readFileIntoString(file_path));
 }
 
 std::string ServerHandler::executeCgi(std::string request_target)
@@ -264,6 +321,21 @@ HttpResponseMessage ServerHandler::getHandler()
         // 응답 생성
         response_message = getResponseMessage(status_code, message_body);
     }
+    catch(const AutoIndexExceptnion& e)
+    {
+        try
+        {
+            std::string file_path = _config.getRoot() + request_target;
+            message_body = getAutoIndexPage(file_path, request_target);
+            response_message = getResponseMessage(status_code, message_body);
+        }
+        catch(const Error503Exceptnion& e)
+        {
+            status_code = 503;
+            message_body = getErrorPage(status_code);
+            response_message = getResponseMessage(status_code, message_body);
+        }
+    }
     catch(const Error404Exceptnion& e)
     {
         status_code = 404;
@@ -274,6 +346,12 @@ HttpResponseMessage ServerHandler::getHandler()
     catch(const Error500Exceptnion& e)
     {
         status_code = 500;
+        message_body = getErrorPage(status_code);
+        response_message = getResponseMessage(status_code, message_body);
+    }
+    catch(const Error503Exceptnion& e)
+    {
+        status_code = 503;
         message_body = getErrorPage(status_code);
         response_message = getResponseMessage(status_code, message_body);
     }
@@ -313,6 +391,9 @@ HttpResponseMessage ServerHandler::requestHandler()
     return (response_message);
 }
 
+const char* ServerHandler::AutoIndexExceptnion::what() const throw() {
+  return "Not Found";
+}
 const char* ServerHandler::Error404Exceptnion::what() const throw() {
   return "Not Found";
 }
@@ -321,4 +402,7 @@ const char* ServerHandler::Error405Exceptnion::what() const throw() {
 }
 const char* ServerHandler::Error500Exceptnion::what() const throw() {
   return "Internal Server Error";
+}
+const char* ServerHandler::Error503Exceptnion::what() const throw() {
+  return "Service Unavailable";
 }
