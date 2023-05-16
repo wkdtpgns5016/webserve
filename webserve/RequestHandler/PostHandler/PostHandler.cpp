@@ -26,19 +26,44 @@ PostHandler& PostHandler::operator=(const PostHandler& delete_handler)
     (void)delete_handler;
     return (*this);
 }
+void PostHandler::checkCGI(std::string request_target)
+{
+    (void)request_target;
+}
 
 HttpResponseMessage PostHandler::requestHandler()
 {
-    // 메소드 허용 검사
-    // 파일 인지 cgi 검사
-    // 파일 읽기
-    // cgi 실행
-
     HttpResponseMessage response_message;
-    int status_code = 200;
-    std::string message_body = "Post";
+    std::string message_body;
     std::string request_target = _request_message.getStartLine().getRequestTarget();
 
-        response_message = getResponseMessage(status_code, message_body);
+    try
+    {
+        // 메소드 권한 검사
+        checkAllowMethod(_request_message.getStartLine().getHttpMethod());
+        // 파일 종류 판별
+        if (checkFile(request_target)) // 일반 파일
+            message_body = findPath(request_target);
+        else                           // cgi 파일
+            message_body = executeCgi(request_target);
+        // 응답 생성
+        response_message = getResponseMessage(200, message_body);
+    }
+    catch(const Error404Exceptnion& e)
+    {
+        response_message = getErrorResponse(404);
+    }
+    catch(const Error405Exceptnion& e)
+    {
+        response_message = getErrorResponse(405);
+    }
+    catch(const Error500Exceptnion& e)
+    {
+        response_message = getErrorResponse(500);
+    }
+    catch(const Error503Exceptnion& e)
+    {
+        response_message = getErrorResponse(503);
+    }
     return (response_message);
 }

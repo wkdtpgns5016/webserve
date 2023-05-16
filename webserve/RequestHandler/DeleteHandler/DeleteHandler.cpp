@@ -27,6 +27,16 @@ DeleteHandler& DeleteHandler::operator=(const DeleteHandler& delete_handler)
     return (*this);
 }
 
+
+void DeleteHandler::deleteFile(std::string request_target)
+{
+    std::string path;
+
+    path = findPath(request_target);
+    if (remove(path.c_str()) == -1)
+        throw Error500Exceptnion();
+}
+
 HttpResponseMessage DeleteHandler::requestHandler()
 {
     HttpResponseMessage response_message;
@@ -35,16 +45,20 @@ HttpResponseMessage DeleteHandler::requestHandler()
 
     try
     {
+        int status = 200;
+        std::string body;
         // 메소드 권한 검사
-        checkAllowMethod("DELETE");
+        checkAllowMethod(_request_message.getStartLine().getHttpMethod());
         // 파일 삭제
-        path = findPath(request_target);
+        deleteFile(request_target);
         // 응답 생성
-        response_message = getResponseMessage(200, "");
+        if (body.empty())
+            status = 201;
+        response_message = getResponseMessage(status, body);
     }
     catch(const Error404Exceptnion& e)
     {
-        response_message = getErrorResponse(404);
+        response_message = getResponseMessage(204, "");
     }
     catch(const Error405Exceptnion& e)
     {

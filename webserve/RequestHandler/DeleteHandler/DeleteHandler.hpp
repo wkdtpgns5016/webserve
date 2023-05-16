@@ -6,6 +6,8 @@
 class DeleteHandler : public ServerHandler
 {
     private:
+    void deleteFile(std::string request_target);
+
     public:
     DeleteHandler();
     DeleteHandler(ServerBlock* server_block, HttpRequestMessage request_message);

@@ -31,10 +31,12 @@ class ServerHandler
     bool checkFile(std::string request_target);
 
     std::vector<std::string> getIndexPath(std::string root, std::string index);
+    std::string tryFiles(std::vector<std::string> try_files);
     std::string findPath(std::string request_target);
 
     std::string executeCgi(std::string request_target);
 
+    std::map<std::string, std::string> setHeader(int status_code, std::string message_body);
     HttpResponseMessage getErrorResponse(int status_code);
     HttpResponseMessage getResponseMessage(int status_code, std::string message_body);
     
