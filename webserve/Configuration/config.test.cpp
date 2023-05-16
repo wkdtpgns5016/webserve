@@ -119,8 +119,9 @@ TEST(ConfigTest, Config2Test)
 	std::vector<std::string>	allow_method_result4 = location_blocks4->getAllowMethod();
 	std::vector<std::string>	try_files_result4 = location_blocks4->getTryFiles();
 	bool	autoindex_result4 = location_blocks4->getAutoindex();
-	
+
 	// then
+	//server1
     EXPECT_EQ(port_result1, 80);
     EXPECT_EQ(root_result1, "/var/html");
     EXPECT_EQ(addr_result1.empty(), true);
@@ -132,7 +133,7 @@ TEST(ConfigTest, Config2Test)
 	EXPECT_EQ(allow_method_result1.size(), 0);
 	EXPECT_EQ(try_files_result1.size(), 0);
 	EXPECT_EQ(autoindex_result1, false);
-    
+	//server2
 	EXPECT_EQ(port_result2, 81);
     EXPECT_EQ(root_result2, "/var/html");
     EXPECT_EQ(addr_result2.empty(), true);
@@ -143,8 +144,8 @@ TEST(ConfigTest, Config2Test)
 	EXPECT_EQ(upload_path_result2.size(), 0);
 	EXPECT_EQ(allow_method_result2.size(), 0);
 	EXPECT_EQ(try_files_result2.size(), 0);
-	EXPECT_EQ(autoindex_result2, false);
-
+	EXPECT_EQ(autoindex_result2, true);
+	//location1
 	EXPECT_EQ(port_result3, 80);
     EXPECT_EQ(root_result3, "/var/html");
     EXPECT_EQ(addr_result3.empty(), true);
@@ -156,7 +157,7 @@ TEST(ConfigTest, Config2Test)
 	EXPECT_EQ(allow_method_result3.size(), 0);
 	EXPECT_EQ(*try_files_result3.begin(), "$uri $uri/ = 404");
 	EXPECT_EQ(autoindex_result3, false);
-	
+	//location2
 	EXPECT_EQ(port_result4, 81);
     EXPECT_EQ(root_result4, "/var/html");
     EXPECT_EQ(addr_result4.empty(), true);
