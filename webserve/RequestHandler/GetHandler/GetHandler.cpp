@@ -111,7 +111,7 @@ HttpResponseMessage GetHandler::requestHandler()
     try
     {
         // 메소드 권한 검사
-        checkAllowMethod("GET");
+        checkAllowMethod(_request_message.getStartLine().getHttpMethod());
         // 파일 종류 판별
         if (checkFile(request_target)) // 일반 파일
             message_body = openFile(request_target);

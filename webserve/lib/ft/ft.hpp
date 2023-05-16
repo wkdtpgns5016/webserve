@@ -13,6 +13,7 @@ namespace ft
     std::vector<std::string> splitBlockString(std::string str);
     std::string itos(int num);
     int stoi(std::string str);
+    std::vector<std::string> getTime(time_t timer);
 }
 
 #endif

@@ -55,14 +55,9 @@ CommonLogFormat& CommonLogFormat::operator=(const CommonLogFormat& log_format)
 
 void CommonLogFormat::initTimeStamp(void)
 {
-    time_t timer;
-    std::string t;
     std::vector<std::string> arr;
 
-    timer = time(NULL);
-    //timer += 3600 * 9;
-    t = std::string(std::ctime(&timer));
-    arr = ft::splitString(t, " ");
+    arr = ft::getTime(time(NULL));
     _time_stamp = "[" + arr[2] + "/"
                 + arr[1] + "/"
                 + arr[4].substr(0, arr[4].length() - 1) + ":"

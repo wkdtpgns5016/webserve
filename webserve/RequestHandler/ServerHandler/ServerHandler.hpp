@@ -35,6 +35,7 @@ class ServerHandler
 
     std::string executeCgi(std::string request_target);
 
+    std::map<std::string, std::string> setHeader(int status_code, std::string message_body);
     HttpResponseMessage getErrorResponse(int status_code);
     HttpResponseMessage getResponseMessage(int status_code, std::string message_body);
     

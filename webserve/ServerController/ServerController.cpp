@@ -43,6 +43,11 @@ HttpResponseMessage ServerController::requestHandler(ServerBlock* server_block, 
         handler = new DeleteHandler(server_block, request_message);
         response_message = handler->requestHandler();
     }
+    else
+    {
+        handler = new GetHandler(server_block, request_message);
+        response_message = handler->requestHandler();
+    }
     if (handler != NULL)
         delete handler;
     return (response_message);

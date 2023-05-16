@@ -95,15 +95,15 @@ void ConfigDto::setConfigWithServerBlock(const ServerBlock& server_block)
         _autoindex = server_block.getAutoindex();
 }
 
-const int&	ConfigDto::getPort() const { return _port; }
-const std::string&	ConfigDto::getRoot() const { return _root; }
-const std::string&	ConfigDto::getAddr() const { return _addr; }
-const std::string&	ConfigDto::getServerName() const { return _server_name; }
-const std::string&	ConfigDto::getIndex() const { return _index; }
-const std::string&	ConfigDto::getDefaultErrorPage() const { return _default_error_page; }
-const int&	ConfigDto::getClientBodySize() const { return _client_body_size; }
-const std::string&	ConfigDto::getUploadPath() const { return _upload_path; }
-const std::vector<std::string>&	ConfigDto::getAllowMethod() const { return _allow_method; }
-const std::vector<std::string>&	ConfigDto::getTryFiles() const { return _try_files; }
-const bool&	ConfigDto::getAutoindex() const { return _autoindex; }
-const std::string& ConfigDto::getUrl() const { return _url; }
+int	ConfigDto::getPort() const { return _port; }
+std::string	ConfigDto::getRoot() const { return _root; }
+std::string	ConfigDto::getAddr() const { return _addr; }
+std::string	ConfigDto::getServerName() const { return _server_name; }
+std::string	ConfigDto::getIndex() const { return _index; }
+std::string	ConfigDto::getDefaultErrorPage() const { return _default_error_page; }
+int	ConfigDto::getClientBodySize() const { return _client_body_size; }
+std::string	ConfigDto::getUploadPath() const { return _upload_path; }
+std::vector<std::string>	ConfigDto::getAllowMethod() const { return _allow_method; }
+std::vector<std::string>	ConfigDto::getTryFiles() const { return _try_files; }
+bool	ConfigDto::getAutoindex() const { return _autoindex; }
+std::string ConfigDto::getUrl() const { return _url; }

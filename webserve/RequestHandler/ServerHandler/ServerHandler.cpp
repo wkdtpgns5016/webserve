@@ -76,10 +76,33 @@ HttpRequestMessage& ServerHandler::getRequestMessage(void)
     return (_request_message);
 }
 
+std::map<std::string, std::string> ServerHandler::setHeader(int status_code, std::string message_body)
+{
+    std::map<std::string, std::string> headers;
+    std::vector<std::string> t = ft::getTime(time(NULL));
+
+    headers["Server"] = "webserv";
+    headers["Date"] = t[0] + ", " + t[2] + " " + t[1] + " " + t[4] + " " + t[3] + " GMT";
+    headers["Content-Type"] = "text/html";
+    headers["Content-Length"] = ft::itos(message_body.size());
+    headers["Connection"] = "keep-alive";
+    if (status_code == 405)
+    {
+        std::string allow;
+        std::vector<std::string> config_method = _config.getAllowMethod();
+        std::vector<std::string>::iterator it = config_method.begin();
+        for(; it != config_method.end(); it++)
+            allow += *it + ", ";
+        allow.substr(0, allow.length() - 2);
+        headers["Allow"] = allow;
+    }
+    return (headers);
+}
+
 HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::string message_body)
 {
     StatusLine start_line = StatusLine(_request_message.getStartLine().getHttpVersion(), status_code, _status[status_code]);
-    std::map<std::string, std::string> headers;
+    std::map<std::string, std::string> headers = setHeader(status_code, message_body);
     HttpResponseMessage response_message = HttpResponseMessage(start_line, headers, message_body);
     return (response_message);
 }

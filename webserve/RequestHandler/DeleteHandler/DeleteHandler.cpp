@@ -48,7 +48,7 @@ HttpResponseMessage DeleteHandler::requestHandler()
         int status = 200;
         std::string body;
         // 메소드 권한 검사
-        checkAllowMethod("DELETE");
+        checkAllowMethod(_request_message.getStartLine().getHttpMethod());
         // 파일 삭제
         deleteFile(request_target);
         // 응답 생성

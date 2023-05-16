@@ -31,18 +31,18 @@ class ConfigDto
     ~ConfigDto();
     ConfigDto& operator=(const ConfigDto& config_dto);
 
-    const int&			getPort() const;
-	const std::string&	getRoot() const;
-	const std::string&	getAddr() const;
-	const std::string&	getServerName() const;
-	const std::string&	getIndex() const;
-	const std::string&	getDefaultErrorPage() const;
-	const int&			getClientBodySize() const;
-	const std::string&	getUploadPath() const;
-	const std::vector<std::string>&	getAllowMethod() const;
-	const std::vector<std::string>&	getTryFiles() const;
-	const bool&	getAutoindex() const;
-    const std::string& getUrl() const;
+    int			getPort() const;
+	std::string	getRoot() const;
+	std::string	getAddr() const;
+	std::string	getServerName() const;
+	std::string	getIndex() const;
+	std::string	getDefaultErrorPage() const;
+	int			getClientBodySize() const;
+	std::string	getUploadPath() const;
+	std::vector<std::string>	getAllowMethod() const;
+	std::vector<std::string>	getTryFiles() const;
+	bool	getAutoindex() const;
+    std::string getUrl() const;
 };
 
 #endif

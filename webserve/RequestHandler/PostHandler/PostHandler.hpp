@@ -6,6 +6,8 @@
 class PostHandler : public ServerHandler
 {
     private:
+    void checkCGI(std::string path);
+
     public:
     PostHandler();
     PostHandler(ServerBlock* server_block, HttpRequestMessage request_message);
