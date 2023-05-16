@@ -180,6 +180,30 @@ HttpResponseMessage ServerHandler::getErrorResponse(int status_code)
     return (getResponseMessage(status_code, message_body));
 }
 
+
+std::string ServerHandler::tryFiles(std::vector<std::string> try_files)
+{
+    std::vector<std::string>::iterator it = try_files.begin();
+    std::string path;
+    for (; it != try_files.end(); it++)
+    {
+        try
+        {
+            path = findPath(*it);
+            if (!path.empty())
+                break;
+        }
+        catch(...)
+        {
+            continue;
+        }
+        
+    }
+    if (path.empty())
+        throw Error404Exceptnion();
+    return (path);
+}
+
 std::string ServerHandler::findPath(std::string request_target)
 {
     std::string root = _config.getRoot();
@@ -201,7 +225,12 @@ std::string ServerHandler::findPath(std::string request_target)
             else if (access((*it).c_str(), F_OK) == 0) // 권한이 없을 경우
                 throw Error500Exceptnion();
         }
-        throw Error404Exceptnion(); // 파일이 없을 경우
+        // try_files
+        std::vector<std::string> try_files = _config.getTryFiles();
+        if (try_files.empty())
+            throw Error404Exceptnion(); // 파일이 없을 경우
+        else
+            return (tryFiles(try_files));
     }
     return(path);
 }
