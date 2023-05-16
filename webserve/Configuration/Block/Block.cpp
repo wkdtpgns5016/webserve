@@ -234,6 +234,7 @@ void	Block::parseAllowMethod(const std::string& value)
 	size_t	pos = 0;
 	size_t	end = 0;
 
+	_allow_method.clear();
 	while (pos + 1 < value.length())
 	{
 		end = jumpWord(value, pos);
@@ -246,7 +247,16 @@ void	Block::parseAllowMethod(const std::string& value)
  */
 void	Block::parseTryFiles(const std::string& value)
 {
-	_try_files.push_back(value);
+	size_t	pos = 0;
+	size_t	end = 0;
+
+	_try_files.clear();
+	while (pos + 1 < value.length())
+	{
+		end = jumpWord(value, pos);
+		_try_files.push_back(value.substr(pos, end - pos));
+		pos = jumpTrash(value, end);
+	}
 }
 
 /** @details autoindex여부  파싱함수
