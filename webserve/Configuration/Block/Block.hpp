@@ -47,7 +47,7 @@ public:
 	std::pair<std::string, std::string>	divideBlockIdAndValue(const std::string& str, size_t pos) const;
 
 	size_t	parseSimple(const std::string& script);
-	virtual size_t	parseInnerBlock(const std::string& script);
+	void	parseInnerBlock(const std::vector<std::string>& block_scripts);
 	
 	void	parsePort(const std::string&);
 	void	parseRoot(const std::string&);

@@ -11,6 +11,8 @@ void	Block::compile(const std::string& script)
 	size_t	pos = jumpTrash(script, 0);
 	size_t	simple_end = pos;
 	size_t	block_id_end = pos;
+	std::vector<std::string>	block_scripts;
+
 	while (pos + 1 < script.length())
 	{
 		simple_end = jumpSimple(script, pos);
@@ -18,9 +20,13 @@ void	Block::compile(const std::string& script)
 		if (simple_end < block_id_end)
 			pos += parseSimple(script.substr(pos, simple_end - pos));
 		else
-			pos += parseInnerBlock(script.substr(pos, jumpBlock(script, block_id_end) - pos));
+		{
+			block_scripts.push_back(script.substr(pos, jumpBlock(script, block_id_end) - pos));
+			pos += block_scripts.rbegin()->length();
+		}
 		pos = jumpTrash(script, pos);
 	}
+	parseInnerBlock(block_scripts);
 }
 
 /**
@@ -164,10 +170,11 @@ size_t	Block::parseSimple(const std::string& script)
 /**
  * @details block_directives 하나를 파싱합니다.
  */
-size_t	Block::parseInnerBlock(const std::string& script)
+void	Block::parseInnerBlock(const std::vector<std::string>& block_scripts)
 {
-	_inner_blocks.push_back(generateInnerBlock(script));
-	return script.length();
+	std::vector<std::string>::const_iterator	ite = block_scripts.end();
+	for (std::vector<std::string>::const_iterator it = block_scripts.begin(); it != ite; it++)
+		_inner_blocks.push_back(generateInnerBlock(*it));
 }
 
 
