@@ -132,10 +132,8 @@ LocationBlock* ServerHandler::findLocationBlock(std::vector<Block*> locations, s
 
 void ServerHandler::checkAllowMethod(std::string method)
 {
-    // 임시
     std::vector<std::string> config_method = _config.getAllowMethod();
-    std::vector<std::string> a = ft::splitString(config_method[0], " ");
-    if (std::find(a.begin(), a.end(), method) == a.end())
+    if (std::find(config_method.begin(), config_method.end(), method) == config_method.end())
         throw Error405Exceptnion();
 }
 
