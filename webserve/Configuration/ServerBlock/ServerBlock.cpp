@@ -20,7 +20,7 @@ std::pair<std::pair<std::string, std::string>, std::string>	ServerBlock::divideL
 	
 	pos = jumpTrash(str, end);
 	end = jumpWord(str, pos);
-
+	url = str.substr(pos, end - pos);
 	if (str.find('{', end) == std::string::npos)
 		throw std::exception();
 

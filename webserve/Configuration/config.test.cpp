@@ -62,10 +62,10 @@ TEST(ConfigTest, Config2Test)
     // given
 	std::string a = readFileIntoString("../var/conf/default1.conf");
 	Conf conf(a);
-	Block* server_blocks1 = *conf.getInnerBlock().begin();
-	Block* server_blocks2 = *(conf.getInnerBlock().begin() + 1);
-	Block* location_blocks3 = *server_blocks1->getInnerBlock().begin();
-	Block* location_blocks4 = *server_blocks2->getInnerBlock().begin();
+	ServerBlock* server_blocks1 = static_cast<ServerBlock*>(*conf.getInnerBlock().begin());
+	ServerBlock* server_blocks2 = static_cast<ServerBlock*>(conf.getInnerBlock().back());
+	LocationBlock* location_blocks3 = static_cast<LocationBlock*>(*server_blocks1->getInnerBlock().begin());
+	LocationBlock* location_blocks4 = static_cast<LocationBlock*>(*server_blocks2->getInnerBlock().begin());
 	// when
 	
 	//server1 
@@ -106,6 +106,7 @@ TEST(ConfigTest, Config2Test)
 	std::vector<std::string>	allow_method_result3 = location_blocks3->getAllowMethod();
 	std::vector<std::string>	try_files_result3 = location_blocks3->getTryFiles();
 	bool	autoindex_result3 = location_blocks3->getAutoindex();
+	std::string	url_result3 = location_blocks3->getUrl();
 
 	//location2
 	int			port_result4 = location_blocks4->getPort();
@@ -119,7 +120,7 @@ TEST(ConfigTest, Config2Test)
 	std::vector<std::string>	allow_method_result4 = location_blocks4->getAllowMethod();
 	std::vector<std::string>	try_files_result4 = location_blocks4->getTryFiles();
 	bool	autoindex_result4 = location_blocks4->getAutoindex();
-
+	std::string	url_result4 = location_blocks4->getUrl();
 	// then
 	//server1
     EXPECT_EQ(port_result1, 80);
@@ -155,8 +156,10 @@ TEST(ConfigTest, Config2Test)
     EXPECT_EQ(client_body_size_result3, 10240);
 	EXPECT_EQ(upload_path_result3.size(), 0);
 	EXPECT_EQ(allow_method_result3.size(), 0);
-	EXPECT_EQ(*try_files_result3.begin(), "$uri $uri/ = 404");
+	EXPECT_EQ(*try_files_result3.begin(), "$uri");
 	EXPECT_EQ(autoindex_result3, false);
+	EXPECT_EQ(url_result3, "/");
+
 	//location2
 	EXPECT_EQ(port_result4, 81);
     EXPECT_EQ(root_result4, "/var/html");
@@ -167,9 +170,9 @@ TEST(ConfigTest, Config2Test)
     EXPECT_EQ(client_body_size_result4, 1024);
 	EXPECT_EQ(upload_path_result4.size(), 0);
 	EXPECT_EQ(allow_method_result4.size(), 3);
-	EXPECT_EQ(*try_files_result4.begin(), "$uri $uri/ = 404");
+	EXPECT_EQ(*try_files_result4.begin(), "$uri");
 	EXPECT_EQ(autoindex_result4, true);
-
+	EXPECT_EQ(url_result4, "/");
 }
 int main(int argc, char **argv)
 {
