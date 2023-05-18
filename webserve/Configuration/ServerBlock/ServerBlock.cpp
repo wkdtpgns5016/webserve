@@ -15,16 +15,16 @@ std::pair<std::pair<std::string, std::string>, std::string>	ServerBlock::divideL
 	std::string	url;
 	std::string	value;
 
-	end = jumpWord(str, pos);
+	end = _scripter.jumpWord(str, pos);
 	id = str.substr(pos, end - pos);
 	
-	pos = jumpTrash(str, end);
-	end = jumpWord(str, pos);
+	pos = _scripter.jumpTrash(str, end);
+	end = _scripter.jumpWord(str, pos);
 	url = str.substr(pos, end - pos);
 	if (str.find('{', end) == std::string::npos)
 		throw std::exception();
 
-	pos = jumpTrash(str, end) + 1;
+	pos = _scripter.jumpTrash(str, end) + 1;
 	end = str.length() - 1;
 	if (pos < end)
 		value = str.substr(pos, end - pos);
