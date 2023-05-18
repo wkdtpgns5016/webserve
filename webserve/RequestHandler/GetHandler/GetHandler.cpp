@@ -37,6 +37,8 @@ std::string GetHandler::openFile(std::string request_target)
     {
         if (_config.getAutoindex())
             message_body = getAutoIndexPage(file_path, request_target);
+        else
+            throw Error404Exceptnion();
     }
     else
         message_body = ft::readFileIntoString(file_path);

@@ -11,6 +11,8 @@ SRCS =	webserve/main.cpp \
 		webserve/Configuration/Block/Block.cpp \
 		webserve/Configuration/LocationBlock/LocationBlock.cpp \
 		webserve/Configuration/ServerBlock/ServerBlock.cpp \
+		webserve/Configuration/Parser/Parser.cpp \
+		webserve/Configuration/Scripter/Scripter.cpp \
 		webserve/RequestHandler/ServerHandler/ServerHandler.cpp \
 		webserve/RequestHandler/GetHandler/GetHandler.cpp \
 		webserve/RequestHandler/DeleteHandler/DeleteHandler.cpp \

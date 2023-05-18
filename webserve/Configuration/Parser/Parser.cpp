@@ -153,6 +153,7 @@ void	Parser::parseAutoindex(const std::string& value, Block* block)
  */
 void	Parser::parseNoMatchId(const std::string& value, Block* block)
 {
+	(void)block;
 	if (value.empty() || 1)
 		throw std::exception();
 }
@@ -160,5 +161,5 @@ void	Parser::parseNoMatchId(const std::string& value, Block* block)
 //occf
 Parser::Parser() { setParsingFunctionArray(); }
 Parser::~Parser() {}
-Parser::Parser(const Parser& other) {}
-Parser& Parser::operator=(const Parser& other) { return *this; }
+Parser::Parser(const Parser& other) { (void)other; }
+Parser& Parser::operator=(const Parser& other) { (void)other; return *this; }

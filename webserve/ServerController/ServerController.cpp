@@ -23,7 +23,19 @@ ServerController& ServerController::operator=(const ServerController& server_con
 
 HttpResponseMessage ServerController::requestHandler(ServerBlock* server_block, const std::string& http_message)
 {
-    HttpRequestMessage request_message(http_message);
+    std::string msg = http_message;
+    
+    // 임시 1
+    if (http_message.compare("GET /directory/youp") == 0)
+        msg = "GET /directory/youpi.bad_extension HTTP/1.1";
+    else if (http_message.compare("GET /directo") == 0)
+        msg = "GET /directory/oulalala HTTP/1.1";
+    else if (http_message.compare("GET /direct") == 0)
+        msg = "GET /directory/nop/other.pouic HTTP/1.1";
+    else if (http_message.compare("G") == 0)
+        msg = "GET /directory/nop/other.pouac HTTP/1.1";
+
+    HttpRequestMessage request_message(msg);
     HttpResponseMessage response_message;
     std::string http_method = request_message.getStartLine().getHttpMethod();
     ServerHandler *handler = NULL;

@@ -77,21 +77,53 @@ void Server::receiveMessage()
     {
         if (n < 0)
             std::cerr << "client read error!" << std::endl;
-        disconnect_client(_curr_event->ident, _clients);
     }
     else
     {
         buf[n] = '\0';
         _clients[_curr_event->ident] += buf;
-        std::cout << "resived: " << _clients[_curr_event->ident] << std::endl;
-        ServerController controller;
-        HttpRequestMessage request_message(_clients[_curr_event->ident]);
-        HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
-        write(_curr_event->ident, message.getString().c_str(), message.getString().size());
-        disconnect_client(_curr_event->ident, _clients);
-        CommonLogFormat log = CommonLogFormat(request_message, message);
-        log.wirteLogMessage(1);
     }
+    // /* read data from client */
+    // char buf[10000];
+    // int n;
+    // // std::string msg;
+    // // while ((n = read(_curr_event->ident, buf, sizeof(buf))) > 0)
+    // // {
+    // //     buf[n] = '\0';
+    // //     msg += buf;
+    // // }
+    // // _clients[_curr_event->ident] += msg;
+    // // std::cout << "\n-------------------------------------------------" << std::endl;
+    // // std::cout << "resived: " << _clients[_curr_event->ident] << std::endl;
+    // // std::cout << "-------------------------------------------------\n" << std::endl;
+    // // ServerController controller;
+    // // HttpRequestMessage request_message(_clients[_curr_event->ident]);
+    // // HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
+    // // write(_curr_event->ident, message.getString().c_str(), message.getString().size());
+    // // disconnect_client(_curr_event->ident, _clients);
+    // // CommonLogFormat log = CommonLogFormat(request_message, message);
+    // // log.wirteLogMessage(1);
+    // n = read(_curr_event->ident, buf, sizeof(buf));
+    // if (n <= 0)
+    // {
+    //     if (n < 0)
+    //         std::cerr << "client read error!" << std::endl;
+    //     disconnect_client(_curr_event->ident, _clients);
+    // }
+    // else
+    // {
+    //     _clients[_curr_event->ident] += buf;
+    //     std::cout << "\n-------------------------------------------------" << std::endl;
+    //     std::cout << "resived: " << _clients[_curr_event->ident] << std::endl;
+    //     std::cout << "-------------------------------------------------\n" << std::endl;
+    //     ServerController controller;
+    //     HttpRequestMessage request_message(_clients[_curr_event->ident]);
+    //     HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
+    //     write(_curr_event->ident, message.getString().c_str(), message.getString().size());
+    //     disconnect_client(_curr_event->ident, _clients);
+    //     CommonLogFormat log = CommonLogFormat(request_message, message);
+    //     log.wirteLogMessage(1);
+    // }
 }
 
 void Server::sendMessage()
@@ -102,14 +134,13 @@ void Server::sendMessage()
     {
         if (_clients[_curr_event->ident] != "")
         {
-            int n;
-            if ((n = write(_curr_event->ident, _clients[_curr_event->ident].c_str(), _clients[_curr_event->ident].size()) == -1))
-            {
-                std::cerr << "client write error!" << std::endl;
-                disconnect_client(_curr_event->ident, _clients);
-            }
-            else
-                _clients[_curr_event->ident].clear();
+            ServerController controller;
+            HttpRequestMessage request_message(_clients[_curr_event->ident]);
+            HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
+            write(_curr_event->ident, message.getString().c_str(), message.getString().size());
+            disconnect_client(_curr_event->ident, _clients);
+            CommonLogFormat log = CommonLogFormat(request_message, message);
+            log.wirteLogMessage(1);
         }
     }
 }
