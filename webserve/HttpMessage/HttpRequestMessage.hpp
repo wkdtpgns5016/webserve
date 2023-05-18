@@ -19,6 +19,7 @@ public:
     HttpRequestMessage& operator=(const HttpRequestMessage& http_meesage);
 
     RequestLine getStartLine(void) const;
+    void setStartLine(RequestLine start_line);
     bool isVaild(void);
     std::string getString(void);
 

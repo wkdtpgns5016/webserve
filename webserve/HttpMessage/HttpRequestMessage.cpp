@@ -56,6 +56,11 @@ RequestLine HttpRequestMessage::getStartLine(void) const
     return (_start_line);
 }
 
+void HttpRequestMessage::setStartLine(RequestLine start_line)
+{
+    _start_line = start_line;
+}
+
 bool HttpRequestMessage::isVaild(void)
 {
     return (true);

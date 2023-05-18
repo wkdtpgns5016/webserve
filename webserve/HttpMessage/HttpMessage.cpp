@@ -143,7 +143,10 @@ RequestLine::RequestLine(std::string start_line)
     arr = ft::splitString(start_line, " ");
     _http_method = arr[0];
     _request_target = arr[1];
-    _http_version = arr[2];
+    if (arr.size() < 3)
+        _http_version = "";
+    else
+        _http_version = arr[2];
 }
 
 RequestLine::RequestLine(std::string http_method, std::string request_target, std::string http_version)

@@ -14,6 +14,7 @@ ServerHandler::ServerHandler(ServerBlock* server_block, HttpRequestMessage reque
                                                       request_message.getStartLine().getRequestTarget());
     _request_message = request_message;
     _config = ConfigDto(*server_block, *location_block);
+    _b_config = location_block;
 }
 
 ServerHandler::~ServerHandler()
@@ -143,14 +144,48 @@ LocationBlock* ServerHandler::findLocationBlock(std::vector<Block*> locations, s
 {
     std::vector<Block*>::iterator it = locations.begin();
     LocationBlock* location;
+    LocationBlock* temp;
+    int find_flag;
     for (; it != locations.end(); it++)
     {
         location = (LocationBlock *)(*it);
-        std::string url = location->getUrl();
-        if (request_target.find(url) == 0)
+        std::string url = cleanUrl(location->getUrl(), false);
+        std::string compare_url = cleanUrl(request_target, true);
+        if (url.compare(compare_url.substr(0, url.length())) == 0)
+        {
+            find_flag = 1;
+            if (url.compare("/") == 0)
+            {
+                temp = location;
+                find_flag = 0;
+                continue;
+            }
             break ;
+        }
+
+    }
+    if (find_flag == 0)
+    {
+        return (temp);
     }
     return (location);
+}
+
+std::string ServerHandler::cleanUrl(std::string url, bool request_target)
+{
+    std::vector<std::string> url_arr = ft::splitString(url, "/");
+    std::vector<std::string>::iterator it = url_arr.begin();
+    std::string new_url;
+
+    if (url.compare("/") == 0)
+        return (url);
+    for (; it != url_arr.end(); it++)
+    {
+        new_url = new_url + "/" + *it;
+    }
+    if (url.back() == '/' && request_target)
+        new_url += "/";
+    return (new_url);
 }
 
 void ServerHandler::checkAllowMethod(std::string method)
@@ -215,7 +250,19 @@ std::string ServerHandler::findPath(std::string request_target)
     // 인덱싱 url
     std::vector<std::string> index_path = getIndexPath(path, index);
 
+    std::string directory = path;
+    if (directory.back() != '/')
+        directory = path + "/";
     if (access(path.c_str(), F_OK) == -1)
+    {
+        // try_files
+        std::vector<std::string> try_files = _config.getTryFiles();
+        if (try_files.empty())
+            throw Error404Exceptnion(); // 파일이 없을 경우
+        else
+            return (tryFiles(try_files));
+    }
+    else if (access(directory.c_str(), F_OK) != -1)
     {
         std::vector<std::string>::iterator it = index_path.begin();
         for (; it != index_path.end(); it++)
@@ -225,25 +272,51 @@ std::string ServerHandler::findPath(std::string request_target)
             else if (access((*it).c_str(), F_OK) == 0) // 권한이 없을 경우
                 throw Error500Exceptnion();
         }
-        // try_files
-        std::vector<std::string> try_files = _config.getTryFiles();
-        if (try_files.empty())
-            throw Error404Exceptnion(); // 파일이 없을 경우
-        else
-            return (tryFiles(try_files));
     }
     return(path);
 }
 
+void ServerHandler::checkHttpVersion(RequestLine start_line)
+{
+    std::string http_version = start_line.getHttpVersion();
+    std::vector<std::string> arr = ft::splitString(http_version, "/");
+
+    if (http_version.empty())
+    {
+        _request_message.setStartLine(RequestLine(start_line.getHttpMethod(), 
+                                                  start_line.getRequestTarget(), 
+                                                  "HTTP/1.1"));
+        return ;
+    }
+    if (arr.size() != 2)
+        throw Error400Exceptnion();
+    if (arr[0].compare("HTTP") != 0)
+        throw Error400Exceptnion();
+    if (arr[1].compare("1.1") != 0)
+        throw Error400Exceptnion();
+}
+
+void ServerHandler::checkHttpMessage(void)
+{
+    // check start line
+    RequestLine start_line = _request_message.getStartLine();
+    checkAllowMethod(start_line.getHttpMethod());
+    checkHttpVersion(start_line);
+}
+
 std::string ServerHandler::executeCgi(std::string request_target)
 {
+    (void)request_target;
     std::string file_path = findPath(request_target);
     // fork 후 cgi 실행
     return ("");
 }
 
 const char* ServerHandler::AutoIndexExceptnion::what() const throw() {
-  return "Not Found";
+  return "Auto Index";
+}
+const char* ServerHandler::Error400Exceptnion::what() const throw() {
+  return "Bad Request";
 }
 const char* ServerHandler::Error404Exceptnion::what() const throw() {
   return "Not Found";

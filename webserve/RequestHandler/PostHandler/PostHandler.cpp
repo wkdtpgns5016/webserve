@@ -39,8 +39,8 @@ HttpResponseMessage PostHandler::requestHandler()
 
     try
     {
-        // 메소드 권한 검사
-        checkAllowMethod(_request_message.getStartLine().getHttpMethod());
+        // http reqeust message 검사
+        checkHttpMessage();
         // 파일 종류 판별
         if (checkFile(request_target)) // 일반 파일
             message_body = findPath(request_target);
@@ -48,6 +48,10 @@ HttpResponseMessage PostHandler::requestHandler()
             message_body = executeCgi(request_target);
         // 응답 생성
         response_message = getResponseMessage(200, message_body);
+    }
+    catch(const Error400Exceptnion& e)
+    {
+        response_message = getResponseMessage(400, "");
     }
     catch(const Error404Exceptnion& e)
     {

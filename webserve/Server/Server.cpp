@@ -83,6 +83,7 @@ void Server::receiveMessage()
     {
         buf[n] = '\0';
         _clients[_curr_event->ident] += buf;
+        std::cout << "resived: " << _clients[_curr_event->ident] << std::endl;
         ServerController controller;
         HttpRequestMessage request_message(_clients[_curr_event->ident]);
         HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);

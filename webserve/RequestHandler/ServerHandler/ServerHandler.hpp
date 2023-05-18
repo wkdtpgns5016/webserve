@@ -26,7 +26,11 @@ class ServerHandler
     void init_status();
     LocationBlock* findLocationBlock(std::vector<Block*> locations, std::string request_target);
 
+    std::string cleanUrl(std::string url, bool request_target);
+
     void checkAllowMethod(std::string method);
+    void checkHttpVersion(RequestLine start_line);
+    void checkHttpMessage(void);
     bool checkDirectory(std::string path);
     bool checkFile(std::string request_target);
 
@@ -51,6 +55,10 @@ class ServerHandler
     virtual HttpResponseMessage requestHandler() = 0;
 
     class AutoIndexExceptnion : public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+    class Error400Exceptnion : public std::exception {
 			public:
 				virtual const char* what() const throw();
 		};

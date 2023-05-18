@@ -47,14 +47,18 @@ HttpResponseMessage DeleteHandler::requestHandler()
     {
         int status = 200;
         std::string body;
-        // 메소드 권한 검사
-        checkAllowMethod(_request_message.getStartLine().getHttpMethod());
+        // http reqeust message 검사
+        checkHttpMessage();
         // 파일 삭제
         deleteFile(request_target);
         // 응답 생성
         if (body.empty())
             status = 201;
         response_message = getResponseMessage(status, body);
+    }
+    catch(const Error400Exceptnion& e)
+    {
+        response_message = getResponseMessage(400, "");
     }
     catch(const Error404Exceptnion& e)
     {

@@ -32,7 +32,6 @@ std::string GetHandler::openFile(std::string request_target)
 {
     std::string message_body;
     std::string file_path = findPath(request_target);
-
     // autoindex 유무
     if (checkDirectory(file_path))
     {
@@ -110,8 +109,8 @@ HttpResponseMessage GetHandler::requestHandler()
 
     try
     {
-        // 메소드 권한 검사
-        checkAllowMethod(_request_message.getStartLine().getHttpMethod());
+        // http reqeust message 검사
+        checkHttpMessage();
         // 파일 종류 판별
         if (checkFile(request_target)) // 일반 파일
             message_body = openFile(request_target);
@@ -119,6 +118,10 @@ HttpResponseMessage GetHandler::requestHandler()
             message_body = executeCgi(request_target);
         // 응답 생성
         response_message = getResponseMessage(200, message_body);
+    }
+    catch(const Error400Exceptnion& e)
+    {
+        response_message = getResponseMessage(400, "");
     }
     catch(const Error404Exceptnion& e)
     {
