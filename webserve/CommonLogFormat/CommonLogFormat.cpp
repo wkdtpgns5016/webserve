@@ -71,8 +71,8 @@ std::string CommonLogFormat::getString(void)
     str = _remote_host + " "
         + _user_name + " "
         + _auth_user_name + " "
-        + _time_stamp + " "
-        + _request_line.getString() + " "
+        + _time_stamp + " \""
+        + _request_line.getString() + "\" "
         + ft::itos(_status_code) + " "
         + _response_size + "\n";
     return (str);

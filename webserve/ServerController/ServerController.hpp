@@ -9,6 +9,7 @@
 #include "../RequestHandler/GetHandler/GetHandler.hpp"
 #include "../RequestHandler/PostHandler/PostHandler.hpp"
 #include "../RequestHandler/DeleteHandler/DeleteHandler.hpp"
+#include "../RequestHandler/PutHandler/PutHandler.hpp"
 #include <iostream>
 
 class ServerController

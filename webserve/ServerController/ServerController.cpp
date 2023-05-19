@@ -55,6 +55,11 @@ HttpResponseMessage ServerController::requestHandler(ServerBlock* server_block, 
         handler = new DeleteHandler(server_block, request_message);
         response_message = handler->requestHandler();
     }
+    else if (http_method.compare("PUT") == 0)
+    {
+        handler = new PutHandler(server_block, request_message);
+        response_message = handler->requestHandler();
+    }
     else
     {
         handler = new GetHandler(server_block, request_message);

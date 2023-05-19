@@ -17,6 +17,7 @@ SRCS =	webserve/main.cpp \
 		webserve/RequestHandler/GetHandler/GetHandler.cpp \
 		webserve/RequestHandler/DeleteHandler/DeleteHandler.cpp \
 		webserve/RequestHandler/PostHandler/PostHandler.cpp \
+		webserve/RequestHandler/PutHandler/PutHandler.cpp \
 		webserve/ServerController/ServerController.cpp \
 		webserve/HttpMessage/HttpMessage.cpp \
 		webserve/HttpMessage/HttpRequestMessage.cpp \
@@ -41,6 +42,7 @@ HEAD =  -I./webserve/Server \
 		-I./webserve/RequestHandler/ServerHandler \
 		-I./webserve/RequestHandler/GetHandler \
 		-I./webserve/RequestHandler/PostHandler \
+		-I./webserve/RequestHandler/PutHandler \
 		-I./webserve/RequestHandler/DeleteHandler \
 		-I./webserve/ServerController/ \
 		-I./webserve/HttpMessage \

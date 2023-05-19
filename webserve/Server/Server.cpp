@@ -125,6 +125,31 @@ void Server::receiveMessage()
     //     log.wirteLogMessage(1);
     // }
 }
+bool checkChunked(std::string message)
+{
+    int pos = message.find("\r\n\r\n");
+    std::string chunkded_message = message.substr(pos + 4);
+    if (chunkded_message.find("0\r\n") == std::string::npos)
+        return (false);
+    return (true);
+}
+
+bool checkMessage(std::string message)
+{
+    std::vector<std::string> arr = ft::splitString(message, "\r\n");
+    if (arr.empty())
+        return (false);
+    std::vector<std::string> arr2 = ft::splitString(arr[0], " ");
+    if (arr2.size() < 3)
+        return (false);
+    if (message.find("\r\n\r\n") == std::string::npos)
+        return (false);
+    if (message.find("chunked") != std::string::npos)
+    {
+        return (checkChunked(message));
+    }
+    return (true);
+}
 
 void Server::sendMessage()
 {
@@ -134,13 +159,18 @@ void Server::sendMessage()
     {
         if (_clients[_curr_event->ident] != "")
         {
-            ServerController controller;
-            HttpRequestMessage request_message(_clients[_curr_event->ident]);
-            HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
-            write(_curr_event->ident, message.getString().c_str(), message.getString().size());
-            disconnect_client(_curr_event->ident, _clients);
-            CommonLogFormat log = CommonLogFormat(request_message, message);
-            log.wirteLogMessage(1);
+            if (checkMessage(_clients[_curr_event->ident]))
+            {
+                std::cout << "read : \n" << _clients[_curr_event->ident] << std::endl;
+                std::getchar();
+                ServerController controller;
+                HttpRequestMessage request_message(_clients[_curr_event->ident]);
+                HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
+                write(_curr_event->ident, message.getString().c_str(), message.getString().size());
+                disconnect_client(_curr_event->ident, _clients);
+                CommonLogFormat log = CommonLogFormat(request_message, message);
+                log.wirteLogMessage(1);
+            }
         }
     }
 }
