@@ -78,6 +78,8 @@ HttpResponseMessage PutHandler::requestHandler()
     {
         checkHttpMessage();
         status = putMethod();
+        if (message_body.empty())
+            status = 204;
         response_message = getResponseMessage(status, message_body);
     }
     catch(const Error400Exceptnion& e)

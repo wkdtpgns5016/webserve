@@ -266,7 +266,7 @@ HttpMessage::HttpMessage(std::string http_message)
     s.clear();
     while (std::getline(iss, token, '\n'))
         s += token + "\n";
-    _message_body = s.substr(0, s.length() - 1);
+    setMessageBody(s);
 }
 
 HttpMessage::HttpMessage(std::map<std::string, std::string>  headers, std::string message_body)
@@ -309,7 +309,29 @@ std::string HttpMessage::getMessageBody(void) const
 }
 
 
+std::string HttpMessage::mergeChunkedMessage(std::string chunk)
+{
+    std::vector<std::string> arr = ft::splitString(chunk, "\r\n");
+    std::vector<std::string>::iterator it = arr.begin();
+    std::string message;
+    unsigned int chunk_size;
+
+    for (int i = 0; it != arr.end(); it++, i++)
+    {
+        if (i % 2 == 0)
+            chunk_size = ft::convertHex(*it);
+        else if (chunk_size > 0)
+            message += *it;
+        else if (chunk_size == 0)
+            break;
+    }
+    return (message);
+}
+
 void HttpMessage::setMessageBody(std::string message_body)
 {
-    _message_body = message_body;
+    std::string body = message_body;
+    if (_headers["Transfer-Encoding"].compare("chunked") == 0)
+        body = mergeChunkedMessage(message_body);
+    _message_body = body;
 }

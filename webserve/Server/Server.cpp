@@ -71,7 +71,7 @@ void Server::receiveMessage()
 {
     /* read data from client */
     char buf[1024];
-    int n = read(_curr_event->ident, buf, sizeof(buf));
+    int n = read(_curr_event->ident, buf, sizeof(buf) - 1);
 
     if (n <= 0)
     {
@@ -129,7 +129,8 @@ bool checkChunked(std::string message)
 {
     int pos = message.find("\r\n\r\n");
     std::string chunkded_message = message.substr(pos + 4);
-    if (chunkded_message.find("0\r\n") == std::string::npos)
+    std::vector<std::string> line = ft::splitString(chunkded_message, "\r\n");
+    if (std::find(line.begin(), line.end(), "0") == line.end())
         return (false);
     return (true);
 }
@@ -161,8 +162,6 @@ void Server::sendMessage()
         {
             if (checkMessage(_clients[_curr_event->ident]))
             {
-                std::cout << "read : \n" << _clients[_curr_event->ident] << std::endl;
-                std::getchar();
                 ServerController controller;
                 HttpRequestMessage request_message(_clients[_curr_event->ident]);
                 HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
