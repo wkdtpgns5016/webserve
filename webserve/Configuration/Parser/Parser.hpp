@@ -11,7 +11,8 @@ private:
 	Scripter	_scripter;
 	void	(Parser::*_parsing_func[11])(const std::string&, Block*);
 
-
+	void	parseListen(const std::string&, Block* block);
+	void	parseAddr(const std::string& value, Block* block);
 	void	parsePort(const std::string&, Block* block);
 	void	parseRoot(const std::string&, Block* block);
 	void	parseServerName(const std::string&, Block* block);

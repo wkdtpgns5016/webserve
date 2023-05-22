@@ -1,4 +1,5 @@
 #include "./Parser.hpp"
+#include <iterator>
 
 /**
  * @details simple_directives 하나를 id와 value로 나눕니다.
@@ -53,11 +54,64 @@ size_t	Parser::parseSimple(const std::string& script, Block* block)
 	return script.length();
 }
 
+void	Parser::parseListen(const std::string& value, Block* block)
+{
+	size_t	pos;
+
+	pos = value.find(':');
+	if (pos == std::string::npos)
+	{
+		try
+		{
+			parsePort(value, block);
+		}
+		catch (std::exception)
+		{
+			parseAddr(value, block);
+		}
+		return ;
+	}
+	parseListen(value.substr(0, pos), block);
+	parsePort(value.substr(pos), block);
+}
+
+void	Parser::parseAddr(const std::string& value, Block* block)
+{
+	std::string	str;
+	int	num;
+	int	addr_num;
+	size_t	pos = 0;
+	size_t	next_pos = 0;
+
+	for (int i = 0; i < 3; i++)
+	{
+		next_pos = value.find('.');
+		if (next_pos == std::string::npos)
+			throw std::exception(); // host not found
+		str = value.substr(pos, next_pos - pos);
+		num = std::strtol(str.c_str(), NULL, 10);
+		if ( num < 0 || 255 < num )
+			throw std::exception(); //host_not_found
+		addr_num |= num << (i * 8);
+		pos = next_pos;
+	}
+	str = value.substr(pos);
+	num = std::strtol(str.c_str(), NULL, 10);
+	if ( num < 0 || 255 < num )
+		throw std::exception(); //host_not_found
+	addr_num |= num << (3 * 8);
+	//block->setAddr("");
+}
+
 /** @details 포트번호 파싱함수
  */
 void	Parser::parsePort(const std::string& value, Block* block)
 {
-	block->setPort(std::strtol(value.c_str(), NULL, 10));
+	long port_num = std::strtol(value.c_str(), NULL, 10);
+
+	if (port_num < 0 || 65535 < port_num)
+		throw std::exception(); //invalid port
+	block->setPort(port_num);
 }
 
 /** @details 루트경로 파싱함수
