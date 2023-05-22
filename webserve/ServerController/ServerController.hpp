@@ -23,7 +23,7 @@ class ServerController
     ~ServerController();
     ServerController& operator=(const ServerController& server_controller);
 
-    HttpResponseMessage requestHandler(ServerBlock* server_block, const std::string& http_message);
+    HttpResponseMessage requestHandler(ServerBlock* server_block, HttpRequestMessage request_message);
 };
 
 #endif

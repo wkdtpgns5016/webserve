@@ -21,9 +21,8 @@ ServerController& ServerController::operator=(const ServerController& server_con
     return (*this);
 }
 
-HttpResponseMessage ServerController::requestHandler(ServerBlock* server_block, const std::string& http_message)
+HttpResponseMessage ServerController::requestHandler(ServerBlock* server_block, HttpRequestMessage request_message)
 {
-    HttpRequestMessage request_message(http_message);
     HttpResponseMessage response_message;
     std::string http_method = request_message.getStartLine().getHttpMethod();
     ServerHandler *handler = NULL;
