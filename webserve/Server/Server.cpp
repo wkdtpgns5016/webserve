@@ -45,7 +45,7 @@ void Server::change_events(uintptr_t ident, int16_t filter,
     _change_list.push_back(temp_event);
 }
 
-void Server::disconnect_client(int client_fd, std::map<int, std::string> &clients)
+void Server::disconnect_client(int client_fd, std::map<int, Connection> &clients)
 {
     // std::cout << "client disconnected: " << client_fd << std::endl;
     close(client_fd);
@@ -64,7 +64,7 @@ void Server::accept_new_client()
     /* add event for client socket - add read && write event */
     change_events(client_socket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
-    _clients[client_socket] = "";
+    _clients[client_socket] = Connection();
 }
 
 void Server::receiveMessage()
@@ -81,7 +81,7 @@ void Server::receiveMessage()
     else
     {
         buf[n] = '\0';
-        _clients[_curr_event->ident] += buf;
+        _clients[_curr_event->ident].appendMessage(buf);
     }
 }
 bool checkMessage(std::string message)
@@ -100,15 +100,16 @@ bool checkMessage(std::string message)
 void Server::sendMessage()
 {
     /* send data to client */
-    std::map<int, std::string>::iterator it = _clients.find(_curr_event->ident);
+    std::map<int, Connection>::iterator it = _clients.find(_curr_event->ident);
     if (it != _clients.end())
     {
-        if (_clients[_curr_event->ident] != "")
+        if (_clients[_curr_event->ident].getMessage() != "")
         {
-            if (checkMessage(_clients[_curr_event->ident]))
+            if (_clients[_curr_event->ident].checkMessage())
             {
+                std::cout << "OK" << std::endl;
                 ServerController controller;
-                HttpRequestMessage request_message(_clients[_curr_event->ident]);
+                HttpRequestMessage request_message(_clients[_curr_event->ident].getMessage());
                 HttpResponseMessage message = controller.requestHandler(_server_block, request_message);
                 write(_curr_event->ident, message.getString().c_str(), message.getString().size());
                 disconnect_client(_curr_event->ident, _clients);
