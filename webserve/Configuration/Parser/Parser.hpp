@@ -12,6 +12,9 @@ private:
 	Scripter	_scripter;
 	void	(Parser::*_parsing_func[11])(const std::string&, Block*);
 
+	bool	isNumbers(const std::string& str, size_t pos = 0, size_t len = std::string::npos);
+	int		extractOneSectionNumber(const std::string& value, size_t pos, size_t len);
+	size_t	measureOneSectionLength(const std::string& value, size_t pos);
 	void	parseListen(const std::string&, Block* block);
 	void	parseAddr(const std::string& value, Block* block);
 	void	parsePort(const std::string&, Block* block);
@@ -34,27 +37,35 @@ public:
 	Parser& operator= (const Parser& other);
 	size_t	parseSimple(const std::string& script, Block* block);
 private:
-	
 	//listen
-	class HostNotFound : public std::exception
+	class ListenException : public std::exception
 	{
+	protected:
+		std::string	_line;
 	public:
+		ListenException(const std::string& type, const std::string& value);
+		~ListenException() throw() ; 
 		const char* what() const throw();
 	};
-	class InvalidPort : public std::exception
+	class HostNotFound : public ListenException
 	{
 	public:
-		const char* what() const throw();
+		HostNotFound(const std::string& value);
 	};
-	class InvalidNumberOfArguments : public std::exception
+	class InvalidPort : public ListenException
 	{
 	public:
-		const char* what() const throw();
+		InvalidPort(const std::string& value);
 	};
-	class NoHost : public std::exception
+	class InvalidNumberOfArguments : public ListenException
 	{
 	public:
-		const char* what() const throw();
+		InvalidNumberOfArguments(const std::string& value);
+	};
+	class NoHost : public ListenException
+	{
+	public:
+		NoHost(const std::string& value);
 	};
 };
 #include "../Block/Block.hpp"

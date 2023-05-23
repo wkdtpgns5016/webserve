@@ -1,5 +1,7 @@
 #include "./Parser.hpp"
+#include <cstddef>
 #include <iterator>
+#include <sys/wait.h>
 
 /**
  * @details simple_directives 하나를 id와 value로 나눕니다.
@@ -54,84 +56,16 @@ size_t	Parser::parseSimple(const std::string& script, Block* block)
 	return script.length();
 }
 
-void	Parser::parseListen(const std::string& value, Block* block)
+bool	Parser::isNumbers(const std::string& str, size_t pos, size_t len)
 {
-	size_t	pos;
-
-	if (value.empty())
-		throw InvalidNumberOfArguments();
-
-	pos = value.find(':');
-	if (pos == std::string::npos)
-	{
-		try
-		{
-			parsePort(value, block);
-		}
-		catch (std::exception)
-		{
-			parseAddr(value, block);
-		}
-		return ;
-	}
-	parseAddr(value.substr(0, pos), block);
-	parsePort(value.substr(pos + 1), block);
-}
-
-unsigned int	reverseBit(unsigned int addr_num)
-{
-	unsigned int	reverse_bit = 0;
-
-	for (int i = 0 ; i < 32; i++)
-	{
-		reverse_bit <<= 1;
-		reverse_bit |= addr_num & 1;
-		addr_num >>= 1;
-	}
-	return reverse_bit;;
-}
-
-void	Parser::parseAddr(const std::string& value, Block* block)
-{
-	if (value.empty())
-		throw NoHost();
-
-	std::string	str;
-	int	num;
-	int	addr_num =  0;
-	size_t	pos = 0;
-	size_t	next_pos = 0;
-
-	for (int i = 0; i < 3; i++)
-	{
-		next_pos = value.find('.', pos);
-		if (next_pos == std::string::npos)
-			throw HostNotFound();
-		str = value.substr(pos, next_pos - pos);
-		num = std::strtol(str.c_str(), NULL, 10);
-		if ( num < 0 || 255 < num )
-			throw HostNotFound();
-		addr_num |= num << i * 8;
-		pos = next_pos + 1;
-	}
-	str = value.substr(pos);
-	num = std::strtol(str.c_str(), NULL, 10);
-	if ( num < 0 || 255 < num )
-		throw HostNotFound();
-	addr_num |= num << (3 * 8); 
-	block->setAddr(addr_num);
-	//block->setAddr(reverseBit(addr_num));
-}
-
-/** @details 포트번호 파싱함수
- */
-void	Parser::parsePort(const std::string& value, Block* block)
-{
-	long port_num = std::strtol(value.c_str(), NULL, 10);
-
-	if (port_num < 0 || 65535 < port_num)
-		throw InvalidPort(); //invalid port
-	block->setPort(port_num);
+	if (len == std::string::npos)
+		len = str.length();
+	while (len > 0 && str[pos] 
+			&& std::isdigit(str[pos], std::locale()))
+		pos++; len--;
+	if (str[pos] == '\0' || len == 0)
+		return true;
+	return false;
 }
 
 /** @details 루트경로 파싱함수
@@ -233,23 +167,24 @@ void	Parser::parseNoMatchId(const std::string& value, Block* block)
 }
 
 //exception
-const char* Parser::InvalidNumberOfArguments::what() const throw()
+Parser::ListenException::ListenException(const std::string& type, const std::string& value)
 {
-	return "Invalid number of arguments in the listen directive";
+	_line += type;
+	if (value.empty())
+		_line += " in \"listen\" directive\n";
+	else
+		_line += " in \"" + value + "\" of the \"listen\" directive\n";
 }
-const char* Parser::NoHost::what() const throw()
+Parser::ListenException::~ListenException() throw() {}
+const char* Parser::ListenException::what() const throw()
 {
-	return "No host in the listen directive";
-}
-const char* Parser::HostNotFound::what() const throw()
-{
-	return "host not found in the listen directive";
-}
-const char* Parser::InvalidPort::what() const throw()
-{
-	return "Invalid port in the listen directive";
+	return _line.c_str();
 }
 
+Parser::HostNotFound::HostNotFound(const std::string& value) : ListenException("host not found", value) {}
+Parser::InvalidPort::InvalidPort(const std::string& value) : ListenException("invalid port", value) {}
+Parser::InvalidNumberOfArguments::InvalidNumberOfArguments(const std::string& value) : ListenException("invalid number of arguments", value) {}
+Parser::NoHost::NoHost(const std::string& value) : ListenException("no host", value) {}
 
 //occf
 Parser::Parser() { setParsingFunctionArray(); }

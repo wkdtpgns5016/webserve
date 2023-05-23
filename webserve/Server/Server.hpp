@@ -46,7 +46,7 @@ private:
     struct kevent               _event_list[8];
     ServerBlock*                _server_block;
     
-    void socket_init(int port, std::string ip_addr);
+    void socket_init(int port, unsigned int ip_addr);
     void change_events(uintptr_t ident, int16_t filter, uint16_t flags, uint32_t fflags, intptr_t data, void *udata);
     void disconnect_client(int client_fd, std::map<int, std::string> &clients);
     void accept_new_client();

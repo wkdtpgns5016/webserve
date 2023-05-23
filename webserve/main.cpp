@@ -14,8 +14,9 @@ int main(int argc, char *argv[])
 			WebServer webserver(conf);
 			webserver.run();
 		}
-		catch (std::exception)
+		catch (std::exception& e)
 		{
+			std::cout << e.what();
 			return 1;
         }
     }
