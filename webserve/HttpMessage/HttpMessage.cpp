@@ -266,10 +266,10 @@ HttpMessage::HttpMessage(std::string http_message)
     s.clear();
     while (std::getline(iss, token, '\n'))
         s += token + "\n";
-    _message_body = s.substr(0, s.length() - 1);
+    setMessageBody(s);
 }
 
-HttpMessage::HttpMessage(std::map<std::string, std::string>  headers, std::string message_body)
+HttpMessage::HttpMessage(std::map<std::string, std::string>  headers, const std::string& message_body)
 : _headers(headers), _message_body(message_body)
 {
 
@@ -279,8 +279,8 @@ HttpMessage::HttpMessage(const HttpMessage& http_message)
 {
     if (this == &http_message)
         return ;
-    _headers = http_message.getHeaders();
-    _message_body = http_message.getMessageBody();
+    _headers = http_message._headers;
+    _message_body = http_message._message_body;
     return ;
 }
 
@@ -293,8 +293,8 @@ HttpMessage& HttpMessage::operator=(const HttpMessage& http_message)
 {
     if (this == &http_message)
         return (*this);
-    _headers = http_message.getHeaders();
-    _message_body = http_message.getMessageBody();
+    _headers = http_message._headers;
+    _message_body = http_message._message_body;
     return (*this);
 }
 
@@ -303,13 +303,42 @@ std::map<std::string, std::string> HttpMessage::getHeaders(void) const
     return (_headers);
 }
 
+std::string HttpMessage::mergeChunkedMessage(const std::string& chunk) const
+{
+    std::vector<std::string> arr = ft::splitString(chunk, "\r\n");
+    std::vector<std::string>::iterator it = arr.begin();
+    std::string message;
+    unsigned int chunk_size;
+
+    message.reserve(chunk.length());
+    for (int i = 0; it != arr.end(); it++, i++)
+    {
+        if (i % 2 == 0)
+            chunk_size = ft::convertHex(*it);
+        else if (chunk_size > 0)
+            message += *it;
+        else if (chunk_size == 0)
+            break;
+    }
+    return (message);
+}
+
 std::string HttpMessage::getMessageBody(void) const
 {
+    if (_headers.count("Transfer-Encoding") > 0)
+    {
+        if (_headers.find("Transfer-Encoding")->second == "chunked")
+        {
+            return (mergeChunkedMessage(_message_body));
+        }
+    }
     return (_message_body);
 }
 
-
 void HttpMessage::setMessageBody(std::string message_body)
 {
-    _message_body = message_body;
+    std::string body = message_body;
+    if (_headers["Transfer-Encoding"].compare("chunked") == 0)
+        body = mergeChunkedMessage(message_body);
+    _message_body = body;
 }

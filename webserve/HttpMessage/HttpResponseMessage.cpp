@@ -17,9 +17,9 @@ HttpResponseMessage::HttpResponseMessage(std::string http_message) : HttpMessage
     return ;
 }
 
-HttpResponseMessage::HttpResponseMessage(StatusLine                          start_line,
+HttpResponseMessage::HttpResponseMessage(const StatusLine&                   start_line,
                                          std::map<std::string, std::string>  headers, 
-                                         std::string                         message_body)
+                                         const std::string&                  message_body)
 : HttpMessage(headers, message_body), _start_line(start_line)
 {
 

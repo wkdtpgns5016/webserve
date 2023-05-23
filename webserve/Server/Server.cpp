@@ -45,7 +45,7 @@ void Server::change_events(uintptr_t ident, int16_t filter,
     _change_list.push_back(temp_event);
 }
 
-void Server::disconnect_client(int client_fd, std::map<int, std::string> &clients)
+void Server::disconnect_client(int client_fd, std::map<int, Connection> &clients)
 {
     // std::cout << "client disconnected: " << client_fd << std::endl;
     close(client_fd);
@@ -56,7 +56,11 @@ void Server::accept_new_client()
 {
     /* accept new client */
     int client_socket;
-    if ((client_socket = accept(_server_socket, NULL, NULL)) == -1)
+    socklen_t addr_len;
+    std::string clinet_ip;
+    char buf[1024] = {'\0'};
+    struct sockaddr_in addr;
+    if ((client_socket = accept(_server_socket, (struct sockaddr *)&addr, &addr_len)) == -1)
         exit(1);
     // std::cout << "accept new client: " << client_socket << std::endl;
     fcntl(client_socket, F_SETFL, O_NONBLOCK);
@@ -64,14 +68,15 @@ void Server::accept_new_client()
     /* add event for client socket - add read && write event */
     change_events(client_socket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
-    _clients[client_socket] = "";
+    clinet_ip = inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
+    _clients[client_socket] = Connection(std::string(buf));
 }
 
 void Server::receiveMessage()
 {
     /* read data from client */
     char buf[1024];
-    int n = read(_curr_event->ident, buf, sizeof(buf));
+    int n = read(_curr_event->ident, buf, sizeof(buf) - 1);
 
     if (n <= 0)
     {
@@ -81,65 +86,25 @@ void Server::receiveMessage()
     else
     {
         buf[n] = '\0';
-        _clients[_curr_event->ident] += buf;
+        _clients[_curr_event->ident].appendMessage(buf, n);
     }
-    // /* read data from client */
-    // char buf[10000];
-    // int n;
-    // // std::string msg;
-    // // while ((n = read(_curr_event->ident, buf, sizeof(buf))) > 0)
-    // // {
-    // //     buf[n] = '\0';
-    // //     msg += buf;
-    // // }
-    // // _clients[_curr_event->ident] += msg;
-    // // std::cout << "\n-------------------------------------------------" << std::endl;
-    // // std::cout << "resived: " << _clients[_curr_event->ident] << std::endl;
-    // // std::cout << "-------------------------------------------------\n" << std::endl;
-    // // ServerController controller;
-    // // HttpRequestMessage request_message(_clients[_curr_event->ident]);
-    // // HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
-    // // write(_curr_event->ident, message.getString().c_str(), message.getString().size());
-    // // disconnect_client(_curr_event->ident, _clients);
-    // // CommonLogFormat log = CommonLogFormat(request_message, message);
-    // // log.wirteLogMessage(1);
-    // n = read(_curr_event->ident, buf, sizeof(buf));
-    // if (n <= 0)
-    // {
-    //     if (n < 0)
-    //         std::cerr << "client read error!" << std::endl;
-    //     disconnect_client(_curr_event->ident, _clients);
-    // }
-    // else
-    // {
-    //     _clients[_curr_event->ident] += buf;
-    //     std::cout << "\n-------------------------------------------------" << std::endl;
-    //     std::cout << "resived: " << _clients[_curr_event->ident] << std::endl;
-    //     std::cout << "-------------------------------------------------\n" << std::endl;
-    //     ServerController controller;
-    //     HttpRequestMessage request_message(_clients[_curr_event->ident]);
-    //     HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
-    //     write(_curr_event->ident, message.getString().c_str(), message.getString().size());
-    //     disconnect_client(_curr_event->ident, _clients);
-    //     CommonLogFormat log = CommonLogFormat(request_message, message);
-    //     log.wirteLogMessage(1);
-    // }
 }
 
 void Server::sendMessage()
 {
     /* send data to client */
-    std::map<int, std::string>::iterator it = _clients.find(_curr_event->ident);
+    std::map<int, Connection>::iterator it = _clients.find(_curr_event->ident);
     if (it != _clients.end())
     {
-        if (_clients[_curr_event->ident] != "")
+        if (_clients[_curr_event->ident].checkMessage())
         {
             ServerController controller;
-            HttpRequestMessage request_message(_clients[_curr_event->ident]);
-            HttpResponseMessage message = controller.requestHandler(_server_block, _clients[_curr_event->ident]);
+            std::string clinet_addr = _clients[_curr_event->ident].getClinetAddr();
+            HttpRequestMessage request_message = _clients[_curr_event->ident].getRequestMessage();
+            HttpResponseMessage message = controller.requestHandler(_server_block, request_message);
             write(_curr_event->ident, message.getString().c_str(), message.getString().size());
             disconnect_client(_curr_event->ident, _clients);
-            CommonLogFormat log = CommonLogFormat(request_message, message);
+            CommonLogFormat log = CommonLogFormat(clinet_addr, request_message, message);
             log.wirteLogMessage(1);
         }
     }

@@ -35,17 +35,19 @@ HttpResponseMessage PostHandler::requestHandler()
 {
     HttpResponseMessage response_message;
     std::string message_body;
+    std::string path;
     std::string request_target = _request_message.getStartLine().getRequestTarget();
 
     try
     {
         // http reqeust message 검사
         checkHttpMessage();
-        // 파일 종류 판별
-        if (checkFile(request_target)) // 일반 파일
-            message_body = findPath(request_target);
-        else                           // cgi 파일
-            message_body = executeCgi(request_target);
+        path = findPath(request_target);
+
+        // execute cgi
+        // 임시
+        message_body = _request_message.getMessageBody();
+
         // 응답 생성
         response_message = getResponseMessage(200, message_body);
     }
