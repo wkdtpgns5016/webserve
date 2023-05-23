@@ -1,6 +1,7 @@
 #ifndef PARSER_HPP
 # define PARSER_HPP
 
+#include <exception>
 #include <iostream>
 #include "../Scripter/Scripter.hpp"
 class	Block;
@@ -32,8 +33,29 @@ public:
 	Parser(const Parser& other);
 	Parser& operator= (const Parser& other);
 	size_t	parseSimple(const std::string& script, Block* block);
-
-
+private:
+	
+	//listen
+	class HostNotFound : public std::exception
+	{
+	public:
+		const char* what() const throw();
+	};
+	class InvalidPort : public std::exception
+	{
+	public:
+		const char* what() const throw();
+	};
+	class InvalidNumberOfArguments : public std::exception
+	{
+	public:
+		const char* what() const throw();
+	};
+	class NoHost : public std::exception
+	{
+	public:
+		const char* what() const throw();
+	};
 };
 #include "../Block/Block.hpp"
 

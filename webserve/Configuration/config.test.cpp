@@ -6,6 +6,7 @@
 #include "./LocationBlock/LocationBlock.hpp"
 #include "Block/Block.hpp"
 
+#include <arpa/inet.h>
 #include <iostream>
 #include "gtest/gtest.h"
 #include <iostream>
@@ -42,7 +43,7 @@ TEST(ConfigTest, Config1Test)
 	// when
 	int	port_result = server_blocks->getPort();
 	std::string	root_result = server_blocks->getRoot();
-	std::string	addr_result = server_blocks->getAddr();
+	unsigned int addr_result = server_blocks->getAddr();
 	std::string	server_name_result = server_blocks->getServerName();
 	std::string	index_result = server_blocks->getIndex();
 	std::string	default_error_page_result = server_blocks->getDefaultErrorPage();
@@ -50,7 +51,7 @@ TEST(ConfigTest, Config1Test)
     // then
     EXPECT_EQ(port_result, 80);
     EXPECT_EQ(root_result, "/var/html");
-    EXPECT_EQ(addr_result.empty(), true);
+    //EXPECT_EQ(addr_result, 0);
     EXPECT_EQ(server_name_result, "example.com");
     EXPECT_EQ(index_result, "index.html");
     EXPECT_EQ(default_error_page_result, "501 502 503 /50x.html");
@@ -71,7 +72,7 @@ TEST(ConfigTest, Config2Test)
 	//server1 
 	int			port_result1 = server_blocks1->getPort();
 	std::string	root_result1 = server_blocks1->getRoot();
-	std::string	addr_result1 = server_blocks1->getAddr();
+	unsigned int	addr_result1 = server_blocks1->getAddr();
 	std::string	server_name_result1 = server_blocks1->getServerName();
 	std::string	index_result1 = server_blocks1->getIndex();
 	std::string	default_error_page_result1 = server_blocks1->getDefaultErrorPage();
@@ -84,7 +85,7 @@ TEST(ConfigTest, Config2Test)
 	//server2
 	int			port_result2 = server_blocks2->getPort();
 	std::string	root_result2 = server_blocks2->getRoot();
-	std::string	addr_result2 = server_blocks2->getAddr();
+	unsigned int	addr_result2 = server_blocks2->getAddr();
 	std::string	server_name_result2 = server_blocks2->getServerName();
 	std::string	index_result2 = server_blocks2->getIndex();
 	std::string	default_error_page_result2 = server_blocks2->getDefaultErrorPage();
@@ -97,7 +98,7 @@ TEST(ConfigTest, Config2Test)
 	//location1
 	int			port_result3 = location_blocks3->getPort();
 	std::string	root_result3 = location_blocks3->getRoot();
-	std::string	addr_result3 = location_blocks3->getAddr();
+	unsigned int addr_result3 = location_blocks3->getAddr();
 	std::string	server_name_result3 = location_blocks3->getServerName();
 	std::string	index_result3 = location_blocks3->getIndex();
 	std::string	default_error_page_result3 = location_blocks3->getDefaultErrorPage();
@@ -111,7 +112,7 @@ TEST(ConfigTest, Config2Test)
 	//location2
 	int			port_result4 = location_blocks4->getPort();
 	std::string	root_result4 = location_blocks4->getRoot();
-	std::string	addr_result4 = location_blocks4->getAddr();
+	unsigned int addr_result4 = location_blocks4->getAddr();
 	std::string	server_name_result4 = location_blocks4->getServerName();
 	std::string	index_result4 = location_blocks4->getIndex();
 	std::string	default_error_page_result4 = location_blocks4->getDefaultErrorPage();
@@ -125,7 +126,7 @@ TEST(ConfigTest, Config2Test)
 	//server1
     EXPECT_EQ(port_result1, 80);
     EXPECT_EQ(root_result1, "/var/html");
-    EXPECT_EQ(addr_result1.empty(), true);
+    EXPECT_EQ(addr_result1, inet_addr("127.0.0.1"));
     EXPECT_EQ(server_name_result1, "example.com");
     EXPECT_EQ(index_result1, "index.html");
     EXPECT_EQ(default_error_page_result1, "");
@@ -137,7 +138,7 @@ TEST(ConfigTest, Config2Test)
 	//server2
 	EXPECT_EQ(port_result2, 81);
     EXPECT_EQ(root_result2, "/var/html");
-    EXPECT_EQ(addr_result2.empty(), true);
+    EXPECT_EQ(addr_result2, inet_addr("127.0.0.1"));
     EXPECT_EQ(server_name_result2, "example.com");
     EXPECT_EQ(index_result2, "index.html");
     EXPECT_EQ(default_error_page_result2, "");
@@ -149,7 +150,7 @@ TEST(ConfigTest, Config2Test)
 	//location1
 	EXPECT_EQ(port_result3, 80);
     EXPECT_EQ(root_result3, "/var/html");
-    EXPECT_EQ(addr_result3.empty(), true);
+    EXPECT_EQ(addr_result3, inet_addr("127.0.0.1"));
     EXPECT_EQ(server_name_result3, "example.com");
     EXPECT_EQ(index_result3, "test.html");
     EXPECT_EQ(default_error_page_result3, "");
@@ -163,7 +164,7 @@ TEST(ConfigTest, Config2Test)
 	//location2
 	EXPECT_EQ(port_result4, 81);
     EXPECT_EQ(root_result4, "/var/html");
-    EXPECT_EQ(addr_result4.empty(), true);
+    EXPECT_EQ(addr_result4, inet_addr("127.0.0.1"));
     EXPECT_EQ(server_name_result4, "example.com");
     EXPECT_EQ(index_result4, "index.html");
     EXPECT_EQ(default_error_page_result4, "");

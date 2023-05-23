@@ -25,7 +25,7 @@ std::pair<std::string, std::string>	Parser::divideSimpleIdAndValue(const std::st
 //private function
 void	Parser::setParsingFunctionArray()
 {
-	_parsing_func[0] = &Parser::parsePort;
+	_parsing_func[0] = &Parser::parseListen;
 	_parsing_func[1] = &Parser::parseRoot;
 	_parsing_func[2] = &Parser::parseServerName;
 	_parsing_func[3] = &Parser::parseIndex;
@@ -58,6 +58,9 @@ void	Parser::parseListen(const std::string& value, Block* block)
 {
 	size_t	pos;
 
+	if (value.empty())
+		throw InvalidNumberOfArguments();
+
 	pos = value.find(':');
 	if (pos == std::string::npos)
 	{
@@ -71,36 +74,53 @@ void	Parser::parseListen(const std::string& value, Block* block)
 		}
 		return ;
 	}
-	parseListen(value.substr(0, pos), block);
-	parsePort(value.substr(pos), block);
+	parseAddr(value.substr(0, pos), block);
+	parsePort(value.substr(pos + 1), block);
+}
+
+unsigned int	reverseBit(unsigned int addr_num)
+{
+	unsigned int	reverse_bit = 0;
+
+	for (int i = 0 ; i < 32; i++)
+	{
+		reverse_bit <<= 1;
+		reverse_bit |= addr_num & 1;
+		addr_num >>= 1;
+	}
+	return reverse_bit;;
 }
 
 void	Parser::parseAddr(const std::string& value, Block* block)
 {
+	if (value.empty())
+		throw NoHost();
+
 	std::string	str;
 	int	num;
-	int	addr_num;
+	int	addr_num =  0;
 	size_t	pos = 0;
 	size_t	next_pos = 0;
 
 	for (int i = 0; i < 3; i++)
 	{
-		next_pos = value.find('.');
+		next_pos = value.find('.', pos);
 		if (next_pos == std::string::npos)
-			throw std::exception(); // host not found
+			throw HostNotFound();
 		str = value.substr(pos, next_pos - pos);
 		num = std::strtol(str.c_str(), NULL, 10);
 		if ( num < 0 || 255 < num )
-			throw std::exception(); //host_not_found
-		addr_num |= num << (i * 8);
-		pos = next_pos;
+			throw HostNotFound();
+		addr_num |= num << i * 8;
+		pos = next_pos + 1;
 	}
 	str = value.substr(pos);
 	num = std::strtol(str.c_str(), NULL, 10);
 	if ( num < 0 || 255 < num )
-		throw std::exception(); //host_not_found
-	addr_num |= num << (3 * 8);
-	//block->setAddr("");
+		throw HostNotFound();
+	addr_num |= num << (3 * 8); 
+	block->setAddr(addr_num);
+	//block->setAddr(reverseBit(addr_num));
 }
 
 /** @details 포트번호 파싱함수
@@ -110,7 +130,7 @@ void	Parser::parsePort(const std::string& value, Block* block)
 	long port_num = std::strtol(value.c_str(), NULL, 10);
 
 	if (port_num < 0 || 65535 < port_num)
-		throw std::exception(); //invalid port
+		throw InvalidPort(); //invalid port
 	block->setPort(port_num);
 }
 
@@ -211,6 +231,25 @@ void	Parser::parseNoMatchId(const std::string& value, Block* block)
 	if (value.empty() || 1)
 		throw std::exception();
 }
+
+//exception
+const char* Parser::InvalidNumberOfArguments::what() const throw()
+{
+	return "Invalid number of arguments in the listen directive";
+}
+const char* Parser::NoHost::what() const throw()
+{
+	return "No host in the listen directive";
+}
+const char* Parser::HostNotFound::what() const throw()
+{
+	return "host not found in the listen directive";
+}
+const char* Parser::InvalidPort::what() const throw()
+{
+	return "Invalid port in the listen directive";
+}
+
 
 //occf
 Parser::Parser() { setParsingFunctionArray(); }

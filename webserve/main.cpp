@@ -8,9 +8,16 @@ int main(int argc, char *argv[])
 {
     if (argc ==  2)
     {
-        Conf conf(ft::readFileIntoString(argv[1]));
-        WebServer webserver(conf);
-        webserver.run();
+        try
+		{
+			Conf conf(ft::readFileIntoString(argv[1]));
+			WebServer webserver(conf);
+			webserver.run();
+		}
+		catch (std::exception)
+		{
+			return 1;
+        }
     }
     else
     {
