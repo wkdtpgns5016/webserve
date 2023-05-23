@@ -32,7 +32,7 @@ void	Parser::setParsingFunctionArray()
 	_parsing_func[2] = &Parser::parseServerName;
 	_parsing_func[3] = &Parser::parseIndex;
 	_parsing_func[4] = &Parser::parseDefaultErrorPage;
-	_parsing_func[5] = &Parser::parseClientBodySize;
+	_parsing_func[5] = &Parser::parseClientMaxBodySize;
 	_parsing_func[6] = &Parser::parseUploadPath;
 	_parsing_func[7] = &Parser::parseAllowMethod;
 	_parsing_func[8] = &Parser::parseTryFiles;
@@ -98,9 +98,17 @@ void	Parser::parseDefaultErrorPage(const std::string& value, Block* block)
 
 /** @details 클라이언트 바디의 최대바이트수 파싱함수
  */
-void	Parser::parseClientBodySize(const std::string& value, Block* block)
+void	Parser::parseClientMaxBodySize(const std::string& value, Block* block)
 {
-	block->setClientBodySize(std::strtol(value.c_str(), NULL, 10));
+	size_t pos = value.find("client_max_body_size ");
+	if (pos == std::string::npos)
+		throw ClientMaxBodySizeException();
+	if (pos == 0)
+		throw ClientMaxBodySizeException();
+	std::string str = value.substr(pos);
+	if (!isNumbers(str))
+		throw ClientMaxBodySizeException();
+	block->setClientMaxBodySize(std::strtol(value.c_str(), NULL, 10));
 }
 
 /** @details 업로드 경로 파싱함수
@@ -167,6 +175,7 @@ void	Parser::parseNoMatchId(const std::string& value, Block* block)
 }
 
 //exception
+//listen
 Parser::ListenException::ListenException(const std::string& type, const std::string& value)
 {
 	_line += type;
@@ -185,6 +194,12 @@ Parser::HostNotFound::HostNotFound(const std::string& value) : ListenException("
 Parser::InvalidPort::InvalidPort(const std::string& value) : ListenException("invalid port", value) {}
 Parser::InvalidNumberOfArguments::InvalidNumberOfArguments(const std::string& value) : ListenException("invalid number of arguments", value) {}
 Parser::NoHost::NoHost(const std::string& value) : ListenException("no host", value) {}
+
+//client_max_body_size
+const char*  Parser::ClientMaxBodySizeException::what() const throw()
+{
+	return ("Invalid number in \"clinet_max_body_size\" directive\n");
+}
 
 //occf
 Parser::Parser() { setParsingFunctionArray(); }

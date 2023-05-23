@@ -22,7 +22,7 @@ private:
 	void	parseServerName(const std::string&, Block* block);
 	void	parseIndex(const std::string&, Block* block);
 	void	parseDefaultErrorPage(const std::string&, Block* block);
-	void	parseClientBodySize(const std::string&, Block* block);
+	void	parseClientMaxBodySize(const std::string&, Block* block);
 	void	parseUploadPath(const std::string&, Block* block);
 	void	parseAllowMethod(const std::string&, Block* block);
 	void	parseTryFiles(const std::string&, Block* block);
@@ -66,6 +66,13 @@ private:
 	{
 	public:
 		NoHost(const std::string& value);
+	};
+
+	//client_max_body_size
+	class ClientMaxBodySizeException : public std::exception
+	{
+		public:
+			virtual const char* what() const throw();
 	};
 };
 #include "../Block/Block.hpp"

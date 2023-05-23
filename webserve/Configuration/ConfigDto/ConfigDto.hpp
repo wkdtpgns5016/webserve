@@ -37,7 +37,7 @@ class ConfigDto
 	std::string	getServerName() const;
 	std::string	getIndex() const;
 	std::string	getDefaultErrorPage() const;
-	int			getClientBodySize() const;
+	int			getClientMaxBodySize() const;
 	std::string	getUploadPath() const;
 	std::vector<std::string>	getAllowMethod() const;
 	std::vector<std::string>	getTryFiles() const;

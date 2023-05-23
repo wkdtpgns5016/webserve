@@ -26,7 +26,7 @@ protected:
 	std::string	_server_name;
 	std::string	_index;
 	std::string	_default_error_page;
-	int			_client_body_size;
+	int			_client_max_body_size;
 
 	std::string	_upload_path;
 	std::vector<std::string>	_allow_methods;
@@ -56,7 +56,7 @@ public:
 	void	setServerName(const std::string& server_name);
 	void	setIndex(const std::string& index);
 	void	setDefaultErrorPage(const std::string& default_error_page);
-	void	setClientBodySize(int client_body_size);
+	void	setClientMaxBodySize(int client_max_body_size);
 	void	setUploadPath(const std::string& upload_path);
 	void	setAllowMethod(const std::string& allow_method);
 	void	setTryFiles(const std::string& try_files);
@@ -71,7 +71,7 @@ public:
 	const std::string&	getServerName() const;
 	const std::string&	getIndex() const;
 	const std::string&	getDefaultErrorPage() const;
-	const int&			getClientBodySize() const;
+	const int&			getClientMaxBodySize() const;
 	const std::string&	getUploadPath() const;
 	const std::vector<std::string>&	getAllowMethod() const;
 	const std::vector<std::string>&	getTryFiles() const;
