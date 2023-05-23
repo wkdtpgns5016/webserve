@@ -14,7 +14,7 @@ Server::~Server()
 
 }
 
-void Server::socket_init(int port, std::string ip_addr)
+void Server::socket_init(int port, unsigned int ip_addr)
 {
     (void)ip_addr;
     if ((_server_socket = socket(PF_INET, SOCK_STREAM, 0)) == -1)

@@ -1,6 +1,7 @@
 #ifndef PARSER_HPP
 # define PARSER_HPP
 
+#include <exception>
 #include <iostream>
 #include "../Scripter/Scripter.hpp"
 class	Block;
@@ -11,7 +12,11 @@ private:
 	Scripter	_scripter;
 	void	(Parser::*_parsing_func[11])(const std::string&, Block*);
 
-
+	bool	isNumbers(const std::string& str, size_t pos = 0, size_t len = std::string::npos);
+	int		extractOneSectionNumber(const std::string& value, size_t pos, size_t len);
+	size_t	measureOneSectionLength(const std::string& value, size_t pos);
+	void	parseListen(const std::string&, Block* block);
+	void	parseAddr(const std::string& value, Block* block);
 	void	parsePort(const std::string&, Block* block);
 	void	parseRoot(const std::string&, Block* block);
 	void	parseServerName(const std::string&, Block* block);
@@ -31,8 +36,37 @@ public:
 	Parser(const Parser& other);
 	Parser& operator= (const Parser& other);
 	size_t	parseSimple(const std::string& script, Block* block);
-
-
+private:
+	//listen
+	class ListenException : public std::exception
+	{
+	protected:
+		std::string	_line;
+	public:
+		ListenException(const std::string& type, const std::string& value);
+		~ListenException() throw() ; 
+		const char* what() const throw();
+	};
+	class HostNotFound : public ListenException
+	{
+	public:
+		HostNotFound(const std::string& value);
+	};
+	class InvalidPort : public ListenException
+	{
+	public:
+		InvalidPort(const std::string& value);
+	};
+	class InvalidNumberOfArguments : public ListenException
+	{
+	public:
+		InvalidNumberOfArguments(const std::string& value);
+	};
+	class NoHost : public ListenException
+	{
+	public:
+		NoHost(const std::string& value);
+	};
 };
 #include "../Block/Block.hpp"
 

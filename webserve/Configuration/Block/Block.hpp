@@ -22,7 +22,7 @@ protected:
 
 	int			_port;
 	std::string	_root;
-	std::string	_addr;
+	unsigned int	_addr;
 	std::string	_server_name;
 	std::string	_index;
 	std::string	_default_error_page;
@@ -52,7 +52,7 @@ public:
 
 	void	setPort(int port);
 	void	setRoot(const std::string& root);
-	void	setAddr(const std::string& addr);
+	void	setAddr(unsigned int addr);
 	void	setServerName(const std::string& server_name);
 	void	setIndex(const std::string& index);
 	void	setDefaultErrorPage(const std::string& default_error_page);
@@ -67,7 +67,7 @@ public:
 
 	const int&			getPort() const;
 	const std::string&	getRoot() const;
-	const std::string&	getAddr() const;
+	const unsigned int&	getAddr() const;
 	const std::string&	getServerName() const;
 	const std::string&	getIndex() const;
 	const std::string&	getDefaultErrorPage() const;

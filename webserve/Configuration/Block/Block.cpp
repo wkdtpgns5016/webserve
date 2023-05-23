@@ -51,7 +51,7 @@ std::pair<std::string, std::string>	Block::divideBlockIdAndValue(const std::stri
 
 void	Block::setPort(int port) { _port = port; }
 void	Block::setRoot(const std::string& root) { _root = root; }
-void	Block::setAddr(const std::string& addr) { _addr = addr; }
+void	Block::setAddr(unsigned addr) { _addr = addr; }
 void	Block::setServerName(const std::string& server_name) { _server_name = server_name; }
 void	Block::setIndex(const std::string& index) {_index = index; }
 void	Block::setDefaultErrorPage(const std::string& default_error_page) { _default_error_page = default_error_page; }
@@ -93,7 +93,7 @@ void	Block::copyWithoutInnerBlock(const Block& other)
 //getter
 const int&	Block::getPort() const { return _port; }
 const std::string&	Block::getRoot() const { return _root; }
-const std::string&	Block::getAddr() const { return _addr; }
+const unsigned int& Block::getAddr() const { return _addr; }
 const std::string&	Block::getServerName() const { return _server_name; }
 const std::string&	Block::getIndex() const { return _index; }
 const std::string&	Block::getDefaultErrorPage() const { return _default_error_page; }
@@ -105,7 +105,7 @@ const bool&	Block::getAutoindex() const { return _autoindex; }
 const std::vector<Block *>&	Block::getInnerBlock() const { return _inner_blocks; }
 
 //occf
-Block::Block() : _parser(new Parser())
+Block::Block() : _parser(new Parser()), _port(80), _addr(0)
 {
 }
 

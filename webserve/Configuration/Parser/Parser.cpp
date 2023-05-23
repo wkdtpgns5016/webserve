@@ -1,4 +1,7 @@
 #include "./Parser.hpp"
+#include <cstddef>
+#include <iterator>
+#include <sys/wait.h>
 
 /**
  * @details simple_directives 하나를 id와 value로 나눕니다.
@@ -24,7 +27,7 @@ std::pair<std::string, std::string>	Parser::divideSimpleIdAndValue(const std::st
 //private function
 void	Parser::setParsingFunctionArray()
 {
-	_parsing_func[0] = &Parser::parsePort;
+	_parsing_func[0] = &Parser::parseListen;
 	_parsing_func[1] = &Parser::parseRoot;
 	_parsing_func[2] = &Parser::parseServerName;
 	_parsing_func[3] = &Parser::parseIndex;
@@ -53,11 +56,16 @@ size_t	Parser::parseSimple(const std::string& script, Block* block)
 	return script.length();
 }
 
-/** @details 포트번호 파싱함수
- */
-void	Parser::parsePort(const std::string& value, Block* block)
+bool	Parser::isNumbers(const std::string& str, size_t pos, size_t len)
 {
-	block->setPort(std::strtol(value.c_str(), NULL, 10));
+	if (len == std::string::npos)
+		len = str.length();
+	while (len > 0 && str[pos] 
+			&& std::isdigit(str[pos], std::locale()))
+		pos++; len--;
+	if (str[pos] == '\0' || len == 0)
+		return true;
+	return false;
 }
 
 /** @details 루트경로 파싱함수
@@ -157,6 +165,26 @@ void	Parser::parseNoMatchId(const std::string& value, Block* block)
 	if (value.empty() || 1)
 		throw std::exception();
 }
+
+//exception
+Parser::ListenException::ListenException(const std::string& type, const std::string& value)
+{
+	_line += type;
+	if (value.empty())
+		_line += " in \"listen\" directive\n";
+	else
+		_line += " in \"" + value + "\" of the \"listen\" directive\n";
+}
+Parser::ListenException::~ListenException() throw() {}
+const char* Parser::ListenException::what() const throw()
+{
+	return _line.c_str();
+}
+
+Parser::HostNotFound::HostNotFound(const std::string& value) : ListenException("host not found", value) {}
+Parser::InvalidPort::InvalidPort(const std::string& value) : ListenException("invalid port", value) {}
+Parser::InvalidNumberOfArguments::InvalidNumberOfArguments(const std::string& value) : ListenException("invalid number of arguments", value) {}
+Parser::NoHost::NoHost(const std::string& value) : ListenException("no host", value) {}
 
 //occf
 Parser::Parser() { setParsingFunctionArray(); }
