@@ -81,7 +81,6 @@ protected:
 private:
     void                                setHeaders(std::string header);
     bool                                checkHeaders(std::vector<std::string> arr);
-    std::string                         mergeChunkedMessage(std::string chunk);
     void                                setMessageBody(std::string message_body);
 
 public:
@@ -96,6 +95,7 @@ public:
     std::string                         getMessageBody(void) const;
     virtual std::string                 getString(void) = 0;
     virtual bool                        isVaild(void) = 0;
+    std::string                         mergeChunkedMessage(std::string chunk) const;
 };
 
 #endif

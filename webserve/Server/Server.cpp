@@ -56,7 +56,11 @@ void Server::accept_new_client()
 {
     /* accept new client */
     int client_socket;
-    if ((client_socket = accept(_server_socket, NULL, NULL)) == -1)
+    socklen_t addr_len;
+    std::string clinet_ip;
+    char buf[1024] = {'\0'};
+    struct sockaddr_in addr;
+    if ((client_socket = accept(_server_socket, (struct sockaddr *)&addr, &addr_len)) == -1)
         exit(1);
     // std::cout << "accept new client: " << client_socket << std::endl;
     fcntl(client_socket, F_SETFL, O_NONBLOCK);
@@ -64,7 +68,8 @@ void Server::accept_new_client()
     /* add event for client socket - add read && write event */
     change_events(client_socket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
-    _clients[client_socket] = Connection();
+    clinet_ip = inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
+    _clients[client_socket] = Connection(std::string(buf));
 }
 
 void Server::receiveMessage()
@@ -81,20 +86,8 @@ void Server::receiveMessage()
     else
     {
         buf[n] = '\0';
-        _clients[_curr_event->ident].appendMessage(buf);
+        _clients[_curr_event->ident].appendMessage(buf, n);
     }
-}
-bool checkMessage(std::string message)
-{
-    if (message.find("\r\n\r\n") == std::string::npos)
-        return (false);
-    else if (message.find("chunked") != std::string::npos)
-    {
-        if (message.find("\r\n0\r\n") == std::string::npos)
-            return (false);
-        return (true);
-    }
-    return (true);
 }
 
 void Server::sendMessage()
@@ -103,19 +96,16 @@ void Server::sendMessage()
     std::map<int, Connection>::iterator it = _clients.find(_curr_event->ident);
     if (it != _clients.end())
     {
-        if (_clients[_curr_event->ident].getMessage() != "")
+        if (_clients[_curr_event->ident].checkMessage())
         {
-            if (_clients[_curr_event->ident].checkMessage())
-            {
-                std::cout << "OK" << std::endl;
-                ServerController controller;
-                HttpRequestMessage request_message(_clients[_curr_event->ident].getMessage());
-                HttpResponseMessage message = controller.requestHandler(_server_block, request_message);
-                write(_curr_event->ident, message.getString().c_str(), message.getString().size());
-                disconnect_client(_curr_event->ident, _clients);
-                CommonLogFormat log = CommonLogFormat(request_message, message);
-                log.wirteLogMessage(1);
-            }
+            ServerController controller;
+            std::string clinet_addr = _clients[_curr_event->ident].getClinetAddr();
+            HttpRequestMessage request_message = _clients[_curr_event->ident].getRequestMessage();
+            HttpResponseMessage message = controller.requestHandler(_server_block, request_message);
+            write(_curr_event->ident, message.getString().c_str(), message.getString().size());
+            disconnect_client(_curr_event->ident, _clients);
+            CommonLogFormat log = CommonLogFormat(clinet_addr, request_message, message);
+            log.wirteLogMessage(1);
         }
     }
 }
