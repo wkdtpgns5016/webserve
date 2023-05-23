@@ -105,7 +105,7 @@ const bool&	Block::getAutoindex() const { return _autoindex; }
 const std::vector<Block *>&	Block::getInnerBlock() const { return _inner_blocks; }
 
 //occf
-Block::Block() : _parser(new Parser())
+Block::Block() : _parser(new Parser()), _port(80), _addr(0)
 {
 }
 

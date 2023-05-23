@@ -15,7 +15,7 @@ add_library(server_block webserve/Configuration/ServerBlock/ServerBlock.hpp webs
 add_library(block webserve/Configuration/Block/Block.hpp webserve/Configuration/Block/Block.cpp)
 add_library(location_block  webserve/Configuration/LocationBlock/LocationBlock.hpp webserve/Configuration/LocationBlock/LocationBlock.cpp)
 add_library(conf  webserve/Configuration/Conf/Conf.hpp webserve/Configuration/Conf/Conf.cpp)
-add_library(parser webserve/Configuration/Parser/parser.cpp webserve/Configuration/Parser/parser.hpp)
+add_library(parser webserve/Configuration/Parser/parser.cpp webserve/Configuration/Parser/parseListen.cpp webserve/Configuration/Parser/parser.hpp)
 add_library(scripter webserve/Configuration/Scripter/Scripter.cpp webserve/Configuration/Scripter/Scripter.hpp)
 add_library(http_message webserve/HttpMessage/HttpMessage.cpp
                         webserve/HttpMessage/HttpMessage.hpp
