@@ -1,13 +1,13 @@
 #include "Connection.hpp"
 
 Connection::Connection()
- : _is_chunked(false), _complete_start_line(false), _complete_header(false), _complete_body(false)
+ : _is_chunked(false), _is_trailer(false), _complete_start_line(false), _complete_header(false), _complete_body(false)
 {
 
 }
 
 Connection::Connection(std::string clent_addr)
- : _is_chunked(false), _complete_start_line(false), _complete_header(false), _complete_body(false), _client_addr(clent_addr)
+ : _is_chunked(false), _is_trailer(false), _complete_start_line(false), _complete_header(false), _complete_body(false), _client_addr(clent_addr)
 {
 
 }
@@ -15,6 +15,7 @@ Connection::Connection(std::string clent_addr)
 Connection::Connection(const Connection& connection)
 {
     _is_chunked = connection._is_chunked;
+    _is_trailer = connection._is_trailer;
     _complete_start_line = connection._complete_start_line;
     _complete_header = connection._complete_header;
     _complete_body = connection._complete_body;
@@ -25,6 +26,7 @@ Connection::Connection(const Connection& connection)
 Connection& Connection::operator=(const Connection& connection)
 {
     _is_chunked = connection._is_chunked;
+    _is_trailer = connection._is_trailer;
     _complete_start_line = connection._complete_start_line;
     _complete_header = connection._complete_header;
     _complete_body = connection._complete_body;
@@ -49,44 +51,60 @@ void Connection::checkChunk()
     }
 }
 
-void Connection::checkChunkComplete(std::string message, size_t len)
+void Connection::checkTrailer()
+{
+    if (_header.count("Trailer") > 0)
+        _is_trailer = true;
+}
+
+void Connection::checkChunkComplete(const std::string&  message, size_t len)
 {
     // trailer 헤더가 있을 경우
     std::string trailer;
     std::vector<std::string> line;
+    size_t l = _message_body_str.length();
 
-    if (_header.count("Trailer") > 0)
+    if (_is_trailer)
     {
         trailer = _header["Trailer"];
-
+        findTrailer(line, _header["Trailer"]);
     }
     else
     {
         if (len >= 5)
-            line = ft::splitString(message, "\r\n");
-        else
-            line = ft::splitString(_message_body_str, "\r\n");
-        findZero(line);
+            findZero(message, len);
+        else if (l >= 5)
+            findZero(_message_body_str, l);
     }
-
-    // if (len >= 5)
-    // {
-    //     if (message.find("0\r\n\r\n") != std::string::npos)
-    //         _complete_body = true;
-    // }
-    // else
-    // {
-    //     if (_message_body_str.find("0\r\n\r\n") != std::string::npos)
-    //         _complete_body = true;
-    // }
 }
 
-bool Connection::findZero(std::vector<std::string> arr)
+void Connection::findZero(const std::string&  message, size_t len)
 {
-    
+    if (message.at(len - 1) != '\n')
+        return ;
+    if (message.at(len - 2) != '\r')
+        return ;
+    if (message.at(len - 3) != '\n')
+        return ;
+    if (message.at(len - 4) != '\r')
+        return ;
+    if (message.at(len - 5) != '0')
+        return ;
+    _complete_body = true;
 }
 
-void Connection::initStartLine(std::string message)
+void Connection::findTrailer(std::vector<std::string> arr, std::string trailer)
+{
+    std::string key = trailer + ": ";
+    std::vector<std::string>::reverse_iterator it = arr.rbegin();
+    if (arr.size() > 1)
+    {
+        if ((*it).find(key) != std::string::npos)
+            _complete_body = true;
+    }
+}
+
+void Connection::initStartLine(const std::string&  message)
 {
     size_t pos;
     std::string prev;
@@ -105,7 +123,7 @@ void Connection::initStartLine(std::string message)
     }
 }
 
-void Connection::initHeader(std::string message)
+void Connection::initHeader(const std::string&  message)
 {
     size_t pos;
     std::string prev;
@@ -121,11 +139,12 @@ void Connection::initHeader(std::string message)
         setHeader(_header_str);
         _complete_header = true;
         checkChunk();
+        checkTrailer();
         initBody(next, next.length());
     }
 }
 
-void Connection::initBody(std::string message, size_t len)
+void Connection::initBody(const std::string& message, size_t len)
 {
     _message_body_str += message;
     if (_is_chunked)
@@ -143,7 +162,7 @@ void Connection::initBody(std::string message, size_t len)
     }
 }
 
-void Connection::setHeader(std::string message)
+void Connection::setHeader(const std::string&  message)
 {
     std::vector<std::string> arr;
     std::string filed;
@@ -160,7 +179,7 @@ void Connection::setHeader(std::string message)
     }
 }
 
-void Connection::appendMessage(std::string new_str, size_t len)
+void Connection::appendMessage(const std::string&  new_str, size_t len)
 {
     if (!_complete_start_line)
         initStartLine(new_str);

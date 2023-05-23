@@ -86,7 +86,7 @@ private:
 public:
     HttpMessage(void);
     HttpMessage(std::string http_message);
-    HttpMessage(std::map<std::string, std::string>  headers, std::string message_body);
+    HttpMessage(std::map<std::string, std::string>  headers, const std::string& message_body);
     HttpMessage(const HttpMessage& http_message);
     ~HttpMessage(void);
     HttpMessage& operator=(const HttpMessage& http_message);
@@ -95,7 +95,7 @@ public:
     std::string                         getMessageBody(void) const;
     virtual std::string                 getString(void) = 0;
     virtual bool                        isVaild(void) = 0;
-    std::string                         mergeChunkedMessage(std::string chunk) const;
+    std::string                         mergeChunkedMessage(const std::string& chunk) const;
 };
 
 #endif

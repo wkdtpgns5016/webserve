@@ -269,7 +269,7 @@ HttpMessage::HttpMessage(std::string http_message)
     setMessageBody(s);
 }
 
-HttpMessage::HttpMessage(std::map<std::string, std::string>  headers, std::string message_body)
+HttpMessage::HttpMessage(std::map<std::string, std::string>  headers, const std::string& message_body)
 : _headers(headers), _message_body(message_body)
 {
 
@@ -303,13 +303,14 @@ std::map<std::string, std::string> HttpMessage::getHeaders(void) const
     return (_headers);
 }
 
-std::string HttpMessage::mergeChunkedMessage(std::string chunk) const
+std::string HttpMessage::mergeChunkedMessage(const std::string& chunk) const
 {
     std::vector<std::string> arr = ft::splitString(chunk, "\r\n");
     std::vector<std::string>::iterator it = arr.begin();
     std::string message;
     unsigned int chunk_size;
 
+    message.reserve(chunk.length());
     for (int i = 0; it != arr.end(); it++, i++)
     {
         if (i % 2 == 0)

@@ -8,6 +8,7 @@ class Connection
 {
     private:
     bool        _is_chunked;
+    bool        _is_trailer;
     bool        _complete_start_line;
     bool        _complete_header;
     bool        _complete_body;
@@ -25,14 +26,16 @@ class Connection
     HttpRequestMessage _request_message;
     
     void checkChunk();
-    void checkChunkComplete(std::string message, size_t len);
-    bool findZero(std::vector<std::string> arr);
+    void checkTrailer();
+    void checkChunkComplete(const std::string&  message, size_t len);
+    void findZero(const std::string&  message, size_t len);
+    void findTrailer(std::vector<std::string> arr, std::string trailer);
 
-    void initStartLine(std::string message);
-    void initHeader(std::string message);
-    void initBody(std::string message, size_t len);
+    void initStartLine(const std::string&  message);
+    void initHeader(const std::string&  message);
+    void initBody(const std::string&  message, size_t len);
 
-    void setHeader(std::string message);
+    void setHeader(const std::string&  message);
 
     public:
     Connection();
@@ -41,7 +44,7 @@ class Connection
     Connection& operator=(const Connection& connection);
     ~Connection();
 
-    void appendMessage(std::string new_str, size_t len);
+    void appendMessage(const std::string& new_str, size_t len);
     std::string getMessage() const;
     HttpRequestMessage getRequestMessage() const;
     std::string getClinetAddr() const;
