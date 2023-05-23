@@ -1,6 +1,8 @@
 #include "./Parser.hpp"
 #include <cstddef>
+#include <i386/limits.h>
 #include <iterator>
+#include <sstream>
 #include <sys/wait.h>
 
 /**
@@ -62,12 +64,30 @@ bool	Parser::isNumbers(const std::string& str, size_t pos, size_t len)
 		len = str.length();
 	while (len > 0 && str[pos] 
 			&& std::isdigit(str[pos], std::locale()))
-		pos++; len--;
+	{
+		pos++;
+		len--;
+	}
 	if (str[pos] == '\0' || len == 0)
 		return true;
 	return false;
 }
 
+bool	isSmallerThanMax(const std::string& num_str)
+{
+	std::stringstream	ss;
+	ss << SIZE_T_MAX;
+	std::string	str = ss.str();
+	if (num_str.length() > str.length())
+		return false;
+	else if (num_str.length() == str.length())
+	{
+		if (num_str.compare(str) <= 0)
+			return true;
+		return false;;
+	}
+	return true;
+}
 /** @details 루트경로 파싱함수
  */
 void	Parser::parseRoot(const std::string& value, Block* block)
@@ -100,15 +120,13 @@ void	Parser::parseDefaultErrorPage(const std::string& value, Block* block)
  */
 void	Parser::parseClientMaxBodySize(const std::string& value, Block* block)
 {
-	size_t pos = value.find("client_max_body_size ");
-	if (pos == std::string::npos)
+	if (isNumbers(value) == false || isSmallerThanMax(value) == false)
 		throw ClientMaxBodySizeException();
-	if (pos == 0)
-		throw ClientMaxBodySizeException();
-	std::string str = value.substr(pos);
-	if (!isNumbers(str))
-		throw ClientMaxBodySizeException();
-	block->setClientMaxBodySize(std::strtol(value.c_str(), NULL, 10));
+	
+	std::stringstream ss(value);
+	size_t	client_max_body_size;
+	ss >> client_max_body_size;
+	block->setClientMaxBodySize(client_max_body_size);
 }
 
 /** @details 업로드 경로 파싱함수

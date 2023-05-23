@@ -14,6 +14,7 @@ namespace ft
     std::string itos(int num);
     int stoi(std::string str);
     std::vector<std::string> getTime(time_t timer);
+	size_t stoul(std::string str);
 }
 
 #endif

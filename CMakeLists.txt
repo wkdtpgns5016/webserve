@@ -10,6 +10,7 @@ add_library(libft webserve/lib/ft/ft.hpp
                   webserve/lib/ft/readFileIntoString.cpp 
                   webserve/lib/ft/splitString.cpp 
                   webserve/lib/ft/itos.cpp 
+		          webserve/lib/ft/stoul.cpp
 		          webserve/lib/ft/stoi.cpp )
 add_library(server_block webserve/Configuration/ServerBlock/ServerBlock.hpp webserve/Configuration/ServerBlock/ServerBlock.cpp)
 add_library(block webserve/Configuration/Block/Block.hpp webserve/Configuration/Block/Block.cpp)

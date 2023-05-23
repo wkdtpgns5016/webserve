@@ -1,4 +1,4 @@
-for file in ./SimpleTest/*
+for file in ./SimpleTest/*/*
 do
 	echo "*****************test********************"
 	echo "$file"
