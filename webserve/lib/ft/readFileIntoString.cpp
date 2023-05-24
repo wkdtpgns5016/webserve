@@ -7,7 +7,6 @@ std::string	ft::readFileIntoString(std::string filename)
 
     if (!f.good() || !f.is_open())
 	{
-		std::cout << "Error: Do not stream open of file open." << std::endl;
 		return (str);
 	}
 
