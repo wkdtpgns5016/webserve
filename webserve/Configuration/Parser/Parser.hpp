@@ -14,6 +14,10 @@ private:
 	void	(Parser::*_parsing_func[11])(const std::string&, Block*);
 
 	bool	isNumbers(const std::string& str, size_t pos = 0, size_t len = std::string::npos);
+	bool	isSmallerThanMax(const std::string& num_str);
+	bool 	isDuplicateMethod(const std::string& value);
+	bool	isInvalidMethod(const std::string& method);
+	bool	isInvalidErrorPage(const std::string& error_page);
 	int		extractOneSectionNumber(const std::string& value, size_t pos, size_t len);
 	size_t	measureOneSectionLength(const std::string& value, size_t pos);
 	void	parseListen(const std::string&, Block* block);
@@ -102,6 +106,13 @@ private:
 	{
 		public:
 		InvalidMethod();
+	};
+
+	// default_error_page
+	class DefalutErrorPageException : public std::exception
+	{
+		public:
+		virtual const char* what() const throw();
 	};
 };
 #include "../Block/Block.hpp"

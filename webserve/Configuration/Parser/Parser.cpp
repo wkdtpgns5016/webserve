@@ -73,7 +73,7 @@ bool	Parser::isNumbers(const std::string& str, size_t pos, size_t len)
 	return false;
 }
 
-bool	isSmallerThanMax(const std::string& num_str)
+bool	Parser::isSmallerThanMax(const std::string& num_str)
 {
 	std::stringstream	ss;
 	ss << SIZE_T_MAX;
@@ -89,7 +89,7 @@ bool	isSmallerThanMax(const std::string& num_str)
 	return true;
 }
 
-bool	isDuplicateMethod(const std::string& value)
+bool	Parser::isDuplicateMethod(const std::string& value)
 {
 	std::vector<std::string> arr = ft::splitString(value, " ");
 	std::sort(arr.begin(), arr.end());
@@ -99,7 +99,7 @@ bool	isDuplicateMethod(const std::string& value)
 	return (false);
 }
 
-bool	isInvalidMethod(const std::string& method)
+bool	Parser::isInvalidMethod(const std::string& method)
 {
 	std::vector<std::string> method_arr;
 	method_arr.push_back("GET");
@@ -116,6 +116,20 @@ bool	isInvalidMethod(const std::string& method)
 	}
 	if (count == method_arr.size())
 		return (true);
+	return (false);
+}
+
+bool 	Parser::isInvalidErrorPage(const std::string& error_page)
+{
+	std::vector<std::string> arr = ft::splitString(error_page, " ");
+	if (arr.size() <= 1)
+		return (true);
+	std::vector<std::string>::iterator it = arr.begin();
+	for (; it != arr.end() - 1; it++)
+	{
+		if (!isNumbers(*it))
+			return (true);
+	}
 	return (false);
 }
 
@@ -144,6 +158,8 @@ void	Parser::parseIndex(const std::string& value, Block* block)
  */
 void	Parser::parseDefaultErrorPage(const std::string& value, Block* block)
 {
+	if (isInvalidErrorPage(value))
+		throw DefalutErrorPageException();
 	block->setDefaultErrorPage(value);
 }
 
@@ -271,6 +287,12 @@ Parser::InvalidMethod::InvalidMethod() : AllowMethodException("Invalid Method") 
 const char*  Parser::AllowMethodException::what() const throw()
 {
 	return (_line.c_str());
+}
+
+//default_error_page
+const char*  Parser::DefalutErrorPageException::what() const throw()
+{
+	return ("Invalid status \"error_page\" directive\n");
 }
 
 //occf
