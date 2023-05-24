@@ -4,14 +4,14 @@
 **1. Webserver 객체** </br>
 **2. Server 객체** </br>
 **3. ServerController 객체** </br>
-**[4. RequestHandler 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSpecification/server_handler.md)** </br>
+**[4. RequestHandler 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/server_handler.md)** </br>
 + 4-1. ServerHandler
 + 4-2. GetHandler
 + 4-3. PostHandler
 + 4-4. DeleteHandler
 + 4-5. PutHandler
 
-**[5. Http 메세지 객체](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSpecification/http_message.md)** </br>
+**[5. Http 메세지 객체](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/http_message.md)** </br>
 + 5-1. Http 메세지 요소
     + StartLine
     + RequestLine
@@ -21,7 +21,7 @@
     + HttpRequestMessage
     + HttpResponseMessage
     
-**[6. Configuration 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSpecification/configuration.md)** </br>
+**[6. Configuration 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/configuration.md)** </br>
 + 6-1. Block 객체
     + Block
     + ServerBlock
@@ -33,7 +33,7 @@
     + Parser
     + Scripter
 
-**[7. 라이브러리 함수](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSpecification/lib_function.md)** </br>
+**[7. 라이브러리 함수](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/lib_function.md)** </br>
 
 ---------------------------------------------------
 
