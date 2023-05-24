@@ -16,7 +16,7 @@ void	Block::compile(const std::string& script)
 	while (pos + 1 < script.length())
 	{
 		simple_end = _scripter.jumpSimple(script, pos);
-		block_id_end = _scripter.jumpBlockId(script, pos);
+		block_id_end = _scripter.jumpBeforeBlock(script, pos);
 		if (simple_end < block_id_end)
 			pos += _parser->parseSimple(script.substr(pos, simple_end - pos), this);
 		else

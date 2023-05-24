@@ -43,7 +43,7 @@ size_t	Scripter::jumpSimple(const std::string& str, size_t pos) const
 {
 	pos = str.find(';', pos);
 	if (pos == std::string::npos)
-		throw std::exception();
+		return std::string::npos;
 	return pos + 1;
 }
 
@@ -54,7 +54,7 @@ size_t	Scripter::jumpSimple(const std::string& str, size_t pos) const
  * @param[out] pos 마지막 인덱스 + 1
  * @warning 문자열의 시작이 Trash면 안됩니다. 즉, 이 함수 호출전에 jumpTrash 를 먼저 호출해야 합니다.
  */
-size_t	Scripter::jumpBlockId(const std::string& str, size_t pos) const
+size_t	Scripter::jumpBeforeBlock(const std::string& str, size_t pos) const
 {
 	pos = str.find('{', pos);
 
@@ -78,6 +78,6 @@ size_t	Scripter::jumpBlock(const std::string& str, size_t pos) const
 			&& pos != std::string::npos)
 		end = str.find('}', end + 1);
 	if (end == std::string::npos)
-		throw std::exception();
+		return std::string::npos;
 	return end + 1;
 }
