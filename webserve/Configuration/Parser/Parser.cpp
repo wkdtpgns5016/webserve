@@ -179,7 +179,7 @@ void	Parser::parseAutoindex(const std::string& value, Block* block)
 	else if (value == "off")
 		autoindex = false;
 	else
-		throw std::exception();
+		throw AutoIndexException();
 	block->setAutoIndex(autoindex);
 }
 
@@ -218,6 +218,13 @@ const char*  Parser::ClientMaxBodySizeException::what() const throw()
 {
 	return ("Invalid number in \"clinet_max_body_size\" directive\n");
 }
+
+//autoindex
+const char*  Parser::AutoIndexException::what() const throw()
+{
+	return ("Invalid autoindex in \"autoindex\" directive\n");
+}
+
 
 //occf
 Parser::Parser() { setParsingFunctionArray(); }

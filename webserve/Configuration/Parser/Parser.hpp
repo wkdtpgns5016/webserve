@@ -74,6 +74,14 @@ private:
 		public:
 			virtual const char* what() const throw();
 	};
+
+	//autoindex
+	class AutoIndexException : public std::exception
+	{
+		public:
+			virtual const char* what() const throw();
+	};
+
 };
 #include "../Block/Block.hpp"
 
