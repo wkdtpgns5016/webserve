@@ -88,6 +88,37 @@ bool	isSmallerThanMax(const std::string& num_str)
 	}
 	return true;
 }
+
+bool	isDuplicateMethod(const std::string& value)
+{
+	std::vector<std::string> arr = ft::splitString(value, " ");
+	std::sort(arr.begin(), arr.end());
+	std::vector<std::string>::iterator it = std::unique(arr.begin(), arr.end());
+	if (it != arr.end())
+		return (true);
+	return (false);
+}
+
+bool	isInvalidMethod(const std::string& method)
+{
+	std::vector<std::string> method_arr;
+	method_arr.push_back("GET");
+	method_arr.push_back("HEAD");
+	method_arr.push_back("POST");
+	method_arr.push_back("PUT");
+	method_arr.push_back("DELETE");
+	size_t count = 0;
+	std::vector<std::string>::iterator it = method_arr.begin();
+	for (; it != method_arr.end() ; it++)
+	{
+		if (method != *it)
+			count++;
+	}
+	if (count == method_arr.size())
+		return (true);
+	return (false);
+}
+
 /** @details 루트경로 파싱함수
  */
 void	Parser::parseRoot(const std::string& value, Block* block)
@@ -142,12 +173,18 @@ void	Parser::parseAllowMethod(const std::string& value, Block* block)
 {
 	size_t	pos = 0;
 	size_t	end = 0;
+	std::string method;
 
 	block->clearAllowMethod();
+	if (isDuplicateMethod(value))
+		throw DuplicateMethod();
 	while (pos + 1 < value.length())
 	{
 		end = _scripter.jumpWord(value, pos);
-		block->setAllowMethod(value.substr(pos, end - pos));
+		method = value.substr(pos, end - pos);
+		if (isInvalidMethod(method))
+			throw InvalidMethod();
+		block->setAllowMethod(method);
 		pos = _scripter.jumpTrash(value, end);
 	}
 }
@@ -225,6 +262,16 @@ const char*  Parser::AutoIndexException::what() const throw()
 	return ("Invalid autoindex in \"autoindex\" directive\n");
 }
 
+//allow_method
+Parser::AllowMethodException::AllowMethodException(const std::string& type)
+ : _line(type + " in \"allow_method\" directive\n") {}
+Parser::AllowMethodException::~AllowMethodException() throw() {}
+Parser::DuplicateMethod::DuplicateMethod() : AllowMethodException("Duplicate Method") {}
+Parser::InvalidMethod::InvalidMethod() : AllowMethodException("Invalid Method") {}
+const char*  Parser::AllowMethodException::what() const throw()
+{
+	return (_line.c_str());
+}
 
 //occf
 Parser::Parser() { setParsingFunctionArray(); }

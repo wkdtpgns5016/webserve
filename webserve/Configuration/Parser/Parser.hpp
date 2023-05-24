@@ -4,6 +4,7 @@
 #include <exception>
 #include <iostream>
 #include "../Scripter/Scripter.hpp"
+#include "../lib/ft/ft.hpp"
 class	Block;
 
 class	Parser
@@ -72,16 +73,36 @@ private:
 	class ClientMaxBodySizeException : public std::exception
 	{
 		public:
-			virtual const char* what() const throw();
+		virtual const char* what() const throw();
 	};
 
 	//autoindex
 	class AutoIndexException : public std::exception
 	{
 		public:
-			virtual const char* what() const throw();
+		virtual const char* what() const throw();
 	};
 
+	//allow_method
+	class AllowMethodException : public std::exception
+	{
+		protected:
+		std::string	_line;
+		public:
+		AllowMethodException(const std::string& type);
+		~AllowMethodException() throw() ; 
+		virtual const char* what() const throw();
+	};
+	class DuplicateMethod : public AllowMethodException
+	{
+		public:
+		DuplicateMethod();
+	};
+	class InvalidMethod : public AllowMethodException
+	{
+		public:
+		InvalidMethod();
+	};
 };
 #include "../Block/Block.hpp"
 
