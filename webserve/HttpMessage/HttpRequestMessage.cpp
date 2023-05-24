@@ -32,6 +32,9 @@ HttpRequestMessage::HttpRequestMessage(const HttpRequestMessage& http_message) :
     _start_line = http_message._start_line;
     _headers = http_message._headers;
     _message_body = http_message._message_body;
+    _chunked_message_body = http_message._chunked_message_body;
+    _message_size = http_message._message_size;
+    _chunked_size = http_message._chunked_size;
     return ;
 }
 
@@ -47,6 +50,9 @@ HttpRequestMessage& HttpRequestMessage::operator=(const HttpRequestMessage& http
     _start_line = http_message._start_line;
     _headers = http_message._headers;
     _message_body = http_message._message_body;
+    _chunked_message_body = http_message._chunked_message_body;
+    _message_size = http_message._message_size;
+    _chunked_size = http_message._chunked_size;
     return (*this);
 }
 
