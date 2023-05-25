@@ -69,45 +69,7 @@ void Server::accept_new_client()
     change_events(client_socket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
     clinet_ip = inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
-    _clients[client_socket] = Connection(std::string(buf));
-}
-
-void Server::receiveMessage()
-{
-    /* read data from client */
-    char buf[1024];
-    int n = read(_curr_event->ident, buf, sizeof(buf) - 1);
-
-    if (n <= 0)
-    {
-        if (n < 0)
-            std::cerr << "client read error!" << std::endl;
-    }
-    else
-    {
-        buf[n] = '\0';
-        _clients[_curr_event->ident].appendMessage(buf, n);
-    }
-}
-
-void Server::sendMessage()
-{
-    /* send data to client */
-    std::map<int, Connection>::iterator it = _clients.find(_curr_event->ident);
-    if (it != _clients.end())
-    {
-        if (_clients[_curr_event->ident].checkMessage())
-        {
-            ServerController controller;
-            std::string clinet_addr = _clients[_curr_event->ident].getClinetAddr();
-            HttpRequestMessage request_message = _clients[_curr_event->ident].getRequestMessage();
-            HttpResponseMessage message = controller.requestHandler(_server_block, request_message);
-            write(_curr_event->ident, message.getString().c_str(), message.getString().size());
-            disconnect_client(_curr_event->ident, _clients);
-            CommonLogFormat log = CommonLogFormat(clinet_addr, request_message, message);
-            log.wirteLogMessage(1);
-        }
-    }
+    _clients[client_socket] = Connection(client_socket, std::string(buf));
 }
 
 void Server::run()
@@ -157,10 +119,17 @@ void Server::run()
                 if (_curr_event->ident == (uintptr_t)_server_socket)
                     accept_new_client();
                 else if (_clients.find(_curr_event->ident) != _clients.end())
-                    receiveMessage();
+                    _clients[_curr_event->ident].receiveMessage();
             }
             else if (_curr_event->filter == EVFILT_WRITE)
-                sendMessage();
+            {   
+                std::map<int, Connection>::iterator it = _clients.find(_curr_event->ident);
+                if (it != _clients.end())
+                {
+                    if (_clients[_curr_event->ident].sendMessage(_server_block))
+                        disconnect_client(_curr_event->ident, _clients);
+                }
+            }
         }
     }
 }
