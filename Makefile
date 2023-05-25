@@ -9,6 +9,7 @@ SRCS =	webserve/main.cpp \
 		webserve/Configuration/Conf/Conf.cpp \
 		webserve/Configuration/ConfigDto/ConfigDto.cpp \
 		webserve/Configuration/Block/Block.cpp \
+		webserve/Configuration/Block/BlockException.cpp \
 		webserve/Configuration/LocationBlock/LocationBlock.cpp \
 		webserve/Configuration/ServerBlock/ServerBlock.cpp \
 		webserve/Configuration/Parser/Parser.cpp \

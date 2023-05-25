@@ -16,7 +16,7 @@ ServerBlock*	Conf::generateInnerBlock(const std::string& script)
 	std::string	value = id_value_pair.second;
 
 	if (id != "server")
-		throw std::exception();
+		throw UnknownOrNotAllowed(id);
 	return new ServerBlock(*this, value);
 }
 
