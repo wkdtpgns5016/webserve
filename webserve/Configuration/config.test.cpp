@@ -47,7 +47,7 @@ TEST(ConfigTest, Config1Test)
 	std::string	server_name_result = server_blocks->getServerName();
 	std::string	index_result = server_blocks->getIndex();
 	std::string	default_error_page_result = server_blocks->getDefaultErrorPage();
-	int			client_body_size_result = server_blocks->getClientBodySize();
+	int			client_body_size_result = server_blocks->getClientMaxBodySize();
     // then
     EXPECT_EQ(port_result, 80);
     EXPECT_EQ(root_result, "/var/html");
@@ -76,7 +76,7 @@ TEST(ConfigTest, Config2Test)
 	std::string	server_name_result1 = server_blocks1->getServerName();
 	std::string	index_result1 = server_blocks1->getIndex();
 	std::string	default_error_page_result1 = server_blocks1->getDefaultErrorPage();
-	int			client_body_size_result1 = server_blocks1->getClientBodySize();
+	int			client_body_size_result1 = server_blocks1->getClientMaxBodySize();
 	std::string	upload_path_result1 = server_blocks1->getUploadPath();
 	std::vector<std::string>	allow_method_result1 = server_blocks1->getAllowMethod();
 	std::vector<std::string>	try_files_result1 = server_blocks1->getTryFiles();
@@ -89,7 +89,7 @@ TEST(ConfigTest, Config2Test)
 	std::string	server_name_result2 = server_blocks2->getServerName();
 	std::string	index_result2 = server_blocks2->getIndex();
 	std::string	default_error_page_result2 = server_blocks2->getDefaultErrorPage();
-	int			client_body_size_result2 = server_blocks2->getClientBodySize();
+	int			client_body_size_result2 = server_blocks2->getClientMaxBodySize();
 	std::string	upload_path_result2 = server_blocks2->getUploadPath();
 	std::vector<std::string>	allow_method_result2 = server_blocks2->getAllowMethod();
 	std::vector<std::string>	try_files_result2 = server_blocks2->getTryFiles();
@@ -102,7 +102,7 @@ TEST(ConfigTest, Config2Test)
 	std::string	server_name_result3 = location_blocks3->getServerName();
 	std::string	index_result3 = location_blocks3->getIndex();
 	std::string	default_error_page_result3 = location_blocks3->getDefaultErrorPage();
-	int			client_body_size_result3 = location_blocks3->getClientBodySize();
+	int			client_body_size_result3 = location_blocks3->getClientMaxBodySize();
 	std::string	upload_path_result3 = location_blocks3->getUploadPath();
 	std::vector<std::string>	allow_method_result3 = location_blocks3->getAllowMethod();
 	std::vector<std::string>	try_files_result3 = location_blocks3->getTryFiles();
@@ -116,7 +116,7 @@ TEST(ConfigTest, Config2Test)
 	std::string	server_name_result4 = location_blocks4->getServerName();
 	std::string	index_result4 = location_blocks4->getIndex();
 	std::string	default_error_page_result4 = location_blocks4->getDefaultErrorPage();
-	int			client_body_size_result4 = location_blocks4->getClientBodySize();
+	int			client_body_size_result4 = location_blocks4->getClientMaxBodySize();
 	std::string	upload_path_result4 = location_blocks4->getUploadPath();
 	std::vector<std::string>	allow_method_result4 = location_blocks4->getAllowMethod();
 	std::vector<std::string>	try_files_result4 = location_blocks4->getTryFiles();

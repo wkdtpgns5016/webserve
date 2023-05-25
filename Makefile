@@ -29,6 +29,7 @@ SRCS =	webserve/main.cpp \
 		webserve/lib/ft/splitString.cpp \
 		webserve/lib/ft/itos.cpp \
 		webserve/lib/ft/stoi.cpp  \
+		webserve/lib/ft/stoul.cpp  \
 		webserve/lib/ft/getTime.cpp  \
 		webserve/lib/ft/convertHex.cpp  \
 		webserve/CommonLogFormat/CommonLogFormat.cpp
