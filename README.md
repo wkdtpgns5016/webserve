@@ -11,5 +11,5 @@
 
 ### **6. [개념 정리](https://github.com/wkdtpgns5016/webserve/blob/main/docs/Study/study.md)** </br>
 
-### **7. [클래스 명세서 및 라이브러리 명세서](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSpecification/classSpecification.md)** </br>
+### **7. [클래스 명세서 및 라이브러리 명세서](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/classSpecification.md)** </br>
 <br/>

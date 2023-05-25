@@ -17,9 +17,9 @@ HttpResponseMessage::HttpResponseMessage(std::string http_message) : HttpMessage
     return ;
 }
 
-HttpResponseMessage::HttpResponseMessage(StatusLine                          start_line,
+HttpResponseMessage::HttpResponseMessage(const StatusLine&                   start_line,
                                          std::map<std::string, std::string>  headers, 
-                                         std::string                         message_body)
+                                         const std::string&                  message_body)
 : HttpMessage(headers, message_body), _start_line(start_line)
 {
 
@@ -29,9 +29,12 @@ HttpResponseMessage::HttpResponseMessage(const HttpResponseMessage& http_meesage
 {
     if (this == &http_meesage)
         return ;
-    _start_line = http_meesage.getStartLine();
-    _headers = http_meesage.getHeaders();
-    _message_body = http_meesage.getMessageBody();
+    _start_line = http_meesage._start_line;
+    _headers = http_meesage._headers;
+    _message_body = http_meesage._message_body;
+    _chunked_message_body = http_meesage._chunked_message_body;
+    _message_size = http_meesage._message_size;
+    _chunked_size = http_meesage._chunked_size;
     return ;
 }
 
@@ -44,9 +47,12 @@ HttpResponseMessage& HttpResponseMessage::operator=(const HttpResponseMessage& h
 {
     if (this == &http_meesage)
         return (*this);
-    _start_line = http_meesage.getStartLine();
-    _headers = http_meesage.getHeaders();
-    _message_body = http_meesage.getMessageBody();
+    _start_line = http_meesage._start_line;
+    _headers = http_meesage._headers;
+    _message_body = http_meesage._message_body;
+    _chunked_message_body = http_meesage._chunked_message_body;
+    _message_size = http_meesage._message_size;
+    _chunked_size = http_meesage._chunked_size;
     return (*this);
 }
 

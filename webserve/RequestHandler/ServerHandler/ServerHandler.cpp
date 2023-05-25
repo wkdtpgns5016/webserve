@@ -209,9 +209,24 @@ bool ServerHandler::checkDirectory(std::string path)
 HttpResponseMessage ServerHandler::getErrorResponse(int status_code)
 {
     std::string message_body;
-    std::stringstream ss;
-    ss << "var/html/error-page/" << status_code << ".html";
-    message_body = ft::readFileIntoString(ss.str());
+    if (_config.getDefaultErrorPage().empty())
+        return (getResponseMessage(status_code, message_body));
+
+    std::vector<std::string> arr = ft::splitString(_config.getDefaultErrorPage(), " ");
+    std::vector<std::string>::iterator it = arr.begin();
+    std::string status = ft::itos(status_code);
+    std::string path;
+
+    for (; it != arr.end() - 1; it++)
+    {
+        if (status == *it)
+        {
+            path = _config.getRoot() + arr.back();
+            break;
+        }
+    }
+    if (!path.empty())
+        message_body = ft::readFileIntoString(path);
     return (getResponseMessage(status_code, message_body));
 }
 
@@ -296,12 +311,24 @@ void ServerHandler::checkHttpVersion(RequestLine start_line)
         throw Error400Exceptnion();
 }
 
+void ServerHandler::checkMessageSize(void)
+{
+    size_t message_size = _request_message.getMessageSize();
+    size_t client_max_body_size = _config.getClientBodySize();
+    
+    if (message_size > client_max_body_size)
+        throw Error413Exceptnion();
+}
+
 void ServerHandler::checkHttpMessage(void)
 {
     // check start line
     RequestLine start_line = _request_message.getStartLine();
     checkAllowMethod(start_line.getHttpMethod());
     checkHttpVersion(start_line);
+
+    // check message size
+    checkMessageSize();
 }
 
 std::string ServerHandler::executeCgi(std::string request_target)
@@ -323,6 +350,9 @@ const char* ServerHandler::Error404Exceptnion::what() const throw() {
 }
 const char* ServerHandler::Error405Exceptnion::what() const throw() {
   return "Method Not Allowed";
+}
+const char* ServerHandler::Error413Exceptnion::what() const throw() {
+  return "Content Too Large";
 }
 const char* ServerHandler::Error500Exceptnion::what() const throw() {
   return "Internal Server Error";

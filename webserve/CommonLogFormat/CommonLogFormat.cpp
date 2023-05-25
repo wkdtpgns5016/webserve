@@ -7,10 +7,10 @@ CommonLogFormat::CommonLogFormat()
     initTimeStamp();
 }
 
-CommonLogFormat::CommonLogFormat(HttpRequestMessage request_message, HttpResponseMessage response_message)
+CommonLogFormat::CommonLogFormat(std::string client_ip, HttpRequestMessage request_message, HttpResponseMessage response_message)
 {
     initTimeStamp();
-    _remote_host = "127.0.0.1";
+    _remote_host = client_ip;
     _user_name = "-";
     _auth_user_name = "-";
     _request_line = request_message.getStartLine();
@@ -71,8 +71,8 @@ std::string CommonLogFormat::getString(void)
     str = _remote_host + " "
         + _user_name + " "
         + _auth_user_name + " "
-        + _time_stamp + " "
-        + _request_line.getString() + " "
+        + _time_stamp + " \""
+        + _request_line.getString() + "\" "
         + ft::itos(_status_code) + " "
         + _response_size + "\n";
     return (str);

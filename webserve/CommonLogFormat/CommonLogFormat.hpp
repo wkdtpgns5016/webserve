@@ -22,7 +22,7 @@ class CommonLogFormat
     
     public:
     CommonLogFormat();
-    CommonLogFormat(HttpRequestMessage request_message, HttpResponseMessage response_message);
+    CommonLogFormat(std::string client_ip, HttpRequestMessage request_message, HttpResponseMessage response_message);
     CommonLogFormat(const CommonLogFormat& log_format);
     ~CommonLogFormat();
     CommonLogFormat& operator=(const CommonLogFormat& log_format);

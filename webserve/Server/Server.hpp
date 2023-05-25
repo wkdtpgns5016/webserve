@@ -29,6 +29,7 @@
 #include <sys/event.h>
 
 #include "../ServerController/ServerController.hpp"
+#include "../Connection/Connection.hpp"
 #include "../CommonLogFormat/CommonLogFormat.hpp"
 
 #define BUFSIZE 1024
@@ -41,14 +42,14 @@ private:
     struct sockaddr_in          _server_addr;
     std::vector<struct kevent>  _change_list;
     struct kevent*              _curr_event;
-    std::map<int, std::string>  _clients;
+    std::map<int, Connection>   _clients;
     int                         _kqueue;
     struct kevent               _event_list[8];
     ServerBlock*                _server_block;
     
     void socket_init(int port, unsigned int ip_addr);
     void change_events(uintptr_t ident, int16_t filter, uint16_t flags, uint32_t fflags, intptr_t data, void *udata);
-    void disconnect_client(int client_fd, std::map<int, std::string> &clients);
+    void disconnect_client(int client_fd, std::map<int, Connection> &clients);
     void accept_new_client();
     void receiveMessage();
     void sendMessage();

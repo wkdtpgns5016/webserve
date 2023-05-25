@@ -77,24 +77,29 @@ protected:
     
     std::map<std::string, std::string>  _headers;
     std::string                         _message_body;
+    std::string                         _chunked_message_body;
+    size_t                              _message_size;
+    size_t                              _chunked_size;
 
 private:
     void                                setHeaders(std::string header);
     bool                                checkHeaders(std::vector<std::string> arr);
+    void                                setMessageBody(std::string message_body);
+    std::string                         mergeChunkedMessage(const std::string& chunk);
 
 public:
     HttpMessage(void);
     HttpMessage(std::string http_message);
-    HttpMessage(std::map<std::string, std::string>  headers, std::string message_body);
+    HttpMessage(std::map<std::string, std::string>  headers, const std::string& message_body);
     HttpMessage(const HttpMessage& http_message);
     ~HttpMessage(void);
     HttpMessage& operator=(const HttpMessage& http_message);
 
     std::map<std::string, std::string>  getHeaders(void) const;
-    std::string                         getMessageBody(void) const;
-    void                                setMessageBody(std::string message_body);
+    std::string                         getMessageBody(void);
     virtual std::string                 getString(void) = 0;
     virtual bool                        isVaild(void) = 0;
+    size_t                              getMessageSize(void) const;
 };
 
 #endif

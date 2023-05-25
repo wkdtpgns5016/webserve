@@ -16,6 +16,7 @@ class Block
 private:
 	Block(const Block& other);
 	Block& operator= (const Block& other);
+
 protected:
 	Scripter	_scripter;
 	Parser*	_parser;
@@ -27,13 +28,12 @@ protected:
 	std::string	_index;
 	std::string	_default_error_page;
 	size_t	_client_max_body_size;
-
 	std::string	_upload_path;
 	std::vector<std::string>	_allow_methods;
 	std::vector<std::string>	_try_files;
 	bool	_autoindex;
-
 	std::vector<Block*>	_inner_blocks;
+
 public:
 	Block();
 	virtual	~Block();
@@ -41,14 +41,10 @@ public:
 
 	void	compile(const std::string& script);
 
-	std::pair<std::string, std::string>	divideSimpleIdAndValue(const std::string& str, size_t pos) const;
 	std::pair<std::string, std::string>	divideBlockIdAndValue(const std::string& str, size_t pos) const;
-
-	size_t	parseSimple(const std::string& script);
 	void	parseInnerBlock(const std::vector<std::string>& block_scripts);
-	
-	
 	void	copyWithoutInnerBlock(const Block&);
+	size_t	saveBlockScripts(const std::string& script, size_t pos, std::vector<std::string>* block_scripts);
 
 	void	setPort(int port);
 	void	setRoot(const std::string& root);
@@ -61,7 +57,6 @@ public:
 	void	setAllowMethod(const std::string& allow_method);
 	void	setTryFiles(const std::string& try_files);
 	void	setAutoIndex(bool auto_index);
-
 	void	clearAllowMethod();
 	void	clearTryFiles();
 
@@ -77,6 +72,7 @@ public:
 	const std::vector<std::string>&	getTryFiles() const;
 	const bool&	getAutoindex() const;
 	const std::vector<Block *>&	getInnerBlock() const;
+
 };
 
 #include "../Parser/Parser.hpp"

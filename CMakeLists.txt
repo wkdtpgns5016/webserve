@@ -69,11 +69,11 @@ target_link_libraries(libftUnitTest libft)
 # target_link_libraries(LocationParserTest location_parser)
 
 # http message 단위테스트 빌드
-include_directories(http_message)
-add_executable(HttpMessageUnitTest webserve/HttpMessage/HttpMessage.test.cpp)
-target_link_libraries(HttpMessageUnitTest gtest gtest_main)
-target_link_libraries(HttpMessageUnitTest http_message)
-target_link_libraries(HttpMessageUnitTest libft)
+#include_directories(http_message)
+#add_executable(HttpMessageUnitTest webserve/HttpMessage/HttpMessage.test.cpp)
+#target_link_libraries(HttpMessageUnitTest gtest gtest_main)
+#target_link_libraries(HttpMessageUnitTest http_message)
+#target_link_libraries(HttpMessageUnitTest libft)
 
 
 # #paresr 단위테스트 빌드

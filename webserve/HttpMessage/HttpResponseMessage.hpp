@@ -11,9 +11,9 @@ private:
 public:
     HttpResponseMessage(void);
     HttpResponseMessage(std::string http_message);
-    HttpResponseMessage(StatusLine                          start_line,
+    HttpResponseMessage(const StatusLine&                   start_line,
                         std::map<std::string, std::string>  headers, 
-                        std::string                         message_body);
+                        const std::string&                  message_body);
     HttpResponseMessage(const HttpResponseMessage& http_meesage);
     ~HttpResponseMessage(void);
     HttpResponseMessage& operator=(const HttpResponseMessage& http_meesage);
