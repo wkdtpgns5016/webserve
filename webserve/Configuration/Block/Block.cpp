@@ -5,28 +5,31 @@
  */
 void	Block::compile(const std::string& script)
 {
-	if (script.length() == std::string::npos)
-		throw std::exception();
-
 	size_t	pos = _scripter.jumpTrash(script, 0);
 	size_t	simple_end = pos;
-	size_t	block_id_end = pos;
+	size_t	block_start = pos;
 	std::vector<std::string>	block_scripts;
 
 	while (pos + 1 < script.length())
 	{
+		block_start = _scripter.jumpBeforeBlock(script, pos);
 		simple_end = _scripter.jumpSimple(script, pos);
-		block_id_end = _scripter.jumpBeforeBlock(script, pos);
-		if (simple_end < block_id_end)
+		if (simple_end < block_start)
 			pos += _parser->parseSimple(script.substr(pos, simple_end - pos), this);
 		else
-		{
-			block_scripts.push_back(script.substr(pos, _scripter.jumpBlock(script, block_id_end) - pos));
-			pos += block_scripts.rbegin()->length();
-		}
+			pos = saveBlockScripts(script, pos, &block_scripts);
 		pos = _scripter.jumpTrash(script, pos);
 	}
 	parseInnerBlock(block_scripts);
+}
+
+size_t	Block::saveBlockScripts(const std::string& script, size_t pos, std::vector<std::string>* block_scripts)
+{
+	size_t	block_start = _scripter.jumpBeforeBlock(script, pos);
+	size_t	block_end = _scripter.jumpBlock(script, block_start);
+
+	block_scripts->push_back(script.substr(pos, block_end - pos));
+	return pos + block_scripts->rbegin()->length();
 }
 
 /**
@@ -48,21 +51,6 @@ std::pair<std::string, std::string>	Block::divideBlockIdAndValue(const std::stri
 
 	return std::make_pair(id, value);
 }
-
-void	Block::setPort(int port) { _port = port; }
-void	Block::setRoot(const std::string& root) { _root = root; }
-void	Block::setAddr(unsigned addr) { _addr = addr; }
-void	Block::setServerName(const std::string& server_name) { _server_name = server_name; }
-void	Block::setIndex(const std::string& index) {_index = index; }
-void	Block::setDefaultErrorPage(const std::string& default_error_page) { _default_error_page = default_error_page; }
-void	Block::setClientBodySize(int client_body_size) { _client_body_size = client_body_size; }
-void	Block::setUploadPath(const std::string& upload_path) { _upload_path = upload_path; }
-void	Block::setAllowMethod(const std::string& allow_method) { _allow_methods.push_back(allow_method); }
-void	Block::setTryFiles(const std::string& try_files) { _try_files.push_back(try_files); }
-void	Block::setAutoIndex(bool autoindex) { _autoindex = autoindex; }
-
-void	Block::clearAllowMethod() { _allow_methods.clear(); }
-void	Block::clearTryFiles() { _try_files.clear(); }
 
 /**
  * @details block_directives 하나를 파싱합니다.
@@ -90,6 +78,22 @@ void	Block::copyWithoutInnerBlock(const Block& other)
 	_autoindex = other._autoindex;
 }
 
+//setter
+void	Block::setPort(int port) { _port = port; }
+void	Block::setRoot(const std::string& root) { _root = root; }
+void	Block::setAddr(unsigned addr) { _addr = addr; }
+void	Block::setServerName(const std::string& server_name) { _server_name = server_name; }
+void	Block::setIndex(const std::string& index) {_index = index; }
+void	Block::setDefaultErrorPage(const std::string& default_error_page) { _default_error_page = default_error_page; }
+void	Block::setClientBodySize(int client_body_size) { _client_body_size = client_body_size; }
+void	Block::setUploadPath(const std::string& upload_path) { _upload_path = upload_path; }
+void	Block::setAllowMethod(const std::string& allow_method) { _allow_methods.push_back(allow_method); }
+void	Block::setTryFiles(const std::string& try_files) { _try_files.push_back(try_files); }
+void	Block::setAutoIndex(bool autoindex) { _autoindex = autoindex; }
+
+void	Block::clearAllowMethod() { _allow_methods.clear(); }
+void	Block::clearTryFiles() { _try_files.clear(); }
+
 //getter
 const int&	Block::getPort() const { return _port; }
 const std::string&	Block::getRoot() const { return _root; }
@@ -116,4 +120,5 @@ Block::~Block()
 	for (std::vector<Block *>::iterator it = _inner_blocks.begin(); it != ite; it++)
 		delete *it;
 }
+
 

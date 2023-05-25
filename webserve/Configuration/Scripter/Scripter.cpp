@@ -43,7 +43,7 @@ size_t	Scripter::jumpSimple(const std::string& str, size_t pos) const
 {
 	pos = str.find(';', pos);
 	if (pos == std::string::npos)
-		return std::string::npos;
+		throw unexpectedSimple();
 	return pos + 1;
 }
 
@@ -78,6 +78,16 @@ size_t	Scripter::jumpBlock(const std::string& str, size_t pos) const
 			&& pos != std::string::npos)
 		end = str.find('}', end + 1);
 	if (end == std::string::npos)
-		return std::string::npos;
+		throw unexpectedBlock();
 	return end + 1;
+}
+
+const char* Scripter::unexpectedSimple::what() const throw()
+{
+	return "unexpected end of file, expecting \";\"\n";
+}
+
+const char* Scripter::unexpectedBlock::what() const throw()
+{
+	return "unexpected end of file, expecting \"}\"\n";
 }
