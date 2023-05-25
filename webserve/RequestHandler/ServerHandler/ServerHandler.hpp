@@ -30,6 +30,7 @@ class ServerHandler
 
     void checkAllowMethod(std::string method);
     void checkHttpVersion(RequestLine start_line);
+    void checkMessageSize(void);
     void checkHttpMessage(void);
     bool checkDirectory(std::string path);
     bool checkFile(std::string request_target);
@@ -67,6 +68,10 @@ class ServerHandler
 				virtual const char* what() const throw();
 		};
     class Error405Exceptnion : public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+    class Error413Exceptnion : public std::exception {
 			public:
 				virtual const char* what() const throw();
 		};
