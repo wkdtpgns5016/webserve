@@ -101,18 +101,21 @@ void CGI::setEnv(void)
     this->_env["PATH_INFO"] = headers["Accept-Encoding"]; // ?
     this->_env["PATH_TRANSLATED"] = headers["Accept-Encoding"]; // ?
     this->_env["QUERY_STRING"] = headers["Accept-Encoding"];
-    this->_env["REMOTE_ADDR"] = headers["Accept-Encoding"];
-    this->_env["REMOTE_HOST"] = headers["Accept-Encoding"];
-    this->_env["REMOTE_USER"] = headers["Accept-Encoding"];
-    this->_env["REQUEST_METHOD"] = headers["Accept-Encoding"];
-    this->_env["SCRIPT_NAME"] = headers["Accept-Encoding"];
-    this->_env["SERVER_NAME"] = headers["Accept-Encoding"];
-    this->_env["SERVER_PORT"] = headers["Accept-Encoding"];
-    this->_env["SERVER_PROTOCOL"] = headers["Accept-Encoding"];
+    std::string client_ip = ft::splitString(headers["X-Forwarded-For"], " ")[0];
+    if (client_ip[client_ip.length() - 1] == ',')
+        client_ip = client_ip.substr(0, client_ip.length() - 1);
+    this->_env["REMOTE_ADDR"] = client_ip;
+    this->_env["REMOTE_HOST"] = headers[""]; // 
+    this->_env["REMOTE_USER"] = headers["Authorization"];
+    this->_env["REQUEST_METHOD"] = headers[""]; //
+    this->_env["SCRIPT_NAME"] = headers[""]; //
+    this->_env["SERVER_NAME"] = headers[""]; // 
+    this->_env["SERVER_PORT"] = headers[""]; // 
+    this->_env["SERVER_PROTOCOL"] = headers[""]; // 
     this->_env["SERVER_SOFTWARE"] = "webserv/1.0";
-    this->_env["HTTP_COOKIE"] = headers["Accept-Encoding"];
-    this->_env["WEBTOP_USER"] = headers["Accept-Encoding"];
-    this->_env["NCHOME"] = headers["Accept-Encoding"];
+    this->_env["HTTP_COOKIE"] = headers[""]; // 
+    this->_env["WEBTOP_USER"] = headers[""]; //
+    this->_env["NCHOME"] = headers[""]; //
 }
 
 char **CGI::getEnvChar(void) const

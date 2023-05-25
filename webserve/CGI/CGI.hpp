@@ -3,10 +3,14 @@
 
 #include <map>
 #include <string>
+#include <unistd.h>
 #include "../lib/ft/splitString.cpp"
 #include "../ServerParser/ServerParser.hpp"
 #include "../LocationParser/LocationParser.hpp"
 #include "../ServerHandler/ServerHandler.hpp"
+
+#define READ 0
+#define WRITE 1
 
 
 class CGI
@@ -26,7 +30,8 @@ public:
     CGI(ServerParser s_parser, LocationParser l_parser, ServerHandler s_handler);
 
     void setEnv(void);
-    void excute(void);
+    char **getEnvChar(void) const;
+    std::string excute(std::string scriptName);
 };
 
 #endif
