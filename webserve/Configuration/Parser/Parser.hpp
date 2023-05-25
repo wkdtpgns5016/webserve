@@ -4,7 +4,8 @@
 #include <exception>
 #include <iostream>
 #include "../Scripter/Scripter.hpp"
-#include "../lib/ft/ft.hpp"
+#include "./SimpleException.hpp"
+#include "../../lib/ft/ft.hpp"
 class	Block;
 
 class	Parser
@@ -36,92 +37,15 @@ private:
 	void	parseNoMatchId(const std::string&, Block* block);
 	std::pair<std::string, std::string>	divideSimpleIdAndValue(const std::string &str, size_t pos) const;
 	void	setParsingFunctionArray();
+
 public:
 	Parser();
 	~Parser();
 	Parser(const Parser& other);
 	Parser& operator= (const Parser& other);
 	size_t	parseSimple(const std::string& script, Block* block);
+
 private:
-	// listen
-	class ListenException : public std::exception
-	{
-	protected:
-		std::string	_line;
-	public:
-		ListenException(const std::string& type, const std::string& value);
-		~ListenException() throw() ; 
-		const char* what() const throw();
-	};
-	class HostNotFound : public ListenException
-	{
-	public:
-		HostNotFound(const std::string& value);
-	};
-	class InvalidPort : public ListenException
-	{
-	public:
-		InvalidPort(const std::string& value);
-	};
-	class InvalidNumberOfArguments : public ListenException
-	{
-	public:
-		InvalidNumberOfArguments(const std::string& value);
-	};
-	class NoHost : public ListenException
-	{
-	public:
-		NoHost(const std::string& value);
-	};
-
-	// client_max_body_size
-	class ClientMaxBodySizeException : public std::exception
-	{
-		public:
-		virtual const char* what() const throw();
-	};
-
-	// autoindex
-	class AutoIndexException : public std::exception
-	{
-		public:
-		virtual const char* what() const throw();
-	};
-
-	// allow_method
-	class AllowMethodException : public std::exception
-	{
-		protected:
-		std::string	_line;
-		public:
-		AllowMethodException(const std::string& type);
-		~AllowMethodException() throw() ; 
-		virtual const char* what() const throw();
-	};
-	class DuplicateMethod : public AllowMethodException
-	{
-		public:
-		DuplicateMethod();
-	};
-	class InvalidMethod : public AllowMethodException
-	{
-		public:
-		InvalidMethod();
-	};
-
-	// default_error_page
-	class DefalutErrorPageException : public std::exception
-	{
-		public:
-		virtual const char* what() const throw();
-	};
-
-	// try_files
-	class TryFilesException : public std::exception
-	{
-		public:
-		virtual const char* what() const throw();
-	};
 };
 #include "../Block/Block.hpp"
 

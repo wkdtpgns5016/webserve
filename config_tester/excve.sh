@@ -1,47 +1,29 @@
+echo "test[Simple/Syntax]"
+read -p "simple or syntax?" test_directory
+if [ $test_directory != "Simple" -a $test_directory != "Syntax" ];then
+	echo "only simple or syntax, please..."
+	exit
+fi
 
-echo "****************SIMPLE*******************"
-echo "*****************TEST********************"
-echo "*****************************************\n"
-for file in ./SimpleTest/*
-do
-	echo "*****************test********************"
-	echo "$file"
-	cat $file
-	echo "****************result*******************"
-	../webserv "$file" &
-	./pkill.sh > /dev/null 2>&1
-	echo "*****************************************\n"
-	echo "\n\n"
-done
-
-echo "****************SYNTAX*******************"
-echo "*****************TEST********************"
+echo "*****************************************"
+echo "$test_directory"
 echo "*****************************************\n"
 
-echo "****************Brace********************"
-
-for file in ./SyntaxTest/Brace/*
+for directory in ./$test_directory/*
 do
-	echo "*****************test********************"
+echo "*****************************************"
+echo "$directory"
+echo "*****************************************\n"
+
+for file in $directory/*
+do
+	echo "-----------------test--------------------"
 	echo "$file"
 	cat $file
-	echo "****************result*******************"
+	echo "\n----------------result-------------------"
 	../webserv "$file" &
 	./pkill.sh > /dev/null 2>&1
-	echo "*****************************************\n"
+	echo "-----------------------------------------\n"
 	echo "\n\n"
 done
-
-echo "***************SemiColon*****************"
-
-for file in ./SyntaxTest/Semicolon/*
-do
-	echo "*****************test********************"
-	echo "$file"
-	cat $file
-	echo "****************result*******************"
-	../webserv "$file" &
-	./pkill.sh > /dev/null 2>&1
-	echo "*****************************************\n"
-	echo "\n\n"
 done

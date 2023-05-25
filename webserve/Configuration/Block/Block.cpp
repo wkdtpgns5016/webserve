@@ -92,22 +92,6 @@ void	Block::copyWithoutInnerBlock(const Block& other)
 	_autoindex = other._autoindex;
 }
 
-//setter
-void	Block::setPort(int port) { _port = port; }
-void	Block::setRoot(const std::string& root) { _root = root; }
-void	Block::setAddr(unsigned addr) { _addr = addr; }
-void	Block::setServerName(const std::string& server_name) { _server_name = server_name; }
-void	Block::setIndex(const std::string& index) {_index = index; }
-void	Block::setDefaultErrorPage(const std::string& default_error_page) { _default_error_page = default_error_page; }
-void	Block::setClientBodySize(int client_body_size) { _client_body_size = client_body_size; }
-void	Block::setUploadPath(const std::string& upload_path) { _upload_path = upload_path; }
-void	Block::setAllowMethod(const std::string& allow_method) { _allow_methods.push_back(allow_method); }
-void	Block::setTryFiles(const std::string& try_files) { _try_files.push_back(try_files); }
-void	Block::setAutoIndex(bool autoindex) { _autoindex = autoindex; }
-
-void	Block::clearAllowMethod() { _allow_methods.clear(); }
-void	Block::clearTryFiles() { _try_files.clear(); }
-
 //getter
 const int&	Block::getPort() const { return _port; }
 const std::string&	Block::getRoot() const { return _root; }

@@ -13,6 +13,11 @@ SRCS =	webserve/main.cpp \
 		webserve/Configuration/ServerBlock/ServerBlock.cpp \
 		webserve/Configuration/Parser/Parser.cpp \
 		webserve/Configuration/Parser/parseListen.cpp \
+		webserve/Configuration/Parser/parseAllowMethod.cpp \
+		webserve/Configuration/Parser/parseErrorPage.cpp \
+		webserve/Configuration/Parser/parseClientMaxBodySize.cpp \
+		webserve/Configuration/Parser/parseTryFiles.cpp \
+		webserve/Configuration/Parser/SimpleException.cpp \
 		webserve/Configuration/Scripter/Scripter.cpp \
 		webserve/RequestHandler/ServerHandler/ServerHandler.cpp \
 		webserve/RequestHandler/GetHandler/GetHandler.cpp \
