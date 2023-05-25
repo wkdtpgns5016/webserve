@@ -18,6 +18,7 @@ private:
 	bool 	isDuplicateMethod(const std::string& value);
 	bool	isInvalidMethod(const std::string& method);
 	bool	isInvalidErrorPage(const std::string& error_page);
+	bool	isInvalidUri(const std::string& uri);
 	int		extractOneSectionNumber(const std::string& value, size_t pos, size_t len);
 	size_t	measureOneSectionLength(const std::string& value, size_t pos);
 	void	parseListen(const std::string&, Block* block);
@@ -42,7 +43,7 @@ public:
 	Parser& operator= (const Parser& other);
 	size_t	parseSimple(const std::string& script, Block* block);
 private:
-	//listen
+	// listen
 	class ListenException : public std::exception
 	{
 	protected:
@@ -73,21 +74,21 @@ private:
 		NoHost(const std::string& value);
 	};
 
-	//client_max_body_size
+	// client_max_body_size
 	class ClientMaxBodySizeException : public std::exception
 	{
 		public:
 		virtual const char* what() const throw();
 	};
 
-	//autoindex
+	// autoindex
 	class AutoIndexException : public std::exception
 	{
 		public:
 		virtual const char* what() const throw();
 	};
 
-	//allow_method
+	// allow_method
 	class AllowMethodException : public std::exception
 	{
 		protected:
@@ -110,6 +111,13 @@ private:
 
 	// default_error_page
 	class DefalutErrorPageException : public std::exception
+	{
+		public:
+		virtual const char* what() const throw();
+	};
+
+	// try_files
+	class TryFilesException : public std::exception
 	{
 		public:
 		virtual const char* what() const throw();

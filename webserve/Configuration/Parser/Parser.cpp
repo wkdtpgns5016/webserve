@@ -133,6 +133,14 @@ bool 	Parser::isInvalidErrorPage(const std::string& error_page)
 	return (false);
 }
 
+bool	Parser::isInvalidUri(const std::string& uri)
+{
+	if (uri.at(0) != '/')
+		if (uri.substr(0, 4) != "$uri")
+			return (true);
+	return (false);
+}
+
 /** @details 루트경로 파싱함수
  */
 void	Parser::parseRoot(const std::string& value, Block* block)
@@ -211,12 +219,16 @@ void	Parser::parseTryFiles(const std::string& value, Block* block)
 {
 	size_t	pos = 0;
 	size_t	end = 0;
+	std::string uri;
 
 	block->clearTryFiles();
 	while (pos + 1 < value.length())
 	{
 		end = _scripter.jumpWord(value, pos);
-		block->setTryFiles(value.substr(pos, end - pos));
+		uri = value.substr(pos, end - pos);
+		if (isInvalidUri(uri))
+			throw TryFilesException();
+		block->setTryFiles(uri);
 		pos = _scripter.jumpTrash(value, end);
 	}
 }
@@ -245,8 +257,8 @@ void	Parser::parseNoMatchId(const std::string& value, Block* block)
 		throw std::exception();
 }
 
-//exception
-//listen
+// exception
+// listen
 Parser::ListenException::ListenException(const std::string& type, const std::string& value)
 {
 	_line += type;
@@ -266,19 +278,19 @@ Parser::InvalidPort::InvalidPort(const std::string& value) : ListenException("in
 Parser::InvalidNumberOfArguments::InvalidNumberOfArguments(const std::string& value) : ListenException("invalid number of arguments", value) {}
 Parser::NoHost::NoHost(const std::string& value) : ListenException("no host", value) {}
 
-//client_max_body_size
+// client_max_body_size
 const char*  Parser::ClientMaxBodySizeException::what() const throw()
 {
 	return ("Invalid number in \"clinet_max_body_size\" directive\n");
 }
 
-//autoindex
+// autoindex
 const char*  Parser::AutoIndexException::what() const throw()
 {
 	return ("Invalid autoindex in \"autoindex\" directive\n");
 }
 
-//allow_method
+// allow_method
 Parser::AllowMethodException::AllowMethodException(const std::string& type)
  : _line(type + " in \"allow_method\" directive\n") {}
 Parser::AllowMethodException::~AllowMethodException() throw() {}
@@ -289,10 +301,16 @@ const char*  Parser::AllowMethodException::what() const throw()
 	return (_line.c_str());
 }
 
-//default_error_page
+// default_error_page
 const char*  Parser::DefalutErrorPageException::what() const throw()
 {
 	return ("Invalid status \"error_page\" directive\n");
+}
+
+// try_files
+const char*  Parser::TryFilesException::what() const throw()
+{
+	return ("Invalid uri \"try_files\" directive\n");
 }
 
 //occf
