@@ -84,7 +84,7 @@ size_t	Scripter::jumpBlock(const std::string& str, size_t pos) const
 
 const char* Scripter::unexpectedSimple::what() const throw()
 {
-	return "unexpected end of file, expecting \";\"\n";
+	return "unexpected end of file";
 }
 
 const char* Scripter::unexpectedBlock::what() const throw()

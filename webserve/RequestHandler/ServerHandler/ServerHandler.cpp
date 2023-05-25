@@ -314,7 +314,7 @@ void ServerHandler::checkHttpVersion(RequestLine start_line)
 void ServerHandler::checkMessageSize(void)
 {
     size_t message_size = _request_message.getMessageSize();
-    size_t client_max_body_size = _config.getClientBodySize();
+    size_t client_max_body_size = _config.getClientMaxBodySize();
     
     if (message_size > client_max_body_size)
         throw Error413Exceptnion();
