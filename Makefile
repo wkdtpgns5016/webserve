@@ -23,6 +23,7 @@ SRCS =	webserve/main.cpp \
 		webserve/Connection/Connection.cpp \
 		webserve/HttpMessage/HttpMessage.cpp \
 		webserve/HttpMessage/HttpRequestMessage.cpp \
+		webserve/HttpMessage/RequestMessageParser.cpp \
 		webserve/HttpMessage/HttpResponseMessage.cpp \
 		webserve/lib/ft/readFileIntoString.cpp \
 		webserve/lib/ft/splitBlockString.cpp \
