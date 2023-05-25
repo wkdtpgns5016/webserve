@@ -18,6 +18,8 @@ bool 	Parser::isInvalidErrorPage(const std::string& error_page)
 
 void	Parser::parseDefaultErrorPage(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, "error_page", 0));
+		throw InvalidNumberOfArguments(value, "error_page");
 	if (isInvalidErrorPage(value))
 		throw InvalidStatus(value);
 	block->setDefaultErrorPage(value);

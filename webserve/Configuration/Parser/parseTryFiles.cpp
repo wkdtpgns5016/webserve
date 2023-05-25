@@ -17,6 +17,8 @@ void	Parser::parseTryFiles(const std::string& value, Block* block)
 	std::string uri;
 
 	block->clearTryFiles();
+	if (isInvalidNumberOfArguments(value, "try_files", 0));
+		throw InvalidNumberOfArguments(value, "try_files");
 	while (pos + 1 < value.length())
 	{
 		end = _scripter.jumpWord(value, pos);

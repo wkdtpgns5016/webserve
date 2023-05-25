@@ -13,6 +13,14 @@ public:
 	const char* what() const throw();
 };
 
+
+// common Exception
+class InvalidNumberOfArguments : public SimpleException
+{
+public:
+	InvalidNumberOfArguments(const std::string& value, const std::string& id);
+};
+
 //Each Directive Exception
 class ErrorPageException: public SimpleException
 {
@@ -37,11 +45,7 @@ class InvalidPort : public ListenException
 public:
 	InvalidPort(const std::string& value);
 };
-class InvalidNumberOfArguments : public ListenException
-{
-public:
-	InvalidNumberOfArguments(const std::string& value);
-};
+
 class NoHost : public ListenException
 {
 public:

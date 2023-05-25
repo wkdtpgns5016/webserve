@@ -94,6 +94,8 @@ void	Parser::parseAutoindex(const std::string& value, Block* block)
 {
 	bool	autoindex;
 
+	if (isInvalidNumberOfArguments(value, "autoindex", 1));
+		throw InvalidNumberOfArguments(value, "autoindex");
 	if (value == "on")
 		autoindex = true;
 	else if (value == "off")
@@ -111,6 +113,16 @@ void	Parser::parseNoMatchId(const std::string& id, Block* block)
 	throw UnknownDirective(id);
 }
 
+bool	Parser::isInvalidNumberOfArguments(const std::string& value, const std::string& id, int limit)
+{
+	std::vector<std::string> arr;
+	if (value.empty())
+		return (true);
+	arr = ft::splitString(value, " ");
+	if (limit != 0 && arr.size() > limit)
+		return (true);
+	return (false);
+}
 
 //occf
 Parser::Parser() { setParsingFunctionArray(); }

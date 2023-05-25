@@ -14,6 +14,7 @@ private:
 	Scripter	_scripter;
 	void	(Parser::*_parsing_func[11])(const std::string&, Block*);
 
+	bool	isInvalidNumberOfArguments(const std::string& value, const std::string& id, int limit);
 	bool	isNumbers(const std::string& str, size_t pos = 0, size_t len = std::string::npos);
 	bool	isSmallerThanMax(const std::string& num_str);
 	bool 	isDuplicateMethod(const std::string& value);

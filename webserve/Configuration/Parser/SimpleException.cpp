@@ -16,13 +16,14 @@ const char* SimpleException::what() const throw()
 	return _line.c_str();
 }
 
+// common exception
+InvalidNumberOfArguments::InvalidNumberOfArguments(const std::string& value, const std::string& id) : SimpleException("invalid number of arguments", value, id) {}
 
 //listen
 ListenException::ListenException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "listen") {}
 
 HostNotFound::HostNotFound(const std::string& value) : ListenException("host not found", value) {}
 InvalidPort::InvalidPort(const std::string& value) : ListenException("invalid port", value) {}
-InvalidNumberOfArguments::InvalidNumberOfArguments(const std::string& value) : ListenException("invalid number of arguments", value) {}
 NoHost::NoHost(const std::string& value) : ListenException("no host", value) {}
 
 // client_max_body_size
