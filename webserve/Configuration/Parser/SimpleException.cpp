@@ -34,7 +34,7 @@ InvalidValue::InvalidValue(const std::string& value) : ClientMaxBodySizeExceptio
 // autoindex
 AutoIndexException::AutoIndexException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "autoindex") {}
 
-InvalidAutoIndex::InvalidAutoIndex(const std::string& value) : AutoIndexException("invalid autoindex", value) {}
+InvalidAutoIndex::InvalidAutoIndex(const std::string& value) : AutoIndexException("invalid value", value) {}
 
 // allow_method
 TryFilesException::TryFilesException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "try_files") {}
