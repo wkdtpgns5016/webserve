@@ -72,6 +72,8 @@ void	Parser::parseRoot(const std::string& value, Block* block)
  */
 void	Parser::parseServerName(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, 0, false))
+		throw InvalidNumberOfArguments(value, "upload_path");
 	block->setServerName(value);
 }
 
@@ -88,6 +90,8 @@ void	Parser::parseIndex(const std::string& value, Block* block)
  */
 void	Parser::parseUploadPath(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, 1, true))
+		throw InvalidNumberOfArguments(value, "upload_path");
 	block->setUploadPath(value);
 }
 
