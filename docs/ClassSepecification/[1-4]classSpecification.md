@@ -4,36 +4,39 @@
 **1. Webserver 객체** </br>
 **2. Server 객체** </br>
 **3. ServerController 객체** </br>
-**[4. RequestHandler 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/server_handler.md)** </br>
-+ 4-1. ServerHandler
-+ 4-2. GetHandler
-+ 4-3. PostHandler
-+ 4-4. DeleteHandler
-+ 4-5. PutHandler
+**4. Connection 객체** </br>
 
-**[5. Http 메세지 객체](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/http_message.md)** </br>
-+ 5-1. Http 메세지 요소
+**[5. RequestHandler 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[5]server_handler.md)** </br>
++ 5-1. ServerHandler
++ 5-2. GetHandler
++ 5-3. PostHandler
++ 5-4. DeleteHandler
++ 5-5. PutHandler
+
+**[6. Http 메세지 객체](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[6]http_message.md)** </br>
++ 6-1. Http 메세지 요소
     + StartLine
     + RequestLine
     + StatusLine
-+ 5-2. Http 메세지
++ 6-2. Http 메세지
     + HttpMessage
     + HttpRequestMessage
     + HttpResponseMessage
-    
-**[6. Configuration 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/configuration.md)** </br>
-+ 6-1. Block 객체
+ + 6-3. RequestMessageParser
+ 
+**[7. Configuration 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[7]configuration.md)** </br>
++ 7-1. Block 객체
     + Block
     + ServerBlock
     + LocationBlock
-+ 6-2. conf 객체
++ 7-2. conf 객체
     + Conf
     + ConfDto
-+ 6-3. 파싱 모듈
++ 7-3. 파싱 모듈
     + Parser
     + Scripter
 
-**[7. 라이브러리 함수](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/lib_function.md)** </br>
+**[8. 라이브러리 함수](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[8]lib_function.md)** </br>
 
 ---------------------------------------------------
 
@@ -100,4 +103,21 @@
 
 ------------------------------------------
 
+## **4. Connection 객체**
+**class Connection**
+> 서버와 클라이언트의 메시지 송수신을 담당하는 객체
 
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> | int         | private | _client_fd | 클라이언트 소켓 fd |
+> | std::string | private | _client_addr | 클라이언트 주소 |
+> | RequestMessageParser | private | _message_parser | Http 요청 메시지 파서 |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | bool checkMessage() | private | 메시지 완성 검사 함수 |
+> | void receiveMessage() | public | 메시지 수신 함수 |
+> | bool sendMessage(ServerBlock *Server_block) | public | 메시지 송신 함수 |
+> | std::string getClinetAddr() const | public | 클라이언트 주소 getter |
