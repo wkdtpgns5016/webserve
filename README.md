@@ -7,7 +7,7 @@
 
 ### **4. [프로젝트 플로우 차트](https://github.com/wkdtpgns5016/webserve/blob/main/docs/FlowChart/flowchart.md)** </br>
 
-### **5. [클래스 다이어그램](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassDiagram/[1-4]classSpecification.md)** </br>
+### **5. [클래스 다이어그램](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassDiagram/ClassDiagram.md)** </br>
 
 ### **6. [클래스 명세서 및 라이브러리 명세서](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[1-4]classSpecification.md)** </br>
 
