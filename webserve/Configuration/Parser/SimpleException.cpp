@@ -17,7 +17,10 @@ const char* SimpleException::what() const throw()
 }
 
 // common exception
-InvalidNumberOfArguments::InvalidNumberOfArguments(const std::string& value, const std::string& id) : SimpleException("invalid number of arguments", value, id) {}
+InvalidNumberOfArguments::InvalidNumberOfArguments(const std::string& value, const std::string& id) : SimpleException("invalid number of arguments", value, id) 
+{
+	_line = "invalid number of arguments in \"" + id + "\"\n";
+}
 
 //listen
 ListenException::ListenException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "listen") {}
@@ -37,19 +40,17 @@ AutoIndexException::AutoIndexException(const std::string& error_type, const std:
 InvalidAutoIndex::InvalidAutoIndex(const std::string& value) : AutoIndexException("invalid value", value) {}
 
 // allow_method
-TryFilesException::TryFilesException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "try_files") {}
-
-DuplicateMethod::DuplicateMethod(const std::string& value) : AllowMethodException("Duplicate Method", value) {}
-InvalidMethod::InvalidMethod(const std::string& value) : AllowMethodException("Invalid Method", value) {}
+AllowMethodException::AllowMethodException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "allow_method") {}
+DuplicateMethod::DuplicateMethod(const std::string& value) : AllowMethodException("duplicate method", value) {}
+InvalidMethod::InvalidMethod(const std::string& value) : AllowMethodException("invalid method", value) {}
 
 // default_error_page
-AllowMethodException::AllowMethodException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "allow_method") {}
-
-InvalidStatus::InvalidStatus(const std::string& value) : ErrorPageException("invalid status", value) {}
-
-// try_files
 ErrorPageException::ErrorPageException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "error_page") {}
 
+InvalidStatus::InvalidStatus(const std::string& line, const std::string& value) : ErrorPageException(line, value) {}
+
+// try_files
+TryFilesException::TryFilesException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "try_files") {}
 InvalidUri::InvalidUri(const std::string& value) : TryFilesException("invalid uri", value) {}
 
 //unnkown

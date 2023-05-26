@@ -100,7 +100,7 @@ public:
 class InvalidStatus : public ErrorPageException
 {
 public:
-	InvalidStatus(const std::string& value);
+	InvalidStatus(const std::string& line, const std::string& value);
 };
 
 // try_files
