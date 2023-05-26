@@ -1,5 +1,5 @@
 echo "test[Simple/Syntax]"
-read -p "simple or syntax?" test_directory
+read test_directory
 if [ $test_directory != "Simple" -a $test_directory != "Syntax" ];then
 	echo "only simple or syntax, please..."
 	exit

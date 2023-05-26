@@ -19,12 +19,12 @@ std::pair<std::pair<std::string, std::string>, std::string>	ServerBlock::divideL
 	id = str.substr(pos, end - pos);
 	
 	pos = _scripter.jumpTrash(str, end);
-	end = _scripter.jumpWord(str, pos);
-	url = str.substr(pos, end - pos);
-	if (str.find('{', end) == std::string::npos)
-		throw std::exception();
+	end = _scripter.jumpBeforeBlock(str, pos);
+	end = _scripter.jumpBackTrash(str, end);
+	if (pos < end)
+		url = str.substr(pos, end - pos);
 
-	pos = _scripter.jumpTrash(str, end) + 1;
+	pos = _scripter.jumpBeforeBlock(str, end);
 	end = str.length() - 1;
 	if (pos < end)
 		value = str.substr(pos, end - pos);
@@ -41,7 +41,9 @@ LocationBlock*	ServerBlock::generateInnerBlock(const std::string& script)
 	std::string url = id_url_pair.second;
 	std::string	value = id_url_value_pair.second;
 	if (id != "location")
-		throw std::exception();
+		throw UnknownOrNotAllowed(id);
+	if (url.empty() || _scripter.jumpWord(url, 0) != url.length())
+		throw ConsistOfInvalidNumbersOfArguments(id);
 	return new LocationBlock(*this, value, url);
 }
 
