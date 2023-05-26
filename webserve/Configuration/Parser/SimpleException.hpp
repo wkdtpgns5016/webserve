@@ -59,10 +59,10 @@ public:
 	ClientMaxBodySizeException(const std::string& type, const std::string& value);
 };
 
-class InvalidValue: public ClientMaxBodySizeException
+class InvalidSize: public ClientMaxBodySizeException
 {
 public:
-	InvalidValue(const std::string& value);
+	InvalidSize(const std::string& value);
 };
 
 // autoindex
@@ -102,18 +102,17 @@ class InvalidStatus : public ErrorPageException
 public:
 	InvalidStatus(const std::string& line, const std::string& value);
 };
+class BetweenStatus : public ErrorPageException
+{
+public:
+	BetweenStatus(const std::string& line, const std::string& value);
+};
 
 // try_files
 class TryFilesException: public SimpleException
 {
 public:
 	TryFilesException(const std::string& type, const std::string& value);
-};
-
-class InvalidUri : public TryFilesException
-{
-public:
-	InvalidUri(const std::string& value);
 };
 
 //unknown

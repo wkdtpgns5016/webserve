@@ -14,7 +14,7 @@ void 	Parser::checkInvalidStatus(const std::string& error_page)
 		{
 			int number = ft::stoi(*it);
 			if (number < 300 || number > 599)
-				throw InvalidStatus("value "+ *it +"  must be between 300 and 599", *it);
+				throw BetweenStatus("value "+ *it +"  must be between 300 and 599", *it);
 		}
 	}
 }

@@ -63,6 +63,8 @@ size_t	Parser::parseSimple(const std::string& script, Block* block)
  */
 void	Parser::parseRoot(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, 1, true))
+		throw InvalidNumberOfArguments(value, "root");
 	block->setRoot(value);
 }
 
@@ -77,6 +79,8 @@ void	Parser::parseServerName(const std::string& value, Block* block)
  */
 void	Parser::parseIndex(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, 0, false))
+		throw InvalidNumberOfArguments(value, "index");
 	block->setIndex(value);
 }
 

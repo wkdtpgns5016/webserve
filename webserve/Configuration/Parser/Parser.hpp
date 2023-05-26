@@ -20,7 +20,7 @@ private:
 	bool 	isDuplicateMethod(const std::string& value);
 	bool	isInvalidMethod(const std::string& method);
 	void	checkInvalidStatus(const std::string& error_page);
-	bool	isInvalidUri(const std::string& uri);
+	void	checkInvalidUri(const std::string& uri);
 	int		extractOneSectionNumber(const std::string& value, size_t pos, size_t len);
 	size_t	measureOneSectionLength(const std::string& value, size_t pos);
 	void	parseListen(const std::string&, Block* block);
