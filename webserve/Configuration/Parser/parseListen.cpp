@@ -4,6 +4,8 @@ void	Parser::parseListen(const std::string& value, Block* block)
 {
 	size_t	pos;
 
+	if (isServerBlock(block) == false)
+		throw NotAllowed("listen");
 	if (isInvalidNumberOfArguments(value, 0, false))
 		throw InvalidNumberOfArguments(value, "listen");
 	pos = value.find(':');
@@ -84,3 +86,4 @@ size_t	Parser::measureOneSectionLength(const std::string& value, size_t pos)
 		throw HostNotFound(value);
 	return next_pos - pos;
 }
+

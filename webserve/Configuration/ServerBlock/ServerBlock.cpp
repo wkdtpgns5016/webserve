@@ -1,5 +1,4 @@
 #include "ServerBlock.hpp"
-#include <exception>
 
 //script constructor
 ServerBlock::ServerBlock(const Block& outer_block, const std::string& script)

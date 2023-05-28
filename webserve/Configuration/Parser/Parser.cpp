@@ -1,10 +1,5 @@
 #include "./Parser.hpp"
-#include <cstddef>
-#include <i386/limits.h>
-#include <iterator>
-#include <sstream>
-#include <sys/wait.h>
-
+#include "../ServerBlock/ServerBlock.hpp"
 /**
  * @details simple_directives 하나를 id와 value로 나눕니다.
  */
@@ -72,6 +67,8 @@ void	Parser::parseRoot(const std::string& value, Block* block)
  */
 void	Parser::parseServerName(const std::string& value, Block* block)
 {
+	if (isServerBlock(block) == false)
+		throw NotAllowed("server_name");
 	if (isInvalidNumberOfArguments(value, 0, false))
 		throw InvalidNumberOfArguments(value, "upload_path");
 	block->setServerName(value);
@@ -137,6 +134,13 @@ bool	Parser::isInvalidNumberOfArguments(const std::string& value, size_t limit, 
 	return (false);
 }
 
+bool	Parser::isServerBlock(Block* block)
+{
+	ServerBlock* test = dynamic_cast<ServerBlock *>(block);
+	if (test)
+		return true;
+	return false;
+}
 //occf
 Parser::Parser() { setParsingFunctionArray(); }
 Parser::~Parser() {}
