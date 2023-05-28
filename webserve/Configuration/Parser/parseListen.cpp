@@ -31,7 +31,7 @@ void	Parser::parseListen(const std::string& value, Block* block)
  */
 void	Parser::parsePort(const std::string& value, Block* block)
 {
-	if (isNumbers(value) == false)
+	if (isNumbers(value) == false || value.empty())
 		throw InvalidPort(value);
 
 	long port_num = std::strtol(value.c_str(), NULL, 10);
