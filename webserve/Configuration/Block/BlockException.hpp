@@ -1,5 +1,6 @@
 #ifndef BLOCKEXCEPTION_HPP
 # define BLOCKEXCEPTION_HPP
+
 #include <iostream>
 
 class BlockException : public std::exception

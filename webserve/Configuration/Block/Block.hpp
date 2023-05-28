@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include "../Scripter/Scripter.hpp"
+#include "./BlockException.hpp"
 
 /**
  * @class	Block
