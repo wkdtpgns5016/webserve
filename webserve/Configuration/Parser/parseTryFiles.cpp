@@ -21,7 +21,7 @@ void	Parser::parseTryFiles(const std::string& value, Block* block)
 	{
 		end = _scripter.jumpWord(value, pos);
 		uri = value.substr(pos, end - pos);
-		if (isInvalidUri(uri))
+		if (isInvalidUri(uri) == true)
 			throw InvalidUri(value);
 		block->setTryFiles(uri);
 		pos = _scripter.jumpTrash(value, end);
