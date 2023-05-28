@@ -14,12 +14,13 @@ private:
 	Scripter	_scripter;
 	void	(Parser::*_parsing_func[11])(const std::string&, Block*);
 
+	bool	isInvalidNumberOfArguments(const std::string& value, size_t limit, bool only);
 	bool	isNumbers(const std::string& str, size_t pos = 0, size_t len = std::string::npos);
 	bool	isSmallerThanMax(const std::string& num_str);
 	bool 	isDuplicateMethod(const std::string& value);
 	bool	isInvalidMethod(const std::string& method);
-	bool	isInvalidErrorPage(const std::string& error_page);
-	bool	isInvalidUri(const std::string& uri);
+	void	checkInvalidStatus(const std::string& error_page);
+	void	checkInvalidUri(const std::string& uri);
 	int		extractOneSectionNumber(const std::string& value, size_t pos, size_t len);
 	size_t	measureOneSectionLength(const std::string& value, size_t pos);
 	void	parseListen(const std::string&, Block* block);

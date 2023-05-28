@@ -63,6 +63,8 @@ size_t	Parser::parseSimple(const std::string& script, Block* block)
  */
 void	Parser::parseRoot(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, 1, true))
+		throw InvalidNumberOfArguments(value, "root");
 	block->setRoot(value);
 }
 
@@ -70,6 +72,8 @@ void	Parser::parseRoot(const std::string& value, Block* block)
  */
 void	Parser::parseServerName(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, 0, false))
+		throw InvalidNumberOfArguments(value, "upload_path");
 	block->setServerName(value);
 }
 
@@ -77,6 +81,8 @@ void	Parser::parseServerName(const std::string& value, Block* block)
  */
 void	Parser::parseIndex(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, 0, false))
+		throw InvalidNumberOfArguments(value, "index");
 	block->setIndex(value);
 }
 
@@ -84,6 +90,8 @@ void	Parser::parseIndex(const std::string& value, Block* block)
  */
 void	Parser::parseUploadPath(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, 1, true))
+		throw InvalidNumberOfArguments(value, "upload_path");
 	block->setUploadPath(value);
 }
 
@@ -94,6 +102,8 @@ void	Parser::parseAutoindex(const std::string& value, Block* block)
 {
 	bool	autoindex;
 
+	if (isInvalidNumberOfArguments(value, 1, true))
+		throw InvalidNumberOfArguments(value, "autoindex");
 	if (value == "on")
 		autoindex = true;
 	else if (value == "off")
@@ -111,6 +121,21 @@ void	Parser::parseNoMatchId(const std::string& id, Block* block)
 	throw UnknownDirective(id);
 }
 
+bool	Parser::isInvalidNumberOfArguments(const std::string& value, size_t limit, bool only)
+{
+	std::vector<std::string> arr;
+	if (value.empty())
+		return (true);
+	arr = ft::splitString(value, " ");
+	if (limit != 0)
+	{
+		if (only && arr.size() != limit)
+			return (true);
+		if (!only && arr.size() < limit)
+			return (true);
+	}
+	return (false);
+}
 
 //occf
 Parser::Parser() { setParsingFunctionArray(); }

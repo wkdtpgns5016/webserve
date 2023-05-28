@@ -4,9 +4,8 @@ void	Parser::parseListen(const std::string& value, Block* block)
 {
 	size_t	pos;
 
-	if (value.empty())
-		throw InvalidNumberOfArguments(value);
-
+	if (isInvalidNumberOfArguments(value, 0, false))
+		throw InvalidNumberOfArguments(value, "listen");
 	pos = value.find(':');
 	if (pos == std::string::npos)
 	{
