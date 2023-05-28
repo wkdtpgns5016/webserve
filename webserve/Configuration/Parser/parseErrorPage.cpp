@@ -2,23 +2,27 @@
 
 /** @details 에러페이지 경로 파싱함수
  */
-bool 	Parser::isInvalidErrorPage(const std::string& error_page)
+void 	Parser::checkInvalidStatus(const std::string& error_page)
 {
 	std::vector<std::string> arr = ft::splitString(error_page, " ");
-	if (arr.size() <= 1)
-		return (true);
 	std::vector<std::string>::iterator it = arr.begin();
 	for (; it != arr.end() - 1; it++)
 	{
 		if (!isNumbers(*it))
-			return (true);
+			throw InvalidStatus("invalid value", *it);
+		else
+		{
+			int number = ft::stoi(*it);
+			if (number < 300 || number > 599)
+				throw BetweenStatus("value "+ *it +"  must be between 300 and 599", *it);
+		}
 	}
-	return (false);
 }
 
 void	Parser::parseDefaultErrorPage(const std::string& value, Block* block)
 {
-	if (isInvalidErrorPage(value))
-		throw InvalidStatus(value);
+	if (isInvalidNumberOfArguments(value, 2, false))
+		throw InvalidNumberOfArguments(value, "error_page");
+	checkInvalidStatus(value);
 	block->setDefaultErrorPage(value);
 }

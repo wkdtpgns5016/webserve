@@ -13,6 +13,14 @@ public:
 	const char* what() const throw();
 };
 
+
+// common Exception
+class InvalidNumberOfArguments : public SimpleException
+{
+public:
+	InvalidNumberOfArguments(const std::string& value, const std::string& id);
+};
+
 //Each Directive Exception
 class ErrorPageException: public SimpleException
 {
@@ -37,11 +45,7 @@ class InvalidPort : public ListenException
 public:
 	InvalidPort(const std::string& value);
 };
-class InvalidNumberOfArguments : public ListenException
-{
-public:
-	InvalidNumberOfArguments(const std::string& value);
-};
+
 class NoHost : public ListenException
 {
 public:
@@ -55,10 +59,10 @@ public:
 	ClientMaxBodySizeException(const std::string& type, const std::string& value);
 };
 
-class InvalidValue: public ClientMaxBodySizeException
+class InvalidSize: public ClientMaxBodySizeException
 {
 public:
-	InvalidValue(const std::string& value);
+	InvalidSize(const std::string& value);
 };
 
 // autoindex
@@ -96,7 +100,12 @@ public:
 class InvalidStatus : public ErrorPageException
 {
 public:
-	InvalidStatus(const std::string& value);
+	InvalidStatus(const std::string& line, const std::string& value);
+};
+class BetweenStatus : public ErrorPageException
+{
+public:
+	BetweenStatus(const std::string& line, const std::string& value);
 };
 
 // try_files
@@ -104,12 +113,6 @@ class TryFilesException: public SimpleException
 {
 public:
 	TryFilesException(const std::string& type, const std::string& value);
-};
-
-class InvalidUri : public TryFilesException
-{
-public:
-	InvalidUri(const std::string& value);
 };
 
 //unknown

@@ -35,8 +35,10 @@ bool	Parser::isSmallerThanMax(const std::string& num_str)
 
 void	Parser::parseClientMaxBodySize(const std::string& value, Block* block)
 {
+	if (isInvalidNumberOfArguments(value, 1, true))
+		throw InvalidNumberOfArguments(value, "client_max_body_size");
 	if (isNumbers(value) == false || isSmallerThanMax(value) == false)
-		throw InvalidValue(value);
+		throw InvalidSize(value);
 	
 	std::stringstream ss(value);
 	size_t	client_max_body_size;

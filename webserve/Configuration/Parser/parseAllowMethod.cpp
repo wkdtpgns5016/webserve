@@ -39,6 +39,8 @@ void	Parser::parseAllowMethod(const std::string& value, Block* block)
 	std::string method;
 
 	block->clearAllowMethod();
+	if (isInvalidNumberOfArguments(value, 0, false))
+		throw InvalidNumberOfArguments(value, "allow_method");
 	if (isDuplicateMethod(value))
 		throw DuplicateMethod(value);
 	while (pos + 1 < value.length())
