@@ -119,11 +119,6 @@ std::string HttpRequestMessage::getPathInfo() const
     std::string path_info = request_tartget;
     size_t pos = request_tartget.find('?');
     if (pos != std::string::npos)
-        path_info  = request_tartget.substr(0, pos - 1);
+        path_info  = request_tartget.substr(0, pos);
     return (path_info);
-}
-
-std::string HttpRequestMessage::getPathTranslate() const
-{
-    return ("/home/sehjang/weserve" + getPathInfo());
 }

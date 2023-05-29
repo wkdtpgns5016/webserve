@@ -42,6 +42,7 @@ HttpResponseMessage DeleteHandler::requestHandler()
     HttpResponseMessage response_message;
     std::string path;
     std::string request_target = _request_message.getStartLine().getRequestTarget();
+    std::string path_info = _request_message.getPathInfo();
 
     try
     {
@@ -50,7 +51,7 @@ HttpResponseMessage DeleteHandler::requestHandler()
         // http reqeust message 검사
         checkHttpMessage();
         // 파일 삭제
-        deleteFile(request_target);
+        deleteFile(path_info);
         // 응답 생성
         if (body.empty())
             status = 201;

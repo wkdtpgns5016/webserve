@@ -35,7 +35,7 @@ class ServerHandler
     void checkMessageSize(void);
     void checkHttpMessage(void);
     bool checkDirectory(std::string path);
-    bool checkFile(std::string request_target);
+    int checkFile(std::string request_target);
 
     std::vector<std::string> getIndexPath(std::string root, std::string index);
     std::string tryFiles(std::vector<std::string> try_files);

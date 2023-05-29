@@ -108,16 +108,17 @@ HttpResponseMessage GetHandler::requestHandler()
     HttpResponseMessage response_message;
     std::string message_body;
     std::string request_target = _request_message.getStartLine().getRequestTarget();
+    std::string path_info = _request_message.getPathInfo();
 
     try
     {
         // http reqeust message 검사
         checkHttpMessage();
         // 파일 종류 판별
-        if (checkFile(request_target)) // 일반 파일
-            message_body = openFile(request_target);
+        if (checkFile(path_info) == -1) // 일반 파일
+            message_body = openFile(path_info);
         else                           // cgi 파일
-            message_body = executeCgi(request_target);
+            message_body = executeCgi(path_info);
         // 응답 생성
         response_message = getResponseMessage(200, message_body);
     }
