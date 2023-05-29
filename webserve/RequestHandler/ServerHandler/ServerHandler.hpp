@@ -41,6 +41,7 @@ class ServerHandler
     std::string tryFiles(std::vector<std::string> try_files);
     std::string findPath(std::string request_target);
 
+
     std::string executeCgi(std::string request_target);
 
     std::map<std::string, std::string> setHeader(int status_code, std::string message_body);
