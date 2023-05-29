@@ -38,16 +38,16 @@ CGI::CGI(const CGI &obj)
 
 CGI CGI::operator=(const CGI &obj)
 {
-    this->_s_parser = obj._s_parser;
-    this->_l_parser = obj._l_parser;
-    this->_s_handler = obj._s_handler;
+    this->_block = obj._block;
+    this->_request_message = obj._request_message;
     this->_env = obj._env;
+    return *this;
 }
 
 CGI::~CGI(void) {}
 
 
-CGI::CGI(ServerParser s_parser, LocationParser l_parser, ServerHandler s_handler)
+CGI::CGI(LocationBlock *block, HttpRequestMessage request_message)
 {
     this->_env.insert(std::make_pair("AUTH_TYPE", ""));
     this->_env.insert(std::make_pair("CONTENT_LENGTH", ""));
@@ -77,14 +77,13 @@ CGI::CGI(ServerParser s_parser, LocationParser l_parser, ServerHandler s_handler
     this->_env.insert(std::make_pair("WEBTOP_USER", ""));
     this->_env.insert(std::make_pair("NCHOME", ""));
 
-    this->_s_parser = s_parser;
-    this->_l_parser = l_parser;
-    this->_s_handler = s_handler;
+    this->_block = block;
+    this->_request_message = request_message;
 }
 
 void CGI::setEnv(void)
 {
-    std::map<std::string, std::string> headers = _s_handler.getRequestMessage().getHeaders();
+    std::map<std::string, std::string> headers = _request_message.getHeaders();
 
     this->_env["AUTH_TYPE"] = ft::splitString(headers["Authorization"], " ")[0];
     this->_env["CONTENT_LENGTH"] = headers["Content-Length"];
@@ -98,24 +97,33 @@ void CGI::setEnv(void)
     this->_env["HTTP_HOST"] = headers["Host"];
     this->_env["HTTP_PROXY_AUTHORIZATION"] = headers["Proxy-Authorization"];
     this->_env["HTTP_USER_AGENT"] = headers["User-Agent"];
-    this->_env["PATH_INFO"] = headers["Accept-Encoding"]; // ?
-    this->_env["PATH_TRANSLATED"] = headers["Accept-Encoding"]; // ?
-    this->_env["QUERY_STRING"] = headers["Accept-Encoding"];
+
+    this->_env["PATH_INFO"] = _request_message.getPathInfo(); // ?
+    this->_env["PATH_TRANSLATED"] = _request_message.getPathTranslate(); // ?
+    this->_env["QUERY_STRING"] = _request_message.getQueryString();
+    
     std::string client_ip = ft::splitString(headers["X-Forwarded-For"], " ")[0];
     if (client_ip[client_ip.length() - 1] == ',')
         client_ip = client_ip.substr(0, client_ip.length() - 1);
     this->_env["REMOTE_ADDR"] = client_ip;
-    this->_env["REMOTE_HOST"] = headers[""]; // 
+    this->_env["REMOTE_HOST"] = client_ip;
     this->_env["REMOTE_USER"] = headers["Authorization"];
-    this->_env["REQUEST_METHOD"] = headers[""]; //
-    this->_env["SCRIPT_NAME"] = headers[""]; //
-    this->_env["SERVER_NAME"] = headers[""]; // 
-    this->_env["SERVER_PORT"] = headers[""]; // 
-    this->_env["SERVER_PROTOCOL"] = headers[""]; // 
+    this->_env["REQUEST_METHOD"] = _request_message.getHttpMethod();
+    this->_env["SCRIPT_NAME"] = _request_message.getPathInfo();
+
+    if (headers.find("Host") != headers.end())
+        this->_env["SERVER_NAME"] = headers["Host"];
+    else
+        this->_env["SERVER_NAME"] = this->_env["REMOTE_ADDR"];
+
+    this->_env["SERVER_PORT"] = _block->getPort(); 
+    this->_env["SERVER_PROTOCOL"] = _request_message.getHttpVersion(); 
     this->_env["SERVER_SOFTWARE"] = "webserv/1.0";
-    this->_env["HTTP_COOKIE"] = headers[""]; // 
-    this->_env["WEBTOP_USER"] = headers[""]; //
-    this->_env["NCHOME"] = headers[""]; //
+
+
+    this->_env["HTTP_COOKIE"] = "";
+    this->_env["WEBTOP_USER"] = "";
+    this->_env["NCHOME"] = "";
 }
 
 char **CGI::getEnvChar(void) const
@@ -141,15 +149,16 @@ std::string CGI::excute(std::string scriptName)
     int         fd[2];
     int         std_fd[2];
     pid_t       pid;
-    char        **env;
+    char        **env = NULL;
 
+    setEnv();
     if (pipe(fd) < 0)
     {
         std::cerr << "pipe error\n";
         exit(1);
     }
 
-    if (pid = fork() < 0)
+    if ((pid = fork()) < 0)
     {
         std::cerr << "fork error\n";
         exit(1);
@@ -180,15 +189,15 @@ std::string CGI::excute(std::string scriptName)
     else
     {
         char buf[1000] = {0, };
-        int ret = 1;
+        //int ret = 1;
 
         waitpid(-1, NULL, 0);
 
         close(fd[WRITE]);
-        while (ret > 0)
+        while (read(fd[READ], buf, 1000) > 0)
         {
             memset(buf, 0, 1000);
-            ret = read(fd[READ], buf, 1000);
+            //ret = read(fd[READ], buf, 1000);
             result += buf;
         }
     }

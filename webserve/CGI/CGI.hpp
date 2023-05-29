@@ -5,9 +5,8 @@
 #include <string>
 #include <unistd.h>
 #include "../lib/ft/splitString.cpp"
-#include "../ServerParser/ServerParser.hpp"
-#include "../LocationParser/LocationParser.hpp"
-#include "../ServerHandler/ServerHandler.hpp"
+#include "../Configuration/LocationBlock/LocationBlock.hpp"
+#include "../HttpMessage/HttpRequestMessage.hpp"
 
 #define READ 0
 #define WRITE 1
@@ -16,9 +15,8 @@
 class CGI
 {
 private:
-    ServerParser                        _s_parser;
-    LocationParser                      _l_parser;
-    ServerHandler                       _s_handler;
+    LocationBlock                       *_block;
+    HttpRequestMessage                  _request_message;
     std::map<std::string, std::string>  _env;
 
 public:
@@ -27,7 +25,7 @@ public:
     CGI operator=(const CGI& obj);
     ~CGI(void);
 
-    CGI(ServerParser s_parser, LocationParser l_parser, ServerHandler s_handler);
+    CGI(LocationBlock *_block, HttpRequestMessage _request_message);
 
     void setEnv(void);
     char **getEnvChar(void) const;

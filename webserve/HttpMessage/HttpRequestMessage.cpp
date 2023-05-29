@@ -106,8 +106,24 @@ std::string HttpRequestMessage::getQueryString() const
 {
     std::string query;
     std::string request_tartget = _start_line.getRequestTarget();
-    int pos = request_tartget.find('?');
+    size_t pos = request_tartget.find('?');
     if (pos != std::string::npos)
         query  = request_tartget.substr(pos + 1);
     return (query);
+}
+
+
+std::string HttpRequestMessage::getPathInfo() const
+{
+    std::string request_tartget = _start_line.getRequestTarget();
+    std::string path_info = request_tartget;
+    size_t pos = request_tartget.find('?');
+    if (pos != std::string::npos)
+        path_info  = request_tartget.substr(0, pos - 1);
+    return (path_info);
+}
+
+std::string HttpRequestMessage::getPathTranslate() const
+{
+    return ("/home/sehjang/weserve" + getPathInfo());
 }
