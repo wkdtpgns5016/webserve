@@ -37,17 +37,14 @@ HttpResponseMessage PostHandler::requestHandler()
     std::string message_body;
     std::string path;
     std::string request_target = _request_message.getStartLine().getRequestTarget();
+    std::string path_info = _request_message.getPathInfo();
 
     try
     {
         // http reqeust message 검사
         checkHttpMessage();
-        path = findPath(request_target);
-
-        // execute cgi
-        // 임시
-        message_body = _request_message.getMessageBody();
-
+        path = findPath(path_info);
+        message_body = executeCgi(path_info);
         // 응답 생성
         response_message = getResponseMessage(200, message_body);
     }

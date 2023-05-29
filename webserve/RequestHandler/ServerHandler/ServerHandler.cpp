@@ -108,19 +108,25 @@ HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::stri
     return (response_message);
 }
 
-bool ServerHandler::checkFile(std::string request_target)
+int ServerHandler::checkFile(std::string request_target)
 {
     int len = request_target.length();
     if (len < 4)
-        return (true);
-    if (request_target.substr(len - 4, 3).compare("php") == 0)
-        return (false);
-    else if (request_target.substr(len - 4, 3).compare("cgi") == 0)
-        return (false);
-    else if (request_target.substr(len - 3, 2).compare("pl") == 0)
-        return (false);
+        return (-1);
+    if (request_target.substr(len - 3, 3).compare("php") == 0)
+        return (1);
+    else if (request_target.substr(len - 3, 3).compare("cgi") == 0)
+        return (2);
+    else if (request_target.substr(len - 2, 2).compare("pl") == 0)
+        return (3);
+    else if (request_target.substr(len - 2, 2).compare("py") == 0)
+        return (4);
+    else if (request_target.substr(len - 2, 2).compare("sh") == 0)
+        return (5);
+    else if (request_target.substr(len - 3, 3).compare("bla") == 0)
+        return (6);
     else
-        return (true);
+        return (-1);
 }
 
 std::vector<std::string> ServerHandler::getIndexPath(std::string root, std::string index)
@@ -334,9 +340,38 @@ void ServerHandler::checkHttpMessage(void)
 std::string ServerHandler::executeCgi(std::string request_target)
 {
     CGI cgi(_b_config, _request_message);
-    std::string file_path = findPath(request_target);
+    std::string file_path = "" + findPath(request_target);
+    std::string script_name;
+    std::string result;
 
-    return ("");
+    int flag = checkFile(request_target);
+
+    switch (flag)
+    {
+    case 1:
+        script_name = "/usr/bin/php " + file_path;
+        break;
+    case 2:
+        script_name = "." + file_path;
+        break;
+    case 3:
+        script_name = "/usr/bin/perl " + file_path;
+        break;
+    case 4:
+        script_name = "/usr/bin/python " + file_path;
+        break;
+    case 5:
+        script_name = "/bin/sh " + file_path;
+        break;
+    case 6:
+        script_name = "./cgi_tester " + _request_message.getHttpMethod();
+        break;
+    default:
+        script_name = "./" + file_path;
+        break;
+    }
+    result = cgi.excute(script_name);
+    return (result);
 }
 
 const char* ServerHandler::AutoIndexExceptnion::what() const throw() {

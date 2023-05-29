@@ -46,12 +46,13 @@ void PutHandler::writeFile(int fd, std::string message)
 int PutHandler::putMethod()
 {
     std::string request_target = _request_message.getStartLine().getRequestTarget();
+    std::string path_info = _request_message.getPathInfo();
     std::string path;
     int status = 200;
     int fd;
     try
     {
-        path = findPath(request_target);
+        path = findPath(path_info);
         fd = openFile(path);
         writeFile(fd, _request_message.getMessageBody());
         close(fd);

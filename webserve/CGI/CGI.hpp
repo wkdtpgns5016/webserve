@@ -4,7 +4,6 @@
 #include <map>
 #include <string>
 #include <unistd.h>
-#include "../lib/ft/splitString.cpp"
 #include "../Configuration/LocationBlock/LocationBlock.hpp"
 #include "../HttpMessage/HttpRequestMessage.hpp"
 
