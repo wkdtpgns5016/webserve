@@ -6,29 +6,33 @@ CGI::CGI(void)
     this->_env.insert(std::make_pair("CONTENT_LENGTH", ""));
     this->_env.insert(std::make_pair("CONTENT_TYPE", ""));
     this->_env.insert(std::make_pair("GATEWAY_INTERFACE", ""));
-    this->_env.insert(std::make_pair("HTTP_ACCEPT", ""));
-    this->_env.insert(std::make_pair("HTTP_ACCEPT_CHARSET", ""));
-    this->_env.insert(std::make_pair("HTTP_ACCEPT_ENCODING", ""));
-    this->_env.insert(std::make_pair("HTTP_ACCEPT_LANGUAGE", ""));
-    this->_env.insert(std::make_pair("HTTP_FORWARDED", ""));
-    this->_env.insert(std::make_pair("HTTP_HOST", ""));
-    this->_env.insert(std::make_pair("HTTP_PROXY_AUTHORIZATION", ""));
-    this->_env.insert(std::make_pair("HTTP_USER_AGENT", ""));
+    // this->_env.insert(std::make_pair("HTTP_ACCEPT", ""));
+    // this->_env.insert(std::make_pair("HTTP_ACCEPT_CHARSET", ""));
+    // this->_env.insert(std::make_pair("HTTP_ACCEPT_ENCODING", ""));
+    // this->_env.insert(std::make_pair("HTTP_ACCEPT_LANGUAGE", ""));
+    // this->_env.insert(std::make_pair("HTTP_COOKIE", ""));
+    // this->_env.insert(std::make_pair("HTTP_FORWARDED", ""));
+    // this->_env.insert(std::make_pair("HTTP_HOST", ""));
+    // this->_env.insert(std::make_pair("HTTP_PROXY_AUTHORIZATION", ""));
+    // this->_env.insert(std::make_pair("HTTP_USER_AGENT", ""));
+    // this->_env.insert(std::make_pair("NCHOME", ""));
     this->_env.insert(std::make_pair("PATH_INFO", ""));
     this->_env.insert(std::make_pair("PATH_TRANSLATED", ""));
     this->_env.insert(std::make_pair("QUERY_STRING", ""));
     this->_env.insert(std::make_pair("REMOTE_ADDR", ""));
-    this->_env.insert(std::make_pair("REMOTE_HOST", ""));
+    // this->_env.insert(std::make_pair("REMOTE_HOST", ""));
+    this->_env.insert(std::make_pair("REMOTE_IDENT", ""));
     this->_env.insert(std::make_pair("REMOTE_USER", ""));
     this->_env.insert(std::make_pair("REQUEST_METHOD", ""));
+    this->_env.insert(std::make_pair("REQUEST_URI", ""));
+    this->_env.insert(std::make_pair("SCRIPT_FILENAME", ""));
     this->_env.insert(std::make_pair("SCRIPT_NAME", ""));
     this->_env.insert(std::make_pair("SERVER_NAME", ""));
     this->_env.insert(std::make_pair("SERVER_PORT", ""));
     this->_env.insert(std::make_pair("SERVER_PROTOCOL", ""));
     this->_env.insert(std::make_pair("SERVER_SOFTWARE", ""));
-    this->_env.insert(std::make_pair("HTTP_COOKIE", ""));
-    this->_env.insert(std::make_pair("WEBTOP_USER", ""));
-    this->_env.insert(std::make_pair("NCHOME", ""));
+    // this->_env.insert(std::make_pair("WEBTOP_USER", ""));
+    this->_env.insert(std::make_pair("REDIRECT_STATUS", ""));
 }
 
 CGI::CGI(const CGI &obj)
@@ -53,19 +57,22 @@ CGI::CGI(LocationBlock *block, HttpRequestMessage request_message)
     this->_env.insert(std::make_pair("CONTENT_LENGTH", ""));
     this->_env.insert(std::make_pair("CONTENT_TYPE", ""));
     this->_env.insert(std::make_pair("GATEWAY_INTERFACE", ""));
-    this->_env.insert(std::make_pair("HTTP_ACCEPT", ""));
-    this->_env.insert(std::make_pair("HTTP_ACCEPT_CHARSET", ""));
-    this->_env.insert(std::make_pair("HTTP_ACCEPT_ENCODING", ""));
-    this->_env.insert(std::make_pair("HTTP_ACCEPT_LANGUAGE", ""));
-    this->_env.insert(std::make_pair("HTTP_FORWARDED", ""));
-    this->_env.insert(std::make_pair("HTTP_HOST", ""));
-    this->_env.insert(std::make_pair("HTTP_PROXY_AUTHORIZATION", ""));
-    this->_env.insert(std::make_pair("HTTP_USER_AGENT", ""));
+    // this->_env.insert(std::make_pair("HTTP_ACCEPT", ""));
+    // this->_env.insert(std::make_pair("HTTP_ACCEPT_CHARSET", ""));
+    // this->_env.insert(std::make_pair("HTTP_ACCEPT_ENCODING", ""));
+    // this->_env.insert(std::make_pair("HTTP_ACCEPT_LANGUAGE", ""));
+    // this->_env.insert(std::make_pair("HTTP_COOKIE", ""));
+    // this->_env.insert(std::make_pair("HTTP_FORWARDED", ""));
+    // this->_env.insert(std::make_pair("HTTP_HOST", ""));
+    // this->_env.insert(std::make_pair("HTTP_PROXY_AUTHORIZATION", ""));
+    // this->_env.insert(std::make_pair("HTTP_USER_AGENT", ""));
+    // this->_env.insert(std::make_pair("NCHOME", ""));
     this->_env.insert(std::make_pair("PATH_INFO", ""));
     this->_env.insert(std::make_pair("PATH_TRANSLATED", ""));
     this->_env.insert(std::make_pair("QUERY_STRING", ""));
     this->_env.insert(std::make_pair("REMOTE_ADDR", ""));
-    this->_env.insert(std::make_pair("REMOTE_HOST", ""));
+    // this->_env.insert(std::make_pair("REMOTE_HOST", ""));
+    this->_env.insert(std::make_pair("REMOTE_IDENT", ""));
     this->_env.insert(std::make_pair("REMOTE_USER", ""));
     this->_env.insert(std::make_pair("REQUEST_METHOD", ""));
     this->_env.insert(std::make_pair("REQUEST_URI", ""));
@@ -75,9 +82,7 @@ CGI::CGI(LocationBlock *block, HttpRequestMessage request_message)
     this->_env.insert(std::make_pair("SERVER_PORT", ""));
     this->_env.insert(std::make_pair("SERVER_PROTOCOL", ""));
     this->_env.insert(std::make_pair("SERVER_SOFTWARE", ""));
-    this->_env.insert(std::make_pair("HTTP_COOKIE", ""));
-    this->_env.insert(std::make_pair("WEBTOP_USER", ""));
-    this->_env.insert(std::make_pair("NCHOME", ""));
+    // this->_env.insert(std::make_pair("WEBTOP_USER", ""));
     this->_env.insert(std::make_pair("REDIRECT_STATUS", ""));
 
     this->_block = block;
@@ -95,17 +100,19 @@ void CGI::setEnv(void)
     this->_env["CONTENT_LENGTH"] = headers["Content-Length"];
     this->_env["CONTENT_TYPE"] = headers["Content-Type"];
     this->_env["GATEWAY_INTERFACE"] = "CGI/1.1";
-    this->_env["HTTP_ACCEPT"] = headers["Accept"];
-    this->_env["HTTP_ACCEPT_CHARSET"] = headers["Accept-CH"];
-    this->_env["HTTP_ACCEPT_ENCODING"] = headers["Accept-Encoding"]; // 여러개 일땐?
-    this->_env["HTTP_ACCEPT_LANGUAGE"] = headers["Accept-Language"];
-    this->_env["HTTP_FORWARDED"] = headers["Forwarded"];
-    this->_env["HTTP_HOST"] = headers["Host"];
-    this->_env["HTTP_PROXY_AUTHORIZATION"] = headers["Proxy-Authorization"];
-    this->_env["HTTP_USER_AGENT"] = headers["User-Agent"];
+    // this->_env["HTTP_ACCEPT"] = headers["Accept"];
+    // this->_env["HTTP_ACCEPT_CHARSET"] = headers["Accept-CH"];
+    // this->_env["HTTP_ACCEPT_ENCODING"] = headers["Accept-Encoding"]; // 여러개 일땐?
+    // this->_env["HTTP_ACCEPT_LANGUAGE"] = headers["Accept-Language"];
+    // this->_env["HTTP_COOKIE"] = "";
+    // this->_env["HTTP_FORWARDED"] = headers["Forwarded"];
+    // this->_env["HTTP_HOST"] = headers["Host"];
+    // this->_env["HTTP_PROXY_AUTHORIZATION"] = headers["Proxy-Authorization"];
+    // this->_env["HTTP_USER_AGENT"] = headers["User-Agent"];
+    // this->_env["NCHOME"] = "";
 
     this->_env["PATH_INFO"] = _block->getRoot() + _request_message.getPathInfo(); // ?
-    this->_env["PATH_TRANSLATED"] = "/Users/sehjang/webserve";// ?
+    this->_env["PATH_TRANSLATED"] = "/Users/pjang/Common-Circle/webserve";// ?
     this->_env["QUERY_STRING"] = _request_message.getQueryString();
     
     std::string client_ip = "";
@@ -115,12 +122,13 @@ void CGI::setEnv(void)
         client_ip = client_ip.substr(0, client_ip.length() - 1);
 
     this->_env["REMOTE_ADDR"] = "127.0.0.1";
-    this->_env["REMOTE_HOST"] = client_ip;
+    // this->_env["REMOTE_HOST"] = client_ip;
+    this->_env["REMOTE_IDENT"] = headers["Authorization"];
     this->_env["REMOTE_USER"] = headers["Authorization"];
     this->_env["REQUEST_METHOD"] = _request_message.getHttpMethod();
     this->_env["SCRIPT_FILENAME"] = this->_env["PATH_INFO"];
     this->_env["SCRIPT_NAME"] = this->_env["PATH_INFO"];
-    this->_env["REQUEST_URI"] = "/" + this->_env["SCRIPT_NAME"];
+    this->_env["REQUEST_URI"] = this->_env["SCRIPT_NAME"];
 
     if (headers.find("Host") != headers.end())
         this->_env["SERVER_NAME"] = headers["Host"];
@@ -133,9 +141,7 @@ void CGI::setEnv(void)
     this->_env["REDIRECT_STATUS"] = "CGI";
 
 
-    this->_env["HTTP_COOKIE"] = "";
-    this->_env["WEBTOP_USER"] = "";
-    this->_env["NCHOME"] = "";
+    // this->_env["WEBTOP_USER"] = "";
 }
 
 char **CGI::getEnvChar(void) const

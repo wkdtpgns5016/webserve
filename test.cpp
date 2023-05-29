@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cgi_practice.cpp                                   :+:      :+:    :+:   */
+/*   test.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sucho <sucho@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: pjang <pjang@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 19:26:26 by sucho             #+#    #+#             */
-/*   Updated: 2021/08/08 16:23:09 by sucho            ###   ########.fr       */
+/*   Updated: 2023/05/29 19:59:20 by pjang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ int main(int argc, char *argv[]) {
       env_set["SCRIPT_FILENAME"] = std::string(argv[3]);
       env_set["SERVER_PROTOCOL"] = "HTTP/1.1";
       env_set["PATH_INFO"] = setPathInfo(argv[3]);
-      env_set["CONTENT_TYPE"] = "application/x-www-form-urlencoded";
-      // env_set["CONTENT_TYPE"] = "text/plaine";
+      // env_set["CONTENT_TYPE"] = "application/x-www-form-urlencoded";
+      env_set["CONTENT_TYPE"] = "text/plain";
       env_set["GATEWAY_INTERFACE"] = "CGI/1.1";
       env_set["PATH_TRANSLATED"] = setPathTranslated(argv[3]);
       env_set["REMOTE_ADDR"] = "127.0.0.1";
