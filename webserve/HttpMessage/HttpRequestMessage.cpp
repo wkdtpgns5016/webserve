@@ -85,3 +85,29 @@ std::string HttpRequestMessage::getString(void)
     str += _message_body;
     return (str);
 }
+
+
+std::string HttpRequestMessage::getReqeustTarget() const
+{
+    return (_start_line.getRequestTarget());
+}
+
+std::string HttpRequestMessage::getHttpVersion() const
+{
+    return (_start_line.getHttpVersion());
+}
+
+std::string HttpRequestMessage::getHttpMethod() const
+{
+    return (_start_line.getHttpMethod());
+}
+
+std::string HttpRequestMessage::getQueryString() const
+{
+    std::string query;
+    std::string request_tartget = _start_line.getRequestTarget();
+    int pos = request_tartget.find('?');
+    if (pos != std::string::npos)
+        query  = request_tartget.substr(pos + 1);
+    return (query);
+}

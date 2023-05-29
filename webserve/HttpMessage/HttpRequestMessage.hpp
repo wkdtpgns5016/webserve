@@ -23,6 +23,11 @@ public:
     bool isVaild(void);
     std::string getString(void);
 
+    std::string getReqeustTarget() const;
+    std::string getHttpVersion() const;
+    std::string getHttpMethod() const;
+    std::string getQueryString() const;
+
 };
 
 #endif
