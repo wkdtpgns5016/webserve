@@ -45,8 +45,11 @@ HttpResponseMessage PostHandler::requestHandler()
         checkHttpMessage();
         path = findPath(path_info);
         message_body = executeCgi(path_info);
+        std::vector<std::string> arr = ft::splitString(message_body, "\r\n");
+        message_body = arr.back();
         // 응답 생성
         response_message = getResponseMessage(200, message_body);
+        //response_message.changeChunkedMessage(1024);
     }
     catch(const Error400Exceptnion& e)
     {

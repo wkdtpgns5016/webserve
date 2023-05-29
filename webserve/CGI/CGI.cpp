@@ -84,6 +84,7 @@ CGI::CGI(LocationBlock *block, HttpRequestMessage request_message)
     this->_env.insert(std::make_pair("SERVER_SOFTWARE", ""));
     // this->_env.insert(std::make_pair("WEBTOP_USER", ""));
     this->_env.insert(std::make_pair("REDIRECT_STATUS", ""));
+    this->_env.insert(std::make_pair("X-Secret-Header-For-Test", ""));
 
     this->_block = block;
     this->_request_message = request_message;
@@ -139,6 +140,7 @@ void CGI::setEnv(void)
     this->_env["SERVER_PROTOCOL"] = _request_message.getHttpVersion(); 
     this->_env["SERVER_SOFTWARE"] = "webserv/1.0";
     this->_env["REDIRECT_STATUS"] = "CGI";
+    this->_env["X-Secret-Header-For-Test"] = headers["X-Secret-Header-For-Test"];
 
 
     // this->_env["WEBTOP_USER"] = "";

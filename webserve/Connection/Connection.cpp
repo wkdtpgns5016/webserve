@@ -51,7 +51,24 @@ bool Connection::sendMessage(ServerBlock *server_block)
         ServerController controller;
         HttpRequestMessage request_message = _message_parser.getRequestMessage();
         HttpResponseMessage message = controller.requestHandler(server_block, request_message);
-        write(_client_fd, message.getString().c_str(), message.getString().size());
+        std::string m = message.getString();
+        const char* msg = m.c_str();
+        size_t i = 0;
+        size_t n;
+        size_t len = message.getString().size();
+        if (len <= 1023)
+            write(_client_fd, message.getString().c_str(), len);
+        else
+        {
+            while (1)
+            {
+                n = write(_client_fd, msg + i, 1023);
+                i += n;
+                if (i >= len)
+                    break ;
+            }
+        }
+        //write(_client_fd, message.getString().c_str(), message.getString().size());
         CommonLogFormat log = CommonLogFormat(_client_addr, request_message, message);
         log.wirteLogMessage(1);
         return (true);

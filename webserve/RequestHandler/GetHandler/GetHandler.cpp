@@ -109,6 +109,7 @@ HttpResponseMessage GetHandler::requestHandler()
     std::string message_body;
     std::string request_target = _request_message.getStartLine().getRequestTarget();
     std::string path_info = _request_message.getPathInfo();
+    int status = 200;
 
     try
     {
@@ -118,9 +119,13 @@ HttpResponseMessage GetHandler::requestHandler()
         if (checkFile(path_info) == -1) // 일반 파일
             message_body = openFile(path_info);
         else                           // cgi 파일
+        {
             message_body = executeCgi(path_info);
+            std::vector<std::string> arr = ft::splitString(message_body, "\r\n");
+            message_body = arr.back();
+        }
         // 응답 생성
-        response_message = getResponseMessage(200, message_body);
+        response_message = getResponseMessage(status, message_body);
     }
     catch(const Error400Exceptnion& e)
     {
