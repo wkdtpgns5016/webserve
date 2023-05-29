@@ -2,6 +2,7 @@
 #define HTTP_REQUEST_MESSAGE_HPP
 
 #include "HttpMessage.hpp"
+#include <unistd.h>
 
 class HttpRequestMessage : public HttpMessage
 {
@@ -27,6 +28,9 @@ public:
     std::string getHttpVersion() const;
     std::string getHttpMethod() const;
     std::string getQueryString() const;
+
+    std::string getPathInfo() const;
+    std::string getPathTranslate() const;
 
 };
 

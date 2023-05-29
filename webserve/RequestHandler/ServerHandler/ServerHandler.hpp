@@ -1,11 +1,13 @@
-#ifndef SERVER_CONTROLLER_HPP
-#define SERVER_CONTROLLER_HPP
+#ifndef SERVER_HANDLER_HPP
+#define SERVER_HANDLER_HPP
 
 #include "../lib/ft/ft.hpp"
 #include "../HttpMessage/HttpRequestMessage.hpp"
 #include "../HttpMessage/HttpResponseMessage.hpp"
 #include "../Configuration/Conf/Conf.hpp"
 #include "../Configuration/ConfigDto/ConfigDto.hpp"
+#include "../CGI/CGI.hpp"
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>

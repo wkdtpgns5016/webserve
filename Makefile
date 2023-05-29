@@ -39,7 +39,8 @@ SRCS =	webserve/main.cpp \
 		webserve/lib/ft/stoul.cpp  \
 		webserve/lib/ft/getTime.cpp  \
 		webserve/lib/ft/convertHex.cpp  \
-		webserve/CommonLogFormat/CommonLogFormat.cpp
+		webserve/CommonLogFormat/CommonLogFormat.cpp \
+		webserve/CGI/CGI.cpp
 		
 		
 OBJS = $(SRCS:.cpp=.o)
@@ -59,7 +60,8 @@ HEAD =  -I./webserve/Server \
 		-I./webserve/Connection \
 		-I./webserve/HttpMessage \
 		-I./webserve/lib/ft \
-		-I./webserve/CommonLogFormat
+		-I./webserve/CommonLogFormat \
+		-I./webserve/CGI
 
 all: $(NAME)
 

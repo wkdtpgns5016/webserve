@@ -333,9 +333,9 @@ void ServerHandler::checkHttpMessage(void)
 
 std::string ServerHandler::executeCgi(std::string request_target)
 {
-    (void)request_target;
+    CGI cgi(_b_config, _request_message);
     std::string file_path = findPath(request_target);
-    // fork 후 cgi 실행
+
     return ("");
 }
 
