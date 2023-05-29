@@ -24,7 +24,7 @@ std::pair<std::pair<std::string, std::string>, std::string>	ServerBlock::divideL
 	if (pos < end)
 		url = str.substr(pos, end - pos);
 
-	pos = _scripter.jumpBeforeBlock(str, end);
+	pos = _scripter.jumpBeforeBlock(str, end) + 1;
 	end = str.length() - 1;
 	if (pos < end)
 		value = str.substr(pos, end - pos);

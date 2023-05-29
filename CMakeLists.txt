@@ -12,12 +12,25 @@ add_library(libft webserve/lib/ft/ft.hpp
                   webserve/lib/ft/itos.cpp 
 		          webserve/lib/ft/stoul.cpp
 		          webserve/lib/ft/stoi.cpp )
-add_library(server_block webserve/Configuration/ServerBlock/ServerBlock.hpp webserve/Configuration/ServerBlock/ServerBlock.cpp)
-add_library(block webserve/Configuration/Block/Block.hpp webserve/Configuration/Block/Block.cpp)
-add_library(location_block  webserve/Configuration/LocationBlock/LocationBlock.hpp webserve/Configuration/LocationBlock/LocationBlock.cpp)
-add_library(conf  webserve/Configuration/Conf/Conf.hpp webserve/Configuration/Conf/Conf.cpp)
-add_library(parser webserve/Configuration/Parser/*.cpp webserve/Configuration/Parser/parser.hpp)
-add_library(scripter webserve/Configuration/Scripter/Scripter.cpp webserve/Configuration/Scripter/Scripter.hpp)
+add_library(Configuration	webserve/Configuration/Parser/parseTryFiles.cpp 
+							webserve/Configuration/Parser/parseAllowMethod.cpp 
+							webserve/Configuration/Parser/parseListen.cpp  
+							webserve/Configuration/Parser/parseErrorPage.cpp 
+							webserve/Configuration/Parser/parseClientMaxBodySize.cpp 
+							webserve/Configuration/Parser/SimpleException.cpp  
+							webserve/Configuration/Parser/Parser.hpp 
+							webserve/Configuration/Parser/Parser.cpp 
+							webserve/Configuration/Block/Block.hpp 
+							webserve/Configuration/Block/Block.cpp 
+							webserve/Configuration/Block/BlockException.cpp
+							webserve/Configuration/LocationBlock/LocationBlock.hpp 
+							webserve/Configuration/LocationBlock/LocationBlock.cpp 
+							webserve/Configuration/Conf/Conf.hpp 
+							webserve/Configuration/Conf/Conf.cpp 
+							webserve/Configuration/Scripter/Scripter.cpp
+							webserve/Configuration/Scripter/Scripter.hpp
+							webserve/Configuration/ServerBlock/ServerBlock.hpp
+							webserve/Configuration/ServerBlock/ServerBlock.cpp)
 add_library(http_message webserve/HttpMessage/HttpMessage.cpp
                         webserve/HttpMessage/HttpMessage.hpp
                         webserve/HttpMessage/HttpRequestMessage.cpp
@@ -98,21 +111,11 @@ target_link_libraries(libftUnitTest libft)
 #conf 단위테스트 빌드
 include_directories(libft)
 include_directories(${gtest_SRC_DIR}/googletest/include)
-include_directories(conf)
-include_directories(block)
-include_directories(server_block)
-include_directories(location_block)
-include_directories(parser)
-include_directories(scripter)
+include_directories(Configuration)
 add_executable(ConfigTest webserve/Configuration/config.test.cpp)
 target_link_libraries(ConfigTest gtest gtest_main)
 target_link_libraries(ConfigTest libft)
-target_link_libraries(ConfigTest conf)
-target_link_libraries(ConfigTest block)
-target_link_libraries(ConfigTest server_block)
-target_link_libraries(ConfigTest location_block)
-target_link_libraries(ConfigTest parser)
-target_link_libraries(ConfigTest scripter)
+target_link_libraries(ConfigTest Configuration)
 
 # server handler 단위 테스트 빌드
 #include_directories(libft)
