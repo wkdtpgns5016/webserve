@@ -39,6 +39,7 @@ SRCS =	webserve/main.cpp \
 		webserve/lib/ft/stoul.cpp  \
 		webserve/lib/ft/getTime.cpp  \
 		webserve/lib/ft/convertHex.cpp  \
+		webserve/lib/ft/isNumbers.cpp  \
 		webserve/CommonLogFormat/CommonLogFormat.cpp \
 		webserve/CGI/CGI.cpp
 		
