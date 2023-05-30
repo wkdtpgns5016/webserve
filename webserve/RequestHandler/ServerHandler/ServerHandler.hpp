@@ -42,7 +42,7 @@ class ServerHandler
     std::string findPath(std::string request_target);
 
 
-    std::string executeCgi(std::string request_target);
+    std::string executeCgi(std::string file_path);
 
     std::map<std::string, std::string> setHeader(int status_code, std::string message_body);
     HttpResponseMessage getErrorResponse(int status_code);

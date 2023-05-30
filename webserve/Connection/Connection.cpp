@@ -55,14 +55,14 @@ bool Connection::sendMessage(ServerBlock *server_block)
         const char* msg = m.c_str();
         size_t i = 0;
         size_t n;
-        size_t len = message.getString().size();
-        if (len <= 1023)
+        size_t len = message.getString().length();
+        if (len <= 1024)
             write(_client_fd, message.getString().c_str(), len);
         else
         {
             while (1)
             {
-                n = write(_client_fd, msg + i, 1023);
+                n = write(_client_fd, msg + i, 1024);
                 i += n;
                 if (i >= len)
                     break ;

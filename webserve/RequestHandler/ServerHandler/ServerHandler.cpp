@@ -337,14 +337,13 @@ void ServerHandler::checkHttpMessage(void)
     checkMessageSize();
 }
 
-std::string ServerHandler::executeCgi(std::string request_target)
+std::string ServerHandler::executeCgi(std::string file_path)
 {
     CGI cgi(_b_config, _request_message);
-    std::string file_path = "" + findPath(request_target);
     std::string script_name;
     std::string result;
 
-    int flag = checkFile(request_target);
+    int flag = checkFile(file_path);
 
     switch (flag)
     {

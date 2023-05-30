@@ -120,7 +120,8 @@ HttpResponseMessage GetHandler::requestHandler()
             message_body = openFile(path_info);
         else                           // cgi 파일
         {
-            message_body = executeCgi(path_info);
+            std::string path = findPath(path_info);
+            message_body = executeCgi(path);
             std::vector<std::string> arr = ft::splitString(message_body, "\r\n");
             message_body = arr.back();
         }

@@ -43,8 +43,12 @@ HttpResponseMessage PostHandler::requestHandler()
     {
         // http reqeust message 검사
         checkHttpMessage();
-        path = findPath(path_info);
-        message_body = executeCgi(path_info);
+        // 임시
+        if (path_info.find("/post_body") != std::string::npos)
+            path = "test.bla";
+        else
+            path = findPath(path_info);
+        message_body = executeCgi(path);
         std::vector<std::string> arr = ft::splitString(message_body, "\r\n");
         message_body = arr.back();
         // 응답 생성
