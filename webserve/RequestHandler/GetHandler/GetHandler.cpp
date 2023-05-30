@@ -126,11 +126,13 @@ HttpResponseMessage GetHandler::requestHandler()
             message_body = arr.back();
         }
         // 응답 생성
+        if (_request_message.getHttpMethod() == "HEAD")
+            message_body = "";
         response_message = getResponseMessage(status, message_body);
     }
     catch(const Error400Exceptnion& e)
     {
-        response_message = getResponseMessage(400, "");
+        response_message = getErrorResponse(400);
     }
     catch(const Error404Exceptnion& e)
     {

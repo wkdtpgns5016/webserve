@@ -233,6 +233,8 @@ HttpResponseMessage ServerHandler::getErrorResponse(int status_code)
     }
     if (!path.empty())
         message_body = ft::readFileIntoString(path);
+    if (_request_message.getHttpMethod() == "HEAD")
+        message_body = "";
     return (getResponseMessage(status_code, message_body));
 }
 

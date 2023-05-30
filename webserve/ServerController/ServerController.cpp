@@ -27,22 +27,22 @@ HttpResponseMessage ServerController::requestHandler(ServerBlock* server_block, 
     std::string http_method = request_message.getStartLine().getHttpMethod();
     ServerHandler *handler = NULL;
 
-    if (http_method.compare("GET") == 0)
+    if (http_method == "GET" || http_method == "HEAD")
     {
         handler = new GetHandler(server_block, request_message);
         response_message = handler->requestHandler();
     }
-    else if (http_method.compare("POST") == 0)
+    else if (http_method == "POST")
     {
         handler = new PostHandler(server_block, request_message);
         response_message = handler->requestHandler();
     }
-    else if (http_method.compare("DELETE") == 0)
+    else if (http_method == "DELETE")
     {
         handler = new DeleteHandler(server_block, request_message);
         response_message = handler->requestHandler();
     }
-    else if (http_method.compare("PUT") == 0)
+    else if (http_method == "PUT")
     {
         handler = new PutHandler(server_block, request_message);
         response_message = handler->requestHandler();
