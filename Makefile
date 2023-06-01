@@ -40,7 +40,8 @@ SRCS =	webserve/main.cpp \
 		webserve/lib/ft/getTime.cpp  \
 		webserve/lib/ft/convertHex.cpp  \
 		webserve/lib/ft/isNumbers.cpp  \
-		webserve/CommonLogFormat/CommonLogFormat.cpp \
+		webserve/Log/CommonLogFormat/CommonLogFormat.cpp \
+		webserve/Log/Logger/Logger.cpp \
 		webserve/CGI/CGI.cpp \
 		webserve/Buffer/Buffer.cpp
 		
@@ -62,7 +63,8 @@ HEAD =  -I./webserve/Server \
 		-I./webserve/Connection \
 		-I./webserve/HttpMessage \
 		-I./webserve/lib/ft \
-		-I./webserve/CommonLogFormat \
+		-I./webserve/Log/CommonLogFormat \
+		-I./webserve/Log/Logger \
 		-I./webserve/CGI \
 		-I./webserve/Buffer
 

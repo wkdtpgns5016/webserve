@@ -29,7 +29,7 @@
 #include <sys/event.h>
 
 #include "../Connection/Connection.hpp"
-#include "../CommonLogFormat/CommonLogFormat.hpp"
+#include "../Log/Logger/Logger.hpp"
 
 #define BUFSIZE 1024
 
@@ -50,7 +50,7 @@ private:
     
     void socket_init(int port, unsigned int ip_addr);
     void change_events(uintptr_t ident, int16_t filter, uint16_t flags, uint32_t fflags, intptr_t data, void *udata);
-    void disconnect_client(int client_fd, std::map<int, Connection> &clients, std::string message);
+    void disconnect_client(int client_fd, std::map<int, Connection> &clients);
     void accept_new_client();
 
     void checkConnectionTimeout();

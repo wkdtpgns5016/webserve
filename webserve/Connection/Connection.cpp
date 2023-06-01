@@ -44,12 +44,12 @@ bool Connection::receiveMessage()
     n = read(_client_fd, recv, 1024);
     if (n < 0)
     {
-        std::cout << "n < 0" << std::endl;
+        Logger::writeLog(_client_addr, _client_fd, "read error", 1);
         return (false);
     }
     else if (n == 0)
     {
-        std::cout << "n == 0" << std::endl;
+        Logger::writeLog(_client_addr, _client_fd, "Close Connection client", 1);
         return (false);
     }
     else
@@ -78,12 +78,14 @@ bool Connection::sendMessage(ServerBlock *server_block)
             n = write(_client_fd, _buffer.getBuffer(), buffer_size);
         
         if (n < 0)
+        {
+            Logger::writeLog(_client_addr, _client_fd, "write error", 1);
             return (false);
+        }
         else if (n == 0 || (size_t)n == len)
         {
             clearConnection();
-            CommonLogFormat log = CommonLogFormat(_client_addr, _request, _response);
-            log.wirteLogMessage(1);
+            Logger::writeLog(_client_addr, _request, _response, 1);
         }
         else
         {
@@ -119,4 +121,5 @@ void Connection::clearConnection()
 bool Connection::checkMessage() { return (_message_parser.checkMessage()); }
 bool Connection::checkResponse() { return (_complete_respose); }
 std::string Connection::getClinetAddr() const { return (_client_addr); }
+int Connection::getClinetFd() const { return (_client_fd); }
 time_t Connection::getCurrentConnectionTime() const { return (_current_connection_time); }

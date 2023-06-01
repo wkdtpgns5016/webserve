@@ -45,9 +45,8 @@ void Server::change_events(uintptr_t ident, int16_t filter,
     _change_list.push_back(temp_event);
 }
 
-void Server::disconnect_client(int client_fd, std::map<int, Connection> &clients, std::string message)
+void Server::disconnect_client(int client_fd, std::map<int, Connection> &clients)
 {
-    std::cout << "disconnect client [" << client_fd << "]: " << message << std::endl;
     close(client_fd);
     clients.erase(client_fd);
 }
@@ -60,9 +59,10 @@ void Server::accept_new_client()
     std::string clinet_ip;
     char buf[1024] = {'\0'};
     struct sockaddr_in addr;
+
     if ((client_socket = accept(_server_socket, (struct sockaddr *)&addr, &addr_len)) == -1)
         exit(1);
-    std::cout << "accept new client [" << client_socket << "]" << std::endl;
+
     fcntl(client_socket, F_SETFL, O_NONBLOCK);
 
     /* add event for client socket - add read && write event */
@@ -70,6 +70,7 @@ void Server::accept_new_client()
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
     clinet_ip = inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
     _clients[client_socket] = Connection(client_socket, std::string(buf));
+    Logger::writeLog(_clients[client_socket].getClinetAddr(), _clients[client_socket].getClinetFd(), "Add new Client", 1);
 }
 
 void Server::checkConnectionTimeout()
@@ -78,7 +79,8 @@ void Server::checkConnectionTimeout()
     {
         if (std::time(NULL) - it->second.getCurrentConnectionTime() > 60)
         {
-            disconnect_client(it->first, _clients, "Timeout Connection");
+            Logger::writeLog(it->second.getClinetAddr(), it->second.getClinetFd(), "Timeout Connection client", 1);
+            disconnect_client(it->first, _clients);
             break;
         }
     }
@@ -97,8 +99,9 @@ void Server::run()
     /* add event for server socket */
     change_events(_server_socket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
 
-    std::string msg = "Server started [" + ft::itos(_server_block->getPort()) + "]";
-    std::cout << msg << std::endl;
+    char buf[1024] = {'\0'};
+    std::string server_ip = inet_ntop(AF_INET, &_server_addr.sin_addr, buf, INET_ADDRSTRLEN);
+    Logger::writeLog(server_ip, _server_block->getPort(), "Server started", 1);
 
     /* main loop */
     int new_events;
@@ -121,7 +124,7 @@ void Server::run()
                 if (_curr_event->ident == (uintptr_t)_server_socket)
                     exit(1);
                 else
-                    disconnect_client(_curr_event->ident, _clients, "Client socket error");
+                    disconnect_client(_curr_event->ident, _clients);
             }
             else if (_curr_event->filter == EVFILT_READ)
             {
@@ -130,7 +133,7 @@ void Server::run()
                 else if (_clients.find(_curr_event->ident) != _clients.end())
                 {
                     if (!_clients[_curr_event->ident].receiveMessage())
-                        disconnect_client(_curr_event->ident, _clients, "Client receive error");
+                        disconnect_client(_curr_event->ident, _clients);
                 }
             }
             else if (_curr_event->filter == EVFILT_WRITE)
@@ -139,7 +142,7 @@ void Server::run()
                 if (it != _clients.end())
                 {
                     if (!_clients[_curr_event->ident].sendMessage(_server_block))
-                        disconnect_client(_curr_event->ident, _clients, "Client send error");
+                        disconnect_client(_curr_event->ident, _clients);
                 }
             }
         }

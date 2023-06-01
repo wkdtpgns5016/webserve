@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include "../HttpMessage/RequestMessageParser.hpp"
 #include "../ServerController/ServerController.hpp"
-#include "../CommonLogFormat/CommonLogFormat.hpp"
+#include "../Log/Logger/Logger.hpp"
 #include "../Buffer/Buffer.hpp"
 
 class Connection
@@ -37,6 +37,7 @@ class Connection
     bool sendMessage(ServerBlock *server_block);
     void clearConnection();
     std::string getClinetAddr() const;
+    int getClinetFd() const;
     time_t getCurrentConnectionTime() const;
 };
 
