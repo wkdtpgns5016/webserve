@@ -89,7 +89,7 @@ std::map<std::string, std::string> ServerHandler::setHeader(int status_code, std
     else
         headers["Content-Type"] = "text/html";
     headers["Content-Length"] = ft::itos(message_body.size());
-    headers["Connection"] = "keep-alive";
+    //headers["Connection"] = "close";
     if (status_code == 405)
     {
         std::string allow;

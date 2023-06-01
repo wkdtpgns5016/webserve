@@ -41,7 +41,8 @@ SRCS =	webserve/main.cpp \
 		webserve/lib/ft/convertHex.cpp  \
 		webserve/lib/ft/isNumbers.cpp  \
 		webserve/CommonLogFormat/CommonLogFormat.cpp \
-		webserve/CGI/CGI.cpp
+		webserve/CGI/CGI.cpp \
+		webserve/Buffer/Buffer.cpp
 		
 		
 OBJS = $(SRCS:.cpp=.o)
@@ -62,7 +63,8 @@ HEAD =  -I./webserve/Server \
 		-I./webserve/HttpMessage \
 		-I./webserve/lib/ft \
 		-I./webserve/CommonLogFormat \
-		-I./webserve/CGI
+		-I./webserve/CGI \
+		-I./webserve/Buffer
 
 all: $(NAME)
 

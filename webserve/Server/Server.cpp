@@ -32,7 +32,7 @@ void Server::socket_init(int port, unsigned int ip_addr)
     if (bind(_server_socket, (struct sockaddr *)&_server_addr, sizeof(_server_addr)) == -1)
         exit(1);
 
-    if (listen(_server_socket, 5) == -1)
+    if (listen(_server_socket, 1000) == -1)
         exit(1);
 }
 
@@ -45,9 +45,9 @@ void Server::change_events(uintptr_t ident, int16_t filter,
     _change_list.push_back(temp_event);
 }
 
-void Server::disconnect_client(int client_fd, std::map<int, Connection> &clients)
+void Server::disconnect_client(int client_fd, std::map<int, Connection> &clients, std::string message)
 {
-    // std::cout << "client disconnected: " << client_fd << std::endl;
+    std::cout << "disconnect client [" << client_fd << "]: " << message << std::endl;
     close(client_fd);
     clients.erase(client_fd);
 }
@@ -62,7 +62,7 @@ void Server::accept_new_client()
     struct sockaddr_in addr;
     if ((client_socket = accept(_server_socket, (struct sockaddr *)&addr, &addr_len)) == -1)
         exit(1);
-    // std::cout << "accept new client: " << client_socket << std::endl;
+    std::cout << "accept new client [" << client_socket << "]" << std::endl;
     fcntl(client_socket, F_SETFL, O_NONBLOCK);
 
     /* add event for client socket - add read && write event */
@@ -70,6 +70,18 @@ void Server::accept_new_client()
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
     clinet_ip = inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
     _clients[client_socket] = Connection(client_socket, std::string(buf));
+}
+
+void Server::checkConnectionTimeout()
+{
+    for(std::map<int, Connection>::iterator it = _clients.begin() ; it != _clients.end(); ++it)
+    {
+        if (std::time(NULL) - it->second.getCurrentConnectionTime() > 60)
+        {
+            disconnect_client(it->first, _clients, "Timeout Connection");
+            break;
+        }
+    }
 }
 
 void Server::run()
@@ -109,28 +121,29 @@ void Server::run()
                 if (_curr_event->ident == (uintptr_t)_server_socket)
                     exit(1);
                 else
-                {
-                    std::cerr << "client socket error" << std::endl;
-                    disconnect_client(_curr_event->ident, _clients);
-                }
+                    disconnect_client(_curr_event->ident, _clients, "Client socket error");
             }
             else if (_curr_event->filter == EVFILT_READ)
             {
                 if (_curr_event->ident == (uintptr_t)_server_socket)
                     accept_new_client();
                 else if (_clients.find(_curr_event->ident) != _clients.end())
-                    _clients[_curr_event->ident].receiveMessage();
+                {
+                    if (!_clients[_curr_event->ident].receiveMessage())
+                        disconnect_client(_curr_event->ident, _clients, "Client receive error");
+                }
             }
             else if (_curr_event->filter == EVFILT_WRITE)
             {   
                 std::map<int, Connection>::iterator it = _clients.find(_curr_event->ident);
                 if (it != _clients.end())
                 {
-                    if (_clients[_curr_event->ident].sendMessage(_server_block))
-                        disconnect_client(_curr_event->ident, _clients);
+                    if (!_clients[_curr_event->ident].sendMessage(_server_block))
+                        disconnect_client(_curr_event->ident, _clients, "Client send error");
                 }
             }
         }
+        checkConnectionTimeout();
     }
 }
 
