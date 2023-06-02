@@ -123,13 +123,16 @@ HttpResponseMessage GetHandler::requestHandler()
         {
             std::string path = findPath(path_info);
             message_body = executeCgi(path);
-            std::vector<std::string> arr = ft::splitString(message_body, "\r\n");
-            cgi_header = getCgiHeader(arr);
-            int cgi_status;
-            if ((cgi_status = getStautsCgi(cgi_header)) > 0)
-                status = cgi_status;
-            message_body = arr.back();
-            throwStatusError(status);
+            if (!message_body.empty())
+            {
+                std::vector<std::string> arr = ft::splitString(message_body, "\r\n");
+                cgi_header = getCgiHeader(arr);
+                int cgi_status;
+                if ((cgi_status = getStautsCgi(cgi_header)) > 0)
+                    status = cgi_status;
+                message_body = arr.back();
+                throwStatusError(status);
+            }
         }
         // 응답 생성
         response_message = getResponseMessage(status, message_body, cgi_header);
@@ -157,6 +160,10 @@ HttpResponseMessage GetHandler::requestHandler()
     catch(const Error503Exceptnion& e)
     {
         response_message = getErrorResponse(503);
+    }
+    catch(const std::exception& e)
+    {
+        response_message = getErrorResponse(500);
     }
     return (response_message);
 }

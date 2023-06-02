@@ -26,7 +26,7 @@ class ConfigDto
 
     public:
     ConfigDto();
-    ConfigDto(const ServerBlock& server_block, const LocationBlock& location_block);
+    ConfigDto(ServerBlock* server_block, LocationBlock* location_block);
     ConfigDto(const ConfigDto& config_dto);
     ~ConfigDto();
     ConfigDto& operator=(const ConfigDto& config_dto);

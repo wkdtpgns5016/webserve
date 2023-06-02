@@ -22,7 +22,6 @@ class ServerHandler
     protected:
     std::map<int, std::string>  _status;
     HttpRequestMessage          _request_message;
-    LocationBlock*              _b_config;
     ConfigDto                   _config;
 
     void init_status();

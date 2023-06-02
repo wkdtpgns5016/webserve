@@ -13,8 +13,7 @@ ServerHandler::ServerHandler(ServerBlock* server_block, HttpRequestMessage reque
     LocationBlock* location_block = findLocationBlock(server_block->getInnerBlock(), 
                                                       request_message.getStartLine().getRequestTarget());
     _request_message = request_message;
-    _config = ConfigDto(*server_block, *location_block);
-    _b_config = location_block;
+    _config = ConfigDto(server_block, location_block);
 }
 
 ServerHandler::~ServerHandler()
@@ -153,8 +152,8 @@ std::vector<std::string> ServerHandler::getIndexPath(std::string root, std::stri
 LocationBlock* ServerHandler::findLocationBlock(std::vector<Block*> locations, std::string request_target)
 {
     std::vector<Block*>::iterator it = locations.begin();
-    LocationBlock* location;
-    LocationBlock* temp;
+    LocationBlock* location = NULL;
+    LocationBlock* temp = NULL;
     int find_flag;
     for (; it != locations.end(); it++)
     {
@@ -371,7 +370,7 @@ void ServerHandler::checkHttpMessage(void)
 
 std::string ServerHandler::executeCgi(std::string file_path)
 {
-    CGI cgi(_b_config, _request_message);
+    CGI cgi(_config, _request_message);
     std::string script_name;
     std::string result;
 

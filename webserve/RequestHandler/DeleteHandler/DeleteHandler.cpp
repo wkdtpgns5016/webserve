@@ -82,5 +82,9 @@ HttpResponseMessage DeleteHandler::requestHandler()
     {
         response_message = getErrorResponse(503);
     }
+    catch(const std::exception& e)
+    {
+        response_message = getErrorResponse(500);
+    }
     return (response_message);
 }

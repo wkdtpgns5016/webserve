@@ -16,6 +16,8 @@ Server::~Server()
 
 void Server::socket_init(int port, unsigned int ip_addr)
 {
+    int optvalue = 1;
+    
     (void)ip_addr;
     if ((_server_socket = socket(PF_INET, SOCK_STREAM, 0)) == -1)
         exit(1);
@@ -29,6 +31,7 @@ void Server::socket_init(int port, unsigned int ip_addr)
     //     server_addr.sin_addr.s_addr = inet_addr(ip_addr.c_str());
     _server_addr.sin_port = htons(port);
     
+    setsockopt(_server_socket, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));
     if (bind(_server_socket, (struct sockaddr *)&_server_addr, sizeof(_server_addr)) == -1)
         exit(1);
 
