@@ -82,16 +82,24 @@
 > |:----------|:----------|:----------|:----------:|
 > | map&#60;string, string&#62; | _headers | protected | http 헤더 |
 > | string | _message_body | protected   | 메세지 바디 |
+> | std::string | _chunked_message_body | protected | 청크 메시지 바디 |
+> | size_t | _message_size | protected | 바디 사이즈 |
+> | size_t | _chunked_size | protected | 청크 바디 사이즈 |
 
 **Method**
 > | 함수 원형                                              | 접근 제한   |         설명          |
 > |:---------------------------------------------------|:--------|:-------------------:|
 > | void setHeader(string)                             | private |   http 헤더 초기화 메소드   |
-> | map&#60;string, string&#62; getHeaders(void) const | public  | http header getter  |
-> | string getMessageBody(void) const                  | public  | message body getter |
-> | virtual bool isVaild(void) = 0                     | public  |    유효성 검사 가상 메소드    |
-> | virtual string getString(void) = 0                 | public  |    문자열 반환 가상 메소드    |
-
+> | bool checkHeaders(std::vector<std::string> arr) | private | 헤더 체크 메소드 |
+> | void setMessageBody(std::string message_body) | private | 메시지 바디 setter |
+> | std::string mergeChunkedMessage(const std::string& chunk) | private | 청크 메시지 병합 |
+> | std::map&#60;string, string&#62;  getHeaders(void) const | public | 헤더 getter |
+> | std::string getMessageBody(void) | public | 바디 getter |
+> | virtual std::string getString(void) = 0 | public | 유효성 검사 가상 메소드 |
+> | virtual bool isVaild(void) = 0 | public | 문자열 반환 가상 메소드 |
+> | size_t getMessageSize(void) const | public | 바디 사이즈 getter |
+> | bool checkChunked(void) const | public | 청크 체크 함수 |
+> | void changeChunkedMessage(size_t encoding_size) | public | 청크 메시지 변환 메소드 |
 ------------------------------------------------
 
 **HttpRequestMessage**
@@ -106,10 +114,15 @@
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------:|
-> | string getRequestLine(void) const | public | request line getter |
+> | string getStartLine(void) const | public | request line getter |
 > | bool isVaild(void) | public | 유효성 검사 메소드 |
 > | string getString(void) | public | 문자열 반환 메소드 |
-
+> | std::string getReqeustTarget() const | public | requestTarget 반환 메소드 |
+> | std::string getHttpVersion() const | public | Http Version 반환 메소드 |
+> | std::string getHttpMethod() const | public | Http Method 반환 메소드 |
+> | std::string getQueryString() const | public | Query String 반환 메소드 |
+> | std::string getPathInfo() const | public | Path Info 반환 메소드 |
+> | std::string getPathTranslate() const | public | Translate 반환 메소드 |
 ------------------------------------------------
 
 **HttpResponseMessage**
