@@ -16,6 +16,8 @@ Server::~Server()
 
 void Server::socket_init(int port, unsigned int ip_addr)
 {
+    int optvalue = 1;
+    
     (void)ip_addr;
     if ((_server_socket = socket(PF_INET, SOCK_STREAM, 0)) == -1)
         exit(1);
@@ -29,10 +31,11 @@ void Server::socket_init(int port, unsigned int ip_addr)
     //     server_addr.sin_addr.s_addr = inet_addr(ip_addr.c_str());
     _server_addr.sin_port = htons(port);
     
+    setsockopt(_server_socket, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));
     if (bind(_server_socket, (struct sockaddr *)&_server_addr, sizeof(_server_addr)) == -1)
         exit(1);
 
-    if (listen(_server_socket, 5) == -1)
+    if (listen(_server_socket, 1000) == -1)
         exit(1);
 }
 
@@ -47,7 +50,6 @@ void Server::change_events(uintptr_t ident, int16_t filter,
 
 void Server::disconnect_client(int client_fd, std::map<int, Connection> &clients)
 {
-    // std::cout << "client disconnected: " << client_fd << std::endl;
     close(client_fd);
     clients.erase(client_fd);
 }
@@ -60,9 +62,10 @@ void Server::accept_new_client()
     std::string clinet_ip;
     char buf[1024] = {'\0'};
     struct sockaddr_in addr;
+
     if ((client_socket = accept(_server_socket, (struct sockaddr *)&addr, &addr_len)) == -1)
         exit(1);
-    // std::cout << "accept new client: " << client_socket << std::endl;
+
     fcntl(client_socket, F_SETFL, O_NONBLOCK);
 
     /* add event for client socket - add read && write event */
@@ -70,6 +73,20 @@ void Server::accept_new_client()
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
     clinet_ip = inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
     _clients[client_socket] = Connection(client_socket, std::string(buf));
+    Logger::writeLog(_clients[client_socket].getClinetAddr(), _clients[client_socket].getClinetFd(), "Add new Client", 1);
+}
+
+void Server::checkConnectionTimeout()
+{
+    for(std::map<int, Connection>::iterator it = _clients.begin() ; it != _clients.end(); ++it)
+    {
+        if (std::time(NULL) - it->second.getCurrentConnectionTime() > 60)
+        {
+            Logger::writeLog(it->second.getClinetAddr(), it->second.getClinetFd(), "Timeout Connection client", 1);
+            disconnect_client(it->first, _clients);
+            break;
+        }
+    }
 }
 
 void Server::run()
@@ -85,8 +102,9 @@ void Server::run()
     /* add event for server socket */
     change_events(_server_socket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
 
-    std::string msg = "Server started [" + ft::itos(_server_block->getPort()) + "]";
-    std::cout << msg << std::endl;
+    char buf[1024] = {'\0'};
+    std::string server_ip = inet_ntop(AF_INET, &_server_addr.sin_addr, buf, INET_ADDRSTRLEN);
+    Logger::writeLog(server_ip, _server_block->getPort(), "Server started", 1);
 
     /* main loop */
     int new_events;
@@ -109,28 +127,29 @@ void Server::run()
                 if (_curr_event->ident == (uintptr_t)_server_socket)
                     exit(1);
                 else
-                {
-                    std::cerr << "client socket error" << std::endl;
                     disconnect_client(_curr_event->ident, _clients);
-                }
             }
             else if (_curr_event->filter == EVFILT_READ)
             {
                 if (_curr_event->ident == (uintptr_t)_server_socket)
                     accept_new_client();
                 else if (_clients.find(_curr_event->ident) != _clients.end())
-                    _clients[_curr_event->ident].receiveMessage();
+                {
+                    if (!_clients[_curr_event->ident].receiveMessage())
+                        disconnect_client(_curr_event->ident, _clients);
+                }
             }
             else if (_curr_event->filter == EVFILT_WRITE)
             {   
                 std::map<int, Connection>::iterator it = _clients.find(_curr_event->ident);
                 if (it != _clients.end())
                 {
-                    if (_clients[_curr_event->ident].sendMessage(_server_block))
+                    if (!_clients[_curr_event->ident].sendMessage(_server_block))
                         disconnect_client(_curr_event->ident, _clients);
                 }
             }
         }
+        checkConnectionTimeout();
     }
 }
 
