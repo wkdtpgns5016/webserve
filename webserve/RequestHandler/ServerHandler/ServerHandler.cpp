@@ -264,7 +264,10 @@ HttpResponseMessage ServerHandler::getErrorResponse(int status_code)
     }
     if (!path.empty())
         message_body = ft::readFileIntoString(path);
-    return (getResponseMessage(status_code, message_body, cgi_header));
+    if (_request_message.getHttpMethod() == "HEAD")
+        message_body = "";
+    return (getResponseMessage(status_code, message_body));
+    //return (getResponseMessage(status_code, message_body, cgi_header));
 }
 
 
