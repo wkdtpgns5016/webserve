@@ -11,12 +11,18 @@ class RequestMessageParser
     bool        _is_chunked;
     bool        _is_trailer;
     bool        _complete_start_line;
+    int         _start_line_end_flag;
     bool        _complete_header;
+    int         _header_end_flag;
     bool        _complete_body;
+    int         _chunk_end_flag;
+
+    char        _prev;
 
     std::string _start_line_str;
     std::string _header_str;
     std::string _message_body_str;
+    size_t      _message_body_len;
 
     RequestLine _start_line;
     std::map<std::string, std::string> _header;
@@ -34,6 +40,11 @@ class RequestMessageParser
     void initBody(const std::string&  message, size_t len);
     void setHeader(const std::string&  message);
 
+    bool checkStartLineEnd(char prev, char now);
+    bool checkHeaderEnd(char prev, char now);
+    bool checkBodyEnd(char prev, char now);
+    bool checkChunkEnd(char prev, char now);
+
     public:
     RequestMessageParser();
     RequestMessageParser(const RequestMessageParser& parser);
@@ -41,6 +52,7 @@ class RequestMessageParser
     ~RequestMessageParser();
 
     void appendMessage(const std::string& new_str, size_t len);
+    void appendMessage(char* buffer, size_t len);
     HttpRequestMessage getRequestMessage() const;
     bool        checkMessage() const;
 
