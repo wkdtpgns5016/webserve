@@ -11,7 +11,7 @@ void	Parser::checkInvalidUri(const std::string& uri)
 		size_t pos = (*it).find('/');
 		std::string value = (*it).substr(0, pos);
 		if (value != "uri")
-			throw UnknownDirective(value);
+			throw InvalidValue(value);
 	}
 }
 

@@ -48,7 +48,7 @@ BetweenStatus::BetweenStatus(const std::string& line, const std::string& value) 
 
 // try_files
 TryFilesException::TryFilesException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "try_files") {}
-
+InvalidValue::InvalidValue(const std::string& value) : TryFilesException("invalid value", value) {}
 //unnkown
 UnknownDirective::UnknownDirective(const std::string& value) { _line += "unnkown directive \"" + value + "\" variable\n"; }
 UnknownDirective::~UnknownDirective() throw() {}

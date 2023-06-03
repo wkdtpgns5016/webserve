@@ -116,6 +116,11 @@ public:
 	TryFilesException(const std::string& type, const std::string& value);
 };
 
+class InvalidValue: public TryFilesException
+{
+public:
+	InvalidValue(const std::string& value);
+};
 //unknown
 class UnknownDirective : public std::exception
 {
