@@ -61,6 +61,12 @@ BetweenStatus::BetweenStatus(const std::string& line, const std::string& value) 
 // try_files
 TryFilesException::TryFilesException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "try_files") {}
 
+// cgi_config
+CgiConfigException::CgiConfigException(const std::string& type, const std::string& value) : SimpleException(type, value, "cgi_config") {}
+
+InvalidValue::InvalidValue(const std::string& value) : CgiConfigException("invalid value", value) {}
+NoValue::NoValue(const std::string& value) : CgiConfigException("no value", value) {}
+
 //unnkown
 UnknownDirective::UnknownDirective(const std::string& value)
 {

@@ -115,6 +115,23 @@ public:
 	TryFilesException(const std::string& type, const std::string& value);
 };
 
+//cgi_config
+class CgiConfigException : public SimpleException
+{
+public:
+	CgiConfigException(const std::string& type, const std::string& value);
+};
+
+class NoValue : public CgiConfigException
+{
+public:
+	NoValue(const std::string& value);
+};
+class InvalidValue : public CgiConfigException
+{
+public:
+	InvalidValue(const std::string& value);
+};
 //unknown
 class UnknownDirective : public std::exception
 {
