@@ -113,14 +113,8 @@ HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::stri
 
 int ServerHandler::checkFile(std::string request_target)
 {
-    // 임시
     std::map<std::string, std::string> cgi_config;
-    cgi_config[".bla"] = "./cgi_tester";
-    cgi_config[".php"] = "/usr/bin/php";
-    cgi_config[".py"] = "/usr/bin/python";
-    cgi_config[".pl"] = "/usr/bin/perl";
-    cgi_config[".sh"] = "/bin/sh";
-    // cgi_config = _config.getCgiConfig();
+    cgi_config = _config.getCgiConfig();
 
     size_t pos = request_target.rfind('.');
     if (pos == std::string::npos)
@@ -381,14 +375,8 @@ std::string ServerHandler::executeCgi(std::string file_path)
     std::string script_name;
     std::string result;
 
-    // 임시
     std::map<std::string, std::string> cgi_config;
-    cgi_config[".bla"] = "./cgi_tester";
-    cgi_config[".php"] = "/usr/bin/php";
-    cgi_config[".py"] = "/usr/bin/python";
-    cgi_config[".pl"] = "/usr/bin/perl";
-    cgi_config[".sh"] = "/bin/sh";
-    // cgi_config = _config.getCgiConfig();
+    cgi_config = _config.getCgiConfig();
 
     size_t pos = file_path.rfind('.');
     std::string extension = file_path.substr(pos);

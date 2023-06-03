@@ -28,6 +28,7 @@ ConfigDto::ConfigDto(const ConfigDto& config_dto)
     _allow_method = config_dto.getAllowMethod();
     _try_files = config_dto.getTryFiles();
     _autoindex = config_dto.getAutoindex();
+    _cgi_config = config_dto.getCgiConfig();
     _url = config_dto.getUrl();
 }
 
@@ -51,6 +52,7 @@ ConfigDto& ConfigDto::operator=(const ConfigDto& config_dto)
     _allow_method = config_dto.getAllowMethod();
     _try_files = config_dto.getTryFiles();
     _autoindex = config_dto.getAutoindex();
+    _cgi_config = config_dto.getCgiConfig();
     _url = config_dto.getUrl();
     return (*this);
 }
@@ -68,6 +70,7 @@ void ConfigDto::setConfigWithLocationBlock(const LocationBlock& location_block)
     _allow_method = location_block.getAllowMethod();
     _try_files = location_block.getTryFiles();
     _autoindex = location_block.getAutoindex();
+    _cgi_config = location_block.getCgiConfigs();
     _url = location_block.getUrl();
 }
 
@@ -84,6 +87,7 @@ void ConfigDto::setConfigWithServerBlock(const ServerBlock& server_block)
     _allow_method = server_block.getAllowMethod();
     _try_files = server_block.getTryFiles();
     _autoindex = server_block.getAutoindex();
+    _cgi_config = server_block.getCgiConfigs();
     _url = "";
 }
 
@@ -99,3 +103,4 @@ std::vector<std::string>	ConfigDto::getAllowMethod() const { return _allow_metho
 std::vector<std::string>	ConfigDto::getTryFiles() const { return _try_files; }
 bool	ConfigDto::getAutoindex() const { return _autoindex; }
 std::string ConfigDto::getUrl() const { return _url; }
+std::map <std::string, std::string> ConfigDto::getCgiConfig() const { return (_cgi_config); }
