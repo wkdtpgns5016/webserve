@@ -6,6 +6,7 @@
 #include "../Scripter/Scripter.hpp"
 #include "./SimpleException.hpp"
 #include "../../lib/ft/ft.hpp"
+
 class	Block;
 
 class	Parser
@@ -19,6 +20,7 @@ private:
 	bool	isSmallerThanMax(const std::string& num_str);
 	bool 	isDuplicateMethod(const std::string& value);
 	bool	isInvalidMethod(const std::string& method);
+	bool	isServerBlock(Block* block);
 	void	checkInvalidStatus(const std::string& error_page);
 	void	checkInvalidUri(const std::string& uri);
 	int		extractOneSectionNumber(const std::string& value, size_t pos, size_t len);
@@ -49,5 +51,4 @@ public:
 private:
 };
 #include "../Block/Block.hpp"
-
 #endif

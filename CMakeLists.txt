@@ -31,6 +31,7 @@ add_library(Configuration	webserve/Configuration/Parser/parseTryFiles.cpp
 							webserve/Configuration/Scripter/Scripter.hpp
 							webserve/Configuration/ServerBlock/ServerBlock.hpp
 							webserve/Configuration/ServerBlock/ServerBlock.cpp)
+
 add_library(http_message webserve/HttpMessage/HttpMessage.cpp
                         webserve/HttpMessage/HttpMessage.hpp
                         webserve/HttpMessage/HttpRequestMessage.cpp

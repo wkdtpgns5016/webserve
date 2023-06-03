@@ -24,4 +24,5 @@ class ConsistOfInvalidNumbersOfArguments : public BlockException
 public:
 	ConsistOfInvalidNumbersOfArguments(const std::string& id);
 };
+
 #endif

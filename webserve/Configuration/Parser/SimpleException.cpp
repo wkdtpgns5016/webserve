@@ -71,3 +71,11 @@ const char* UnknownDirective::what() const throw()
 {
 	return _line.c_str();
 }
+
+NotAllowed::NotAllowed(const std::string &value)
+{
+	_line += "\"" + value + "\" " +  "is not allowed in config file\n";
+}
+
+NotAllowed::~NotAllowed() throw() {}
+const char* NotAllowed::what() const throw() { return _line.c_str(); }

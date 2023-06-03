@@ -126,4 +126,14 @@ public:
 	const char* what() const throw();
 };
 
+class NotAllowed : public std::exception
+{
+protected:
+	std::string	_line;
+public:
+	NotAllowed(const std::string &value);
+	~NotAllowed() throw();
+	const char* what() const throw();
+};
+
 #endif
