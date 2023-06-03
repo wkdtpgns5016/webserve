@@ -13,7 +13,7 @@ class	Parser
 {
 private:
 	Scripter	_scripter;
-	void	(Parser::*_parsing_func[11])(const std::string&, Block*);
+	void	(Parser::*_parsing_func[12])(const std::string&, Block*);
 
 	bool	isInvalidNumberOfArguments(const std::string& value, size_t limit, bool only);
 	bool	isNumbers(const std::string& str, size_t pos = 0, size_t len = std::string::npos);
@@ -38,6 +38,8 @@ private:
 	void	parseTryFiles(const std::string&, Block* block);
 	void	parseAutoindex(const std::string&, Block* block);
 	void	parseNoMatchId(const std::string&, Block* block);
+	void	parseCgiConfigs(const std::string&, Block* block);
+	void	parseOneCgiConfig(const std::string&, Block* block);
 	std::pair<std::string, std::string>	divideSimpleIdAndValue(const std::string &str, size_t pos) const;
 	void	setParsingFunctionArray();
 

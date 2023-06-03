@@ -63,8 +63,11 @@ void	Block::setUploadPath(const std::string& upload_path) { _upload_path = uploa
 void	Block::setAllowMethod(const std::string& allow_method) { _allow_methods.push_back(allow_method); }
 void	Block::setTryFiles(const std::string& try_files) { _try_files.push_back(try_files); }
 void	Block::setAutoIndex(bool autoindex) { _autoindex = autoindex; }
+void	Block::setCgiConfig(const std::string& extension, const std::string& excuter) { _cgi_configs[extension] = excuter; }
+
 void	Block::clearAllowMethod() { _allow_methods.clear(); }
 void	Block::clearTryFiles() { _try_files.clear(); }
+void	Block::clearCgiConfig() { _cgi_configs.clear(); }
 
 /**
  * @details block_directives 하나를 파싱합니다.
@@ -109,6 +112,7 @@ const std::string&	Block::getUploadPath() const { return _upload_path; }
 const std::vector<std::string>&	Block::getAllowMethod() const { return _allow_methods; }
 const std::vector<std::string>&	Block::getTryFiles() const { return _try_files; }
 const bool&	Block::getAutoindex() const { return _autoindex; }
+const std::map<std::string, std::string>& Block::getCgiConfigs() const { return _cgi_configs; }
 const std::vector<Block *>&	Block::getInnerBlock() const { return _inner_blocks; }
 
 //occf

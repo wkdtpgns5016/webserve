@@ -137,8 +137,7 @@ HttpResponseMessage GetHandler::requestHandler()
         // 응답 생성
         if (_request_message.getHttpMethod() == "HEAD")
             message_body = "";
-        response_message = getResponseMessage(status, message_body);
-        //response_message = getResponseMessage(status, message_body, cgi_header);
+        response_message = getResponseMessage(status, message_body, cgi_header);
     }
     catch(const Error400Exceptnion& e)
     {

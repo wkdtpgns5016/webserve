@@ -32,7 +32,8 @@ void	Parser::setParsingFunctionArray()
 	_parsing_func[7] = &Parser::parseAllowMethod;
 	_parsing_func[8] = &Parser::parseTryFiles;
 	_parsing_func[9] = &Parser::parseAutoindex;
-	_parsing_func[10] = &Parser::parseNoMatchId;
+	_parsing_func[10] = &Parser::parseCgiConfigs;
+	_parsing_func[11] = &Parser::parseNoMatchId;
 }
 
 /**
@@ -40,14 +41,14 @@ void	Parser::setParsingFunctionArray()
  */
 size_t	Parser::parseSimple(const std::string& script, Block* block)
 {
-	const std::string	simple_id[11] = {"listen", "root", "server_name", "index", "error_page", "client_max_body_size", "upload_path", "allow_method", "try_files", "autoindex", ""};
+	const std::string	simple_id[12] = {"listen", "root", "server_name", "index", "error_page", "client_max_body_size", "upload_path", "allow_method", "try_files", "autoindex", "cgi_config", ""};
 
 	std::pair<std::string, std::string>	id_value_pair = divideSimpleIdAndValue(script, 0);
 	int i = 0;
-	for (; i < 10; i++)
+	for (; i < 11; i++)
 		if (id_value_pair.first == simple_id[i])
 			break;
-	if (i != 10)
+	if (i != 11)
 		(this->*_parsing_func[i])(id_value_pair.second, block);
 	else
 		(this->*_parsing_func[i])(id_value_pair.first, block);
