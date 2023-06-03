@@ -42,6 +42,8 @@ HttpResponseMessage DeleteHandler::requestHandler()
     HttpResponseMessage response_message;
     std::string path;
     std::string request_target = _request_message.getStartLine().getRequestTarget();
+    std::string path_info = _request_message.getPathInfo();
+    std::map<std::string, std::string> cgi_header;
 
     try
     {
@@ -50,19 +52,19 @@ HttpResponseMessage DeleteHandler::requestHandler()
         // http reqeust message 검사
         checkHttpMessage();
         // 파일 삭제
-        deleteFile(request_target);
+        deleteFile(path_info);
         // 응답 생성
         if (body.empty())
             status = 201;
-        response_message = getResponseMessage(status, body);
+        response_message = getResponseMessage(status, body, cgi_header);
     }
     catch(const Error400Exceptnion& e)
     {
-        response_message = getResponseMessage(400, "");
+        response_message = getErrorResponse(400);
     }
     catch(const Error404Exceptnion& e)
     {
-        response_message = getResponseMessage(204, "");
+        response_message = getResponseMessage(204, "", cgi_header);
     }
     catch(const Error405Exceptnion& e)
     {
@@ -79,6 +81,10 @@ HttpResponseMessage DeleteHandler::requestHandler()
     catch(const Error503Exceptnion& e)
     {
         response_message = getErrorResponse(503);
+    }
+    catch(const std::exception& e)
+    {
+        response_message = getErrorResponse(500);
     }
     return (response_message);
 }

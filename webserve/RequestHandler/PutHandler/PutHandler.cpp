@@ -46,12 +46,13 @@ void PutHandler::writeFile(int fd, std::string message)
 int PutHandler::putMethod()
 {
     std::string request_target = _request_message.getStartLine().getRequestTarget();
+    std::string path_info = _request_message.getPathInfo();
     std::string path;
     int status = 200;
     int fd;
     try
     {
-        path = findPath(request_target);
+        path = findPath(path_info);
         fd = openFile(path);
         writeFile(fd, _request_message.getMessageBody());
         close(fd);
@@ -73,6 +74,7 @@ HttpResponseMessage PutHandler::requestHandler()
 {
     HttpResponseMessage response_message;
     std::string message_body;
+    std::map<std::string, std::string> cgi_header;
     int status;
     try
     {
@@ -80,7 +82,7 @@ HttpResponseMessage PutHandler::requestHandler()
         status = putMethod();
         if (message_body.empty())
             status = 204;
-        response_message = getResponseMessage(status, message_body);
+        response_message = getResponseMessage(status, message_body, cgi_header);
     }
     catch(const Error400Exceptnion& e)
     {
@@ -101,6 +103,10 @@ HttpResponseMessage PutHandler::requestHandler()
     catch(const Error503Exceptnion& e)
     {
         response_message = getErrorResponse(503);
+    }
+    catch(const std::exception& e)
+    {
+        response_message = getErrorResponse(500);
     }
     return (response_message);
 }

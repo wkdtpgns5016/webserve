@@ -2,6 +2,7 @@
 
 RequestMessageParser::RequestMessageParser()
  : _is_chunked(false), _is_trailer(false), _complete_start_line(false), _complete_header(false), _complete_body(false)
+ , _start_line_str(""), _header_str(""), _message_body_str(""), _start_line(), _header(), _request_message()
 {
 
 }
@@ -13,6 +14,12 @@ RequestMessageParser::RequestMessageParser(const RequestMessageParser& parser)
     _complete_start_line = parser._complete_start_line;
     _complete_header = parser._complete_header;
     _complete_body = parser._complete_body;
+    _start_line_str = parser._start_line_str;
+    _header_str = parser._header_str;
+    _message_body_str = parser._message_body_str;
+    _start_line = parser._start_line;
+    _header = parser._header;
+    _request_message = parser._request_message;
 }
 
 RequestMessageParser& RequestMessageParser::operator=(const RequestMessageParser& parser)
@@ -22,6 +29,12 @@ RequestMessageParser& RequestMessageParser::operator=(const RequestMessageParser
     _complete_start_line = parser._complete_start_line;
     _complete_header = parser._complete_header;
     _complete_body = parser._complete_body;
+    _start_line_str = parser._start_line_str;
+    _header_str = parser._header_str;
+    _message_body_str = parser._message_body_str;
+    _start_line = parser._start_line;
+    _header = parser._header;
+    _request_message = parser._request_message;
     return (*this);
 }
 

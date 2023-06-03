@@ -100,6 +100,8 @@ public:
     virtual std::string                 getString(void) = 0;
     virtual bool                        isVaild(void) = 0;
     size_t                              getMessageSize(void) const;
+    bool                                checkChunked(void) const;
+    void                                changeChunkedMessage(size_t encoding_size);
 };
 
 #endif

@@ -16,6 +16,7 @@ namespace ft
     std::vector<std::string> getTime(time_t timer);
 	size_t stoul(std::string str);
     unsigned int convertHex(std::string hex);
+    bool isNumbers(const std::string& str, size_t pos = 0, size_t len = std::string::npos);
 }
 
 #endif

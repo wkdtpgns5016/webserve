@@ -71,9 +71,14 @@ void	Block::clearTryFiles() { _try_files.clear(); }
  */
 void	Block::parseInnerBlock(const std::vector<std::string>& block_scripts)
 {
+	Block *temp;
 	std::vector<std::string>::const_iterator	ite = block_scripts.end();
+
 	for (std::vector<std::string>::const_iterator it = block_scripts.begin(); it != ite; it++)
-		_inner_blocks.push_back(generateInnerBlock(*it));
+	{
+		temp = generateInnerBlock(*it);
+		_inner_blocks.push_back(temp);
+	}
 }
 
 //copier

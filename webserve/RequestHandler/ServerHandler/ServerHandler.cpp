@@ -13,8 +13,7 @@ ServerHandler::ServerHandler(ServerBlock* server_block, HttpRequestMessage reque
     LocationBlock* location_block = findLocationBlock(server_block->getInnerBlock(), 
                                                       request_message.getStartLine().getRequestTarget());
     _request_message = request_message;
-    _config = ConfigDto(*server_block, *location_block);
-    _b_config = location_block;
+    _config = ConfigDto(server_block, location_block);
 }
 
 ServerHandler::~ServerHandler()
@@ -77,16 +76,19 @@ HttpRequestMessage& ServerHandler::getRequestMessage(void)
     return (_request_message);
 }
 
-std::map<std::string, std::string> ServerHandler::setHeader(int status_code, std::string message_body)
+std::map<std::string, std::string> ServerHandler::setHeader(int status_code, std::string message_body, std::map<std::string, std::string> cgi_header)
 {
     std::map<std::string, std::string> headers;
     std::vector<std::string> t = ft::getTime(time(NULL));
 
     headers["Server"] = "webserv";
     headers["Date"] = t[0] + ", " + t[2] + " " + t[1] + " " + t[4] + " " + t[3] + " GMT";
-    headers["Content-Type"] = "text/html";
+    if (cgi_header.find("Content-Type") != cgi_header.end())
+        headers["Content-Type"] = cgi_header["Content-Type"];
+    else
+        headers["Content-Type"] = "text/html";
     headers["Content-Length"] = ft::itos(message_body.size());
-    headers["Connection"] = "keep-alive";
+    //headers["Connection"] = "close";
     if (status_code == 405)
     {
         std::string allow;
@@ -100,27 +102,34 @@ std::map<std::string, std::string> ServerHandler::setHeader(int status_code, std
     return (headers);
 }
 
-HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::string message_body)
+HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::string message_body, std::map <std::string, std::string> cgi_header)
 {
-    StatusLine start_line = StatusLine(_request_message.getStartLine().getHttpVersion(), status_code, _status[status_code]);
-    std::map<std::string, std::string> headers = setHeader(status_code, message_body);
+    std::vector<std::string> arr;
+    StatusLine start_line = StatusLine(_request_message.getHttpVersion(), status_code, _status[status_code]);
+    std::map<std::string, std::string> headers = setHeader(status_code, message_body, cgi_header);
     HttpResponseMessage response_message = HttpResponseMessage(start_line, headers, message_body);
     return (response_message);
 }
 
-bool ServerHandler::checkFile(std::string request_target)
+int ServerHandler::checkFile(std::string request_target)
 {
     int len = request_target.length();
     if (len < 4)
-        return (true);
-    if (request_target.substr(len - 4, 3).compare("php") == 0)
-        return (false);
-    else if (request_target.substr(len - 4, 3).compare("cgi") == 0)
-        return (false);
-    else if (request_target.substr(len - 3, 2).compare("pl") == 0)
-        return (false);
+        return (-1);
+    if (request_target.substr(len - 3, 3).compare("php") == 0)
+        return (1);
+    else if (request_target.substr(len - 3, 3).compare("cgi") == 0)
+        return (2);
+    else if (request_target.substr(len - 2, 2).compare("pl") == 0)
+        return (3);
+    else if (request_target.substr(len - 2, 2).compare("py") == 0)
+        return (4);
+    else if (request_target.substr(len - 2, 2).compare("sh") == 0)
+        return (5);
+    else if (request_target.substr(len - 3, 3).compare("bla") == 0)
+        return (6);
     else
-        return (true);
+        return (-1);
 }
 
 std::vector<std::string> ServerHandler::getIndexPath(std::string root, std::string index)
@@ -143,8 +152,8 @@ std::vector<std::string> ServerHandler::getIndexPath(std::string root, std::stri
 LocationBlock* ServerHandler::findLocationBlock(std::vector<Block*> locations, std::string request_target)
 {
     std::vector<Block*>::iterator it = locations.begin();
-    LocationBlock* location;
-    LocationBlock* temp;
+    LocationBlock* location = NULL;
+    LocationBlock* temp = NULL;
     int find_flag;
     for (; it != locations.end(); it++)
     {
@@ -206,11 +215,39 @@ bool ServerHandler::checkDirectory(std::string path)
     return (false);
 }
 
+void ServerHandler::throwStatusError(int status_code)
+{
+    switch (status_code)
+    {
+    case 400:
+        throw Error400Exceptnion();
+        break;
+    case 404:
+        throw Error404Exceptnion();
+        break;
+    case 405:
+        throw Error405Exceptnion();
+        break;
+    case 413:
+        throw Error413Exceptnion();
+        break;
+    case 500:
+        throw Error500Exceptnion();
+        break;
+    case 503:
+        throw Error503Exceptnion();
+        break;
+    default:
+        break;
+    }
+}
+
 HttpResponseMessage ServerHandler::getErrorResponse(int status_code)
 {
     std::string message_body;
+    std::map<std::string, std::string> cgi_header;
     if (_config.getDefaultErrorPage().empty())
-        return (getResponseMessage(status_code, message_body));
+        return (getResponseMessage(status_code, message_body, cgi_header));
 
     std::vector<std::string> arr = ft::splitString(_config.getDefaultErrorPage(), " ");
     std::vector<std::string>::iterator it = arr.begin();
@@ -227,7 +264,10 @@ HttpResponseMessage ServerHandler::getErrorResponse(int status_code)
     }
     if (!path.empty())
         message_body = ft::readFileIntoString(path);
+    if (_request_message.getHttpMethod() == "HEAD")
+        message_body = "";
     return (getResponseMessage(status_code, message_body));
+    //return (getResponseMessage(status_code, message_body, cgi_header));
 }
 
 
@@ -331,12 +371,75 @@ void ServerHandler::checkHttpMessage(void)
     checkMessageSize();
 }
 
-std::string ServerHandler::executeCgi(std::string request_target)
+std::string ServerHandler::executeCgi(std::string file_path)
 {
-    (void)request_target;
-    std::string file_path = findPath(request_target);
-    // fork 후 cgi 실행
-    return ("");
+    CGI cgi(_config, _request_message);
+    std::string script_name;
+    std::string result;
+
+    int flag = checkFile(file_path);
+
+    switch (flag)
+    {
+    case 1:
+        script_name = "/usr/bin/php " + file_path;
+        break;
+    case 2:
+        script_name = "." + file_path;
+        break;
+    case 3:
+        script_name = "/usr/bin/perl " + file_path;
+        break;
+    case 4:
+        script_name = "/usr/bin/python " + file_path;
+        break;
+    case 5:
+        script_name = "/bin/sh " + file_path;
+        break;
+    case 6:
+        script_name = "./cgi_tester " + _request_message.getHttpMethod();
+        break;
+    default:
+        script_name = "./" + file_path;
+        break;
+    }
+    result = cgi.excute(script_name);
+    return (result);
+}
+
+std::map<std::string, std::string> ServerHandler::getCgiHeader(std::vector<std::string> arr)
+{
+    std::map<std::string, std::string> cgi_header;
+    for (std::vector<std::string>::iterator it = arr.begin(); it != arr.end() - 1; it++)
+    {
+        size_t pos;
+        std::string key;
+        std::string value;
+        if ((pos = (*it).find(':')) != std::string::npos)
+        {
+            key = (*it).substr(0, pos);
+            value = (*it).substr(pos + 2, (*it).length() - pos - 1);
+            cgi_header[key] = value;
+        }
+    }
+    return (cgi_header);
+}
+
+int ServerHandler::getStautsCgi(std::map<std::string, std::string> cgi_header)
+{
+    int status;
+    std::vector<std::string> arr;
+    if (cgi_header.find("Status") == cgi_header.end())
+        return (-1);
+    arr = ft::splitString(cgi_header["Status"], " ");
+    if (arr.size() != 2)
+        throw Error500Exceptnion();
+    if (arr[0].length() != 3 || !ft::isNumbers(arr[0]))
+        throw Error500Exceptnion();
+    status = ft::stoi(arr[0]);
+    if (status < 100 || status >= 600)
+        throw Error500Exceptnion();
+    return (status);
 }
 
 const char* ServerHandler::AutoIndexExceptnion::what() const throw() {
