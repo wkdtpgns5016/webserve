@@ -5,10 +5,12 @@ ConfigDto::ConfigDto()
 
 }
 
-ConfigDto::ConfigDto(const ServerBlock& server_block, const LocationBlock& location_block)
+ConfigDto::ConfigDto(ServerBlock* server_block, LocationBlock* location_block)
 {
-    setConfigWithLocationBlock(location_block);
-    setConfigWithServerBlock(server_block);
+    if (location_block == NULL)
+        setConfigWithServerBlock(*server_block);
+    else
+        setConfigWithLocationBlock(*location_block);
 }
 
 ConfigDto::ConfigDto(const ConfigDto& config_dto)
@@ -71,28 +73,17 @@ void ConfigDto::setConfigWithLocationBlock(const LocationBlock& location_block)
 
 void ConfigDto::setConfigWithServerBlock(const ServerBlock& server_block)
 {
-    if (_port < 0 || _port > 65535)
-        _port = server_block.getPort();
-    if (_root.empty())
-        _root = server_block.getRoot();
-    if (_addr.empty())
-        _addr = server_block.getAddr();
-    if (_server_name.empty())
-        _server_name = server_block.getServerName();
-    if (_index.empty())
-        _index = server_block.getIndex();
-    if (_default_error_page.empty())
-        _default_error_page = server_block.getDefaultErrorPage();
-    if (_client_body_size <= 0)
-        _client_body_size = server_block.getClientMaxBodySize();
-    if (_upload_path.empty())
-        _upload_path = server_block.getUploadPath();
-    if (_allow_method.empty())
-        _allow_method = server_block.getAllowMethod();
-    if (_try_files.empty())
-        _try_files = server_block.getTryFiles();
-    if (_autoindex == 0)
-        _autoindex = server_block.getAutoindex();
+    _port = server_block.getPort();
+    _root = server_block.getRoot();
+    _addr = server_block.getAddr();
+    _server_name = server_block.getServerName();
+    _index = server_block.getIndex();
+    _default_error_page = server_block.getDefaultErrorPage();
+    _client_body_size = server_block.getClientMaxBodySize();
+    _upload_path = server_block.getUploadPath();
+    _allow_method = server_block.getAllowMethod();
+    _try_files = server_block.getTryFiles();
+    _autoindex = server_block.getAutoindex();
 }
 
 int	ConfigDto::getPort() const { return _port; }

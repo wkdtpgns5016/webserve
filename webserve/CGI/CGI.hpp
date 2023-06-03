@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include <unistd.h>
-#include "../Configuration/LocationBlock/LocationBlock.hpp"
+#include "../Configuration/ConfigDto/ConfigDto.hpp"
 #include "../HttpMessage/HttpRequestMessage.hpp"
 
 #define READ 0
@@ -14,20 +14,20 @@
 class CGI
 {
 private:
-    LocationBlock                       *_block;
+    ConfigDto                           _config;
     HttpRequestMessage                  _request_message;
     std::map<std::string, std::string>  _env;
 
+    void initEnv(void);
+    void setEnv(void);
+    char **getEnvChar(void) const;
 public:
     CGI(void);
     CGI(const CGI& obj);
     CGI operator=(const CGI& obj);
     ~CGI(void);
-
-    CGI(LocationBlock *_block, HttpRequestMessage _request_message);
-
-    void setEnv(void);
-    char **getEnvChar(void) const;
+    CGI(ConfigDto _config, HttpRequestMessage _request_message);
+    
     std::string excute(std::string scriptName);
 };
 

@@ -37,7 +37,13 @@
     + Parser
     + Scripter
 
-**[8. 라이브러리 함수](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[8]lib_function.md)** </br>
+**[8. Log 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[8]log_module.md)** </br>
++ 8-1. Logger 객체
++ 8-2. CommonLogFormat 객체
+
+**[9. CGI 객체](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[9]cgi.md)** </br>
+
+**[10. 라이브러리 함수](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[10]lib_function.md)** </br>
 
 ---------------------------------------------------
 
@@ -79,6 +85,7 @@
 > | void socket_init(int port, unsigned int ip_addr) | private | 소켓 초기화 함수 |
 > | void change_events(uintptr_t ident, int16_t filter, uint16_t flags, uint32_t fflags, intptr_t data, void *udata) | private | 이벤트 리스트 등록 함수 |
 > | void disconnect_client(int client_fd, std::map&#60;int, Connection&#62; &clients) | private | 클라이언트 삭제 함수 |
+> | void checkConnectionTimeout() | private | 커넥션 타임아웃 검사 메소드 |
 > | void accept_new_client()| private | 신규 클라이언트 등록 함수 |
 > | void receiveMessage() | private | 메세지 수신 함수 |
 > | void sendMessage() | private | 메세지 송신 함수 |
@@ -113,12 +120,23 @@
 > |:----------|:----------|:----------|:----------:|
 > | int         | private | _client_fd | 클라이언트 소켓 fd |
 > | std::string | private | _client_addr | 클라이언트 주소 |
+> |time_t | private | _current_connection_time | 최근 연결 시각 |
 > | RequestMessageParser | private | _message_parser | Http 요청 메시지 파서 |
+> | HttpRequestMessage | private | _request | 요청 객체 |
+> | HttpResponseMessage | private | _response | 응답 객체 |
+> | Buffer      | private | _buffer | 전송 버퍼 |
+> | bool        | private | _complete_respose | 응답 완성 플래그 |
 
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------:|
 > | bool checkMessage() | private | 메시지 완성 검사 함수 |
+> | bool checkResponse() | private | 응답 완성 확인 메소드 |
+> | void makeResponse(ServerBlock *server_block) | private | 응답 생성 메소드 |
+> | void updateConnectionTime() | private | 최근 연결 시각 초기화 |
 > | void receiveMessage() | public | 메시지 수신 함수 |
 > | bool sendMessage(ServerBlock *Server_block) | public | 메시지 송신 함수 |
 > | std::string getClinetAddr() const | public | 클라이언트 주소 getter |
+> | void clearConnection() | public | 커넥션 초기화 메소드 |
+> | int getClinetFd() const | public | 클라이언트 fd 반환 메소드 |
+> | time_t getCurrentConnectionTime() const | public | 최근 연결 시각 반환 메소드 |
