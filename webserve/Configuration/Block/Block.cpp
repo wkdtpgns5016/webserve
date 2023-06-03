@@ -98,6 +98,7 @@ void	Block::copyWithoutInnerBlock(const Block& other)
 	_allow_methods = other._allow_methods;
 	_try_files = other._try_files;
 	_autoindex = other._autoindex;
+	_cgi_configs = other._cgi_configs;
 }
 
 //getter

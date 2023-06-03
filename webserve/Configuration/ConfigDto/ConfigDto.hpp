@@ -18,6 +18,7 @@ class ConfigDto
 	std::string	_upload_path;
 	std::vector<std::string>	_allow_method;
 	std::vector<std::string>	_try_files;
+	std::map <std::string, std::string> _cgi_config;
 	bool	_autoindex;
 	std::string	_url;
 
@@ -43,6 +44,7 @@ class ConfigDto
 	std::vector<std::string>	getTryFiles() const;
 	bool	getAutoindex() const;
     std::string getUrl() const;
+	std::map <std::string, std::string> getCgiConfig() const ;
 };
 
 #endif
