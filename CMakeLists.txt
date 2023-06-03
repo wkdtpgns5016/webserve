@@ -4,7 +4,7 @@ project(webserve)
 set(CMAKE_CXX_STANDARD 17)
 ADD_COMPILE_OPTIONS( -g3)
 # 객체 빌드
-add_library(obj SHARED webserve/TestExample/TestExample.cpp webserve/TestExample/TestExample.hpp)
+#add_library(obj SHARED webserve/TestExample/TestExample.cpp webserve/TestExample/TestExample.hpp)
 add_library(libft webserve/lib/ft/ft.hpp 
                   webserve/lib/ft/splitBlockString.cpp 
                   webserve/lib/ft/readFileIntoString.cpp 
@@ -52,11 +52,11 @@ set(gtest_SRC_DIR tests/googletest-1.13.0)
 add_subdirectory(${gtest_SRC_DIR})
 
 # TestExampleUnitTest 빌드
-include_directories(obj)
-include_directories(${gtest_SRC_DIR}/googletest/include)
-add_executable(TestExampleUnitTest webserve/TestExample/TestExample.test.cpp)
-target_link_libraries(TestExampleUnitTest gtest gtest_main)
-target_link_libraries(TestExampleUnitTest obj)
+#include_directories(obj)
+#include_directories(${gtest_SRC_DIR}/googletest/include)
+#add_executable(TestExampleUnitTest webserve/TestExample/TestExample.test.cpp)
+#target_link_libraries(TestExampleUnitTest gtest gtest_main)
+#target_link_libraries(TestExampleUnitTest obj)
 
 # ft 라이브러리 단위테스트 빌드
 include_directories(libft)

@@ -22,11 +22,6 @@ public:
 };
 
 //Each Directive Exception
-class ErrorPageException: public SimpleException
-{
-public:
-	ErrorPageException(const std::string& type, const std::string& value);
-};
 
 //ListenException
 class ListenException: public SimpleException
@@ -97,6 +92,12 @@ public:
 };
 
 // default_error_page
+class ErrorPageException: public SimpleException
+{
+public:
+	ErrorPageException(const std::string& type, const std::string& value);
+};
+
 class InvalidStatus : public ErrorPageException
 {
 public:
