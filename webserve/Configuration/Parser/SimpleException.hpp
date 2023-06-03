@@ -22,11 +22,6 @@ public:
 };
 
 //Each Directive Exception
-class ErrorPageException: public SimpleException
-{
-public:
-	ErrorPageException(const std::string& type, const std::string& value);
-};
 
 //ListenException
 class ListenException: public SimpleException
@@ -97,6 +92,12 @@ public:
 };
 
 // default_error_page
+class ErrorPageException: public SimpleException
+{
+public:
+	ErrorPageException(const std::string& type, const std::string& value);
+};
+
 class InvalidStatus : public ErrorPageException
 {
 public:
@@ -114,6 +115,10 @@ class TryFilesException: public SimpleException
 public:
 	TryFilesException(const std::string& type, const std::string& value);
 };
+class InvalidValue: public TryFilesException{
+public:
+	InvalidValue(const std::string& value);
+};
 
 //cgi_config
 class CgiConfigException : public SimpleException
@@ -128,10 +133,8 @@ public:
 	NoValue(const std::string& value);
 };
 class InvalidValue : public CgiConfigException
-{
-public:
-	InvalidValue(const std::string& value);
-};
+
+
 //unknown
 class UnknownDirective : public std::exception
 {
