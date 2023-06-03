@@ -17,6 +17,7 @@ add_library(Configuration	webserve/Configuration/Parser/parseTryFiles.cpp
 							webserve/Configuration/Parser/parseListen.cpp  
 							webserve/Configuration/Parser/parseErrorPage.cpp 
 							webserve/Configuration/Parser/parseClientMaxBodySize.cpp 
+							webserve/Configuration/Parser/parseCgiConfig.cpp 
 							webserve/Configuration/Parser/SimpleException.cpp  
 							webserve/Configuration/Parser/Parser.hpp 
 							webserve/Configuration/Parser/Parser.cpp 

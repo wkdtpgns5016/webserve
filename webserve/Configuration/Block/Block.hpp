@@ -2,6 +2,7 @@
 # define BLOCK_HPP
 
 #include <iostream>
+#include <map>
 #include <vector>
 #include "../Scripter/Scripter.hpp"
 #include "./BlockException.hpp"
@@ -33,6 +34,7 @@ protected:
 	std::vector<std::string>	_allow_methods;
 	std::vector<std::string>	_try_files;
 	bool	_autoindex;
+	std::map<std::string, std::string> _cgi_configs;
 	std::vector<Block*>	_inner_blocks;
 
 public:
@@ -58,8 +60,12 @@ public:
 	void	setAllowMethod(const std::string& allow_method);
 	void	setTryFiles(const std::string& try_files);
 	void	setAutoIndex(bool auto_index);
+	void	setCgiConfig(const std::string& extension, const std::string& excuter);
+
 	void	clearAllowMethod();
 	void	clearTryFiles();
+	void	clearCgiConfig();
+
 
 	const int&			getPort() const;
 	const std::string&	getRoot() const;
@@ -72,6 +78,7 @@ public:
 	const std::vector<std::string>&	getAllowMethod() const;
 	const std::vector<std::string>&	getTryFiles() const;
 	const bool&	getAutoindex() const;
+	const std::map<std::string, std::string>& getCgiConfigs() const;
 	const std::vector<Block *>&	getInnerBlock() const;
 
 };
