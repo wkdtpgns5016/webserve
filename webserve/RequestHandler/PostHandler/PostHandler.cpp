@@ -45,11 +45,7 @@ HttpResponseMessage PostHandler::requestHandler()
     {
         // http reqeust message 검사
         checkHttpMessage();
-        // 임시
-        if (path_info.find("/post_body") != std::string::npos)
-            path = "test.bla";
-        else
-            path = findPath(path_info);
+        path = findPath(path_info);
         message_body = executeCgi(path);
         if (!message_body.empty())
         {

@@ -84,6 +84,7 @@ void ConfigDto::setConfigWithServerBlock(const ServerBlock& server_block)
     _allow_method = server_block.getAllowMethod();
     _try_files = server_block.getTryFiles();
     _autoindex = server_block.getAutoindex();
+    _url = "";
 }
 
 int	ConfigDto::getPort() const { return _port; }
