@@ -44,12 +44,12 @@ bool Connection::receiveMessage()
     n = read(_client_fd, recv, 1024);
     if (n < 0)
     {
-        Logger::writeLog(_client_addr, _client_fd, "read error", 1);
+        Logger::writeInfoLog(_client_fd, "Read error");
         return (false);
     }
     else if (n == 0)
     {
-        Logger::writeLog(_client_addr, _client_fd, "Close Connection client", 1);
+        Logger::writeInfoLog(_client_fd, "Close Connection client");
         return (false);
     }
     else
@@ -79,13 +79,13 @@ bool Connection::sendMessage(ServerBlock *server_block)
         
         if (n < 0)
         {
-            Logger::writeLog(_client_addr, _client_fd, "write error", 1);
+            Logger::writeInfoLog(_client_fd, "Write error");
             return (false);
         }
         else if (n == 0 || (size_t)n == len)
         {
             clearConnection();
-            Logger::writeLog(_client_addr, _request, _response, 1);
+            Logger::writeLog(_client_addr, _request, _response);
         }
         else
         {

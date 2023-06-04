@@ -107,6 +107,8 @@ HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::stri
     std::vector<std::string> arr;
     StatusLine start_line = StatusLine(_request_message.getHttpVersion(), status_code, _status[status_code]);
     std::map<std::string, std::string> headers = setHeader(status_code, message_body, cgi_header);
+    if (_request_message.getHttpMethod() == "HEAD")
+        message_body = "";
     HttpResponseMessage response_message = HttpResponseMessage(start_line, headers, message_body);
     return (response_message);
 }
@@ -257,8 +259,6 @@ HttpResponseMessage ServerHandler::getErrorResponse(int status_code)
     }
     if (!path.empty())
         message_body = ft::readFileIntoString(path);
-    if (_request_message.getHttpMethod() == "HEAD")
-        message_body = "";
     return (getResponseMessage(status_code, message_body, cgi_header));
 }
 
@@ -388,10 +388,31 @@ std::string ServerHandler::executeCgi(std::string file_path)
     return (result);
 }
 
-std::map<std::string, std::string> ServerHandler::getCgiHeader(std::vector<std::string> arr)
+HttpResponseMessage ServerHandler::getCgiResponse(int status, std::string message_body)
 {
+    int cgi_status;
     std::map<std::string, std::string> cgi_header;
-    for (std::vector<std::string>::iterator it = arr.begin(); it != arr.end() - 1; it++)
+    std::string cgi_header_str;
+    std::string body;
+    size_t pos;
+
+    pos = message_body.find("\r\n\r\n");
+    if (pos == std::string::npos)
+        return (getResponseMessage(status, message_body, cgi_header));
+    cgi_header_str = message_body.substr(0, pos);
+    cgi_header = getCgiHeader(cgi_header_str);
+    body = message_body.substr(pos + 4);
+    if ((cgi_status = getStautsCgi(cgi_header)) > 0)
+        status = cgi_status;
+    throwStatusError(status);
+    return (getResponseMessage(status, body, cgi_header));
+}
+
+std::map<std::string, std::string> ServerHandler::getCgiHeader(std::string cgi_header_str)
+{
+    std::vector<std::string> arr = ft::splitString(cgi_header_str, "\r\n");
+    std::map<std::string, std::string> cgi_header;
+    for (std::vector<std::string>::iterator it = arr.begin(); it != arr.end(); it++)
     {
         size_t pos;
         std::string key;

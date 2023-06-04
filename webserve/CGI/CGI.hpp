@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include "../Configuration/ConfigDto/ConfigDto.hpp"
 #include "../HttpMessage/HttpRequestMessage.hpp"
+#include "../Log/Logger/Logger.hpp"
 
 #define READ 0
 #define WRITE 1

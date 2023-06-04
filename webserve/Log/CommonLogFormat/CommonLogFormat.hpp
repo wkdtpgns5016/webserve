@@ -29,7 +29,7 @@ class CommonLogFormat
     
     void initTimeStamp(void);
     std::string getString(void);
-    void wirteLogMessage(int fd);
+    void wirteLogMessage(void);
 
     std::string getRemoteHost(void) const;
     std::string getUserName(void) const;
