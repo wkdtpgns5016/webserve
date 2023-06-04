@@ -430,15 +430,14 @@ std::map<std::string, std::string> ServerHandler::getCgiHeader(std::string cgi_h
 int ServerHandler::getStautsCgi(std::map<std::string, std::string> cgi_header)
 {
     int status;
+    std::string status_str;
     std::vector<std::string> arr;
     if (cgi_header.find("Status") == cgi_header.end())
         return (-1);
-    arr = ft::splitString(cgi_header["Status"], " ");
-    if (arr.size() != 2)
+    status_str = cgi_header["Status"].substr(0, 3);
+    if (status_str.length() != 3 || !ft::isNumbers(status_str))
         throw Error500Exceptnion();
-    if (arr[0].length() != 3 || !ft::isNumbers(arr[0]))
-        throw Error500Exceptnion();
-    status = ft::stoi(arr[0]);
+    status = ft::stoi(status_str);
     if (status < 100 || status >= 600)
         throw Error500Exceptnion();
     return (status);
