@@ -24,7 +24,7 @@ void	Parser::parseOneCgiConfig(const std::string& value, Block* block)
 	std::string	excuter;
 	size_t	pos = value.find(':');
 	if (pos == std::string::npos)
-		throw InvalidValue(value);
+		throw InvalidCgiValue(value);
 
 	extension = value.substr(0, pos);
 	excuter = value.substr(pos + 1);

@@ -53,7 +53,7 @@ InvalidValue::InvalidValue(const std::string& value) : TryFilesException("invali
 //cgi_config
 CgiConfigException::CgiConfigException(const std::string& type, const std::string& value) : SimpleException(type, value, "cgi_config") {}
 
-InvalidValue::InvalidValue(const std::string& value) : CgiConfigException("invalid value", value) {}
+InvalidCgiValue::InvalidCgiValue(const std::string& value) : CgiConfigException("invalid value", value) {}
 NoValue::NoValue(const std::string& value) : CgiConfigException("no value", value) {}
 
 //unnkown
