@@ -51,12 +51,19 @@ HttpResponseMessage DeleteHandler::requestHandler()
         std::string body;
         // http reqeust message 검사
         checkHttpMessage();
-        // 파일 삭제
-        deleteFile(path_info);
-        // 응답 생성
-        if (body.empty())
-            status = 201;
-        response_message = getResponseMessage(status, body, cgi_header);
+        // 임시
+        //if (!_config.getRetrun().second.empty())
+        if (!false)
+            return (redirectionHttpMessage());
+        else
+        {
+            // 파일 삭제
+            deleteFile(path_info);
+            // 응답 생성
+            if (body.empty())
+                status = 201;
+            response_message = getResponseMessage(status, body, cgi_header);
+        }
     }
     catch(const Error400Exceptnion& e)
     {

@@ -116,20 +116,27 @@ HttpResponseMessage GetHandler::requestHandler()
     {
         // http reqeust message 검사
         checkHttpMessage();
-        // 파일 종류 판별
-        if (checkFile(path_info) == -1) // 일반 파일
+        // 임시
+        //if (!_config.getRetrun().second.empty())
+        if (!false)
+            return (redirectionHttpMessage());
+        else
         {
-            message_body = openFile(path_info);
-            response_message = getResponseMessage(status, message_body, cgi_header);
-        }
-        else                           // cgi 파일
-        {
-            std::string path = findPath(path_info);
-            message_body = executeCgi(path);
-            if (!message_body.empty())
-                response_message = getCgiResponse(status, message_body);
-            else
+            // 파일 종류 판별
+            if (checkFile(path_info) == -1) // 일반 파일
+            {
+                message_body = openFile(path_info);
                 response_message = getResponseMessage(status, message_body, cgi_header);
+            }
+            else                           // cgi 파일
+            {
+                std::string path = findPath(path_info);
+                message_body = executeCgi(path);
+                if (!message_body.empty())
+                    response_message = getCgiResponse(status, message_body);
+                else
+                    response_message = getResponseMessage(status, message_body, cgi_header);
+            }
         }
     }
     catch(const Error400Exceptnion& e)
