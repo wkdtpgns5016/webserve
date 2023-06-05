@@ -294,7 +294,7 @@ std::string ServerHandler::findPath(std::string request_target)
     // 요청 url
     std::string change;
     std::string clean_request_target = cleanUrl(request_target, false);
-    if (_config.getUrl().empty())
+    if (_config.getUrl().empty() || _config.getUrl() == "/")
         change = clean_request_target;
     else
         change = clean_request_target.substr(_config.getUrl().length());
