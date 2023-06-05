@@ -48,7 +48,7 @@ bool Connection::receiveMessage()
     i++;
     if (!_start_read)
     {
-        std::cout << std::clock() << "              start parsing request" << std::endl;
+        //std::cout << std::clock() << "              start parsing request" << std::endl;
          _start_read = true;
     }
     n = read(_client_fd, recv, buffer_size);
@@ -94,8 +94,8 @@ bool Connection::sendMessage(ServerBlock *server_block)
         }
         else if (n == 0 || (size_t)n == len)
         {
-            std::cout << std::clock() << "              complete wrtie" << std::endl;
-            std::cout << std::clock() << "              end" << std::endl;
+            //std::cout << std::clock() << "              complete wrtie" << std::endl;
+            //std::cout << std::clock() << "              end" << std::endl;
             clearConnection();
             Logger::writeLog(_client_addr, _request, _response);
         }
@@ -110,13 +110,13 @@ bool Connection::sendMessage(ServerBlock *server_block)
 
 void Connection::makeResponse(ServerBlock *server_block)
 {
-    std::cout << std::clock() << "              complete parsing reqeust " << i << std::endl;
-    std::cout << std::clock() << "              start parsing response" << std::endl;
+    //std::cout << std::clock() << "              complete parsing reqeust " << i << std::endl;
+    //std::cout << std::clock() << "              start parsing response" << std::endl;
     ServerController controller;
     _request = _message_parser.getRequestMessage();
     _response = controller.requestHandler(server_block, _request);
-    std::cout << std::clock() << "              complete parsing response" << std::endl;
-    std::cout << std::clock() << "              start write" << std::endl;
+    //std::cout << std::clock() << "              complete parsing response" << std::endl;
+    //std::cout << std::clock() << "              start write" << std::endl;
     _buffer = Buffer(_response.getString());
     _complete_respose = true;
 }
