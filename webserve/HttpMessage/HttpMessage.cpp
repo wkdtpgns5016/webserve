@@ -5,7 +5,7 @@ StartLine::StartLine(void)
 
 }
 
-StartLine::StartLine(std::string http_version) : _http_version(http_version)
+StartLine::StartLine(const std::string& http_version) : _http_version(http_version)
 {
 
 }
@@ -48,7 +48,7 @@ StatusLine::StatusLine(void) : StartLine()
 
 }
 
-StatusLine::StatusLine(std::string start_line)
+StatusLine::StatusLine(const std::string& start_line)
 {
     std::vector<std::string> arr;
 
@@ -58,7 +58,7 @@ StatusLine::StatusLine(std::string start_line)
     _status_message = arr[2];
 }
 
-StatusLine::StatusLine(std::string start_line, int status_code, std::string status_message)
+StatusLine::StatusLine(const std::string& start_line, int status_code, const std::string& status_message)
 : StartLine(start_line), _status_code(status_code), _status_message(status_message)
 {
 
@@ -99,13 +99,13 @@ std::string StatusLine::getStatusMessage(void) const
     return (_status_message);
 }
 
-bool StatusLine::checkStatusCode(std::string status_code)
+bool StatusLine::checkStatusCode(const std::string& status_code)
 {
     (void)status_code;
     return (true);
 }
 
-bool StatusLine::checkStatusMessage(std::string status_message)
+bool StatusLine::checkStatusMessage(const std::string& status_message)
 {
     (void)status_message;
     return (true);
@@ -136,7 +136,7 @@ RequestLine::RequestLine(void)
 
 }
 
-RequestLine::RequestLine(std::string start_line)
+RequestLine::RequestLine(const std::string& start_line)
 {
     std::vector<std::string> arr;
 
@@ -149,7 +149,7 @@ RequestLine::RequestLine(std::string start_line)
         _http_version = arr[2];
 }
 
-RequestLine::RequestLine(std::string http_method, std::string request_target, std::string http_version)
+RequestLine::RequestLine(const std::string& http_method, const std::string& request_target, const std::string& http_version)
 : StartLine(http_version), _http_method(http_method), _request_target(request_target)
 {
 
@@ -190,13 +190,13 @@ std::string RequestLine::getRequestTarget(void) const
     return (_request_target);
 }
 
-bool RequestLine::checkHttpMethod(std::string http_method)
+bool RequestLine::checkHttpMethod(const std::string& http_method)
 {
     (void)http_method;
     return (true);
 }
 
-bool RequestLine::checkRequestTarget(std::string request_target)
+bool RequestLine::checkRequestTarget(const std::string& request_target)
 {
     (void)request_target;
     return (true);
@@ -232,7 +232,7 @@ bool HttpMessage::checkHeaders(std::vector<std::string> arr)
     return (true);
 }
 
-void HttpMessage::setHeaders(std::string header)
+void HttpMessage::setHeaders(const std::string& header)
 {
     std::vector<std::string> arr;
     std::string filed;
@@ -250,7 +250,7 @@ void HttpMessage::setHeaders(std::string header)
     }
 }
 
-HttpMessage::HttpMessage(std::string http_message)
+HttpMessage::HttpMessage(const std::string& http_message)
  : _message_size(0), _chunked_size(0)
 {
     std::istringstream iss(http_message);
@@ -342,7 +342,7 @@ std::string HttpMessage::getMessageBody(void)
     return (_message_body);
 }
 
-void HttpMessage::setMessageBody(std::string message_body)
+void HttpMessage::setMessageBody(const std::string& message_body)
 {
     std::string body = message_body;
     if (checkChunked())

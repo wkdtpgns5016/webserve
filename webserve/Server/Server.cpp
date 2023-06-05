@@ -48,10 +48,10 @@ void Server::change_events(uintptr_t ident, int16_t filter,
     _change_list.push_back(temp_event);
 }
 
-void Server::disconnect_client(int client_fd, std::map<int, Connection> &clients)
+void Server::disconnect_client(int client_fd)
 {
     close(client_fd);
-    clients.erase(client_fd);
+    _clients.erase(client_fd);
 }
 
 void Server::accept_new_client()
@@ -73,7 +73,7 @@ void Server::accept_new_client()
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
     clinet_ip = inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
     _clients[client_socket] = Connection(client_socket, std::string(buf));
-    Logger::writeInfoLog(_clients[client_socket].getClinetFd(), "Add new Client");
+    Logger::writeInfoLog(_clients[client_socket].getClinetFd(), "Add new Client", false);
 }
 
 void Server::checkConnectionTimeout()
@@ -82,8 +82,8 @@ void Server::checkConnectionTimeout()
     {
         if (std::time(NULL) - it->second.getCurrentConnectionTime() > 60)
         {
-            Logger::writeInfoLog(it->second.getClinetFd(), "Timeout Connection client");
-            disconnect_client(it->first, _clients);
+            Logger::writeInfoLog(it->second.getClinetFd(), "Timeout Connection client", false);
+            disconnect_client(it->first);
             break;
         }
     }
@@ -91,6 +91,10 @@ void Server::checkConnectionTimeout()
 
 void Server::run()
 {
+    int                         _kqueue;
+    struct kevent               _event_list[8];
+    struct kevent*              _curr_event;
+
     /* init server socket and listen */
     socket_init(_server_block->getPort(), _server_block->getAddr());
     fcntl(_server_socket, F_SETFL, O_NONBLOCK);
@@ -104,7 +108,7 @@ void Server::run()
 
     char buf[1024] = {'\0'};
     std::string server_ip = inet_ntop(AF_INET, &_server_addr.sin_addr, buf, INET_ADDRSTRLEN);
-    Logger::writeInfoLog(_server_block->getPort(), "Server started");
+    Logger::writeInfoLog(_server_block->getPort(), "Server started", false);
 
     /* main loop */
     int new_events;
@@ -127,7 +131,7 @@ void Server::run()
                 if (_curr_event->ident == (uintptr_t)_server_socket)
                     exit(1);
                 else
-                    disconnect_client(_curr_event->ident, _clients);
+                    disconnect_client(_curr_event->ident);
             }
             else if (_curr_event->filter == EVFILT_READ)
             {
@@ -136,7 +140,7 @@ void Server::run()
                 else if (_clients.find(_curr_event->ident) != _clients.end())
                 {
                     if (!_clients[_curr_event->ident].receiveMessage())
-                        disconnect_client(_curr_event->ident, _clients);
+                        disconnect_client(_curr_event->ident);
                 }
             }
             else if (_curr_event->filter == EVFILT_WRITE)
@@ -145,7 +149,7 @@ void Server::run()
                 if (it != _clients.end())
                 {
                     if (!_clients[_curr_event->ident].sendMessage(_server_block))
-                        disconnect_client(_curr_event->ident, _clients);
+                        disconnect_client(_curr_event->ident);
                 }
             }
         }

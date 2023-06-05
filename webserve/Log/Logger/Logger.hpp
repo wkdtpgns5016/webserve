@@ -16,7 +16,7 @@ class Logger
 {
     public:
     static void writeLog(std::string client_ip, HttpRequestMessage request, HttpResponseMessage response);
-    static void writeInfoLog(int socket_fd, std::string messsage);
+    static void writeInfoLog(int socket_fd, std::string messsage, bool is_error);
     static void writeErrorLog(std::string messsage);
 };
 

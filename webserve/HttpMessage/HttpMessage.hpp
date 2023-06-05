@@ -16,7 +16,7 @@ protected:
     bool        checkHttpVersion(std::string http_version);
 public:
     StartLine(void);
-    StartLine(std::string http_version);
+    StartLine(const std::string& http_version);
     StartLine(const StartLine& start_line);
     ~StartLine(void);
     StartLine& operator=(const StartLine& start_line);
@@ -32,12 +32,12 @@ private:
     int         _status_code;
     std::string _status_message;
 
-    bool        checkStatusCode(std::string status_code);
-    bool        checkStatusMessage(std::string status_message);
+    bool        checkStatusCode(const std::string& status_code);
+    bool        checkStatusMessage(const std::string& status_message);
 public:
     StatusLine(void);
-    StatusLine(std::string start_line);
-    StatusLine(std::string http_version, int status_code, std::string status_message);
+    StatusLine(const std::string& start_line);
+    StatusLine(const std::string& http_version, int status_code, const std::string& status_message);
     StatusLine(const StatusLine& status_line);
     ~StatusLine(void);
     StatusLine& operator=(const StatusLine& status_line);
@@ -54,13 +54,13 @@ private:
     std::string _http_method;
     std::string _request_target;
 
-    bool        checkHttpMethod(std::string http_method);
-    bool        checkRequestTarget(std::string request_target);
+    bool        checkHttpMethod(const std::string& http_method);
+    bool        checkRequestTarget(const std::string& request_target);
 
 public:
     RequestLine(void);
-    RequestLine(std::string start_line);
-    RequestLine(std::string http_method, std::string request_target, std::string http_version);
+    RequestLine(const std::string& start_line);
+    RequestLine(const std::string& http_method, const std::string& request_target, const std::string& http_version);
     RequestLine(const RequestLine& request_line);
     ~RequestLine(void);
     RequestLine& operator=(const RequestLine& request_line);
@@ -82,14 +82,14 @@ protected:
     size_t                              _chunked_size;
 
 private:
-    void                                setHeaders(std::string header);
+    void                                setHeaders(const std::string& header);
     bool                                checkHeaders(std::vector<std::string> arr);
-    void                                setMessageBody(std::string message_body);
+    void                                setMessageBody(const std::string& message_body);
     std::string                         mergeChunkedMessage(const std::string& chunk);
 
 public:
     HttpMessage(void);
-    HttpMessage(std::string http_message);
+    HttpMessage(const std::string& http_message);
     HttpMessage(std::map<std::string, std::string>  headers, const std::string& message_body);
     HttpMessage(const HttpMessage& http_message);
     ~HttpMessage(void);

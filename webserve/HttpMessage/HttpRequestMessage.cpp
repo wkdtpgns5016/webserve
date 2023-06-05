@@ -5,7 +5,7 @@ HttpRequestMessage::HttpRequestMessage(void) : HttpMessage()
 
 }
 
-HttpRequestMessage::HttpRequestMessage(std::string http_message) : HttpMessage(http_message)
+HttpRequestMessage::HttpRequestMessage(const std::string& http_message) : HttpMessage(http_message)
 {
     std::string start_line;
     std::vector<std::string> arr;
@@ -62,7 +62,7 @@ RequestLine HttpRequestMessage::getStartLine(void) const
     return (_start_line);
 }
 
-void HttpRequestMessage::setStartLine(RequestLine start_line)
+void HttpRequestMessage::setStartLine(const RequestLine& start_line)
 {
     _start_line = start_line;
 }
