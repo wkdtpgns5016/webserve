@@ -18,10 +18,10 @@ class Connection
     RequestMessageParser _message_parser;
     HttpRequestMessage _request;
     HttpResponseMessage _response;
+    
     Buffer      _buffer;
     bool        _complete_respose;
     bool        _start_read;
-    int i;
 
     bool checkMessage();
     bool checkResponse();

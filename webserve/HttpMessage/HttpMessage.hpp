@@ -22,7 +22,6 @@ public:
     StartLine& operator=(const StartLine& start_line);
 
     std::string         getHttpVersion(void) const;
-    virtual bool        isVaild(std::vector<std::string> arr) = 0;
     virtual std::string getString(void) = 0;
 };
 
@@ -32,8 +31,6 @@ private:
     int         _status_code;
     std::string _status_message;
 
-    bool        checkStatusCode(const std::string& status_code);
-    bool        checkStatusMessage(const std::string& status_message);
 public:
     StatusLine(void);
     StatusLine(const std::string& start_line);
@@ -44,7 +41,6 @@ public:
 
     int         getStatusCode(void) const;
     std::string getStatusMessage(void) const;
-    bool        isVaild(std::vector<std::string> arr);
     std::string getString(void);
 };
 
@@ -54,8 +50,6 @@ private:
     std::string _http_method;
     std::string _request_target;
 
-    bool        checkHttpMethod(const std::string& http_method);
-    bool        checkRequestTarget(const std::string& request_target);
 
 public:
     RequestLine(void);
@@ -67,7 +61,6 @@ public:
 
     std::string getHttpMethod(void) const;
     std::string getRequestTarget(void) const;
-    bool        isVaild(std::vector<std::string> arr);
     std::string getString(void);
 };
 
@@ -83,7 +76,6 @@ protected:
 
 private:
     void                                setHeaders(const std::string& header);
-    bool                                checkHeaders(std::vector<std::string> arr);
     void                                setMessageBody(const std::string& message_body);
     std::string                         mergeChunkedMessage(const std::string& chunk);
 
@@ -98,7 +90,6 @@ public:
     std::map<std::string, std::string>  getHeaders(void) const;
     std::string                         getMessageBody(void);
     virtual std::string                 getString(void) = 0;
-    virtual bool                        isVaild(void) = 0;
     size_t                              getMessageSize(void) const;
     bool                                checkChunked(void) const;
     void                                changeChunkedMessage(size_t encoding_size);

@@ -11,9 +11,11 @@ PostHandler::PostHandler(ServerBlock* server_block, const HttpRequestMessage& re
 
 }
 
-PostHandler::PostHandler(const PostHandler& delete_handler)
+PostHandler::PostHandler(const PostHandler& post_handler)
 {
-    (void)delete_handler;
+    _status = post_handler._status;
+    _request_message = post_handler._request_message;
+    _config = post_handler._config;
 }
 
 PostHandler::~PostHandler()
@@ -21,9 +23,11 @@ PostHandler::~PostHandler()
 
 }
 
-PostHandler& PostHandler::operator=(const PostHandler& delete_handler)
+PostHandler& PostHandler::operator=(const PostHandler& post_handler)
 {
-    (void)delete_handler;
+    _status = post_handler._status;
+    _request_message = post_handler._request_message;
+    _config = post_handler._config;
     return (*this);
 }
 void PostHandler::checkCGI(const std::string& request_target)

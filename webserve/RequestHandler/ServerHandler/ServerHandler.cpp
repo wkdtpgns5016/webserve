@@ -21,6 +21,22 @@ ServerHandler::~ServerHandler()
 
 }
 
+ServerHandler::ServerHandler(const ServerHandler& server_handler)
+{
+    _status = server_handler._status;
+    _request_message = server_handler._request_message;
+    _config = server_handler._config;
+
+}
+
+ServerHandler& ServerHandler::operator=(const ServerHandler& server_handler)
+{
+    _status = server_handler._status;
+    _request_message = server_handler._request_message;
+    _config = server_handler._config;
+    return (*this);
+}
+
 void ServerHandler::init_status()
 {
     _status[100] = "Continue";

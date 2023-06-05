@@ -11,9 +11,9 @@ class PostHandler : public ServerHandler
     public:
     PostHandler();
     PostHandler(ServerBlock* server_block, const HttpRequestMessage& request_message);
-    PostHandler(const PostHandler& get_handler);
+    PostHandler(const PostHandler& post_handler);
     ~PostHandler();
-    PostHandler& operator=(const PostHandler& get_handler);
+    PostHandler& operator=(const PostHandler& post_handler);
 
     HttpResponseMessage requestHandler();
 };

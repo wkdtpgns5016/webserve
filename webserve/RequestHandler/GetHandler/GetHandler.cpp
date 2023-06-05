@@ -13,7 +13,9 @@ GetHandler::GetHandler(ServerBlock* server_block, const HttpRequestMessage& requ
 
 GetHandler::GetHandler(const GetHandler& get_handler)
 {
-    (void)get_handler;
+    _status = get_handler._status;
+    _request_message = get_handler._request_message;
+    _config = get_handler._config;
 }
 
 GetHandler::~GetHandler()
@@ -23,7 +25,9 @@ GetHandler::~GetHandler()
 
 GetHandler& GetHandler::operator=(const GetHandler& get_handler)
 {
-    (void)get_handler;
+    _status = get_handler._status;
+    _request_message = get_handler._request_message;
+    _config = get_handler._config;
     return (*this);
 
 }

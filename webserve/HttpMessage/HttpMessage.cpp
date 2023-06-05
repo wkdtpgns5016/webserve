@@ -99,31 +99,6 @@ std::string StatusLine::getStatusMessage(void) const
     return (_status_message);
 }
 
-bool StatusLine::checkStatusCode(const std::string& status_code)
-{
-    (void)status_code;
-    return (true);
-}
-
-bool StatusLine::checkStatusMessage(const std::string& status_message)
-{
-    (void)status_message;
-    return (true);
-}
-
-bool    StatusLine::isVaild(std::vector<std::string> arr)
-{
-    if (arr.size() != 3)
-        return (false);
-    if (!::checkHttpVersion(arr[0]))
-        return (false);
-    if (!checkStatusCode(arr[1]))
-        return (false);
-    if (!checkStatusMessage(arr[2]))
-        return (false);
-    return (true);
-}
-
 std::string StatusLine::getString(void)
 {
     std::stringstream ss;
@@ -190,31 +165,6 @@ std::string RequestLine::getRequestTarget(void) const
     return (_request_target);
 }
 
-bool RequestLine::checkHttpMethod(const std::string& http_method)
-{
-    (void)http_method;
-    return (true);
-}
-
-bool RequestLine::checkRequestTarget(const std::string& request_target)
-{
-    (void)request_target;
-    return (true);
-}
-
-bool RequestLine::isVaild(std::vector<std::string> arr)
-{
-    if (arr.size() != 3)
-        return (false);
-    if (!checkHttpMethod(arr[0]))
-        return (false);
-    if (!checkRequestTarget(arr[1]))
-        return (false);
-    if (!::checkHttpVersion(arr[2]))
-        return (false);
-    return (true);
-}
-
 std::string RequestLine::getString(void)
 {
     return (_http_method + " " + _request_target + " " + _http_version);
@@ -226,12 +176,6 @@ HttpMessage::HttpMessage(void)
 
 }
 
-bool HttpMessage::checkHeaders(std::vector<std::string> arr)
-{
-    (void)arr;
-    return (true);
-}
-
 void HttpMessage::setHeaders(const std::string& header)
 {
     std::vector<std::string> arr;
@@ -240,7 +184,6 @@ void HttpMessage::setHeaders(const std::string& header)
     int pos;
 
     arr = ft::splitString(header, "\r\n");
-    // header 유효성 검사
     for (std::vector<std::string>::iterator it = arr.begin(); it < arr.end(); it++)
     {
         pos = (*it).find(':');

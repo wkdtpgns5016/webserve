@@ -12,7 +12,9 @@ PutHandler::PutHandler(ServerBlock* server_block, const HttpRequestMessage& requ
 
 PutHandler::PutHandler(const PutHandler& put_handler)
 {
-    (void)put_handler;
+    _status = put_handler._status;
+    _request_message = put_handler._request_message;
+    _config = put_handler._config;
 }
 
 PutHandler::~PutHandler()
@@ -22,7 +24,9 @@ PutHandler::~PutHandler()
 
 PutHandler& PutHandler::operator=(const PutHandler& put_handler)
 {
-    (void)put_handler;
+    _status = put_handler._status;
+    _request_message = put_handler._request_message;
+    _config = put_handler._config;
     return (*this);
 }
 

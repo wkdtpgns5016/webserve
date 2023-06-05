@@ -13,7 +13,9 @@ DeleteHandler::DeleteHandler(ServerBlock* server_block, const HttpRequestMessage
 
 DeleteHandler::DeleteHandler(const DeleteHandler& delete_handler)
 {
-    (void)delete_handler;
+    _status = delete_handler._status;
+    _request_message = delete_handler._request_message;
+    _config = delete_handler._config;
 }
 
 DeleteHandler::~DeleteHandler()
@@ -23,7 +25,9 @@ DeleteHandler::~DeleteHandler()
 
 DeleteHandler& DeleteHandler::operator=(const DeleteHandler& delete_handler)
 {
-    (void)delete_handler;
+    _status = delete_handler._status;
+    _request_message = delete_handler._request_message;
+    _config = delete_handler._config;
     return (*this);
 }
 
