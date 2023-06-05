@@ -25,41 +25,41 @@ class ServerHandler
     ConfigDto                   _config;
 
     void init_status();
-    LocationBlock* findLocationBlock(std::vector<Block*> locations, std::string request_target);
+    LocationBlock* findLocationBlock(const std::vector<Block*>& locations, const std::string& request_target);
 
-    std::string cleanUrl(std::string url, bool request_target);
+    std::string cleanUrl(const std::string& url, bool request_target);
 
-    void checkAllowMethod(std::string method);
-    void checkHttpVersion(RequestLine start_line);
+    void checkAllowMethod(const std::string& method);
+    void checkHttpVersion(const RequestLine& start_line);
     void checkMessageSize(void);
     void checkHttpMessage(void);
-    bool checkDirectory(std::string path);
-    int checkFile(std::string request_target);
+    bool checkDirectory(const std::string& path);
+    int checkFile(const std::string& request_target);
 
     HttpResponseMessage redirectionHttpMessage();
+  
+    std::vector<std::string> getIndexPath(const std::string& root, const std::string& index);
+    std::string tryFiles(const std::vector<std::string>& try_files);
+    std::string findPath(const std::string& request_target);
 
-    std::vector<std::string> getIndexPath(std::string root, std::string index);
-    std::string tryFiles(std::vector<std::string> try_files);
-    std::string findPath(std::string request_target);
-
-    std::string executeCgi(std::string file_path);
-    HttpResponseMessage getCgiResponse(int status, std::string message_body);
-    std::map<std::string, std::string> getCgiHeader(std::string cgi_header_str);
-    int getStautsCgi(std::map<std::string, std::string> cgi_header);
-    std::map<std::string, std::string> setHeader(int status_code, std::string message_body, std::map<std::string, std::string> cgi_header);
+    std::string executeCgi(const std::string& file_path);
+    HttpResponseMessage getCgiResponse(int status, const std::string& message_body);
+    std::map<std::string, std::string> getCgiHeader(const std::string& cgi_header_str);
+    int getStautsCgi(const std::map<std::string, std::string>& cgi_header);
+    std::map<std::string, std::string> setHeader(int status_code, const std::string& message_body, const std::map<std::string, std::string>& cgi_header);
     
     void                throwStatusError(int status_code);
     HttpResponseMessage getErrorResponse(int status_code);
-    HttpResponseMessage getResponseMessage(int status_code, std::string message_body, std::map<std::string, std::string> cgi_header);
+    HttpResponseMessage getResponseMessage(int status_code, const std::string& message_body, const std::map<std::string, std::string>& cgi_header);
     
     public:
     ServerHandler();
-    ServerHandler(ServerBlock* server_block, HttpRequestMessage request_message);
+    ServerHandler(ServerBlock* server_block, const HttpRequestMessage& request_message);
     ServerHandler(const ServerHandler& server_handler);
     ServerHandler& operator=(const ServerHandler& server_handler);
     virtual ~ServerHandler();
 
-    HttpRequestMessage& getRequestMessage(void);
+    const HttpRequestMessage& getRequestMessage(void);
     virtual HttpResponseMessage requestHandler() = 0;
 
     class AutoIndexExceptnion : public std::exception {

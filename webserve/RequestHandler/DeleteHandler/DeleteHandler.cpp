@@ -5,7 +5,7 @@ DeleteHandler::DeleteHandler() : ServerHandler()
 
 }
 
-DeleteHandler::DeleteHandler(ServerBlock* server_block, HttpRequestMessage request_message)
+DeleteHandler::DeleteHandler(ServerBlock* server_block, const HttpRequestMessage& request_message)
  : ServerHandler(server_block, request_message)
 {
 
@@ -28,7 +28,7 @@ DeleteHandler& DeleteHandler::operator=(const DeleteHandler& delete_handler)
 }
 
 
-void DeleteHandler::deleteFile(std::string request_target)
+void DeleteHandler::deleteFile(const std::string& request_target)
 {
     std::string path;
 

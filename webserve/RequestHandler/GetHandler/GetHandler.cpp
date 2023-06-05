@@ -5,7 +5,7 @@ GetHandler::GetHandler() : ServerHandler()
 
 }
 
-GetHandler::GetHandler(ServerBlock* server_block, HttpRequestMessage request_message)
+GetHandler::GetHandler(ServerBlock* server_block, const HttpRequestMessage& request_message)
  : ServerHandler(server_block, request_message)
 {
 
@@ -28,7 +28,7 @@ GetHandler& GetHandler::operator=(const GetHandler& get_handler)
 
 }
 
-std::string GetHandler::openFile(std::string request_target)
+std::string GetHandler::openFile(const std::string& request_target)
 {
     std::string message_body;
     std::string file_path = findPath(request_target);
@@ -45,7 +45,7 @@ std::string GetHandler::openFile(std::string request_target)
     return (message_body);
 }
 
-std::string GetHandler::getAutoIndexPage(std::string path, std::string request_target)
+std::string GetHandler::getAutoIndexPage(const std::string& path, const std::string& request_target)
 {
     std::string message;
 
@@ -60,7 +60,7 @@ std::string GetHandler::getAutoIndexPage(std::string path, std::string request_t
     return (message);
 }
 
-std::string GetHandler::getDirectoryList(std::string path)
+std::string GetHandler::getDirectoryList(const std::string& path)
 {
     std::stringstream ss;
     std::string file_name;

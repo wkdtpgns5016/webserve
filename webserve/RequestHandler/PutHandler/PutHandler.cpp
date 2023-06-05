@@ -5,7 +5,7 @@ PutHandler::PutHandler() : ServerHandler()
 
 }
 
-PutHandler::PutHandler(ServerBlock* server_block, HttpRequestMessage request_message) : ServerHandler(server_block, request_message)
+PutHandler::PutHandler(ServerBlock* server_block, const HttpRequestMessage& request_message) : ServerHandler(server_block, request_message)
 {
 
 }
@@ -26,7 +26,7 @@ PutHandler& PutHandler::operator=(const PutHandler& put_handler)
     return (*this);
 }
 
-int PutHandler::openFile(std::string path)
+int PutHandler::openFile(const std::string& path)
 {
     int fd;
     if ((fd = open(path.c_str(), O_RDWR | O_CREAT | O_TRUNC, S_IWUSR | S_IRUSR)) == -1)
@@ -34,7 +34,7 @@ int PutHandler::openFile(std::string path)
     return (fd);
 }
 
-void PutHandler::writeFile(int fd, std::string message)
+void PutHandler::writeFile(int fd, const std::string& message)
 {
     if (write(fd, message.c_str(), message.length()) == -1)
     {

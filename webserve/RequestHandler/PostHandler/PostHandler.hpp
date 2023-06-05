@@ -6,11 +6,11 @@
 class PostHandler : public ServerHandler
 {
     private:
-    void checkCGI(std::string path);
+    void checkCGI(const std::string& path);
 
     public:
     PostHandler();
-    PostHandler(ServerBlock* server_block, HttpRequestMessage request_message);
+    PostHandler(ServerBlock* server_block, const HttpRequestMessage& request_message);
     PostHandler(const PostHandler& get_handler);
     ~PostHandler();
     PostHandler& operator=(const PostHandler& get_handler);
