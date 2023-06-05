@@ -139,7 +139,7 @@ void Server::run()
                     accept_new_client();
                 else if (_clients.find(_curr_event->ident) != _clients.end())
                 {
-                    if (!_clients[_curr_event->ident].receiveMessage())
+                    if (!_clients[_curr_event->ident].receiveMessage(_server_block))
                         disconnect_client(_curr_event->ident);
                 }
             }
@@ -148,7 +148,7 @@ void Server::run()
                 std::map<int, Connection>::iterator it = _clients.find(_curr_event->ident);
                 if (it != _clients.end())
                 {
-                    if (!_clients[_curr_event->ident].sendMessage(_server_block))
+                    if (!_clients[_curr_event->ident].sendMessage())
                         disconnect_client(_curr_event->ident);
                 }
             }

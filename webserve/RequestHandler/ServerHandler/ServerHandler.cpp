@@ -406,6 +406,13 @@ void ServerHandler::checkMessageSize(void)
         throw Error413Exceptnion();
 }
 
+void ServerHandler::checkUrlSize(void)
+{
+    size_t message_size = _request_message.getReqeustTarget().length();
+    if (message_size > 8000)
+        throw Error414Exceptnion();
+}
+
 void ServerHandler::checkHttpMessage(void)
 {
     // check start line
@@ -505,6 +512,9 @@ const char* ServerHandler::Error405Exceptnion::what() const throw() {
 }
 const char* ServerHandler::Error413Exceptnion::what() const throw() {
   return "Content Too Large";
+}
+const char* ServerHandler::Error414Exceptnion::what() const throw() {
+  return "URI Too Long";
 }
 const char* ServerHandler::Error500Exceptnion::what() const throw() {
   return "Internal Server Error";

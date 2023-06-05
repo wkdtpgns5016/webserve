@@ -31,6 +31,7 @@ class ServerHandler
 
     void checkAllowMethod(const std::string& method);
     void checkHttpVersion(const RequestLine& start_line);
+    void checkUrlSize(void);
     void checkMessageSize(void);
     void checkHttpMessage(void);
     bool checkDirectory(const std::string& path);
@@ -49,7 +50,6 @@ class ServerHandler
     std::map<std::string, std::string> setHeader(int status_code, const std::string& message_body, const std::map<std::string, std::string>& cgi_header);
     
     void                throwStatusError(int status_code);
-    HttpResponseMessage getErrorResponse(int status_code);
     HttpResponseMessage getResponseMessage(int status_code, const std::string& message_body, const std::map<std::string, std::string>& cgi_header);
     
     public:
@@ -60,6 +60,7 @@ class ServerHandler
     virtual ~ServerHandler();
 
     const HttpRequestMessage& getRequestMessage(void);
+    HttpResponseMessage getErrorResponse(int status_code);
     virtual HttpResponseMessage requestHandler() = 0;
 
     class AutoIndexExceptnion : public std::exception {
@@ -79,6 +80,10 @@ class ServerHandler
 				virtual const char* what() const throw();
 		};
     class Error413Exceptnion : public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
+    class Error414Exceptnion : public std::exception {
 			public:
 				virtual const char* what() const throw();
 		};

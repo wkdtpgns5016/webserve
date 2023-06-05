@@ -115,9 +115,14 @@ RequestLine::RequestLine(const std::string& start_line)
 {
     std::vector<std::string> arr;
 
+    if (start_line.empty())
+        return ;
     arr = ft::splitString(start_line, " ");
     _http_method = arr[0];
-    _request_target = arr[1];
+    if (arr.size() < 2)
+        _request_target = "";
+    else
+        _request_target = arr[1];
     if (arr.size() < 3)
         _http_version = "";
     else

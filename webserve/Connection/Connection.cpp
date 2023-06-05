@@ -36,7 +36,7 @@ Connection::~Connection()
 
 }
 
-bool Connection::receiveMessage()
+bool Connection::receiveMessage(ServerBlock *server_block)
 {
     size_t buffer_size = 300000;
     char recv[buffer_size];
@@ -60,45 +60,66 @@ bool Connection::receiveMessage()
     else
     {
         updateConnectionTime();
-        _message_parser.appendMessage(recv, n);
+        parseHttpMessage(recv, n, server_block);
     }
     return (true);
 }
 
-bool Connection::sendMessage(ServerBlock *server_block)
+bool Connection::sendMessage()
 {
-    if (checkMessage())
-    {
-        if (!checkResponse())
-            makeResponse(server_block);
+    if (!checkResponse())
+        return (true);
 
-        size_t buffer_size = 300000;
-        size_t len = std::strlen(_buffer.getBuffer());
-        int n;
-        if (len <= buffer_size)
-            n = write(_client_fd, _buffer.getBuffer(), len);
-        else
-            n = write(_client_fd, _buffer.getBuffer(), buffer_size);
-        
-        if (n < 0)
+    size_t buffer_size = 300000;
+    size_t len = std::strlen(_buffer.getBuffer());
+    int n;
+    if (len <= buffer_size)
+        n = write(_client_fd, _buffer.getBuffer(), len);
+    else
+        n = write(_client_fd, _buffer.getBuffer(), buffer_size);
+    
+    if (n < 0)
+    {
+        Logger::writeInfoLog(_client_fd, "Write error", true);
+        return (false);
+    }
+    else if (n == 0 || (size_t)n == len)
+    {
+        //std::cout << std::clock() << "              complete wrtie" << std::endl;
+        //std::cout << std::clock() << "              end" << std::endl;
+        clearConnection();
+        Logger::writeLog(_client_addr, _request, _response);
+        if (_response.getStartLine().getStatusCode() == 400)
         {
-            Logger::writeInfoLog(_client_fd, "Write error", true);
+            Logger::writeInfoLog(_client_fd, "Close Connection client", false);
             return (false);
         }
-        else if (n == 0 || (size_t)n == len)
-        {
-            //std::cout << std::clock() << "              complete wrtie" << std::endl;
-            //std::cout << std::clock() << "              end" << std::endl;
-            clearConnection();
-            Logger::writeLog(_client_addr, _request, _response);
-        }
-        else
-        {
-            updateConnectionTime();
-            _buffer.cutBuffer(n);
-        }
+    }
+    else
+    {
+        updateConnectionTime();
+        _buffer.cutBuffer(n);
     }
     return (true);
+}
+
+void Connection::parseHttpMessage(char* buffer, size_t len, ServerBlock* config)
+{
+    try
+    {
+        _message_parser.appendMessage(buffer, len);
+        if (checkMessage())
+            makeResponse(config);
+    }
+    catch (const RequestMessageParser::InvalidRequestException& e)
+    {
+        GetHandler handler;
+        _request = _message_parser.getRequestMessage();
+        handler = GetHandler(config, _request);
+        _response = handler.getErrorResponse(400);
+        _buffer = Buffer(_response.getString());
+        _complete_respose = true;
+    }
 }
 
 void Connection::makeResponse(ServerBlock *server_block)
