@@ -81,7 +81,7 @@ TEST(ConfigTest, Config2Test)
 	std::vector<std::string>	allow_method_result1 = server_blocks1->getAllowMethod();
 	std::vector<std::string>	try_files_result1 = server_blocks1->getTryFiles();
 	bool	autoindex_result1 = server_blocks1->getAutoindex();
-
+	std::map<std::string, std::string>	cgi_config_result1 = server_blocks1->getCgiConfigs();
 	//server2
 	int			port_result2 = server_blocks2->getPort();
 	std::string	root_result2 = server_blocks2->getRoot();
@@ -94,6 +94,8 @@ TEST(ConfigTest, Config2Test)
 	std::vector<std::string>	allow_method_result2 = server_blocks2->getAllowMethod();
 	std::vector<std::string>	try_files_result2 = server_blocks2->getTryFiles();
 	bool	autoindex_result2 = server_blocks2->getAutoindex();
+	std::map<std::string, std::string>	cgi_config_result2 = server_blocks2->getCgiConfigs();
+
 
 	//location1
 	int			port_result3 = location_blocks3->getPort();
@@ -108,6 +110,7 @@ TEST(ConfigTest, Config2Test)
 	std::vector<std::string>	try_files_result3 = location_blocks3->getTryFiles();
 	bool	autoindex_result3 = location_blocks3->getAutoindex();
 	std::string	url_result3 = location_blocks3->getUrl();
+	std::map<std::string, std::string>	cgi_config_result3 = location_blocks3->getCgiConfigs();
 
 	//location2
 	int			port_result4 = location_blocks4->getPort();
@@ -122,6 +125,7 @@ TEST(ConfigTest, Config2Test)
 	std::vector<std::string>	try_files_result4 = location_blocks4->getTryFiles();
 	bool	autoindex_result4 = location_blocks4->getAutoindex();
 	std::string	url_result4 = location_blocks4->getUrl();
+	std::map<std::string, std::string>	cgi_config_result4 = location_blocks4->getCgiConfigs();
 	// then
 	//server1
     EXPECT_EQ(port_result1, 80);
@@ -135,6 +139,7 @@ TEST(ConfigTest, Config2Test)
 	EXPECT_EQ(allow_method_result1.size(), 0);
 	EXPECT_EQ(try_files_result1.size(), 0);
 	EXPECT_EQ(autoindex_result1, false);
+	EXPECT_EQ(cgi_config_result1["bla"], "cgi_tester");
 	//server2
 	EXPECT_EQ(port_result2, 81);
     EXPECT_EQ(root_result2, "/var/html");

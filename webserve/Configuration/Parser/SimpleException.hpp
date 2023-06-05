@@ -22,11 +22,6 @@ public:
 };
 
 //Each Directive Exception
-class ErrorPageException: public SimpleException
-{
-public:
-	ErrorPageException(const std::string& type, const std::string& value);
-};
 
 //ListenException
 class ListenException: public SimpleException
@@ -97,6 +92,12 @@ public:
 };
 
 // default_error_page
+class ErrorPageException: public SimpleException
+{
+public:
+	ErrorPageException(const std::string& type, const std::string& value);
+};
+
 class InvalidStatus : public ErrorPageException
 {
 public:
@@ -115,6 +116,30 @@ public:
 	TryFilesException(const std::string& type, const std::string& value);
 };
 
+class InvalidValue: public TryFilesException{
+public:
+	InvalidValue(const std::string& value);
+};
+
+//cgi_config
+class CgiConfigException : public SimpleException
+{
+public:
+	CgiConfigException(const std::string& type, const std::string& value);
+};
+
+class NoValue : public CgiConfigException
+{
+public:
+	NoValue(const std::string& value);
+};
+
+class InvalidCgiValue : public CgiConfigException
+{
+public:
+	InvalidCgiValue(const std::string& value);
+};
+
 //unknown
 class UnknownDirective : public std::exception
 {
@@ -123,6 +148,16 @@ protected:
 public:
 	UnknownDirective(const std::string& value);
 	~UnknownDirective() throw();
+	const char* what() const throw();
+};
+
+class NotAllowed : public std::exception
+{
+protected:
+	std::string	_line;
+public:
+	NotAllowed(const std::string &value);
+	~NotAllowed() throw();
 	const char* what() const throw();
 };
 

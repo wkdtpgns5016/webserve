@@ -73,7 +73,7 @@ void Server::accept_new_client()
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
     clinet_ip = inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
     _clients[client_socket] = Connection(client_socket, std::string(buf));
-    Logger::writeLog(_clients[client_socket].getClinetAddr(), _clients[client_socket].getClinetFd(), "Add new Client", 1);
+    Logger::writeInfoLog(_clients[client_socket].getClinetFd(), "Add new Client");
 }
 
 void Server::checkConnectionTimeout()
@@ -82,7 +82,7 @@ void Server::checkConnectionTimeout()
     {
         if (std::time(NULL) - it->second.getCurrentConnectionTime() > 60)
         {
-            Logger::writeLog(it->second.getClinetAddr(), it->second.getClinetFd(), "Timeout Connection client", 1);
+            Logger::writeInfoLog(it->second.getClinetFd(), "Timeout Connection client");
             disconnect_client(it->first, _clients);
             break;
         }
@@ -104,7 +104,7 @@ void Server::run()
 
     char buf[1024] = {'\0'};
     std::string server_ip = inet_ntop(AF_INET, &_server_addr.sin_addr, buf, INET_ADDRSTRLEN);
-    Logger::writeLog(server_ip, _server_block->getPort(), "Server started", 1);
+    Logger::writeInfoLog(_server_block->getPort(), "Server started");
 
     /* main loop */
     int new_events;

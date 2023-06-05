@@ -74,14 +74,14 @@ std::string CommonLogFormat::getString(void)
         + _time_stamp + " \""
         + _request_line.getString() + "\" "
         + ft::itos(_status_code) + " "
-        + _response_size + "\n";
+        + _response_size;
     return (str);
 }
 
-void CommonLogFormat::wirteLogMessage(int fd)
+void CommonLogFormat::wirteLogMessage()
 {
     std::string log = getString();
-    write(fd, log.c_str(), log.length());
+    std::cout << log;
 }
 
 

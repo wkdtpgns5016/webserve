@@ -107,29 +107,26 @@ HttpResponseMessage ServerHandler::getResponseMessage(int status_code, std::stri
     std::vector<std::string> arr;
     StatusLine start_line = StatusLine(_request_message.getHttpVersion(), status_code, _status[status_code]);
     std::map<std::string, std::string> headers = setHeader(status_code, message_body, cgi_header);
+    if (_request_message.getHttpMethod() == "HEAD")
+        message_body = "";
     HttpResponseMessage response_message = HttpResponseMessage(start_line, headers, message_body);
     return (response_message);
 }
 
 int ServerHandler::checkFile(std::string request_target)
 {
-    int len = request_target.length();
-    if (len < 4)
+    std::map<std::string, std::string> cgi_config;
+    cgi_config = _config.getCgiConfig();
+
+    size_t pos = request_target.rfind('.');
+    if (pos == std::string::npos)
         return (-1);
-    if (request_target.substr(len - 3, 3).compare("php") == 0)
-        return (1);
-    else if (request_target.substr(len - 3, 3).compare("cgi") == 0)
-        return (2);
-    else if (request_target.substr(len - 2, 2).compare("pl") == 0)
-        return (3);
-    else if (request_target.substr(len - 2, 2).compare("py") == 0)
-        return (4);
-    else if (request_target.substr(len - 2, 2).compare("sh") == 0)
-        return (5);
-    else if (request_target.substr(len - 3, 3).compare("bla") == 0)
-        return (6);
-    else
+    if (request_target.length() < 4)
         return (-1);
+    std::string extension = request_target.substr(pos);
+    if (cgi_config.find(extension) == cgi_config.end())
+        return (-1);
+    return (1);
 }
 
 std::vector<std::string> ServerHandler::getIndexPath(std::string root, std::string index)
@@ -174,9 +171,7 @@ LocationBlock* ServerHandler::findLocationBlock(std::vector<Block*> locations, s
 
     }
     if (find_flag == 0)
-    {
         return (temp);
-    }
     return (location);
 }
 
@@ -186,7 +181,7 @@ std::string ServerHandler::cleanUrl(std::string url, bool request_target)
     std::vector<std::string>::iterator it = url_arr.begin();
     std::string new_url;
 
-    if (url.compare("/") == 0)
+    if (url == "/")
         return (url);
     for (; it != url_arr.end(); it++)
     {
@@ -297,7 +292,13 @@ std::string ServerHandler::findPath(std::string request_target)
     std::string index = _config.getIndex();
 
     // 요청 url
-    std::string path = root + request_target;
+    std::string change;
+    std::string clean_request_target = cleanUrl(request_target, false);
+    if (_config.getUrl().empty())
+        change = clean_request_target;
+    else
+        change = clean_request_target.substr(_config.getUrl().length());
+    std::string path = root + change;
 
     // 인덱싱 url
     std::vector<std::string> index_path = getIndexPath(path, index);
@@ -374,40 +375,44 @@ std::string ServerHandler::executeCgi(std::string file_path)
     std::string script_name;
     std::string result;
 
-    int flag = checkFile(file_path);
+    std::map<std::string, std::string> cgi_config;
+    cgi_config = _config.getCgiConfig();
 
-    switch (flag)
-    {
-    case 1:
-        script_name = "/usr/bin/php " + file_path;
-        break;
-    case 2:
-        script_name = "." + file_path;
-        break;
-    case 3:
-        script_name = "/usr/bin/perl " + file_path;
-        break;
-    case 4:
-        script_name = "/usr/bin/python " + file_path;
-        break;
-    case 5:
-        script_name = "/bin/sh " + file_path;
-        break;
-    case 6:
-        script_name = "./cgi_tester " + _request_message.getHttpMethod();
-        break;
-    default:
-        script_name = "./" + file_path;
-        break;
-    }
+    size_t pos = file_path.rfind('.');
+    std::string extension = file_path.substr(pos);
+    std::map<std::string, std::string>::iterator it = cgi_config.find(extension);
+    script_name = (*it).second;
+    if ((*it).first != ".bla")
+        script_name += " " + file_path;
     result = cgi.excute(script_name);
     return (result);
 }
 
-std::map<std::string, std::string> ServerHandler::getCgiHeader(std::vector<std::string> arr)
+HttpResponseMessage ServerHandler::getCgiResponse(int status, std::string message_body)
 {
+    int cgi_status;
     std::map<std::string, std::string> cgi_header;
-    for (std::vector<std::string>::iterator it = arr.begin(); it != arr.end() - 1; it++)
+    std::string cgi_header_str;
+    std::string body;
+    size_t pos;
+
+    pos = message_body.find("\r\n\r\n");
+    if (pos == std::string::npos)
+        return (getResponseMessage(status, message_body, cgi_header));
+    cgi_header_str = message_body.substr(0, pos);
+    cgi_header = getCgiHeader(cgi_header_str);
+    body = message_body.substr(pos + 4);
+    if ((cgi_status = getStautsCgi(cgi_header)) > 0)
+        status = cgi_status;
+    throwStatusError(status);
+    return (getResponseMessage(status, body, cgi_header));
+}
+
+std::map<std::string, std::string> ServerHandler::getCgiHeader(std::string cgi_header_str)
+{
+    std::vector<std::string> arr = ft::splitString(cgi_header_str, "\r\n");
+    std::map<std::string, std::string> cgi_header;
+    for (std::vector<std::string>::iterator it = arr.begin(); it != arr.end(); it++)
     {
         size_t pos;
         std::string key;
@@ -425,15 +430,14 @@ std::map<std::string, std::string> ServerHandler::getCgiHeader(std::vector<std::
 int ServerHandler::getStautsCgi(std::map<std::string, std::string> cgi_header)
 {
     int status;
+    std::string status_str;
     std::vector<std::string> arr;
     if (cgi_header.find("Status") == cgi_header.end())
         return (-1);
-    arr = ft::splitString(cgi_header["Status"], " ");
-    if (arr.size() != 2)
+    status_str = cgi_header["Status"].substr(0, 3);
+    if (status_str.length() != 3 || !ft::isNumbers(status_str))
         throw Error500Exceptnion();
-    if (arr[0].length() != 3 || !ft::isNumbers(arr[0]))
-        throw Error500Exceptnion();
-    status = ft::stoi(arr[0]);
+    status = ft::stoi(status_str);
     if (status < 100 || status >= 600)
         throw Error500Exceptnion();
     return (status);

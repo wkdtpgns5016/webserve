@@ -155,7 +155,7 @@ std::string CGI::excute(std::string scriptName)
 	pid = fork();
 	if (pid == -1)
 	{
-		std::cerr << "Fork crashed." << std::endl;
+        Logger::writeErrorLog("Fork crashed");
 		return ("Status: 500\r\n\r\n");
 	}
 	else if (!pid)
@@ -164,7 +164,7 @@ std::string CGI::excute(std::string scriptName)
 		dup2(fdIn, STDIN_FILENO);
 		dup2(fdOut, STDOUT_FILENO);
 		execve(arr[0].c_str(), (char * const *)arg, env);
-		std::cerr << "Execve crashed." << std::endl;
+        Logger::writeErrorLog("Execve crashed");
 		write(STDOUT_FILENO, "Status: 500\r\n\r\n", 15);
 	}
 	else

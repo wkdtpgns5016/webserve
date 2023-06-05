@@ -118,24 +118,19 @@ HttpResponseMessage GetHandler::requestHandler()
         checkHttpMessage();
         // 파일 종류 판별
         if (checkFile(path_info) == -1) // 일반 파일
+        {
             message_body = openFile(path_info);
+            response_message = getResponseMessage(status, message_body, cgi_header);
+        }
         else                           // cgi 파일
         {
             std::string path = findPath(path_info);
             message_body = executeCgi(path);
             if (!message_body.empty())
-            {
-                std::vector<std::string> arr = ft::splitString(message_body, "\r\n");
-                cgi_header = getCgiHeader(arr);
-                int cgi_status;
-                if ((cgi_status = getStautsCgi(cgi_header)) > 0)
-                    status = cgi_status;
-                message_body = arr.back();
-                throwStatusError(status);
-            }
+                response_message = getCgiResponse(status, message_body);
+            else
+                response_message = getResponseMessage(status, message_body, cgi_header);
         }
-        // 응답 생성
-        response_message = getResponseMessage(status, message_body, cgi_header);
     }
     catch(const Error400Exceptnion& e)
     {

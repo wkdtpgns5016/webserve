@@ -8,12 +8,12 @@ fi
 echo "*****************************************"
 echo "$test_directory"
 echo "*****************************************\n"
-
 for directory in ./$test_directory/*
 do
 echo "*****************************************"
 echo "$directory"
 echo "*****************************************\n"
+read
 
 for file in $directory/*
 do

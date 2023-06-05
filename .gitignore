@@ -43,5 +43,9 @@ webserv
 build/
 cmake-build-debug/
 
+# put test
+multiple_same
+file_should_exist_after
+
 # DS_STORE
 .DS_Store
