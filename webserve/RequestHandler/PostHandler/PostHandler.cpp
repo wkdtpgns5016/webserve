@@ -44,12 +44,17 @@ HttpResponseMessage PostHandler::requestHandler()
     try
     {
         checkHttpMessage();
-        path = findPath(path_info);
-        message_body = executeCgi(path);
-        if (!message_body.empty())
-            response_message = getCgiResponse(status, message_body);
+        if (!_config.getReturnValue().second.empty())
+            return (redirectionHttpMessage());
         else
-            response_message = getResponseMessage(status, message_body, cgi_header);
+        {
+            path = findPath(path_info);
+            message_body = executeCgi(path);
+            if (!message_body.empty())
+                response_message = getCgiResponse(status, message_body);
+            else
+                response_message = getResponseMessage(status, message_body, cgi_header);
+        }
     }
     catch(const Error400Exceptnion& e)
     {

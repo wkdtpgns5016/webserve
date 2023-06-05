@@ -20,6 +20,7 @@ class ConfigDto
 	std::vector<std::string>	_try_files;
 	std::map <std::string, std::string> _cgi_config;
 	bool	_autoindex;
+	std::pair<int, std::string> _return_value;
 	std::string	_url;
 
     void setConfigWithLocationBlock(const LocationBlock& location_block);
@@ -45,6 +46,7 @@ class ConfigDto
 	bool	getAutoindex() const;
     std::string getUrl() const;
 	std::map <std::string, std::string> getCgiConfig() const ;
+	std::pair<int, std::string>	getReturnValue() const;
 };
 
 #endif

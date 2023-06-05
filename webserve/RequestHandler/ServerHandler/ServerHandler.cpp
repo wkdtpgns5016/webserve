@@ -129,6 +129,36 @@ int ServerHandler::checkFile(const std::string& request_target)
     return (1);
 }
 
+HttpResponseMessage ServerHandler::redirectionHttpMessage()
+{
+    int status;
+    StatusLine start_line;
+    std::map<std::string, std::string> header;
+    std::map<std::string, std::string> cgi_header;
+    std::string message_body;
+    HttpResponseMessage response;
+
+    // 임시 
+    std::pair<int, std::string> return_value = _config.getReturnValue();
+    status = return_value.first;
+    start_line = StatusLine(_request_message.getHttpVersion(), status, _status[status]);
+
+    if (status >= 300 && status < 400)
+    {
+        header = setHeader(status, message_body, cgi_header);
+        header["Location"] = return_value.second;
+        return (HttpResponseMessage(start_line, header, message_body));
+    }
+    else
+    {
+        message_body = return_value.second;
+        if (message_body.at(0) == '\"')
+            message_body = message_body.substr(1, message_body.length() - 2);
+        header = setHeader(status, message_body, cgi_header);
+        return (HttpResponseMessage(start_line, header, message_body));
+    }
+}
+
 std::vector<std::string> ServerHandler::getIndexPath(const std::string& root, const std::string& index)
 {
     std::vector<std::string> index_path;

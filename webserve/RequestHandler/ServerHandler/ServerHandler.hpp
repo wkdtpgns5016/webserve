@@ -36,6 +36,8 @@ class ServerHandler
     bool checkDirectory(const std::string& path);
     int checkFile(const std::string& request_target);
 
+    HttpResponseMessage redirectionHttpMessage();
+  
     std::vector<std::string> getIndexPath(const std::string& root, const std::string& index);
     std::string tryFiles(const std::vector<std::string>& try_files);
     std::string findPath(const std::string& request_target);
