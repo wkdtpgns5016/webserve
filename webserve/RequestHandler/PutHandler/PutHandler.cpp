@@ -79,10 +79,15 @@ HttpResponseMessage PutHandler::requestHandler()
     try
     {
         checkHttpMessage();
-        status = putMethod();
-        if (message_body.empty())
-            status = 204;
-        response_message = getResponseMessage(status, message_body, cgi_header);
+        if (!_config.getReturnValue().second.empty())
+            return (redirectionHttpMessage());
+        else
+        {
+            status = putMethod();
+            if (message_body.empty())
+                status = 204;
+            response_message = getResponseMessage(status, message_body, cgi_header);
+        }
     }
     catch(const Error400Exceptnion& e)
     {

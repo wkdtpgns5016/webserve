@@ -29,6 +29,7 @@ ConfigDto::ConfigDto(const ConfigDto& config_dto)
     _try_files = config_dto.getTryFiles();
     _autoindex = config_dto.getAutoindex();
     _cgi_config = config_dto.getCgiConfig();
+    _return_value = config_dto.getReturnValue();
     _url = config_dto.getUrl();
 }
 
@@ -54,6 +55,7 @@ ConfigDto& ConfigDto::operator=(const ConfigDto& config_dto)
     _autoindex = config_dto.getAutoindex();
     _cgi_config = config_dto.getCgiConfig();
     _url = config_dto.getUrl();
+    _return_value = config_dto.getReturnValue();
     return (*this);
 }
 
@@ -71,6 +73,7 @@ void ConfigDto::setConfigWithLocationBlock(const LocationBlock& location_block)
     _try_files = location_block.getTryFiles();
     _autoindex = location_block.getAutoindex();
     _cgi_config = location_block.getCgiConfigs();
+    _return_value = location_block.getReturnValue();
     _url = location_block.getUrl();
 }
 
@@ -88,6 +91,7 @@ void ConfigDto::setConfigWithServerBlock(const ServerBlock& server_block)
     _try_files = server_block.getTryFiles();
     _autoindex = server_block.getAutoindex();
     _cgi_config = server_block.getCgiConfigs();
+    _return_value = server_block.getReturnValue();
     _url = "";
 }
 
@@ -104,3 +108,4 @@ std::vector<std::string>	ConfigDto::getTryFiles() const { return _try_files; }
 bool	ConfigDto::getAutoindex() const { return _autoindex; }
 std::string ConfigDto::getUrl() const { return _url; }
 std::map <std::string, std::string> ConfigDto::getCgiConfig() const { return (_cgi_config); }
+std::pair<int, std::string>	ConfigDto::getReturnValue() const { return (_return_value); }
