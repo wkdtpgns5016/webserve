@@ -6,9 +6,9 @@ Connection::Connection()
 }
 
 Connection::Connection(int client_fd, std::string clent_addr)
- : _client_fd(client_fd), _client_addr(clent_addr), _current_connection_time(std::time(NULL)), _complete_respose(false)
+ : _client_fd(client_fd), _client_addr(clent_addr), _current_connection_time(std::time(NULL)), _complete_respose(false), _start_read(false)
 {
-
+    i = 0;
 }
 
 Connection::Connection(const Connection& connection)
@@ -18,6 +18,8 @@ Connection::Connection(const Connection& connection)
     _message_parser = connection._message_parser;
     _current_connection_time = connection._current_connection_time;
     _complete_respose = connection._complete_respose;
+    _start_read = connection._start_read;
+    i = 0;
 }
 
 Connection& Connection::operator=(const Connection& connection)
@@ -27,6 +29,8 @@ Connection& Connection::operator=(const Connection& connection)
     _message_parser = connection._message_parser;
     _current_connection_time = connection._current_connection_time;
     _complete_respose = connection._complete_respose;
+    _start_read = connection._start_read;
+    i = 0;
     return (*this);
 }
 
@@ -37,11 +41,17 @@ Connection::~Connection()
 
 bool Connection::receiveMessage()
 {
-    std::vector<unsigned char> _buffer;
-    unsigned char recv[1024] = { 0, };
+    //std::vector<char> buffer;
+    size_t buffer_size = 300000;
+    char recv[buffer_size];
     size_t n;
-
-    n = read(_client_fd, recv, 1024);
+    i++;
+    if (!_start_read)
+    {
+        std::cout << std::clock() << "              start parsing request" << std::endl;
+         _start_read = true;
+    }
+    n = read(_client_fd, recv, buffer_size);
     if (n < 0)
     {
         Logger::writeInfoLog(_client_fd, "Read error");
@@ -55,9 +65,9 @@ bool Connection::receiveMessage()
     else
     {
         updateConnectionTime();
-        _buffer.insert(_buffer.end(), recv, recv + n);
-        std::string recv_message(_buffer.begin(), _buffer.end());
-        _message_parser.appendMessage(recv_message, recv_message.length());
+        //buffer.insert(buffer.end(), recv, recv + n);
+        //std::string recv_message(buffer.begin(), buffer.end());
+        _message_parser.appendMessage(recv, n);
     }
     return (true);
 }
@@ -69,7 +79,7 @@ bool Connection::sendMessage(ServerBlock *server_block)
         if (!checkResponse())
             makeResponse(server_block);
 
-        size_t buffer_size = 40000;
+        size_t buffer_size = 300000;
         size_t len = std::strlen(_buffer.getBuffer());
         int n;
         if (len <= buffer_size)
@@ -84,6 +94,8 @@ bool Connection::sendMessage(ServerBlock *server_block)
         }
         else if (n == 0 || (size_t)n == len)
         {
+            std::cout << std::clock() << "              complete wrtie" << std::endl;
+            std::cout << std::clock() << "              end" << std::endl;
             clearConnection();
             Logger::writeLog(_client_addr, _request, _response);
         }
@@ -98,10 +110,13 @@ bool Connection::sendMessage(ServerBlock *server_block)
 
 void Connection::makeResponse(ServerBlock *server_block)
 {
+    std::cout << std::clock() << "              complete parsing reqeust " << i << std::endl;
+    std::cout << std::clock() << "              start parsing response" << std::endl;
     ServerController controller;
     _request = _message_parser.getRequestMessage();
     _response = controller.requestHandler(server_block, _request);
-
+    std::cout << std::clock() << "              complete parsing response" << std::endl;
+    std::cout << std::clock() << "              start write" << std::endl;
     _buffer = Buffer(_response.getString());
     _complete_respose = true;
 }
@@ -116,6 +131,7 @@ void Connection::clearConnection()
     _message_parser = RequestMessageParser();
     _buffer.clearBuffer();
     _complete_respose = false;
+    _start_read = false;
 }
 
 bool Connection::checkMessage() { return (_message_parser.checkMessage()); }

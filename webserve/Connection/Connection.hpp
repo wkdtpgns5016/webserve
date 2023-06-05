@@ -20,6 +20,8 @@ class Connection
     HttpResponseMessage _response;
     Buffer      _buffer;
     bool        _complete_respose;
+    bool        _start_read;
+    int i;
 
     bool checkMessage();
     bool checkResponse();
