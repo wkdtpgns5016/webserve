@@ -7,13 +7,13 @@
 class PutHandler : public ServerHandler
 {
     private:
-    int openFile(std::string path);
-    void writeFile(int fd, std::string message);
+    int openFile(const std::string& path);
+    void writeFile(int fd, const std::string& message);
     int putMethod();
 
     public:
     PutHandler();
-    PutHandler(ServerBlock* server_block, HttpRequestMessage request_message);
+    PutHandler(ServerBlock* server_block, const HttpRequestMessage& request_message);
     PutHandler(const PutHandler& get_handler);
     ~PutHandler();
     PutHandler& operator=(const PutHandler& get_handler);

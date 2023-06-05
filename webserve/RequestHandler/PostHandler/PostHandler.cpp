@@ -5,7 +5,7 @@ PostHandler::PostHandler() : ServerHandler()
 
 }
 
-PostHandler::PostHandler(ServerBlock* server_block, HttpRequestMessage request_message)
+PostHandler::PostHandler(ServerBlock* server_block, const HttpRequestMessage& request_message)
  : ServerHandler(server_block, request_message)
 {
 
@@ -26,7 +26,7 @@ PostHandler& PostHandler::operator=(const PostHandler& delete_handler)
     (void)delete_handler;
     return (*this);
 }
-void PostHandler::checkCGI(std::string request_target)
+void PostHandler::checkCGI(const std::string& request_target)
 {
     (void)request_target;
 }
