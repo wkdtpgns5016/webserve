@@ -317,6 +317,8 @@ std::string ServerHandler::findPath(std::string request_target)
     }
     else if (access(directory.c_str(), F_OK) != -1)
     {
+        if (_config.getAutoindex())
+            return (directory);
         std::vector<std::string>::iterator it = index_path.begin();
         for (; it != index_path.end(); it++)
         {
