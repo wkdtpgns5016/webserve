@@ -33,11 +33,13 @@ class RequestMessageParser
     void checkTrailer();
     void findTrailer(std::vector<std::string> arr, const std::string& trailer);
 
-    void setHeader(const std::string&  message);
+    void setHeader(const std::string& message);
     bool checkStartLineEnd(char prev, char now);
     bool checkHeaderEnd(char prev, char now);
     bool checkBodyEnd(char prev, char now);
     bool checkChunkEnd(char prev, char now);
+
+    bool isInvalidStartLine(const std::string& start_line);
 
     public:
     RequestMessageParser();
@@ -49,6 +51,10 @@ class RequestMessageParser
     HttpRequestMessage getRequestMessage() const;
     bool        checkMessage() const;
 
+    class InvalidRequestException : public std::exception {
+        public:
+            virtual const char* what() const throw();
+	};
 };
 
 #endif

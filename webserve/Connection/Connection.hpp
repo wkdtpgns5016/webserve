@@ -18,7 +18,7 @@ class Connection
     RequestMessageParser _message_parser;
     HttpRequestMessage _request;
     HttpResponseMessage _response;
-    
+
     Buffer      _buffer;
     bool        _complete_respose;
     bool        _start_read;
@@ -28,6 +28,8 @@ class Connection
     void makeResponse(ServerBlock *server_block);
     void updateConnectionTime();
 
+    void parseHttpMessage(char* buffer, size_t len, ServerBlock* config);
+
     public:
     Connection();
     Connection(int client_fd, const std::string& client_addr);
@@ -35,12 +37,13 @@ class Connection
     Connection& operator=(const Connection& connection);
     ~Connection();
 
-    bool receiveMessage();
-    bool sendMessage(ServerBlock *server_block);
+    bool receiveMessage(ServerBlock *server_block);
+    bool sendMessage();
     void clearConnection();
     std::string getClinetAddr() const;
     int getClinetFd() const;
     time_t getCurrentConnectionTime() const;
+
 };
 
 #endif

@@ -114,8 +114,14 @@ void RequestMessageParser::appendMessage(char* buffer, size_t len)
             _start_line_str.push_back(now);
             if (checkStartLineEnd(_prev, now))
             {
+                if (isInvalidStartLine(_start_line_str))
+                {
+                    _request_message = HttpRequestMessage(_start_line_str);
+                    throw InvalidRequestException();
+                }
                 _complete_start_line = true;
                 _start_line = RequestLine(_start_line_str.substr(0, _start_line_str.length() - 2));
+                _header_str = "\r\n";
             }
         }
         else if (!_complete_header)
@@ -175,6 +181,8 @@ bool RequestMessageParser::checkHeaderEnd(char prev, char now)
     case 0:
         if (now == '\r')
             _header_end_flag++;
+        if (now == '\r' && prev == '\n')
+            _header_end_flag = 3;
         break;
     case 1:
         if (now == '\n' && prev == '\r')
@@ -246,6 +254,16 @@ bool RequestMessageParser::checkChunkEnd(char prev, char now)
     return (false);
 }
 
+bool RequestMessageParser::isInvalidStartLine(const std::string& start_line)
+{
+    std::vector<std::string> arr = ft::splitString(start_line, " ");
+    if (arr.size() != 3)
+        return (true);
+    if (arr[2] != "HTTP/1.1\r\n" && arr[2] != "HTTP/1.0\r\n")
+        return (true);
+    return (false);
+}
+
 HttpRequestMessage RequestMessageParser::getRequestMessage() const
 {
     return (_request_message);
@@ -256,4 +274,9 @@ bool        RequestMessageParser::checkMessage() const
     if (_complete_start_line && _complete_header && _complete_body)
         return (true);
     return (false);
+}
+
+const char* RequestMessageParser::InvalidRequestException::what() const throw()
+{
+    return ("InvalidRequestException");
 }
