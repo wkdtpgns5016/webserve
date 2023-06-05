@@ -56,6 +56,11 @@ CgiConfigException::CgiConfigException(const std::string& type, const std::strin
 InvalidCgiValue::InvalidCgiValue(const std::string& value) : CgiConfigException("invalid value", value) {}
 NoValue::NoValue(const std::string& value) : CgiConfigException("no value", value) {}
 
+//return_value
+ReturnValueException::ReturnValueException(const std::string& type, const std::string& value) : SimpleException(type, value, "return_value") {}
+
+InvalidStatusCode::InvalidStatusCode(const std::string& value) : ReturnValueException("invalid status code", value) {}
+
 //unnkown
 UnknownDirective::UnknownDirective(const std::string& value) { _line += "unnkown directive \"" + value + "\" variable\n"; }
 UnknownDirective::~UnknownDirective() throw() {}

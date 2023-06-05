@@ -12,6 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <utility>
 
 std::string	readFileIntoString(std::string filename)
 {
@@ -111,6 +112,7 @@ TEST(ConfigTest, Config2Test)
 	bool	autoindex_result3 = location_blocks3->getAutoindex();
 	std::string	url_result3 = location_blocks3->getUrl();
 	std::map<std::string, std::string>	cgi_config_result3 = location_blocks3->getCgiConfigs();
+	std::pair<int, std::string>	return_value3 = location_blocks3->getReturnValue();
 
 	//location2
 	int			port_result4 = location_blocks4->getPort();
@@ -165,7 +167,8 @@ TEST(ConfigTest, Config2Test)
 	EXPECT_EQ(*try_files_result3.begin(), "$uri");
 	EXPECT_EQ(autoindex_result3, false);
 	EXPECT_EQ(url_result3, "/");
-
+	EXPECT_EQ(return_value3.first, 307);
+	
 	//location2
 	EXPECT_EQ(port_result4, 81);
     EXPECT_EQ(root_result4, "/var/html");
