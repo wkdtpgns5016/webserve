@@ -64,7 +64,7 @@ void	Block::setAllowMethod(const std::string& allow_method) { _allow_methods.pus
 void	Block::setTryFiles(const std::string& try_files) { _try_files.push_back(try_files); }
 void	Block::setAutoIndex(bool autoindex) { _autoindex = autoindex; }
 void	Block::setCgiConfig(const std::string& extension, const std::string& excuter) { _cgi_configs[extension] = excuter; }
-
+void	Block::setReturnValue(int status_code, const std::string &response_data) { _return_value.first = status_code; _return_value.second = response_data; }
 void	Block::clearAllowMethod() { _allow_methods.clear(); }
 void	Block::clearTryFiles() { _try_files.clear(); }
 void	Block::clearCgiConfig() { _cgi_configs.clear(); }
@@ -114,6 +114,7 @@ const std::vector<std::string>&	Block::getAllowMethod() const { return _allow_me
 const std::vector<std::string>&	Block::getTryFiles() const { return _try_files; }
 const bool&	Block::getAutoindex() const { return _autoindex; }
 const std::map<std::string, std::string>& Block::getCgiConfigs() const { return _cgi_configs; }
+const std::pair<int, std::string>&	Block::getReturnValue() const { return _return_value; }
 const std::vector<Block *>&	Block::getInnerBlock() const { return _inner_blocks; }
 
 //occf

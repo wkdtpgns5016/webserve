@@ -140,6 +140,18 @@ public:
 	InvalidCgiValue(const std::string& value);
 };
 
+//return_value
+class ReturnValueException: public SimpleException
+{
+public:
+	ReturnValueException(const std::string& type, const std::string& value);
+};
+
+class InvalidStatusCode : public ReturnValueException
+{
+public:
+	InvalidStatusCode(const std::string& value);
+};
 //unknown
 class UnknownDirective : public std::exception
 {
