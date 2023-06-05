@@ -30,7 +30,7 @@ class Connection
 
     public:
     Connection();
-    Connection(int client_fd, std::string client_addr);
+    Connection(int client_fd, const std::string& client_addr);
     Connection(const Connection& connection);
     Connection& operator=(const Connection& connection);
     ~Connection();

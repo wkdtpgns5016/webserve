@@ -74,43 +74,7 @@ void RequestMessageParser::checkTrailer()
         _is_trailer = true;
 }
 
-void RequestMessageParser::checkChunkComplete(const std::string&  message, size_t len)
-{
-    // trailer 헤더가 있을 경우
-    std::string trailer;
-    std::vector<std::string> line;
-    size_t l = _message_body_str.length();
-
-    if (_is_trailer)
-    {
-        trailer = _header["Trailer"];
-        findTrailer(line, _header["Trailer"]);
-    }
-    else
-    {
-        if (len >= 5)
-            findZero(message, len);
-        else if (l >= 5)
-            findZero(_message_body_str, l);
-    }
-}
-
-void RequestMessageParser::findZero(const std::string&  message, size_t len)
-{
-    if (message.at(len - 1) != '\n')
-        return ;
-    if (message.at(len - 2) != '\r')
-        return ;
-    if (message.at(len - 3) != '\n')
-        return ;
-    if (message.at(len - 4) != '\r')
-        return ;
-    if (message.at(len - 5) != '0')
-        return ;
-    _complete_body = true;
-}
-
-void RequestMessageParser::findTrailer(std::vector<std::string> arr, std::string trailer)
+void RequestMessageParser::findTrailer(std::vector<std::string> arr, const std::string& trailer)
 {
     std::string key = trailer + ": ";
     std::vector<std::string>::reverse_iterator it = arr.rbegin();
@@ -119,72 +83,6 @@ void RequestMessageParser::findTrailer(std::vector<std::string> arr, std::string
         if ((*it).find(key) != std::string::npos)
             _complete_body = true;
     }
-}
-
-void RequestMessageParser::initStartLine(const std::string&  message)
-{
-    size_t pos;
-    std::string prev;
-    std::string next;
-
-    std::cout << std::clock() << "              start initStartLine" << std::endl;
-    _start_line_str += message;
-    std::cout << std::clock() << "              start find" << std::endl;
-    if ((pos = _start_line_str.find("\r\n")) != std::string::npos)
-    {
-        std::cout << std::clock() << "              end find" << std::endl;
-        prev = _start_line_str.substr(0, pos);
-        if (prev.length() < _start_line_str.length() - 2)
-            next = _start_line_str.substr(pos + 2);
-        _start_line_str = prev;
-        _start_line = RequestLine(_start_line_str);
-        _complete_start_line = true;
-        initHeader(next);
-    }
-    std::cout << std::clock() << "              end initStartLine" << std::endl;
-}
-
-void RequestMessageParser::initHeader(const std::string&  message)
-{
-    size_t pos;
-    std::string prev;
-    std::string next;
-
-    std::cout << std::clock() << "              start initHeader" << std::endl;
-    _header_str += message;
-    if ((pos = _header_str.find("\r\n\r\n")) != std::string::npos)
-    {
-        prev = _header_str.substr(0, pos + 4);
-        if (prev.length() < _header_str.length())
-            next = _header_str.substr(pos + 4);
-        _header_str = prev;
-        setHeader(_header_str);
-        _complete_header = true;
-        checkChunk();
-        checkTrailer();
-        initBody(next, next.length());
-    }
-    std::cout << std::clock() << "              end initHeader" << std::endl;
-}
-
-void RequestMessageParser::initBody(const std::string& message, size_t len)
-{
-    std::cout << std::clock() << "              start initBody" << std::endl;
-    _message_body_str += message;
-    if (_is_chunked)
-        checkChunkComplete(message, len);
-    else
-    {
-        if (_header.count("Content-Length") > 0)
-        {
-            size_t content_size = ft::stoi(_header["Content-Length"]);
-            if (_message_body_str.length() >= content_size)
-                _complete_body = true;
-        }
-        else
-            _complete_body = true;
-    }
-    std::cout << std::clock() << "              end initBody" << std::endl;
 }
 
 void RequestMessageParser::setHeader(const std::string&  message)
@@ -202,20 +100,6 @@ void RequestMessageParser::setHeader(const std::string&  message)
         value = (*it).substr(pos + 2, (*it).length() - pos - 1);
         _header[filed] = value;
     }
-}
-
-void RequestMessageParser::appendMessage(const std::string&  new_str, size_t len)
-{
-    std::cout << std::clock() << "              start appendMessage" << std::endl;
-    if (!_complete_start_line)
-        initStartLine(new_str);
-    else if (!_complete_header)
-        initHeader(new_str);
-    else if (!_complete_body)
-        initBody(new_str, len);
-    if (_complete_start_line && _complete_header && _complete_body)
-        _request_message = HttpRequestMessage(_start_line, _header, _message_body_str);
-    std::cout << std::clock() << "              end appendMessage" << std::endl;
 }
 
 void RequestMessageParser::appendMessage(char* buffer, size_t len)

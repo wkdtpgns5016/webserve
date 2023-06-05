@@ -8,7 +8,7 @@ void Logger::writeLog(std::string client_addr, HttpRequestMessage request, HttpR
     std::cout << GRN << log_message << NC << std::endl;
 }
 
-void Logger::writeInfoLog(int socket_fd, std::string messsage)
+void Logger::writeInfoLog(int socket_fd, std::string messsage, bool is_error)
 {
     std::string log_message;
     std::vector<std::string> arr = ft::getTime(std::time(NULL));
@@ -17,8 +17,16 @@ void Logger::writeInfoLog(int socket_fd, std::string messsage)
                 + arr[4].substr(0, arr[4].length() - 1) + ":"
                 + arr[3] + " +0900]";
 
-    log_message = "[INFO]    " + time_stamp + "    " + messsage + " [" + ft::itos(socket_fd) + "]";
-    std::cout << CYN << log_message << NC << std::endl;
+    if (is_error)
+    {
+        log_message = "[ERROR]    " + time_stamp + "    " + messsage + " [" + ft::itos(socket_fd) + "]";
+        std::cout << RED << log_message << NC << std::endl;
+    }
+    else
+    {
+        log_message = "[INFO]    " + time_stamp + "    " + messsage + " [" + ft::itos(socket_fd) + "]";
+        std::cout << CYN << log_message << NC << std::endl;
+    }
 }
 
 void Logger::writeErrorLog(std::string messsage)

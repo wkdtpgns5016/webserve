@@ -5,7 +5,7 @@ Buffer::Buffer()
 
 }
 
-Buffer::Buffer(std::string str) : _pos(0)
+Buffer::Buffer(const std::string& str) : _pos(0)
 {
     _buffer = str;
 }
@@ -28,7 +28,7 @@ Buffer& Buffer::operator=(const Buffer& buffer)
     return (*this);
 }
 
-void Buffer::appendBuffer(std::string str)
+void Buffer::appendBuffer(const std::string& str)
 {
     _buffer += str;
 }

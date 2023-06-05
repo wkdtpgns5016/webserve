@@ -5,7 +5,7 @@ HttpResponseMessage::HttpResponseMessage(void) : HttpMessage()
 
 }
 
-HttpResponseMessage::HttpResponseMessage(std::string http_message) : HttpMessage(http_message)
+HttpResponseMessage::HttpResponseMessage(const std::string& http_message) : HttpMessage(http_message)
 {
     std::string start_line;
     std::vector<std::string> arr;

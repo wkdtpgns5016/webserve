@@ -11,7 +11,7 @@ private:
 
 public:
     HttpRequestMessage(void);
-    HttpRequestMessage(std::string http_message);
+    HttpRequestMessage(const std::string& http_message);
     HttpRequestMessage(const RequestLine&                   start_line,
                         std::map<std::string, std::string>  headers, 
                         const std::string&                  message_body);
@@ -20,7 +20,7 @@ public:
     HttpRequestMessage& operator=(const HttpRequestMessage& http_meesage);
 
     RequestLine getStartLine(void) const;
-    void setStartLine(RequestLine start_line);
+    void setStartLine(const RequestLine& start_line);
     bool isVaild(void);
     std::string getString(void);
 

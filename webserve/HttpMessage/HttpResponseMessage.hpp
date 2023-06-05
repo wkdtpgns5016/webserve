@@ -10,7 +10,7 @@ private:
 
 public:
     HttpResponseMessage(void);
-    HttpResponseMessage(std::string http_message);
+    HttpResponseMessage(const std::string& http_message);
     HttpResponseMessage(const StatusLine&                   start_line,
                         std::map<std::string, std::string>  headers, 
                         const std::string&                  message_body);

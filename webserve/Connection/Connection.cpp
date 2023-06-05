@@ -5,7 +5,7 @@ Connection::Connection()
 
 }
 
-Connection::Connection(int client_fd, std::string clent_addr)
+Connection::Connection(int client_fd, const std::string& clent_addr)
  : _client_fd(client_fd), _client_addr(clent_addr), _current_connection_time(std::time(NULL)), _complete_respose(false), _start_read(false)
 {
     i = 0;
@@ -54,12 +54,12 @@ bool Connection::receiveMessage()
     n = read(_client_fd, recv, buffer_size);
     if (n < 0)
     {
-        Logger::writeInfoLog(_client_fd, "Read error");
+        Logger::writeInfoLog(_client_fd, "Read error", true);
         return (false);
     }
     else if (n == 0)
     {
-        Logger::writeInfoLog(_client_fd, "Close Connection client");
+        Logger::writeInfoLog(_client_fd, "Close Connection client", false);
         return (false);
     }
     else
@@ -89,7 +89,7 @@ bool Connection::sendMessage(ServerBlock *server_block)
         
         if (n < 0)
         {
-            Logger::writeInfoLog(_client_fd, "Write error");
+            Logger::writeInfoLog(_client_fd, "Write error", true);
             return (false);
         }
         else if (n == 0 || (size_t)n == len)

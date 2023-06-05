@@ -11,12 +11,12 @@ class Buffer
 
     public:
     Buffer();
-    Buffer(std::string str);
+    Buffer(const std::string& str);
     Buffer(const Buffer& buffer);
     ~Buffer();
     Buffer& operator=(const Buffer& buffer);
 
-    void appendBuffer(std::string str);
+    void appendBuffer(const std::string& str);
     void cutBuffer(size_t pos);
     void clearBuffer(void);
 

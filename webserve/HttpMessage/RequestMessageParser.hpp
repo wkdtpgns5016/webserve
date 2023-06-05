@@ -31,15 +31,9 @@ class RequestMessageParser
     
     void checkChunk();
     void checkTrailer();
-    void checkChunkComplete(const std::string&  message, size_t len);
-    void findZero(const std::string&  message, size_t len);
-    void findTrailer(std::vector<std::string> arr, std::string trailer);
+    void findTrailer(std::vector<std::string> arr, const std::string& trailer);
 
-    void initStartLine(const std::string&  message);
-    void initHeader(const std::string&  message);
-    void initBody(const std::string&  message, size_t len);
     void setHeader(const std::string&  message);
-
     bool checkStartLineEnd(char prev, char now);
     bool checkHeaderEnd(char prev, char now);
     bool checkBodyEnd(char prev, char now);
@@ -51,7 +45,6 @@ class RequestMessageParser
     RequestMessageParser& operator=(const RequestMessageParser& parser);
     ~RequestMessageParser();
 
-    void appendMessage(const std::string& new_str, size_t len);
     void appendMessage(char* buffer, size_t len);
     HttpRequestMessage getRequestMessage() const;
     bool        checkMessage() const;
