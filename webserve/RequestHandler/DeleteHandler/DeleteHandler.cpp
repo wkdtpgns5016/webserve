@@ -51,9 +51,7 @@ HttpResponseMessage DeleteHandler::requestHandler()
         std::string body;
         // http reqeust message 검사
         checkHttpMessage();
-        // 임시
-        //if (!_config.getRetrun().second.empty())
-        if (!false)
+        if (!_config.getReturnValue().second.empty())
             return (redirectionHttpMessage());
         else
         {

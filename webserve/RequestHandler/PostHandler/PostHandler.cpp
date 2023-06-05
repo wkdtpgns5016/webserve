@@ -44,9 +44,7 @@ HttpResponseMessage PostHandler::requestHandler()
     try
     {
         checkHttpMessage();
-        // 임시
-        //if (!_config.getRetrun().second.empty())
-        if (!false)
+        if (!_config.getReturnValue().second.empty())
             return (redirectionHttpMessage());
         else
         {

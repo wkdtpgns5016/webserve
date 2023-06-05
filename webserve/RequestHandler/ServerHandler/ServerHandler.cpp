@@ -140,20 +140,21 @@ HttpResponseMessage ServerHandler::redirectionHttpMessage()
     HttpResponseMessage response;
 
     // 임시 
-    std::pair<int, std::string> retrn = std::make_pair(200, "OK");
-    //std::pair<int, std::string> retrn = _config.getReturn();
-    status = retrn.first;
+    std::pair<int, std::string> return_value = _config.getReturnValue();
+    status = return_value.first;
     start_line = StatusLine(_request_message.getHttpVersion(), status, _status[status]);
 
     if (status >= 300 && status < 400)
     {
         header = setHeader(status, message_body, cgi_header);
-        header["Location"] = retrn.second;
+        header["Location"] = return_value.second;
         return (HttpResponseMessage(start_line, header, message_body));
     }
     else
     {
-        message_body = retrn.second;
+        message_body = return_value.second;
+        if (message_body.at(0) == '\"')
+            message_body = message_body.substr(1, message_body.length() - 2);
         header = setHeader(status, message_body, cgi_header);
         return (HttpResponseMessage(start_line, header, message_body));
     }
