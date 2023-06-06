@@ -38,7 +38,7 @@ void Server::disconnect_client(int client_fd)
 
 void Server::accept_new_client(int client_fd)
 {
-    char *buf = { '\0', };
+    char buf[1024] = { '\0', };
     socklen_t addr_len;
     struct sockaddr_in addr;
 

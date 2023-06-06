@@ -128,7 +128,7 @@ ServerBlock* Connection::selectServerConfig(std::vector<ServerBlock *> configs)
 {
     std::vector<ServerBlock *>::iterator it = configs.begin();
 
-    if (_request.getHeaders().count("Host") < 0)
+    if (_request.getHeaders().count("Host") == 0)
         return (*it);
     else
     {
@@ -138,6 +138,7 @@ ServerBlock* Connection::selectServerConfig(std::vector<ServerBlock *> configs)
                 return (*it);
         }
     }
+    return (NULL);
 }
 
 void Connection::makeResponse(ServerBlock *server_block)

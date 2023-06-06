@@ -18,12 +18,13 @@ int	WebServer::initSocket(int port, unsigned int ip)
 	struct	sockaddr_in	addr;
 	int	optvalue = 1;
 
+	(void)ip;
 	if ((fd = socket(PF_INET, SOCK_STREAM, 0)) == -1)
 		exit(1);
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	addr.sin_addr.s_addr = ip;
+	//addr.sin_addr.s_addr = ip;
 	addr.sin_port = htons(port);
 
 	setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));
@@ -41,7 +42,7 @@ WebServer::WebServer(const Conf &conf)
 	std::vector<ServerBlock*>	blocks;
 	std::pair<int, unsigned int> port_addr;
 	int	fd;
-	std::map<std::pair<int, unsigned int>, std::vector<ServerBlock*>> server_blocks;
+	std::map<std::pair<int, unsigned int>, std::vector<ServerBlock*> > server_blocks;
 
 	std::vector<Block*> inner_blocks = conf.getInnerBlock();
 	std::vector<Block*>::iterator ite= inner_blocks.end();
@@ -52,8 +53,8 @@ WebServer::WebServer(const Conf &conf)
 		server_blocks[port_addr].push_back(block);
 	}
 
-	std::map<std::pair<int, unsigned int>, std::vector<ServerBlock*>>::iterator	ite1 = server_blocks.end();
-	for(std::map<std::pair<int, unsigned int>, std::vector<ServerBlock*>>::iterator it = server_blocks.begin(); it != ite1; it++)
+	std::map<std::pair<int, unsigned int>, std::vector<ServerBlock*> >::iterator	ite1 = server_blocks.end();
+	for(std::map<std::pair<int, unsigned int>, std::vector<ServerBlock*> >::iterator it = server_blocks.begin(); it != ite1; it++)
 	{
 		port_addr = (*it).first;
 		blocks = (*it).second;
@@ -79,12 +80,13 @@ void WebServer::run(void)
     struct kevent*              _curr_event;
 
 
+	if ((_kqueue = kqueue()) == -1)
+		exit(1);
     /* add event for server socket */
 	for (std::map<int, Server*>::iterator it = _servers.begin(); it != _servers.end(); it++)
 	{
     	change_events((*it).first, EVFILT_READ, EV_ADD | EV_ENABLE, change_list);
 	}
-
 	 /* main loop */
     int new_events;
     while (1)
