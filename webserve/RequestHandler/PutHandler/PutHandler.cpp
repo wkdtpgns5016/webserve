@@ -97,6 +97,10 @@ HttpResponseMessage PutHandler::requestHandler()
     {
         response_message = getErrorResponse(400);
     }
+    catch(const Error403Exceptnion& e)
+    {
+        response_message = getErrorResponse(400);
+    }
     catch(const Error405Exceptnion& e)
     {
         response_message = getErrorResponse(405);
