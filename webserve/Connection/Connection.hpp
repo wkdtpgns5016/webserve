@@ -28,7 +28,8 @@ class Connection
     void makeResponse(ServerBlock *server_block);
     void updateConnectionTime();
 
-    void parseHttpMessage(char* buffer, size_t len, ServerBlock* config);
+    void parseHttpMessage(char* buffer, size_t len, std::vector<ServerBlock *> configs);
+    ServerBlock* selectServerConfig(std::vector<ServerBlock *> configs);
 
     public:
     Connection();
@@ -37,7 +38,7 @@ class Connection
     Connection& operator=(const Connection& connection);
     ~Connection();
 
-    bool receiveMessage(ServerBlock *server_block);
+    bool receiveMessage(std::vector<ServerBlock *> configs);
     bool sendMessage();
     void clearConnection();
     std::string getClinetAddr() const;

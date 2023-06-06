@@ -36,7 +36,7 @@ Connection::~Connection()
 
 }
 
-bool Connection::receiveMessage(ServerBlock *server_block)
+bool Connection::receiveMessage(std::vector<ServerBlock *> configs)
 {
     size_t buffer_size = 300000;
     char recv[buffer_size];
@@ -60,7 +60,7 @@ bool Connection::receiveMessage(ServerBlock *server_block)
     else
     {
         updateConnectionTime();
-        parseHttpMessage(recv, n, server_block);
+        parseHttpMessage(recv, n, configs);
     }
     return (true);
 }
@@ -103,8 +103,9 @@ bool Connection::sendMessage()
     return (true);
 }
 
-void Connection::parseHttpMessage(char* buffer, size_t len, ServerBlock* config)
+void Connection::parseHttpMessage(char* buffer, size_t len, std::vector<ServerBlock *> configs)
 {
+    ServerBlock* config = selectServerConfig(configs);
     try
     {
         _message_parser.appendMessage(buffer, len);
@@ -119,6 +120,23 @@ void Connection::parseHttpMessage(char* buffer, size_t len, ServerBlock* config)
         _response = handler.getErrorResponse(400);
         _buffer = Buffer(_response.getString());
         _complete_respose = true;
+    }
+}
+
+
+ServerBlock* Connection::selectServerConfig(std::vector<ServerBlock *> configs)
+{
+    std::vector<ServerBlock *>::iterator it = configs.begin();
+
+    if (_request.getHeaders().count("Host") < 0)
+        return (*it);
+    else
+    {
+        for (; it != configs.end(); it++)
+        {
+            if (_request.getHeaders().find("Host")->second == (*it)->getServerName())
+                return (*it);
+        }
     }
 }
 
