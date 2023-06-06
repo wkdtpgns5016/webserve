@@ -32,6 +32,8 @@ public:
     std::string getPathInfo() const;
     std::string getPathTranslate() const;
 
+    bool checkConnectionClose();
+
 };
 
 #endif

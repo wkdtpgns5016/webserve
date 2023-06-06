@@ -80,6 +80,10 @@ HttpResponseMessage PostHandler::requestHandler()
     {
         response_message = getErrorResponse(414);
     }
+    catch(const Error422Exceptnion& e)
+    {
+        response_message = getErrorResponse(422);
+    }
     catch(const Error500Exceptnion& e)
     {
         response_message = getErrorResponse(500);
