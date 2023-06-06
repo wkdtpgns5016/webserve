@@ -12,8 +12,7 @@ add_library(libft webserve/lib/ft/ft.hpp
                   webserve/lib/ft/itos.cpp 
 		          webserve/lib/ft/stoul.cpp
 		          webserve/lib/ft/stoi.cpp )
-add_library(Configuration	webserve/Configuration/Parser/parseTryFiles.cpp 
-							webserve/Configuration/Parser/parseAllowMethod.cpp 
+add_library(Configuration	webserve/Configuration/Parser/parseAllowMethod.cpp 
 							webserve/Configuration/Parser/parseListen.cpp  
 							webserve/Configuration/Parser/parseErrorPage.cpp 
 							webserve/Configuration/Parser/parseClientMaxBodySize.cpp 

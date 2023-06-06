@@ -22,7 +22,6 @@ private:
 	bool	isInvalidMethod(const std::string& method);
 	bool	isServerBlock(Block* block);
 	void	checkInvalidStatus(const std::string& error_page);
-	void	checkInvalidUri(const std::string& uri);
 	int		extractOneSectionNumber(const std::string& value, size_t pos, size_t len);
 	size_t	measureOneSectionLength(const std::string& value, size_t pos);
 
@@ -36,7 +35,6 @@ private:
 	void	parseClientMaxBodySize(const std::string&, Block* block);
 	void	parseUploadPath(const std::string&, Block* block);
 	void	parseAllowMethod(const std::string&, Block* block);
-	void	parseTryFiles(const std::string&, Block* block);
 	void	parseAutoindex(const std::string&, Block* block);
 	void	parseNoMatchId(const std::string&, Block* block);
 	void	parseCgiConfigs(const std::string&, Block* block);

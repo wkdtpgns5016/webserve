@@ -60,13 +60,11 @@ public:
 	void	setClientMaxBodySize(size_t client_max_body_size);
 	void	setUploadPath(const std::string& upload_path);
 	void	setAllowMethod(const std::string& allow_method);
-	void	setTryFiles(const std::string& try_files);
 	void	setAutoIndex(bool auto_index);
 	void	setCgiConfig(const std::string& extension, const std::string& excuter);
 	void	setReturnValue(int	status_code, const std::string& response_data);
 
 	void	clearAllowMethod();
-	void	clearTryFiles();
 	void	clearCgiConfig();
 
 	const int&			getPort() const;
@@ -78,7 +76,6 @@ public:
 	const size_t&			getClientMaxBodySize() const;
 	const std::string&	getUploadPath() const;
 	const std::vector<std::string>&	getAllowMethod() const;
-	const std::vector<std::string>&	getTryFiles() const;
 	const bool&	getAutoindex() const;
 	const std::map<std::string, std::string>& getCgiConfigs() const;
 	const std::pair<int, std::string>&	getReturnValue() const;

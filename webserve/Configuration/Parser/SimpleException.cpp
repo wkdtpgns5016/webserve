@@ -43,12 +43,7 @@ InvalidMethod::InvalidMethod(const std::string& value) : AllowMethodException("i
 // default_error_page
 ErrorPageException::ErrorPageException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "error_page") {}
 
-InvalidStatus::InvalidStatus(const std::string& line, const std::string& value) : ErrorPageException(line, value) {}
-BetweenStatus::BetweenStatus(const std::string& line, const std::string& value) : ErrorPageException(line, value) {}
-
-// try_files
-TryFilesException::TryFilesException(const std::string& error_type, const std::string& value) :SimpleException(error_type, value, "try_files") {}
-InvalidValue::InvalidValue(const std::string& value) : TryFilesException("invalid value", value) {}
+InvalidStatus::InvalidStatus(const std::string& value) : ErrorPageException("invalid status", value) {}
 
 //cgi_config
 CgiConfigException::CgiConfigException(const std::string& type, const std::string& value) : SimpleException(type, value, "cgi_config") {}

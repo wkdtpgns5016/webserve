@@ -101,24 +101,7 @@ public:
 class InvalidStatus : public ErrorPageException
 {
 public:
-	InvalidStatus(const std::string& line, const std::string& value);
-};
-class BetweenStatus : public ErrorPageException
-{
-public:
-	BetweenStatus(const std::string& line, const std::string& value);
-};
-
-// try_files
-class TryFilesException: public SimpleException
-{
-public:
-	TryFilesException(const std::string& type, const std::string& value);
-};
-
-class InvalidValue: public TryFilesException{
-public:
-	InvalidValue(const std::string& value);
+	InvalidStatus(const std::string& value);
 };
 
 //cgi_config

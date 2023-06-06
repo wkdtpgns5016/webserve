@@ -70,7 +70,6 @@ void ConfigDto::setConfigWithLocationBlock(const LocationBlock& location_block)
     _client_body_size = location_block.getClientMaxBodySize();
     _upload_path = location_block.getUploadPath();
     _allow_method = location_block.getAllowMethod();
-    _try_files = location_block.getTryFiles();
     _autoindex = location_block.getAutoindex();
     _cgi_config = location_block.getCgiConfigs();
     _return_value = location_block.getReturnValue();
@@ -88,7 +87,6 @@ void ConfigDto::setConfigWithServerBlock(const ServerBlock& server_block)
     _client_body_size = server_block.getClientMaxBodySize();
     _upload_path = server_block.getUploadPath();
     _allow_method = server_block.getAllowMethod();
-    _try_files = server_block.getTryFiles();
     _autoindex = server_block.getAutoindex();
     _cgi_config = server_block.getCgiConfigs();
     _return_value = server_block.getReturnValue();
