@@ -31,8 +31,8 @@ private:
 	WebServer();
 	int	initSocket(int port, unsigned int ip_addr);
 	void change_events(uintptr_t ident, int16_t filter,
-                   uint16_t flags, std::vector<struct kevent>  change_list);
-
+                   uint16_t flags, std::vector<struct kevent> * change_list);
+	void accept_new_client(std::vector<struct kevent>*  change_list, int server_socket);
 
 
 

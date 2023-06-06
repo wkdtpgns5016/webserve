@@ -124,9 +124,9 @@ void Connection::parseHttpMessage(char* buffer, size_t len, std::vector<ServerBl
 }
 
 
-ServerBlock* Connection::selectServerConfig(std::vector<ServerBlock *> configs)
+ServerBlock* Connection::selectServerConfig(const std::vector<ServerBlock *>& configs)
 {
-    std::vector<ServerBlock *>::iterator it = configs.begin();
+    std::vector<ServerBlock *>::const_iterator it = configs.begin();
 
     if (_request.getHeaders().count("Host") == 0)
         return (*it);
@@ -138,7 +138,7 @@ ServerBlock* Connection::selectServerConfig(std::vector<ServerBlock *> configs)
                 return (*it);
         }
     }
-    return (NULL);
+    return (*configs.begin());
 }
 
 void Connection::makeResponse(ServerBlock *server_block)

@@ -64,13 +64,34 @@ WebServer::WebServer(const Conf &conf)
 	}
 }
 void WebServer::change_events(uintptr_t ident, int16_t filter,
-                   uint16_t flags, std::vector<struct kevent>  change_list)
+                   uint16_t flags, std::vector<struct kevent>  *change_list)
 {
     struct kevent temp_event;
 
     EV_SET(&temp_event, ident, filter, flags, 0, 0, NULL);
-    change_list.push_back(temp_event);
+    change_list->push_back(temp_event);
 }
+
+void WebServer::accept_new_client(std::vector<struct kevent> *change_list, int server_socket)
+{
+    /* accept new client */
+    int client_socket;
+    socklen_t addr_len;
+    struct sockaddr_in addr;
+
+    if ((client_socket = accept(server_socket, (struct sockaddr *)&addr, &addr_len)) == -1)
+        exit(1);
+
+    fcntl(client_socket, F_SETFL, O_NONBLOCK);
+
+    /* add event for client socket - add read && write event */
+    change_events(client_socket, EVFILT_READ, EV_ADD | EV_ENABLE, change_list);
+    change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE,change_list);
+
+    _servers[server_socket]->accept_new_client(client_socket);
+	_servers_with_clients[client_socket] = _servers[server_socket];
+}
+
 
 void WebServer::run(void)
 {
@@ -85,7 +106,7 @@ void WebServer::run(void)
     /* add event for server socket */
 	for (std::map<int, Server*>::iterator it = _servers.begin(); it != _servers.end(); it++)
 	{
-    	change_events((*it).first, EVFILT_READ, EV_ADD | EV_ENABLE, change_list);
+    	change_events((*it).first, EVFILT_READ, EV_ADD | EV_ENABLE, &change_list);
 	}
 	 /* main loop */
     int new_events;
@@ -116,7 +137,9 @@ void WebServer::run(void)
             else if (_curr_event->filter == EVFILT_READ)
             {
                 if (_servers.count(_curr_event->ident) == 1)
-                    _servers[_curr_event->ident]->accept_new_client(_curr_event->ident);
+				{
+					accept_new_client(&change_list, _curr_event->ident);
+				}
 				else
 					_servers_with_clients[_curr_event->ident]->recvMessage(_curr_event->ident);
             }

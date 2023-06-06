@@ -29,7 +29,7 @@ class Connection
     void updateConnectionTime();
 
     void parseHttpMessage(char* buffer, size_t len, std::vector<ServerBlock *> configs);
-    ServerBlock* selectServerConfig(std::vector<ServerBlock *> configs);
+    ServerBlock* selectServerConfig(const std::vector<ServerBlock *>& configs);
 
     public:
     Connection();
