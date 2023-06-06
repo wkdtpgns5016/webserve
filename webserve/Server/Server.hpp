@@ -41,7 +41,7 @@ public:
     ~Server();
 
     void disconnect_client(int client_fd);
-    void accept_new_client(int client_fd);
+    void accept_new_client(int client_fd, const std::string& addr);
     void checkConnectionTimeout();
     void sendMessage(int client_fd);
     void recvMessage(int client_fd);

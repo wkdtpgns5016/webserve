@@ -60,6 +60,7 @@ WebServer::WebServer(const Conf &conf)
 		port_addr = (*it).first;
 		blocks = (*it).second;
 		fd = initSocket(port_addr.first, port_addr.second);
+		Logger::writeInfoLog(port_addr.first, "Server started", false);
 		fcntl(fd, F_SETFL, O_NONBLOCK);
 		_servers[fd] = new Server(fd, blocks);
 	}
@@ -76,20 +77,28 @@ void WebServer::change_events(uintptr_t ident, int16_t filter,
 void WebServer::accept_new_client(std::vector<struct kevent> *change_list, int server_socket)
 {
     /* accept new client */
+	char buf[1024] = { 0, };
     int client_socket;
     socklen_t addr_len;
     struct sockaddr_in addr;
 
     if ((client_socket = accept(server_socket, (struct sockaddr *)&addr, &addr_len)) == -1)
+	{
+		Logger::writeErrorLog("Accept error");
         exit(1);
+	}
 
     fcntl(client_socket, F_SETFL, O_NONBLOCK);
-
+	struct linger c_linger;
+	c_linger.l_onoff = 1;
+	c_linger.l_linger = 0;
+	setsockopt(client_socket, SOL_SOCKET, SO_LINGER, &c_linger, sizeof(c_linger));
+    inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
     /* add event for client socket - add read && write event */
     change_events(client_socket, EVFILT_READ, EV_ADD | EV_ENABLE, change_list);
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE,change_list);
 
-    _servers[server_socket]->accept_new_client(client_socket);
+    _servers[server_socket]->accept_new_client(client_socket, std::string(buf));
 	_servers_with_clients[client_socket] = _servers[server_socket];
 }
 
@@ -103,7 +112,10 @@ void WebServer::run(void)
 
 
 	if ((_kqueue = kqueue()) == -1)
+	{
+		Logger::writeErrorLog("Kqueue error");
 		exit(1);
+	}
     /* add event for server socket */
 	for (std::map<int, Server*>::iterator it = _servers.begin(); it != _servers.end(); it++)
 	{
@@ -116,7 +128,10 @@ void WebServer::run(void)
         /*  apply changes and return new events(pending events) */
         new_events = kevent(_kqueue, &change_list[0], change_list.size(), _event_list, 8, NULL);
         if (new_events == -1)
+		{
+			Logger::writeErrorLog("Kevent error");
             exit(1);
+		}
 
         change_list.clear(); // clear change_list for new changes
 
@@ -128,7 +143,10 @@ void WebServer::run(void)
             if (_curr_event->flags & EV_ERROR)
             {
                 if (_servers.count(_curr_event->ident) == 1)
+				{
+					Logger::writeErrorLog("Server Error");
                     exit(1);
+				}
                 else
 				{
 					_servers_with_clients[_curr_event->ident]->disconnect_client(_curr_event->ident);

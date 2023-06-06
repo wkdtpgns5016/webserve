@@ -36,15 +36,9 @@ void Server::disconnect_client(int client_fd)
     _clients.erase(client_fd);
 }
 
-void Server::accept_new_client(int client_fd)
+void Server::accept_new_client(int client_fd, const std::string& addr)
 {
-    char buf[1024] = { '\0', };
-    socklen_t addr_len;
-    struct sockaddr_in addr;
-
-    getsockname(client_fd, (struct sockaddr *)&addr, &addr_len);
-    inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
-    _clients[client_fd] = Connection(client_fd, std::string(buf));
+    _clients[client_fd] = Connection(client_fd, addr);
     Logger::writeInfoLog(_clients[client_fd].getClinetFd(), "Add new Client", false);
 }
 
