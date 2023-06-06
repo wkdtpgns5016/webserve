@@ -23,8 +23,7 @@ int	WebServer::initSocket(int port, unsigned int ip)
 		exit(1);
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	//addr.sin_addr.s_addr = ip;
+	addr.sin_addr.s_addr = ip;
 	addr.sin_port = htons(port);
 
 	setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &optvalue, sizeof(optvalue));
@@ -32,6 +31,7 @@ int	WebServer::initSocket(int port, unsigned int ip)
 		exit(1);
 	if (listen(fd, 1000) == -1)
 		exit(1);
+	
 	return fd;
 }
 
@@ -46,6 +46,7 @@ WebServer::WebServer(const Conf &conf)
 
 	std::vector<Block*> inner_blocks = conf.getInnerBlock();
 	std::vector<Block*>::iterator ite= inner_blocks.end();
+
 	for (std::vector<Block*>::iterator it= inner_blocks.begin(); it != ite; it++)
 	{
 		port_addr = std::make_pair((*it)->getPort(), (*it)->getAddr());
