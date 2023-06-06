@@ -122,3 +122,19 @@ std::string HttpRequestMessage::getPathInfo() const
         path_info  = request_tartget.substr(0, pos);
     return (path_info);
 }
+
+
+bool HttpRequestMessage::checkConnectionClose()
+{
+    if (_headers.count("Connection") > 0)
+    {
+        if (_headers["Connection"] == "close")
+            return (true);
+    }
+    else
+    {
+        if (_start_line.getHttpVersion() == "HTTP/1.0")
+            return (true);
+    }
+    return (false);
+}
