@@ -36,7 +36,14 @@ void DeleteHandler::deleteFile(const std::string& request_target)
 {
     std::string path;
 
-    path = findPath(request_target);
+	try
+	{
+		path = findPath(request_target);
+	}
+    catch(const Error404Exceptnion& e)
+	{
+		;
+	}
     if (remove(path.c_str()) == -1)
         throw Error500Exceptnion();
 }
@@ -70,6 +77,10 @@ HttpResponseMessage DeleteHandler::requestHandler()
     catch(const Error400Exceptnion& e)
     {
         response_message = getErrorResponse(400);
+    }
+    catch(const Error403Exceptnion& e)
+    {
+        response_message = getErrorResponse(403);
     }
     catch(const Error404Exceptnion& e)
     {

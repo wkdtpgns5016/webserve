@@ -371,7 +371,7 @@ std::string ServerHandler::findPath(const std::string& request_target)
             if (access((*it).c_str(), R_OK) == 0)      // 읽기 권한 있을 경우
                 return (*it);
             else if (access((*it).c_str(), F_OK) == 0) // 권한이 없을 경우
-                throw Error500Exceptnion();
+                throw Error403Exceptnion();
         }
     }
     return(path);
@@ -503,6 +503,9 @@ const char* ServerHandler::AutoIndexExceptnion::what() const throw() {
 }
 const char* ServerHandler::Error400Exceptnion::what() const throw() {
   return "Bad Request";
+}
+const char* ServerHandler::Error403Exceptnion::what() const throw() {
+  return "Forbidden";
 }
 const char* ServerHandler::Error404Exceptnion::what() const throw() {
   return "Not Found";

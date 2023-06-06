@@ -71,6 +71,10 @@ class ServerHandler
 			public:
 				virtual const char* what() const throw();
 		};
+    class Error403Exceptnion : public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
     class Error404Exceptnion : public std::exception {
 			public:
 				virtual const char* what() const throw();
