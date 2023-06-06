@@ -80,7 +80,6 @@ TEST(ConfigTest, Config2Test)
 	int			client_body_size_result1 = server_blocks1->getClientMaxBodySize();
 	std::string	upload_path_result1 = server_blocks1->getUploadPath();
 	std::vector<std::string>	allow_method_result1 = server_blocks1->getAllowMethod();
-	std::vector<std::string>	try_files_result1 = server_blocks1->getTryFiles();
 	bool	autoindex_result1 = server_blocks1->getAutoindex();
 	std::map<std::string, std::string>	cgi_config_result1 = server_blocks1->getCgiConfigs();
 	//server2
@@ -93,7 +92,6 @@ TEST(ConfigTest, Config2Test)
 	int			client_body_size_result2 = server_blocks2->getClientMaxBodySize();
 	std::string	upload_path_result2 = server_blocks2->getUploadPath();
 	std::vector<std::string>	allow_method_result2 = server_blocks2->getAllowMethod();
-	std::vector<std::string>	try_files_result2 = server_blocks2->getTryFiles();
 	bool	autoindex_result2 = server_blocks2->getAutoindex();
 	std::map<std::string, std::string>	cgi_config_result2 = server_blocks2->getCgiConfigs();
 
@@ -108,7 +106,6 @@ TEST(ConfigTest, Config2Test)
 	int			client_body_size_result3 = location_blocks3->getClientMaxBodySize();
 	std::string	upload_path_result3 = location_blocks3->getUploadPath();
 	std::vector<std::string>	allow_method_result3 = location_blocks3->getAllowMethod();
-	std::vector<std::string>	try_files_result3 = location_blocks3->getTryFiles();
 	bool	autoindex_result3 = location_blocks3->getAutoindex();
 	std::string	url_result3 = location_blocks3->getUrl();
 	std::map<std::string, std::string>	cgi_config_result3 = location_blocks3->getCgiConfigs();
@@ -124,7 +121,6 @@ TEST(ConfigTest, Config2Test)
 	int			client_body_size_result4 = location_blocks4->getClientMaxBodySize();
 	std::string	upload_path_result4 = location_blocks4->getUploadPath();
 	std::vector<std::string>	allow_method_result4 = location_blocks4->getAllowMethod();
-	std::vector<std::string>	try_files_result4 = location_blocks4->getTryFiles();
 	bool	autoindex_result4 = location_blocks4->getAutoindex();
 	std::string	url_result4 = location_blocks4->getUrl();
 	std::map<std::string, std::string>	cgi_config_result4 = location_blocks4->getCgiConfigs();
@@ -139,7 +135,6 @@ TEST(ConfigTest, Config2Test)
     EXPECT_EQ(client_body_size_result1, 10240);
 	EXPECT_EQ(upload_path_result1.size(), 0);
 	EXPECT_EQ(allow_method_result1.size(), 0);
-	EXPECT_EQ(try_files_result1.size(), 0);
 	EXPECT_EQ(autoindex_result1, false);
 	EXPECT_EQ(cgi_config_result1["bla"], "cgi_tester");
 	//server2
@@ -152,7 +147,6 @@ TEST(ConfigTest, Config2Test)
     EXPECT_EQ(client_body_size_result2, 1024);
 	EXPECT_EQ(upload_path_result2.size(), 0);
 	EXPECT_EQ(allow_method_result2.size(), 0);
-	EXPECT_EQ(try_files_result2.size(), 0);
 	EXPECT_EQ(autoindex_result2, true);
 	//location1
 	EXPECT_EQ(port_result3, 80);
@@ -164,7 +158,6 @@ TEST(ConfigTest, Config2Test)
     EXPECT_EQ(client_body_size_result3, 10240);
 	EXPECT_EQ(upload_path_result3.size(), 0);
 	EXPECT_EQ(allow_method_result3.size(), 0);
-	EXPECT_EQ(*try_files_result3.begin(), "$uri");
 	EXPECT_EQ(autoindex_result3, false);
 	EXPECT_EQ(url_result3, "/");
 	EXPECT_EQ(return_value3.first, 307);
@@ -179,7 +172,6 @@ TEST(ConfigTest, Config2Test)
     EXPECT_EQ(client_body_size_result4, 1024);
 	EXPECT_EQ(upload_path_result4.size(), 0);
 	EXPECT_EQ(allow_method_result4.size(), 3);
-	EXPECT_EQ(*try_files_result4.begin(), "$uri");
 	EXPECT_EQ(autoindex_result4, true);
 	EXPECT_EQ(url_result4, "/");
 }
