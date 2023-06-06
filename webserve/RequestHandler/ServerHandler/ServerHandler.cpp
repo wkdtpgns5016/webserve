@@ -104,7 +104,10 @@ std::map<std::string, std::string> ServerHandler::setHeader(int status_code, con
     else
         headers["Content-Type"] = "text/html";
     headers["Content-Length"] = ft::itos(message_body.size());
-    //headers["Connection"] = "close";
+    if (_request_message.checkConnectionClose())
+        headers["Connection"] = "close";
+    else
+        headers["Connection"] = "keep-alive";
     if (status_code == 405)
     {
         std::string allow;
@@ -121,7 +124,7 @@ std::map<std::string, std::string> ServerHandler::setHeader(int status_code, con
 HttpResponseMessage ServerHandler::getResponseMessage(int status_code, const std::string& message_body, const std::map <std::string, std::string>& cgi_header)
 {
     std::vector<std::string> arr;
-    StatusLine start_line = StatusLine(_request_message.getHttpVersion(), status_code, _status[status_code]);
+    StatusLine start_line = StatusLine("HTTP/1.1", status_code, _status[status_code]);
     std::map<std::string, std::string> headers = setHeader(status_code, message_body, cgi_header);
     if (_request_message.getHttpMethod() == "HEAD")
 		HttpResponseMessage response_message = HttpResponseMessage(start_line, headers, "");
@@ -391,9 +394,9 @@ void ServerHandler::checkHttpVersion(const RequestLine& start_line)
     }
     if (arr.size() != 2)
         throw Error400Exceptnion();
-    if (arr[0].compare("HTTP") != 0)
+    if (arr[0] != "HTTP")
         throw Error400Exceptnion();
-    if (arr[1].compare("1.1") != 0)
+    if (arr[1] != "1.0" && arr[1] != "1.1")
         throw Error400Exceptnion();
 }
 
@@ -436,6 +439,8 @@ std::string ServerHandler::executeCgi(const std::string& file_path)
     size_t pos = file_path.rfind('.');
     std::string extension = file_path.substr(pos);
     std::map<std::string, std::string>::iterator it = cgi_config.find(extension);
+    if (it == cgi_config.end())
+        throw Error422Exceptnion();
     script_name = (*it).second;
     if ((*it).first != ".bla")
         script_name += " " + file_path;
@@ -515,6 +520,9 @@ const char* ServerHandler::Error413Exceptnion::what() const throw() {
 }
 const char* ServerHandler::Error414Exceptnion::what() const throw() {
   return "URI Too Long";
+}
+const char* ServerHandler::Error422Exceptnion::what() const throw() {
+  return "Unprocessable Content";
 }
 const char* ServerHandler::Error500Exceptnion::what() const throw() {
   return "Internal Server Error";

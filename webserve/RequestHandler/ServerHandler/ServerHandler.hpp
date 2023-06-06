@@ -87,6 +87,10 @@ class ServerHandler
 			public:
 				virtual const char* what() const throw();
 		};
+    class Error422Exceptnion : public std::exception {
+			public:
+				virtual const char* what() const throw();
+		};
     class Error500Exceptnion : public std::exception {
 			public:
 				virtual const char* what() const throw();

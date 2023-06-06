@@ -89,7 +89,7 @@ bool Connection::sendMessage()
         //std::cout << std::clock() << "              end" << std::endl;
         clearConnection();
         Logger::writeLog(_client_addr, _request, _response);
-        if (_response.getStartLine().getStatusCode() == 400)
+        if (_response.getStartLine().getStatusCode() == 400 || _request.checkConnectionClose())
         {
             Logger::writeInfoLog(_client_fd, "Close Connection client", false);
             return (false);
