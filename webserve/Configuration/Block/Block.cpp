@@ -115,7 +115,7 @@ const std::pair<int, std::string>&	Block::getReturnValue() const { return _retur
 const std::vector<Block *>&	Block::getInnerBlock() const { return _inner_blocks; }
 
 //occf
-Block::Block() : _parser(new Parser()), _port(80), _addr(0), _client_max_body_size(1024), _autoindex(false)
+Block::Block() : _parser(new Parser()), _port(80), _addr(0), _client_max_body_size(1024), _autoindex(false), _return_value(std::make_pair(0, ""))
 {
 }
 
