@@ -58,10 +58,75 @@ WebServer::WebServer(const Conf &conf)
 		port_addr = (*it).first;
 		blocks = (*it).second;
 		fd = initSocket(port_addr.first, port_addr.second);
+		fcntl(fd, F_SETFL, O_NONBLOCK);
 		_servers[fd] = new Server(fd, blocks);
 	}
+}
+void WebServer::change_events(uintptr_t ident, int16_t filter,
+                   uint16_t flags, std::vector<struct kevent>  change_list)
+{
+    struct kevent temp_event;
+
+    EV_SET(&temp_event, ident, filter, flags, 0, 0, NULL);
+    change_list.push_back(temp_event);
 }
 
 void WebServer::run(void)
 {
+    int                         _kqueue;
+    std::vector<struct kevent>  change_list;
+    struct kevent               _event_list[8];
+    struct kevent*              _curr_event;
+
+
+    /* add event for server socket */
+	for (std::map<int, Server*>::iterator it = _servers.begin(); it != _servers.end(); it++)
+	{
+    	change_events((*it).first, EVFILT_READ, EV_ADD | EV_ENABLE, change_list);
+	}
+
+	 /* main loop */
+    int new_events;
+    while (1)
+    {
+        /*  apply changes and return new events(pending events) */
+        new_events = kevent(_kqueue, &change_list[0], change_list.size(), _event_list, 8, NULL);
+        if (new_events == -1)
+            exit(1);
+
+        change_list.clear(); // clear change_list for new changes
+
+        for (int i = 0; i < new_events; ++i)
+        {
+            _curr_event = &_event_list[i];
+
+            /* check error event return */
+            if (_curr_event->flags & EV_ERROR)
+            {
+                if (_servers.count(_curr_event->ident) == 1)
+                    exit(1);
+                else
+				{
+					_servers_with_clients[_curr_event->ident]->disconnect_client(_curr_event->ident);
+				}
+                    
+            }
+            else if (_curr_event->filter == EVFILT_READ)
+            {
+                if (_servers.count(_curr_event->ident) == 1)
+                    _servers[_curr_event->ident]->accept_new_client(_curr_event->ident);
+				else
+					_servers_with_clients[_curr_event->ident]->recvMessage(_curr_event->ident);
+            }
+            else if (_curr_event->filter == EVFILT_WRITE)
+            {   
+				_servers_with_clients[_curr_event->ident]->sendMessage(_curr_event->ident);
+            }
+        }
+		for (std::map<int, Server*>::iterator it = _servers.begin(); it != _servers.end(); it++)
+		{
+			(*it).second->checkConnectionTimeout();
+		}
+        
+    }
 }

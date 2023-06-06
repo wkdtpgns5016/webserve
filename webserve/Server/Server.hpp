@@ -10,20 +10,12 @@
 #include <map>
 #include <vector>
 
-#include <pthread.h>
-
 // socket을 위한 헤더파일
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-
-// select을 위한 헤더파일
-#include <sys/select.h>
-
-// poll을 위한 헤더파일
-#include <poll.h>
 
 // kqueue를 위한 헤더파일
 #include <sys/event.h>
@@ -40,9 +32,6 @@ private:
     std::map<int, Connection>   _clients;
     std::vector<ServerBlock *>  _configs;
     
-    void disconnect_client(int client_fd);
-    void accept_new_client(int client_fd);
-    void checkConnectionTimeout();
 
 public:
     Server();
@@ -51,6 +40,9 @@ public:
     Server& operator=(const Server& server);
     ~Server();
 
+    void disconnect_client(int client_fd);
+    void accept_new_client(int client_fd);
+    void checkConnectionTimeout();
     void sendMessage(int client_fd);
     void recvMessage(int client_fd);
 };

@@ -10,13 +10,18 @@
 #include "../Configuration/ServerBlock/ServerBlock.hpp"
 #include "../Configuration/LocationBlock/LocationBlock.hpp"
 
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-//#include "../Server/Server.hpp"
-class Server;
+
+// kqueue를 위한 헤더파일
+#include <sys/event.h>
+
+
+#include "../Server/Server.hpp"
 
 class WebServer
 {
@@ -25,6 +30,12 @@ private:
 	std::map<int, Server*> _servers_with_clients;
 	WebServer();
 	int	initSocket(int port, unsigned int ip_addr);
+	void change_events(uintptr_t ident, int16_t filter,
+                   uint16_t flags, std::vector<struct kevent>  change_list);
+
+
+
+
 public:
     ~WebServer();
     WebServer(const Conf &conf);
