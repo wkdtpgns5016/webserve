@@ -63,12 +63,19 @@ void Server::checkConnectionTimeout()
 
 void Server::sendMessage(int client_fd)
 {
-    if (!_clients[client_fd].sendMessage())
-        disconnect_client(client_fd);
+    std::map<int, Connection>::iterator it = _clients.find(client_fd);
+    if (it != _clients.end())
+    {
+        if (!_clients[client_fd].sendMessage())
+            disconnect_client(client_fd);
+    }
 }
 
 void Server::recvMessage(int client_fd)
 {
-    if (!_clients[client_fd].receiveMessage(_configs))
-        disconnect_client(client_fd);
+    if (_clients.find(client_fd) != _clients.end())
+    {
+        if (!_clients[client_fd].receiveMessage(_configs))
+            disconnect_client(client_fd);
+    }
 }
