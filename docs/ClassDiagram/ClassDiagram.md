@@ -17,3 +17,6 @@
 
 **4. HttpMessage 객체** </br>
 > ![http_message_diagram](./resource/http_message_diagram.png)
+
+**5. 로그 객체** </br>
+> ![log_diagram](./resource/log_diagram.png)

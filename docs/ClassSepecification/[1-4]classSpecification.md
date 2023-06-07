@@ -6,6 +6,7 @@
 **2. Server 객체** </br>
 **3. ServerController 객체** </br>
 **4. Connection 객체** </br>
+**4-2. Buffer 객체** </br>
 
 **[5. RequestHandler 모듈](https://github.com/wkdtpgns5016/webserve/blob/main/docs/ClassSepecification/[5]server_handler.md)** </br>
 + 5-1. ServerHandler
@@ -54,10 +55,14 @@
 **Attribute**
 > | 타입 | 이름 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------|:----------:|
-> | vector&#60;Server&#62; | _servers | private | 서버  |
+> | map&#60;int, Server*&#62; | _servers | private | 서버 맵1 |
+> | map&#60;int, Server*&#62; | _servers_with_clients | private | 서버 맵2 |
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------:|
+> | int	initSocket(int port, unsigned int ip_addr) | private | 소켓 생성 메소드 |
+> | void change_events(uintptr_t ident, int16_t filter, uint16_t flags, vector&#60;struct kevent&#62; * change_list) | private | 이벤트 체인지 메소드 |
+> | void accept_new_client(vector&#60;struct kevent&#62;*  change_list, int server_socket) | private | 클라이언트 등록 함수 |
 > | void run(void) | public | 웹서버 작동 메소드 |
 
 ------------------------------------------
@@ -69,31 +74,18 @@
 **Attribute**
 > | 타입 | 이름 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------|:----------:|
-> |  pthread_t  | _s_thread | private | 서버 스레드  |
-> |  int        | _server_socket | private | 서버 소켓  |
-> |  int        | _kqueue | private | 이벤트 큐 |
-> |  struct sockaddr_in | _server_addr | private | 서버 주소  |
-> |  struct kevent* | _curr_event | private | 이벤트 구조체 |
-> |  struct kevent | _event_list[8] | private | 이벤트 리스트 |
-> |  vector&#60;struct kevent&#62; | _change_list | private | 이벤트 리스트  |
+> |  int        | _server_fd | private | 서버 소켓  |
+> |  vector&#60;ServerBlock *&#62; | _configs_ | private | 설정 벡터  |
 > |  map&#60;int, Connection&#62; |  _clients | private | 클라이언트 맵  |
-> |  ServerBlock* | _server_block | private | 서버 설정 블럭 |
 
 **Method**
 > | 함수 원형 | 접근 제한 | 설명 |
 > |:----------|:----------|:----------:|
-> | void socket_init(int port, unsigned int ip_addr) | private | 소켓 초기화 함수 |
-> | void change_events(uintptr_t ident, int16_t filter, uint16_t flags, uint32_t fflags, intptr_t data, void *udata) | private | 이벤트 리스트 등록 함수 |
-> | void disconnect_client(int client_fd, std::map&#60;int, Connection&#62; &clients) | private | 클라이언트 삭제 함수 |
-> | void checkConnectionTimeout() | private | 커넥션 타임아웃 검사 메소드 |
-> | void accept_new_client()| private | 신규 클라이언트 등록 함수 |
-> | void receiveMessage() | private | 메세지 수신 함수 |
-> | void sendMessage() | private | 메세지 송신 함수 |
-> | static void* threadFunction(void *) | private | 스레드 함수 |
-> | pthread_t getThread(void) | public | 스레드 getter
-> | int  getPort(void) | public | port getter
-> | void run() | public | 서버 시작 함수
-> | void threading(void) | public | 스레드 시작 함수
+> | void disconnect_client(int client_fd) | public | 클라이언트 연결 끊는 함수 |
+> | void accept_new_client(int client_fd, const string& addr) | public | 클라이언트 연결 함수 |
+> | void checkConnectionTimeout() | public | 커넥션 타임아웃 체크 함수 |
+> | void sendMessage(int client_fd) | public | 메시지 전송 함수 |
+> | void recvMessage(int client_fd) | public | 메시지 수신 함수 |
 ------------------------------------------
 
 ## **3. ServerController 객체**
@@ -140,3 +132,23 @@
 > | void clearConnection() | public | 커넥션 초기화 메소드 |
 > | int getClinetFd() const | public | 클라이언트 fd 반환 메소드 |
 > | time_t getCurrentConnectionTime() const | public | 최근 연결 시각 반환 메소드 |
+
+------------------------------------------
+
+## **4-2. Buffer 객체**
+**class Buffer**
+> 클라이언트 송신 버퍼 객체
+
+**Attribute**
+> | 타입 | 이름 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------|:----------:|
+> | string | _buffer | private | 버퍼 |
+> | size_t | _pos | private | 버퍼 인덱스 |
+
+**Method**
+> | 함수 원형 | 접근 제한 | 설명 |
+> |:----------|:----------|:----------:|
+> | void appendBuffer(const string& str) | public | 버퍼 메시지 추가 함수 |
+> | void cutBuffer(size_t pos) | public | 버퍼 내용 자르기 함수 |
+> | void clearBuffer(void) | public | 버퍼 비우기 함수 |
+> | const char* getBuffer(void) const | public | 버퍼 getter |
