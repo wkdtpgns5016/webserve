@@ -254,7 +254,7 @@ bool ServerHandler::checkDirectory(const std::string& path)
     struct stat buf;
 
     stat(path.c_str(), &buf);
-    if(S_ISDIR(buf.st_mode))
+    if(FT_ISDIR(buf.st_mode))
         return (true);
     return (false);
 }
@@ -288,7 +288,7 @@ void ServerHandler::throwStatusError(int status_code)
 
 HttpResponseMessage ServerHandler::getErrorResponse(int status_code)
 {
-    std::string message_body;
+    std::string message_body = ft::itos(status_code) + " " + _status[status_code];
     std::map<std::string, std::string> cgi_header;
     if (_config.getDefaultErrorPage().empty())
         return (getResponseMessage(status_code, message_body, cgi_header));
@@ -357,12 +357,7 @@ std::string ServerHandler::findPath(const std::string& request_target)
         directory = path + "/";
     if (access(path.c_str(), F_OK) == -1)
     {
-        // try_files
-        std::vector<std::string> try_files = _config.getTryFiles();
-        if (try_files.empty())
-            throw Error404Exceptnion(); // 파일이 없을 경우
-        else
-            return (tryFiles(try_files));
+        throw Error404Exceptnion();
     }
     else if (access(directory.c_str(), F_OK) != -1)
     {
@@ -422,7 +417,7 @@ void ServerHandler::checkHttpMessage(void)
     RequestLine start_line = _request_message.getStartLine();
     checkAllowMethod(start_line.getHttpMethod());
     checkHttpVersion(start_line);
-
+    checkUrlSize();
     // check message size
     checkMessageSize();
 }
@@ -496,10 +491,16 @@ int ServerHandler::getStautsCgi(const std::map<std::string, std::string>& cgi_he
         return (-1);
     status_str = cgi_header.at("Status").substr(0, 3);
     if (status_str.length() != 3 || !ft::isNumbers(status_str))
+    {
+        Logger::writeErrorLog("Cgi Status is invaild");
         throw Error500Exceptnion();
+    }
     status = ft::stoi(status_str);
     if (status < 100 || status >= 600)
+    {
+        Logger::writeErrorLog("Cgi Status is invaild");
         throw Error500Exceptnion();
+    }
     return (status);
 }
 

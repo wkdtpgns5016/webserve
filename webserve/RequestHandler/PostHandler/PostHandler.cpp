@@ -98,6 +98,7 @@ HttpResponseMessage PostHandler::requestHandler()
     }
     catch(const std::exception& e)
     {
+        Logger::writeErrorLog(e.what());
         response_message = getErrorResponse(500);
     }
     return (response_message);

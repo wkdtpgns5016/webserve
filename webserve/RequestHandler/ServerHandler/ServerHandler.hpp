@@ -17,6 +17,8 @@
 #include <map>
 #include <exception>
 
+#define FT_ISDIR(m) (((m) & S_IFMT) == S_IFDIR)
+
 class ServerHandler
 {
     protected:

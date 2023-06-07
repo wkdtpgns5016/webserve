@@ -2,13 +2,12 @@
 #define PUTHANDLER_HPP
 
 #include "../ServerHandler/ServerHandler.hpp"
-#include "fcntl.h"
+#include <fstream>
 
 class PutHandler : public ServerHandler
 {
     private:
-    int openFile(const std::string& path);
-    void writeFile(int fd, const std::string& message);
+    void writeFile(const std::string& path, const std::string& message);
     int putMethod();
 
     public:

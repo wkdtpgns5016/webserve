@@ -17,7 +17,6 @@ class ConfigDto
 	int			_client_body_size;
 	std::string	_upload_path;
 	std::vector<std::string>	_allow_method;
-	std::vector<std::string>	_try_files;
 	std::map <std::string, std::string> _cgi_config;
 	bool	_autoindex;
 	std::pair<int, std::string> _return_value;
@@ -42,7 +41,6 @@ class ConfigDto
 	int			getClientMaxBodySize() const;
 	std::string	getUploadPath() const;
 	std::vector<std::string>	getAllowMethod() const;
-	std::vector<std::string>	getTryFiles() const;
 	bool	getAutoindex() const;
     std::string getUrl() const;
 	std::map <std::string, std::string> getCgiConfig() const ;

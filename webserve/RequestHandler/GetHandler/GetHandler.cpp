@@ -96,7 +96,7 @@ std::string GetHandler::getDirectoryList(const std::string& path)
             ss << "<td width=\"100\"></td></tr>";
             continue ;
         }
-        lstat(file_path.c_str(), &buf);
+        stat(file_path.c_str(), &buf);
         // file 수정 시간
         ss << "<td width=\"200\">" << std::ctime(&buf.st_ctimespec.tv_sec) << "</td>";
         // file 크기
@@ -175,6 +175,7 @@ HttpResponseMessage GetHandler::requestHandler()
     }
     catch(const std::exception& e)
     {
+        Logger::writeErrorLog(e.what());
         response_message = getErrorResponse(500);
     }
     return (response_message);

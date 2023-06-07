@@ -26,7 +26,6 @@ ConfigDto::ConfigDto(const ConfigDto& config_dto)
     _client_body_size = config_dto.getClientMaxBodySize();
     _upload_path = config_dto.getUploadPath();
     _allow_method = config_dto.getAllowMethod();
-    _try_files = config_dto.getTryFiles();
     _autoindex = config_dto.getAutoindex();
     _cgi_config = config_dto.getCgiConfig();
     _return_value = config_dto.getReturnValue();
@@ -51,7 +50,6 @@ ConfigDto& ConfigDto::operator=(const ConfigDto& config_dto)
     _client_body_size = config_dto.getClientMaxBodySize();
     _upload_path = config_dto.getUploadPath();
     _allow_method = config_dto.getAllowMethod();
-    _try_files = config_dto.getTryFiles();
     _autoindex = config_dto.getAutoindex();
     _cgi_config = config_dto.getCgiConfig();
     _url = config_dto.getUrl();
@@ -102,7 +100,6 @@ std::string	ConfigDto::getDefaultErrorPage() const { return _default_error_page;
 int	ConfigDto::getClientMaxBodySize() const { return _client_body_size; }
 std::string	ConfigDto::getUploadPath() const { return _upload_path; }
 std::vector<std::string>	ConfigDto::getAllowMethod() const { return _allow_method; }
-std::vector<std::string>	ConfigDto::getTryFiles() const { return _try_files; }
 bool	ConfigDto::getAutoindex() const { return _autoindex; }
 std::string ConfigDto::getUrl() const { return _url; }
 std::map <std::string, std::string> ConfigDto::getCgiConfig() const { return (_cgi_config); }

@@ -74,10 +74,27 @@ void WebServer::change_events(uintptr_t ident, int16_t filter,
     change_list->push_back(temp_event);
 }
 
+std::string getAddrString(void * sin_addr)
+{
+	in_addr* s_addr = reinterpret_cast<in_addr *>(sin_addr);
+	std::string str;
+	in_addr_t addr = htonl(s_addr->s_addr);
+	int size = 24;
+	while (size >= 0)
+	{
+		int n = addr >> size;
+		addr -= n << size;
+		str += ft::itos(n);
+		size -= 8;
+		if (size >= 0)
+			str += ".";
+	}
+	return (str);
+}
+
 void WebServer::accept_new_client(std::vector<struct kevent> *change_list, int server_socket)
 {
     /* accept new client */
-	char buf[1024] = { 0, };
     int client_socket;
     socklen_t addr_len;
     struct sockaddr_in addr;
@@ -93,12 +110,12 @@ void WebServer::accept_new_client(std::vector<struct kevent> *change_list, int s
 	c_linger.l_onoff = 1;
 	c_linger.l_linger = 0;
 	setsockopt(client_socket, SOL_SOCKET, SO_LINGER, &c_linger, sizeof(c_linger));
-    inet_ntop(AF_INET, &addr.sin_addr, buf, INET_ADDRSTRLEN);
+	std::string str = getAddrString(&addr.sin_addr);
     /* add event for client socket - add read && write event */
     change_events(client_socket, EVFILT_READ, EV_ADD | EV_ENABLE, change_list);
     change_events(client_socket, EVFILT_WRITE, EV_ADD | EV_ENABLE,change_list);
 
-    _servers[server_socket]->accept_new_client(client_socket, std::string(buf));
+    _servers[server_socket]->accept_new_client(client_socket, str);
 	_servers_with_clients[client_socket] = _servers[server_socket];
 }
 

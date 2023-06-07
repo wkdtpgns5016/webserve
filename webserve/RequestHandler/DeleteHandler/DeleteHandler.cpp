@@ -36,16 +36,12 @@ void DeleteHandler::deleteFile(const std::string& request_target)
 {
     std::string path;
 
-	try
-	{
-		path = findPath(request_target);
-	}
-    catch(const Error404Exceptnion& e)
-	{
-		;
-	}
-    if (remove(path.c_str()) == -1)
+	path = findPath(request_target);
+    if (std::remove(path.c_str()) == -1)
+    {
+        Logger::writeErrorLog("File can not remove");
         throw Error500Exceptnion();
+    }
 }
 
 HttpResponseMessage DeleteHandler::requestHandler()
@@ -84,7 +80,7 @@ HttpResponseMessage DeleteHandler::requestHandler()
     }
     catch(const Error404Exceptnion& e)
     {
-        response_message = getResponseMessage(204, "", cgi_header);
+        response_message = getErrorResponse(404);
     }
     catch(const Error405Exceptnion& e)
     {
@@ -108,6 +104,7 @@ HttpResponseMessage DeleteHandler::requestHandler()
     }
     catch(const std::exception& e)
     {
+        Logger::writeErrorLog(e.what());
         response_message = getErrorResponse(500);
     }
     return (response_message);

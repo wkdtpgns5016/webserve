@@ -30,19 +30,18 @@ PutHandler& PutHandler::operator=(const PutHandler& put_handler)
     return (*this);
 }
 
-int PutHandler::openFile(const std::string& path)
+void PutHandler::writeFile(const std::string& path, const std::string& message)
 {
-    int fd;
-    if ((fd = open(path.c_str(), O_RDWR | O_CREAT | O_TRUNC, S_IWUSR | S_IRUSR)) == -1)
-        throw Error500Exceptnion();
-    return (fd);
-}
-
-void PutHandler::writeFile(int fd, const std::string& message)
-{
-    if (write(fd, message.c_str(), message.length()) == -1)
+	std::ofstream out(path);
+    if (out.is_open())
     {
-        close(fd);
+        out.clear();
+        out << message;
+        out.close();
+    }
+    else
+    {
+        Logger::writeErrorLog("File can not open");
         throw Error500Exceptnion();
     }
 }
@@ -53,22 +52,17 @@ int PutHandler::putMethod()
     std::string path_info = _request_message.getPathInfo();
     std::string path;
     int status = 200;
-    int fd;
     try
     {
         path = findPath(path_info);
-        fd = openFile(path);
-        writeFile(fd, _request_message.getMessageBody());
-        close(fd);
+        writeFile(path, _request_message.getMessageBody());
         return (status);
     }
     catch(const Error404Exceptnion& e)
     {
         status = 201;
         path = _config.getRoot() + request_target;
-        fd = openFile(path);
-        writeFile(fd, _request_message.getMessageBody());
-        close(fd);
+        writeFile(path, _request_message.getMessageBody());
         return (status);
     }
     return (status);
@@ -123,6 +117,7 @@ HttpResponseMessage PutHandler::requestHandler()
     }
     catch(const std::exception& e)
     {
+        Logger::writeErrorLog(e.what());
         response_message = getErrorResponse(500);
     }
     return (response_message);
