@@ -123,12 +123,14 @@ std::map<std::string, std::string> ServerHandler::setHeader(int status_code, con
 
 HttpResponseMessage ServerHandler::getResponseMessage(int status_code, const std::string& message_body, const std::map <std::string, std::string>& cgi_header)
 {
+    HttpResponseMessage response_message;
     std::vector<std::string> arr;
     StatusLine start_line = StatusLine("HTTP/1.1", status_code, _status[status_code]);
     std::map<std::string, std::string> headers = setHeader(status_code, message_body, cgi_header);
     if (_request_message.getHttpMethod() == "HEAD")
-		HttpResponseMessage response_message = HttpResponseMessage(start_line, headers, "");
-    HttpResponseMessage response_message = HttpResponseMessage(start_line, headers, message_body);
+		response_message = HttpResponseMessage(start_line, headers, "");
+    else
+        response_message = HttpResponseMessage(start_line, headers, message_body);
     return (response_message);
 }
 
