@@ -105,17 +105,21 @@ bool Connection::sendMessage()
 
 void Connection::parseHttpMessage(char* buffer, size_t len, std::vector<ServerBlock *> configs)
 {
-    ServerBlock* config = selectServerConfig(configs);
     try
     {
         _message_parser.appendMessage(buffer, len);
         if (checkMessage())
+		{
+			_request = _message_parser.getRequestMessage();
+			ServerBlock* config = selectServerConfig(configs);
             makeResponse(config);
+		}
     }
     catch (const RequestMessageParser::InvalidRequestException& e)
     {
         GetHandler handler;
-        _request = _message_parser.getRequestMessage();
+		_request = _message_parser.getRequestMessage();
+		ServerBlock* config = selectServerConfig(configs);
         handler = GetHandler(config, _request);
         _response = handler.getErrorResponse(400);
         _buffer = Buffer(_response.getString());
