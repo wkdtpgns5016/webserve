@@ -6,19 +6,19 @@
 
 int main(int argc, char *argv[])
 {
-    std::string conf_path;
+    std::string conf_str;
     try
     {
         if (argc ==  2)
-            conf_path = ft::readFileIntoString(argv[1]);
+            conf_str = ft::readFileIntoString(argv[1]);
         else
-            conf_path = "var/conf/teester.conf";
-        if (conf_path.empty())
+            conf_str = ft::readFileIntoString("./var/conf/tester.conf");
+        if (conf_str.empty())
         {
-            std::cerr << "Invaild File path" << std::endl;
+            std::cerr << "Invaild Config File" << std::endl;
             exit(1);
         }
-        Conf conf(conf_path);
+        Conf conf(conf_str);
         WebServer webserver(conf);
         webserver.run();
     }
