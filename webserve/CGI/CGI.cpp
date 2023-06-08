@@ -112,6 +112,28 @@ char **CGI::getEnvChar(void) const
     return (res);
 }
 
+int ft_strlen(const char* str)
+{
+    int len = 0;
+
+    while (str[len] != '\0')
+        len++;
+    return (len);
+}
+
+void test(int fd, std::string body)
+{
+    int ret = 1;
+    size_t idx = 0;
+    while (idx < body.size())
+    {
+        ret = write(fd, body.substr(idx, 1000).c_str(), ft_strlen(body.substr(idx, 1000).c_str()));
+        if (ret == -1)
+            continue ;
+        idx += 1000;
+    }
+}
+
 std::string CGI::excute(std::string scriptName)
 {
     std::string result = "";
@@ -140,6 +162,19 @@ std::string CGI::excute(std::string scriptName)
 	long	fdIn = fileno(fIn);
 	long	fdOut = fileno(fOut);
 	int		ret = 1;
+
+    if (fcntl(fdIn, F_SETFL,  O_NONBLOCK) < 0)
+    {
+        Logger::writeErrorLog("Non-blocking crashed");
+		return ("Status: 500\r\n\r\n");
+    }
+
+    if (fcntl(fdOut, F_SETFL,  O_NONBLOCK) < 0)
+    {
+        Logger::writeErrorLog("Non-blocking crashed");
+		return ("Status: 500\r\n\r\n");
+    }
+
     std::string _body = _request_message.getMessageBody();
 	write(fdIn, _body.c_str(), _body.size());
 	lseek(fdIn, 0, SEEK_SET);

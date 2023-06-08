@@ -2,6 +2,7 @@
 #define CGI_HPP
 
 #include <map>
+#include <fcntl.h>
 #include <string>
 #include <unistd.h>
 #include "../Configuration/ConfigDto/ConfigDto.hpp"
