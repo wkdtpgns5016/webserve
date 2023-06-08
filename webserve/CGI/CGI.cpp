@@ -129,20 +129,26 @@ std::string CGI::excute(std::string scriptName)
 
     std::vector<std::string> arr = ft::splitString(scriptName, " ");
     const char *arg[] = { arr[0].c_str(), arr.size() > 1 ? arr[1].c_str() : NULL , NULL };
-    int     fd[2];
-    if (pipe(fd) < 0)
+    int     fd_in[2];
+    int     fd_out[2];
+    if (pipe(fd_in) < 0)
+    {
+        Logger::writeErrorLog("Pipe crashed");
+		return ("Status: 500\r\n\r\n");
+    }
+    if (pipe(fd_out) < 0)
     {
         Logger::writeErrorLog("Pipe crashed");
 		return ("Status: 500\r\n\r\n");
     }
 
-    if (fcntl(fd[READ], F_SETFL,  O_NONBLOCK) < 0)
+    if (fcntl(fd_out[WRITE], F_SETFL,  O_NONBLOCK) < 0)
     {
         Logger::writeErrorLog("Non-blocking crashed");
 		return ("Status: 500\r\n\r\n");
     }
 
-    if (fcntl(fd[WRITE], F_SETFL,  O_NONBLOCK) < 0)
+    if (fcntl(fd_out[READ], F_SETFL,  O_NONBLOCK) < 0)
     {
         Logger::writeErrorLog("Non-blocking crashed");
 		return ("Status: 500\r\n\r\n");
@@ -151,10 +157,11 @@ std::string CGI::excute(std::string scriptName)
 	int		ret = 1;
     std::string _body = _request_message.getMessageBody();
 
-	write(STDIN_FILENO, _body.c_str(), _body.size());
+	write(fd_in[WRITE], _body.c_str(), _body.size());
+    close(fd_in[WRITE]);
 
 
-    // fcntl(fd[WRITE], F_SETFL, O_NONBLOCK);
+    // fcntl(fd_in[WRITE], F_SETFL, O_NONBLOCK);
 
     try
     {
@@ -175,8 +182,12 @@ std::string CGI::excute(std::string scriptName)
 	{
 		//char * const * nll = NULL;
 
-        dup2(fd[READ], STDIN_FILENO);
-        dup2(fd[WRITE], STDOUT_FILENO);
+        dup2(fd_in[READ], STDIN_FILENO);
+        dup2(fd_out[WRITE], STDOUT_FILENO);
+
+        close(fd_in[READ]);
+        // close(fd_out[READ]);
+        // close(fd_out[WRITE]);
 
         // (void)arr;
         // (void)arg;
@@ -185,32 +196,36 @@ std::string CGI::excute(std::string scriptName)
         Logger::writeErrorLog("Execve crashed");
 		write(STDOUT_FILENO, "Status: 500\r\n\r\n", 15);
 
-        close(fd[READ]);
-        close(fd[WRITE]);
+        // close(fd_in[READ]);
+        // close(fd_in[WRITE]);
+        // close(fd_out[READ]);
+        // close(fd_out[WRITE]);
 	}
 	else
 	{
 		char	buffer[1024] = {0};
 		waitpid(-1, NULL, 0);
 
-        close(fd[WRITE]);
+        close(fd_in[READ]);
+        close(fd_in[WRITE]);
+        close(fd_out[WRITE]);
 
         ret = 1;
-		while (ret != 0)
+		while (ret > 0)
 		{
 			memset(buffer, 0, 1024);
-			ret = read(fd[READ], buffer, 1024 - 1);
+			ret = read(fd_out[READ], buffer, 1024 - 1);
 			result += buffer;
 		}
 
-        close(fd[READ]);
+        close(fd_out[READ]);
 	}
 	dup2(saveStdin, STDIN_FILENO);
 	dup2(saveStdout, STDOUT_FILENO);
 	close(saveStdin);
 	close(saveStdout);
-    // close(fd[READ]);
-    // close(fd[WRITE]);
+    // close(fd_in[READ]);
+    // close(fd_in[WRITE]);
 	for (size_t i = 0; env[i]; i++)
 		delete[] env[i];
 	delete[] env;
