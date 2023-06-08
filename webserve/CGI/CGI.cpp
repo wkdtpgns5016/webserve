@@ -112,6 +112,28 @@ char **CGI::getEnvChar(void) const
     return (res);
 }
 
+int ft_strlen(const char* str)
+{
+    int len = 0;
+
+    while (str[len] != '\0')
+        len++;
+    return (len);
+}
+
+void test(int fd, std::string body)
+{
+    int ret = 1;
+    size_t idx = 0;
+    while (idx < body.size())
+    {
+        ret = write(fd, body.substr(idx, 1000).c_str(), ft_strlen(body.substr(idx, 1000).c_str()));
+        if (ret == -1)
+            continue ;
+        idx += 1000;
+    }
+}
+
 std::string CGI::excute(std::string scriptName)
 {
     std::string result = "";
@@ -142,13 +164,25 @@ std::string CGI::excute(std::string scriptName)
 		return ("Status: 500\r\n\r\n");
     }
 
-    if (fcntl(fd_out[WRITE], F_SETFL,  O_NONBLOCK) < 0)
+    if (fcntl(fd_in[READ], F_SETFL,  O_NONBLOCK) < 0)
     {
         Logger::writeErrorLog("Non-blocking crashed");
 		return ("Status: 500\r\n\r\n");
     }
 
+    // if (fcntl(fd_in[WRITE], F_SETFL,  O_NONBLOCK) < 0)
+    // {
+    //     Logger::writeErrorLog("Non-blocking crashed");
+	// 	return ("Status: 500\r\n\r\n");
+    // }
+
     if (fcntl(fd_out[READ], F_SETFL,  O_NONBLOCK) < 0)
+    {
+        Logger::writeErrorLog("Non-blocking crashed");
+		return ("Status: 500\r\n\r\n");
+    }
+
+    if (fcntl(fd_out[WRITE], F_SETFL,  O_NONBLOCK) < 0)
     {
         Logger::writeErrorLog("Non-blocking crashed");
 		return ("Status: 500\r\n\r\n");
@@ -157,9 +191,17 @@ std::string CGI::excute(std::string scriptName)
 	int		ret = 1;
     std::string _body = _request_message.getMessageBody();
 
-	write(fd_in[WRITE], _body.c_str(), _body.size());
+    // size_t idx = 0;
+    // while (idx < _body.size())
+    // {
+    //     ret = write(fd_in[WRITE], _body.substr(idx, 300000).c_str(), ft_strlen(_body.substr(idx, 300000).c_str()));
+    //     if (ret == -1)
+    //         continue ;
+    //     idx += 300000;
+    // }
+    write(fd_in[WRITE], _body.c_str(), _body.size());
+    // test(fd_in[WRITE], _body);
     close(fd_in[WRITE]);
-
 
     // fcntl(fd_in[WRITE], F_SETFL, O_NONBLOCK);
 
@@ -186,6 +228,7 @@ std::string CGI::excute(std::string scriptName)
         dup2(fd_out[WRITE], STDOUT_FILENO);
 
         close(fd_in[READ]);
+        // close(fd_in[WRITE]);
         // close(fd_out[READ]);
         // close(fd_out[WRITE]);
 
@@ -207,7 +250,7 @@ std::string CGI::excute(std::string scriptName)
 		waitpid(-1, NULL, 0);
 
         close(fd_in[READ]);
-        close(fd_in[WRITE]);
+        // close(fd_in[WRITE]);
         close(fd_out[WRITE]);
 
         ret = 1;
