@@ -129,20 +129,32 @@ std::string CGI::excute(std::string scriptName)
 
     std::vector<std::string> arr = ft::splitString(scriptName, " ");
     const char *arg[] = { arr[0].c_str(), arr.size() > 1 ? arr[1].c_str() : NULL , NULL };
-    // if (pipe(fd) < 0)
-    // {
-    //     std::cerr << "pipe error\n";
-    //     exit(1);
-    // }
+    int     fd[2];
+    if (pipe(fd) < 0)
+    {
+        Logger::writeErrorLog("Pipe crashed");
+		return ("Status: 500\r\n\r\n");
+    }
 
-    FILE    *fIn = tmpfile();
-	FILE	*fOut = tmpfile();
-	long	fdIn = fileno(fIn);
-	long	fdOut = fileno(fOut);
+    if (fcntl(fd[READ], F_SETFL,  O_NONBLOCK) < 0)
+    {
+        Logger::writeErrorLog("Non-blocking crashed");
+		return ("Status: 500\r\n\r\n");
+    }
+
+    if (fcntl(fd[WRITE], F_SETFL,  O_NONBLOCK) < 0)
+    {
+        Logger::writeErrorLog("Non-blocking crashed");
+		return ("Status: 500\r\n\r\n");
+    }
+
 	int		ret = 1;
     std::string _body = _request_message.getMessageBody();
-	write(fdIn, _body.c_str(), _body.size());
-	lseek(fdIn, 0, SEEK_SET);
+
+	write(STDIN_FILENO, _body.c_str(), _body.size());
+
+
+    // fcntl(fd[WRITE], F_SETFL, O_NONBLOCK);
 
     try
     {
@@ -152,6 +164,7 @@ std::string CGI::excute(std::string scriptName)
     {
         std::cerr << e.what() << std::endl;
     }
+
 	pid = fork();
 	if (pid == -1)
 	{
@@ -161,33 +174,43 @@ std::string CGI::excute(std::string scriptName)
 	else if (!pid)
 	{
 		//char * const * nll = NULL;
-		dup2(fdIn, STDIN_FILENO);
-		dup2(fdOut, STDOUT_FILENO);
+
+        dup2(fd[READ], STDIN_FILENO);
+        dup2(fd[WRITE], STDOUT_FILENO);
+
+        // (void)arr;
+        // (void)arg;
+        // (void)env;
 		execve(arr[0].c_str(), (char * const *)arg, env);
         Logger::writeErrorLog("Execve crashed");
 		write(STDOUT_FILENO, "Status: 500\r\n\r\n", 15);
+
+        close(fd[READ]);
+        close(fd[WRITE]);
 	}
 	else
 	{
 		char	buffer[1024] = {0};
 		waitpid(-1, NULL, 0);
-		lseek(fdOut, 0, SEEK_SET);
-		ret = 1;
-		while (ret > 0)
+
+        close(fd[WRITE]);
+
+        ret = 1;
+		while (ret != 0)
 		{
 			memset(buffer, 0, 1024);
-			ret = read(fdOut, buffer, 1024 - 1);
+			ret = read(fd[READ], buffer, 1024 - 1);
 			result += buffer;
 		}
+
+        close(fd[READ]);
 	}
 	dup2(saveStdin, STDIN_FILENO);
 	dup2(saveStdout, STDOUT_FILENO);
-	fclose(fIn);
-	fclose(fOut);
-	close(fdIn);
-	close(fdOut);
 	close(saveStdin);
 	close(saveStdout);
+    // close(fd[READ]);
+    // close(fd[WRITE]);
 	for (size_t i = 0; env[i]; i++)
 		delete[] env[i];
 	delete[] env;
