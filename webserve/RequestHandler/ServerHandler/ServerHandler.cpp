@@ -434,6 +434,8 @@ std::string ServerHandler::executeCgi(const std::string& file_path)
     cgi_config = _config.getCgiConfig();
 
     size_t pos = file_path.rfind('.');
+    if (pos == std::string::npos)
+        throw Error422Exceptnion();
     std::string extension = file_path.substr(pos);
     std::map<std::string, std::string>::iterator it = cgi_config.find(extension);
     if (it == cgi_config.end())

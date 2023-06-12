@@ -90,12 +90,14 @@ void RequestMessageParser::setHeader(const std::string&  message)
     std::vector<std::string> arr;
     std::string filed;
     std::string value;
-    int pos;
+    size_t pos;
 
     arr = ft::splitString(message, "\r\n");
     for (std::vector<std::string>::iterator it = arr.begin(); it < arr.end(); it++)
     {
         pos = (*it).find(':');
+        if (pos == std::string::npos)
+            continue;
         filed = (*it).substr(0, pos);
         value = (*it).substr(pos + 2, (*it).length() - pos - 1);
         _header[filed] = value;
